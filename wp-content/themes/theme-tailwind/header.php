@@ -5,9 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php wp_head(); ?>
   </head>
-  <body <?php body_class(); ?>>
+  <body <?php body_class(); ?>
+  <?php
+// Get menu items from the menu named "Main Menu"
+$menu = wp_get_nav_menu_object('Main Menu');
+$menu_items = [];
+
+if ($menu) {
+    $menu_items = wp_get_nav_menu_items($menu->term_id);
+}
+?>  
+  >
     <div class="bg-blue-400">
       <div class="max-w-4xl mx-auto mb-5 px-4">
-        <h1 class="text-3xl py-10"><a href="<?php echo get_home_url(); ?>" class="hover:text-blue-500">Welcome To Our Header!</a></h1>
+         <!-- Menu Items Display -->
+  <div class="prose max-w-full mb-10">
+    <?php if (!empty($menu_items)) : ?>
+      <ul class="list-none flex flex-row gap-4">
+      <?php foreach ($menu_items as $item) : ?>
+
+        <li>
+          <a href="<?php echo esc_url($item->url); ?>" class="text-blue-800 font-semibold">
+            <?php echo esc_html($item->title); ?>
+          </a>
+          </li>
+
+      <?php endforeach; ?>
+      </ul>
+    <?php else : ?>
+      <p>No menu items found.</p>
+    <?php endif; ?>
+  </div>
       </div>
     </div>

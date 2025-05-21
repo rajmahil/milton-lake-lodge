@@ -1,24 +1,46 @@
+<?php get_header(); ?>
+
 <?php
+// Get menu items from the menu named "Main Menu"
+$menu = wp_get_nav_menu_object('Main Menu');
+$menu_items = [];
 
-get_header(); ?>
+if ($menu) {
+    $menu_items = wp_get_nav_menu_items($menu->term_id);
+}
+?>
 
-<div class="max-w-4xl mx-auto px-4">
+<div class="p-10">
 
-  <!-- example react component -->
+  <!-- React component mount point -->
   <div id="render-react-example-here"></div>
-  <!-- end example react component -->
 
-  <div class="prose max-w-full">
-    <?php if (have_posts()) {
-      while(have_posts()) {
-        the_post(); ?>
-        <div>
-          <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-          <?php the_content(); ?>
+  <!-- Menu Items Display -->
+  <!-- <div class="prose max-w-full mb-10">
+    <?php if (!empty($menu_items)) : ?>
+      <?php foreach ($menu_items as $item) : ?>
+        <div class="p-6 mb-4 bg-blue-100 rounded">
+          <h3><a href="<?php echo esc_url($item->url); ?>" class="text-blue-800 font-semibold">
+            <?php echo esc_html($item->title); ?>
+          </a></h3>
         </div>
-      <?php }
-    } ?>
+      <?php endforeach; ?>
+    <?php else : ?>
+      <p>No menu items found.</p>
+    <?php endif; ?>
+  </div> -->
+
+  <!-- Posts Content -->
+  <div class="prose max-w-full">
+    <h2 class="text-2xl font-bold mb-4">Posts</h2>
+    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+      <div class="p-6 mb-4 bg-gray-100 rounded">
+        <!-- <h3><a href="<?php the_permalink(); ?>" class="text-gray-900 font-semibold"><?php the_title(); ?></a></h3> -->
+        <?php the_content(); ?>
+      </div>
+    <?php endwhile; endif; ?>
   </div>
 </div>
 
-<?php get_footer();
+
+<?php get_footer(); ?>
