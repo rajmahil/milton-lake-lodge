@@ -4,13 +4,15 @@ FROM node:18 AS builder
 # Work inside your theme folder
 WORKDIR /app/wp-content/themes/press-wind
 
-# Install just package.json & lockfile first (cache layer)
-COPY wp-content/themes/press-wind/package*.json ./
-RUN npm ci
+# Copy only package.json (and package-lock.json if you ever add one)
+COPY wp-content/themes/press-wind/package.json ./
 
-# Copy the rest of your theme, then build
+# Install dependencies (including devDeps for the build)
+RUN npm install
+
+# Copy the rest of the theme files and build
 COPY wp-content/themes/press-wind ./
-RUN npm run build   # <-- generates style.css (and dist/ if you use one)
+RUN npm run build   # creates style.css and/or dist/
 
 
 # ──────── 2) Runtime stage ────────
