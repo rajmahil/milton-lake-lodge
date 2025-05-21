@@ -5,7 +5,7 @@ function ExampleReactComponent() {
 
   return (
     <div
-      className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-4 rounded-md"
+      className="bg-gradient-to-r from-red-300 to-indigo-600 text-white p-4 rounded-md"
       onClick={() => setClickCount(prev => prev + 1)}
     >
       <h1 className="text-xl">Hello from React!</h1>
