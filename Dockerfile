@@ -1,7 +1,12 @@
-# Use the official WordPress image with Apache & PHP
 FROM wordpress:php8.1-apache
 
-# Copy your entire site into the container
-COPY . /var/www/html
- 
-# (Optional) If you want uploads to persist, you can mount /var/www/html/wp-content/uploads as a volume at runtime.
+# 1) Copy just your theme
+COPY wp-content/themes/press-wind \
+     /var/www/html/wp-content/themes/press-wind
+
+# 2) (Optional) Persist uploads
+VOLUME /var/www/html/wp-content/uploads
+
+# 3) Fix ownership/permissions so Apache can read everything
+RUN chown -R www-data:www-data /var/www/html \
+ && chmod -R 755             /var/www/html
