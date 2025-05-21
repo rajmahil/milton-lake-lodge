@@ -43,15 +43,16 @@ define( 'DB_COLLATE',  '' );
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',          'x}-V,^S6?*[&IOcM(RLUSb3JRyR8HR2Qik>jeas0mCVo&ZR/Mms@$9heF>Z{FIEX' );
-define( 'SECURE_AUTH_KEY',   'w-#4=SVr!*lOyt_xlsT9)KCFRa+B-,&.Q:(@,:~[x3h?xt7A=ak-|@nQK@:C._%r' );
-define( 'LOGGED_IN_KEY',     'jE?86.zu.b^v(g(eBt}<}tgV{*aiyNP3~*4>OsUVdo78Go=x6f1jny^FJxuzP$c#' );
-define( 'NONCE_KEY',         'z7us.]]UggrizMj.O_h4F< %3p7rspX*{gJ1A{GNT=u,vD$*h:]xC$2z?B:VR=mw' );
-define( 'AUTH_SALT',         'mE C[>d(NIIK80Qs{dQ{B4n)f1|_9iT^vWY?)~Iz<Y^oyXM7CZ!r.yJs}z6,!Ibj' );
-define( 'SECURE_AUTH_SALT',  't40tx/#Q!{.~xtvbe=1p^7|k|;uiD%l+zJ?O_]%[~e093#38#]P/oY~hfWxbF-pR' );
-define( 'LOGGED_IN_SALT',    'S;/K@:F_utKa>X0:j<*42.$0#sL-]4iwDv38oghPrBrJ,k=|`A*)Uo6%Dh.-1EET' );
-define( 'NONCE_SALT',        '412~.I|LITT@l6VXITM:Hshk^I]t6|N{8<FY7w3JnS73`Rap*[W[&YM)DwxR+H?k' );
-define( 'WP_CACHE_KEY_SALT', 'fIs,R_qOo;dp(;B65roya}RUJ@xbiG$:b:oa#hh$j*?EQn`~I~(;=Ka$xsxZ/WYj' );
+define( 'AUTH_KEY',         getenv('WORDPRESS_AUTH_KEY')         ?: 'x}-V,^S6?*[&IOcM(RLUSb3JRyR8HR2Qik>jeas0mCVo&ZR/Mms@$9heF>Z{FIEX' );
+define( 'SECURE_AUTH_KEY',  getenv('WORDPRESS_SECURE_AUTH_KEY')  ?: 'w-#4=SVr!*lOyt_xlsT9)KCFRa+B-,&.Q:(@,:~[x3h?xt7A=ak-|@nQK@:C._%r' );
+define( 'LOGGED_IN_KEY',    getenv('WORDPRESS_LOGGED_IN_KEY')    ?: 'jE?86.zu.b^v(g(eBt}<}tgV{*aiyNP3~*4>OsUVdo78Go=x6f1jny^FJxuzP$c#' );
+define( 'NONCE_KEY',        getenv('WORDPRESS_NONCE_KEY')        ?: 'z7us.]]UggrizMj.O_h4F< %3p7rspX*{gJ1A{GNT=u,vD$*h:]xC$2z?B:VR=mw' );
+define( 'AUTH_SALT',        getenv('WORDPRESS_AUTH_SALT')        ?: 'mE C[>d(NIIK80Qs{dQ{B4n)f1|_9iT^vWY?)~Iz<Y^oyXM7CZ!r.yJs}z6,!Ibj' );
+define( 'SECURE_AUTH_SALT', getenv('WORDPRESS_SECURE_AUTH_SALT') ?: 't40tx/#Q!{.~xtvbe=1p^7|k|;uiD%l+zJ?O_]%[~e093#38#]P/oY~hfWxbF-pR' );
+define( 'LOGGED_IN_SALT',   getenv('WORDPRESS_LOGGED_IN_SALT')   ?: 'S;/K@:F_utKa>X0:j<*42.$0#sL-]4iwDv38oghPrBrJ,k=|`A*)Uo6%Dh.-1EET' );
+define( 'NONCE_SALT',       getenv('WORDPRESS_NONCE_SALT')       ?: '412~.I|LITT@l6VXITM:Hshk^I]t6|N{8<FY7w3JnS73`Rap*[W[&YM)DwxR+H?k' );
+define( 'WP_CACHE_KEY_SALT', getenv('WORDPRESS_CACHE_KEY_SALT')  ?: 'fIs,R_qOo;dp(;B65roya}RUJ@xbiG$:b:oa#hh$j*?EQn`~I~(;=Ka$xsxZ/WYj' );
+
 
 
 /**#@-*/
