@@ -4,18 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "tailwindbuild": "npx @tailwindcss/cli -i ./src/style.css -o ./build/style-index.css --minify",
+    "tailwindwatch": "npx @tailwindcss/cli -i ./src/style.css -o ./build/style-index.css --watch --minify",
     "preview": "npm-run-all --parallel sync start",
     "sync": "browser-sync start -p 'boilerplate-2024.local' --files '**/*.php' 'build/*.js' 'build/*.css'",
-    "build": "wp-scripts build src/index.js src/frontend.js",
-    "start": "wp-scripts start src/index.js src/frontend.js",
+    "wpbuild": "wp-scripts build src/index.js src/frontend.js",
+    "build": "npm-run-all --sequential wpbuild tailwindbuild",
+    "wpstart": "wp-scripts start src/index.js src/frontend.js",
+    "start": "npm-run-all --parallel wpstart tailwindwatch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@wordpress/scripts": "^27.9.0",
-    "browser-sync": "^3.0.2",
+    "@wordpress/scripts": "^30.10.0",
+    "browser-sync": "^3.0.3",
     "npm-run-all": "^4.1.5"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.6",
+    "tailwindcss": "^4.0.6"
   }
 }

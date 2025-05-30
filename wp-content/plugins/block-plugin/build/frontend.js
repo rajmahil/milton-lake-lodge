@@ -35,18 +35,6 @@ if (false) // removed by dead control flow
 
 /***/ }),
 
-/***/ "./src/frontend.scss":
-/*!***************************!*\
-  !*** ./src/frontend.scss ***!
-  \***************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "react":
 /*!************************!*\
   !*** external "React" ***!
@@ -64,6 +52,16 @@ module.exports = window["React"];
 /***/ ((module) => {
 
 module.exports = window["ReactDOM"];
+
+/***/ }),
+
+/***/ "react/jsx-runtime":
+/*!**********************************!*\
+  !*** external "ReactJSXRuntime" ***!
+  \**********************************/
+/***/ ((module) => {
+
+module.exports = window["ReactJSXRuntime"];
 
 /***/ })
 
@@ -144,31 +142,47 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _frontend_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./frontend.scss */ "./src/frontend.scss");
-/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
 
 
 
-
-const divsToUpdate = document.querySelectorAll(".boilerplate-update-me");
+const divsToUpdate = document.querySelectorAll(".tailwind-update-me");
 divsToUpdate.forEach(div => {
   const data = JSON.parse(div.querySelector("pre").innerText);
-  const root = react_dom_client__WEBPACK_IMPORTED_MODULE_2__.createRoot(div);
-  root.render((0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(OurComponent, {
+  const root = react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot(div);
+  root.render(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(OurComponent, {
     ...data
   }));
-  div.classList.remove("boilerplate-update-me");
+  div.classList.remove("tailwind-update-me");
 });
 function OurComponent(props) {
   const [showSkyColor, setShowSkyColor] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [showGrassColor, setShowGrassColor] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "boilerplate-frontend"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    onClick: () => setShowSkyColor(prev => !prev)
-  }, "Toggle view sky color"), showSkyColor && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, props.skyColor)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    onClick: () => setShowGrassColor(prev => !prev)
-  }, "Toggle view grass color"), showGrassColor && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, props.grassColor)));
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+    className: "my-unique-plugin-wrapper-class",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      className: "bg-amber-100 border-2 border-amber-300 p-4 my-3 rounded shadow-md",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          className: "rounded !bg-red-200 hover:bg-gray-200 active:bg-gray-300 border border-gray-300 py-1 px-3 mr-3 mb-3 inline-block",
+          onClick: () => setShowSkyColor(prev => !prev),
+          children: "Toggle view sky color"
+        }), showSkyColor && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+          children: props.skyColor
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          className: "rounded bg-gray-100 hover:bg-gray-200 active:bg-gray-300 border border-gray-300 py-1 px-3 mr-3 mb-3 inline-block",
+          onClick: () => setShowGrassColor(prev => !prev),
+          children: "Toggle view grass color"
+        }), showGrassColor && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+          children: props.grassColor
+        })]
+      })]
+    })
+  });
 }
 })();
 

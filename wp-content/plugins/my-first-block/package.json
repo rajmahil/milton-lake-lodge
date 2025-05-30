@@ -1,0 +1,41 @@
+{
+	"name": "my-first-block",
+	"version": "0.1.0",
+	"description": "Multi-block plugin with Tailwind CSS v4",
+	"author": "The WordPress Contributors",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"tailwindbuild": "npx @tailwindcss/cli -i ./src/style.css -o ./build/style-index.css --minify",
+		"tailwindwatch": "npx @tailwindcss/cli -i ./src/style.css -o ./build/style-index.css --watch --minify",
+		"preview": "npm-run-all --parallel sync start",
+		"sync": "browser-sync start -p 'boilerplate-2024.local' --files '**/*.php' 'build/*.js' 'build/*.css'",
+		"wpbuild": "wp-scripts build",
+		"build": "npm-run-all --sequential wpbuild tailwindbuild",
+		"wpstart": "wp-scripts start",
+		"start": "npm-run-all --parallel wpstart tailwindwatch",
+		"dev": "npm-run-all --parallel wpstart tailwindwatch sync",
+		"clean": "rm -rf build",
+		"clean-build": "npm run clean && npm run build",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"devDependencies": {
+		"@wordpress/prettier-config": "^4.24.0",
+		"@wordpress/scripts": "^30.17.0",
+		"autoprefixer": "^10.4.21",
+		"concurrently": "^9.1.2",
+		"postcss": "^8.5.4",
+		"tailwindcss": "^4.1.8",
+		"browser-sync": "^3.0.3",
+		"npm-run-all": "^4.1.5"
+	},
+	"dependencies": {
+		"@tailwindcss/cli": "^4.1.8"
+	},
+	"prettier": "@wordpress/prettier-config"
+}

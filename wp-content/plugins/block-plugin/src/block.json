@@ -1,18 +1,46 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "makeupnamespace/make-up-block-name",
-  "version": "0.1.0",
-  "title": "Brads Boilerplate Block",
-  "category": "common",
-  "icon": "welcome-learn-more",
-  "attributes": {
-    "skyColor": { "type": "string" },
-    "grassColor": { "type": "string" }
-  },
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:./index.css",
-  "style": "file:./frontend.css",
-  "render": "file:./render.php",
-  "viewScript": "file:./frontend.js"
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "my-plugin/my-first-block",
+	"version": "0.1.0",
+	"title": "My First Block",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "My first custom block with Tailwind",
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"source": "html",
+			"selector": "h2"
+		},
+		"subheading": {
+			"type": "string",
+			"source": "html",
+			"selector": "p"
+		},
+		"buttonText": {
+			"type": "string",
+			"source": "html",
+			"selector": "a"
+		},
+		"buttonUrl": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "href"
+		},
+		"imageUrl": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "img",
+			"attribute": "src"
+		}
+	},
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "my-first-block",
+	"editorScript": "file:./index.js",
+	"style": "file:../style-index.css"
 }

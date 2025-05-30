@@ -1,4 +1,4 @@
-import "./index.scss"
+import "./style.css"
 
 import { useBlockProps } from "@wordpress/block-editor"
 import { registerBlockType } from "@wordpress/blocks"
@@ -17,19 +17,23 @@ function EditComponent(props) {
 
   return (
     <div {...useBlockProps()}>
-      <div className="makeUpYourBlockTypeName">
-        <input
-          type="text"
-          value={props.attributes.skyColor}
-          onChange={updateSkyColor}
-          placeholder="sky color..."
-        />
-        <input
-          type="text"
-          value={props.attributes.grassColor}
-          onChange={updateGrassColor}
-          placeholder="grass color..."
-        />
+      <div className="my-unique-plugin-wrapper-class">
+        <div className="bg-blue-200 border-2 border-blue-300 rounded-md p-5">
+          <input
+            className="mr-3 p-2 rounded-lg"
+            type="text"
+            value={props.attributes.skyColor}
+            onChange={updateSkyColor}
+            placeholder="sky color..."
+          />
+          <input
+            className="mr-3 p-2 rounded-lg"
+            type="text"
+            value={props.attributes.grassColor}
+            onChange={updateGrassColor}
+            placeholder="grass color..."
+          />
+        </div>
       </div>
     </div>
   )

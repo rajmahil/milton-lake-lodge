@@ -10,34 +10,18 @@ if ($menu) {
 }
 ?>
 
-<div class="p-10">
+<div class="p-0">
 
-  <!-- React component mount point -->
-  <div id="render-react-example-here"></div>
 
-  <!-- Menu Items Display -->
-  <!-- <div class="prose max-w-full mb-10">
-    <?php if (!empty($menu_items)) : ?>
-      <?php foreach ($menu_items as $item) : ?>
-        <div class="p-6 mb-4 bg-blue-100 rounded">
-          <h3><a href="<?php echo esc_url($item->url); ?>" class="text-blue-800 font-semibold">
-            <?php echo esc_html($item->title); ?>
-          </a></h3>
-        </div>
-      <?php endforeach; ?>
-    <?php else : ?>
-      <p>No menu items found.</p>
-    <?php endif; ?>
-  </div> -->
+  <!-- React component mount point    <div id="render-react-example-here"></div> -->
 
   <!-- Posts Content -->
   <div class="prose max-w-full">
-    <h2 class="text-2xl font-bold mb-4">Posts</h2>
     <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-      <div class="p-6 mb-4 bg-gray-100 rounded">
-        <!-- <h3><a href="<?php the_permalink(); ?>" class="text-gray-900 font-semibold"><?php the_title(); ?></a></h3> -->
-        <?php the_content(); ?>
-      </div>
+    <div class="">
+      <!-- <h3><a href="<?php the_permalink(); ?>" class="text-gray-900 font-semibold"><?php the_title(); ?></a></h3> -->
+      <?php the_content(); ?>
+    </div>
     <?php endwhile; endif; ?>
   </div>
 </div>

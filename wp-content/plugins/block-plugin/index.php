@@ -1,15 +1,18 @@
 <?php
+/**
+ * Plugin Name:       My First Block
+ * Description:       Multi-block plugin with Tailwind CSS v4
+ * Version:           0.1.0
+ * Text Domain:       my-first-block
+ */
 
-/*
-  Plugin Name: Brad&rsquo;s Boilerplate Block Plugin
-  Version: 1.0
-  Author: Brad
-  Author URI: https://github.com/LearnWebCode
-*/
-
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-
-function bradsboilerplateblockregister() {
-	register_block_type( __DIR__ . '/build' );
+if (!defined('ABSPATH')) {
+    exit();
 }
-add_action( 'init', 'bradsboilerplateblockregister' );
+
+function my_first_block_init()
+{
+    // Register the block using the build directory
+    register_block_type(__DIR__ . '/build/my-first-block');
+}
+add_action('init', 'my_first_block_init');
