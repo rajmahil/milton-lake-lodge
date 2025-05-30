@@ -51,5 +51,6 @@
   "style": [
     "file:../style-index.css"
   ],
-  "viewScript": "file:./view.js"
+  "render": "file:./render.php",
+  "viewScript": "file:./frontend.js"
 }

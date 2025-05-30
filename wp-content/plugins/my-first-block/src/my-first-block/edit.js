@@ -1,25 +1,16 @@
 import React, { useState } from "react"
 import ReactDOM from "react-dom/client"
-
-const divsToUpdate = document.querySelectorAll(".my-block-update-me")
-
-divsToUpdate.forEach(div => {
-	const data = JSON.parse(div.querySelector("pre").innerText)
-	const root = ReactDOM.createRoot(div)
-	root.render(<MyBlockComponent {...data} />)
-	div.classList.remove("my-block-update-me")
-})
+import "../style.css"
 
 export default function MyBlockComponent(props) {
 	const [showDetails, setShowDetails] = useState(false)
 
 	return (
 		<div className="my-unique-plugin-wrapper-class">
-			<div className="bg-green-100 border-2 border-green-300 p-6 my-3 rounded-lg shadow-md">
-				<p className="text-red-600 font-bold mb-4">
+			<div className="bg-green-100 border-2 border-green-800 p-6 my-3 rounded-lg shadow-md">
+				<p className="text-teal-600 font-bold mb-4">
 					🎉 DYNAMIC BLOCK - Updates Instantly!
 				</p>
-
 				{props.heading && (
 					<h2 className="text-2xl font-bold mb-4 text-gray-900">
 						{props.heading}
