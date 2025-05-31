@@ -57,45 +57,58 @@ function my_minio_client()
 }
 
 // 2️⃣ Upload hook — push file to MinIO
-add_filter('wp_handle_upload', function ($upload) {
-    if (isset($upload['error']) && $upload['error']) {
+add_filter(
+    'wp_handle_upload',
+    function ($upload) {
+        if (isset($upload['error']) && $upload['error']) {
+            error_log('MinIO Upload Error: ' . $upload['error']);
+            return $upload;
+        }
+
+        if (!defined('MINIO_BUCKET') || !defined('MINIO_PUBLIC_URL')) {
+            error_log('MinIO: MINIO_BUCKET or MINIO_PUBLIC_URL not defined.');
+            return $upload;
+        }
+
+        $bucket = MINIO_BUCKET;
+        $file_path = $upload['file'];
+
+        // Get the filename without the temporary path
+        $filename = basename($file_path);
+
+        // Determine the proper path structure for MinIO
+        $upload_dir_details = wp_upload_dir();
+        $wp_subdir = ltrim($upload_dir_details['subdir'], '/');
+        $key = !empty($wp_subdir) ? $wp_subdir . '/' . $filename : $filename;
+
+        $s3 = my_minio_client();
+        if (!$s3) {
+            error_log("MinIO: S3 client not available for key {$key}.");
+            return $upload;
+        }
+
+        try {
+            $s3->putObject([
+                'Bucket' => $bucket,
+                'Key' => $key,
+                'SourceFile' => $file_path,
+                'ACL' => 'public-read',
+            ]);
+
+            $cdn_base = rtrim(MINIO_PUBLIC_URL, '/');
+            $minio_url = $cdn_base . '/' . $key;
+            $upload['url'] = $minio_url;
+
+            error_log("MinIO: Successfully uploaded {$key} to MinIO");
+        } catch (Exception $e) {
+            error_log('MinIO Upload Error: ' . $e->getMessage() . ' for key: ' . $key);
+        }
+
         return $upload;
-    }
-    if (!defined('MINIO_BUCKET') || !defined('MINIO_PUBLIC_URL')) {
-        error_log('MinIO (wp_handle_upload): MINIO_BUCKET or MINIO_PUBLIC_URL not defined.');
-        return $upload;
-    }
-
-    $bucket = MINIO_BUCKET;
-    $file_path = $upload['file'];
-
-    $upload_dir_details = wp_upload_dir();
-    $wp_subdir = ltrim($upload_dir_details['subdir'], '/');
-    $key_filename = wp_basename($file_path);
-    $key = !empty($wp_subdir) ? $wp_subdir . '/' . $key_filename : $key_filename;
-
-    $s3 = my_minio_client();
-    if (!$s3) {
-        error_log("MinIO (wp_handle_upload): S3 client not available for key {$key}.");
-        return $upload;
-    }
-
-    try {
-        $s3->putObject([
-            'Bucket' => $bucket,
-            'Key' => $key,
-            'SourceFile' => $file_path,
-            'ACL' => 'public-read',
-        ]);
-
-        $cdn_base = rtrim(MINIO_PUBLIC_URL, '/');
-        $minio_url = $cdn_base . '/' . $key;
-        $upload['url'] = $minio_url;
-    } catch (AwsException $e) {
-        error_log('MinIO Upload Error (wp_handle_upload): ' . $e->getMessage() . ' for key: ' . $key);
-    }
-    return $upload;
-});
+    },
+    10,
+    1,
+);
 
 // 3️⃣ Upload thumbnails and handle attachment metadata
 add_filter(
@@ -129,7 +142,6 @@ add_filter(
                         'SourceFile' => $main_file_path,
                         'ACL' => 'public-read',
                     ]);
-                    unlink($main_file_path);
                 } catch (AwsException $e) {
                     error_log('MinIO Upload Error (wp_generate_attachment_metadata - main): ' . $e->getMessage() . ' for key: ' . $main_key);
                 }
@@ -300,7 +312,6 @@ add_action(
                             'SourceFile' => $main_file_path,
                             'ACL' => 'public-read',
                         ]);
-                        unlink($main_file_path);
 
                         error_log("✅ Uploaded main file to MinIO: $key");
                     }
@@ -379,4 +390,35 @@ add_action('plugins_loaded', function () {
     }
 
     // Now safe to initialize your MinIO client, hooks, etc.
+});
+
+// Add this near the top of your plugin file
+add_filter('upload_dir', function ($uploads) {
+    // Check if we're in the Railway environment
+    if (getenv('RAILWAY_ENVIRONMENT') !== false) {
+        // Use the system temp directory which should be writable
+        $temp_dir = sys_get_temp_dir() . '/wp-uploads';
+
+        // Create the directory if it doesn't exist
+        if (!file_exists($temp_dir)) {
+            wp_mkdir_p($temp_dir);
+        }
+
+        // Override the upload directory paths
+        $uploads['path'] = $temp_dir;
+        $uploads['basedir'] = $temp_dir;
+
+        // The URLs still point to the expected location
+        // Our MinIO integration will handle the actual URLs
+    }
+
+    return $uploads;
+});
+
+add_action('init', function () {
+    // Ensure the current month's upload directory exists
+    $upload_dir = wp_upload_dir();
+    if (!file_exists($upload_dir['path'])) {
+        wp_mkdir_p($upload_dir['path']);
+    }
 });
