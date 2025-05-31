@@ -57,6 +57,7 @@ function my_minio_client()
 }
 
 // 2️⃣ Upload hook — push file to MinIO
+// Replace your existing wp_handle_upload filter with this enhanced version
 add_filter('wp_handle_upload', function ($upload) {
     if (isset($upload['error']) && $upload['error']) {
         return $upload;
@@ -91,6 +92,8 @@ add_filter('wp_handle_upload', function ($upload) {
         $cdn_base = rtrim(MINIO_PUBLIC_URL, '/');
         $minio_url = $cdn_base . '/' . $key;
         $upload['url'] = $minio_url;
+
+        error_log("MinIO: Upload successful. Local: {$upload['file']}, CDN: {$minio_url}");
     } catch (AwsException $e) {
         error_log('MinIO Upload Error (wp_handle_upload): ' . $e->getMessage() . ' for key: ' . $key);
     }
@@ -380,3 +383,28 @@ add_action('plugins_loaded', function () {
 
     // Now safe to initialize your MinIO client, hooks, etc.
 });
+
+// Add this to ensure admin/media library shows CDN URLs
+add_filter(
+    'wp_get_attachment_image_attributes',
+    function ($attr, $attachment, $size) {
+        if (!defined('MINIO_PUBLIC_URL')) {
+            return $attr;
+        }
+
+        if (isset($attr['src'])) {
+            $upload_dir = wp_upload_dir();
+            $local_base_url = $upload_dir['baseurl'];
+            $cdn_base = rtrim(MINIO_PUBLIC_URL, '/');
+
+            if (strpos($attr['src'], $local_base_url) === 0) {
+                $relative_path = str_replace($local_base_url, '', $attr['src']);
+                $attr['src'] = $cdn_base . $relative_path;
+            }
+        }
+
+        return $attr;
+    },
+    10,
+    3,
+);
