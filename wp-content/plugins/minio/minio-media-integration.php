@@ -56,6 +56,79 @@ function my_minio_client()
     return $client;
 }
 
+// NEW: Intercept file uploads before WordPress tries to move them
+add_filter(
+    'pre_move_uploaded_file',
+    function ($move_new_file, $file, $new_file, $type) {
+        // Skip if not a proper upload
+        if (empty($file['tmp_name']) || !file_exists($file['tmp_name'])) {
+            return $move_new_file;
+        }
+
+        // Check MinIO configuration
+        if (!defined('MINIO_BUCKET') || !defined('MINIO_PUBLIC_URL')) {
+            error_log('MinIO: Missing configuration');
+            return $move_new_file;
+        }
+
+        // Get MinIO client
+        $s3 = my_minio_client();
+        if (!$s3) {
+            error_log('MinIO: S3 client not available');
+            return $move_new_file;
+        }
+
+        // Get the upload directory structure
+        $upload_dir = wp_upload_dir();
+        $subdir = ltrim($upload_dir['subdir'], '/');
+
+        // Get filename from the new_file path
+        $filename = basename($new_file);
+
+        // Generate the MinIO key (path)
+        $key = !empty($subdir) ? $subdir . '/' . $filename : $filename;
+
+        try {
+            // Upload directly to MinIO from the temporary file
+            $s3->putObject([
+                'Bucket' => MINIO_BUCKET,
+                'Key' => $key,
+                'SourceFile' => $file['tmp_name'],
+                'ACL' => 'public-read',
+            ]);
+
+            // Create the MinIO URL
+            $cdn_base = rtrim(MINIO_PUBLIC_URL, '/');
+            $minio_url = $cdn_base . '/' . $key;
+
+            error_log("MinIO: Successfully uploaded {$key} directly to MinIO using pre_move_uploaded_file");
+
+            // Store the file info for later use
+            update_option('minio_last_upload_url', $minio_url);
+            update_option('minio_last_upload_key', $key);
+            update_option('minio_last_upload_filename', $filename);
+
+            // Create the directory structure if it doesn't exist
+            $dir = dirname($new_file);
+            if (!file_exists($dir)) {
+                wp_mkdir_p($dir);
+            }
+
+            // Create an empty file at the destination to satisfy WordPress
+            file_put_contents($new_file, '');
+
+            // Return true to tell WordPress the file was moved successfully
+            return true;
+        } catch (Exception $e) {
+            error_log('MinIO Upload Error: ' . $e->getMessage());
+            // Let WordPress handle it if our upload fails
+            return $move_new_file;
+        }
+    },
+    10,
+    4,
+);
+
 // 2️⃣ Upload hook — push file to MinIO
 add_filter(
     'wp_handle_upload',
@@ -67,6 +140,24 @@ add_filter(
 
         if (!defined('MINIO_BUCKET') || !defined('MINIO_PUBLIC_URL')) {
             error_log('MinIO: MINIO_BUCKET or MINIO_PUBLIC_URL not defined.');
+            return $upload;
+        }
+
+        // Check if we already uploaded this file in pre_move_uploaded_file
+        $last_upload_key = get_option('minio_last_upload_key');
+        $last_upload_url = get_option('minio_last_upload_url');
+        $last_upload_filename = get_option('minio_last_upload_filename');
+
+        if ($last_upload_key && $last_upload_url && $last_upload_filename && basename($upload['file']) === $last_upload_filename) {
+            // We already uploaded this file, just update the URL
+            $upload['url'] = $last_upload_url;
+
+            // Clear the stored data
+            delete_option('minio_last_upload_url');
+            delete_option('minio_last_upload_key');
+            delete_option('minio_last_upload_filename');
+
+            error_log("MinIO: Using previously uploaded file from pre_move_uploaded_file hook: {$last_upload_key}");
             return $upload;
         }
 
@@ -269,6 +360,52 @@ add_filter(
         error_log("→ filename: $filename");
         error_log("→ mime_type: $mime_type");
         error_log('→ image_editor class: ' . get_class($image_editor));
+
+        // Only process if the WordPress save was successful
+        if (is_wp_error($saved)) {
+            return $saved;
+        }
+
+        // Check MinIO configuration
+        if (!defined('MINIO_BUCKET') || !defined('MINIO_PUBLIC_URL')) {
+            return $saved;
+        }
+
+        // Get MinIO client
+        $s3 = my_minio_client();
+        if (!$s3) {
+            return $saved;
+        }
+
+        // Get the file path
+        $file_path = is_array($saved) && isset($saved['path']) ? $saved['path'] : $filename;
+
+        if (!file_exists($file_path)) {
+            error_log("MinIO: Edited image file not found: {$file_path}");
+            return $saved;
+        }
+
+        // Calculate the MinIO key
+        $upload_dir = wp_upload_dir();
+        $base_dir = $upload_dir['basedir'];
+
+        if (strpos($file_path, $base_dir) === 0) {
+            $relative_path = ltrim(str_replace($base_dir, '', $file_path), '/');
+
+            try {
+                // Upload to MinIO
+                $s3->putObject([
+                    'Bucket' => MINIO_BUCKET,
+                    'Key' => $relative_path,
+                    'SourceFile' => $file_path,
+                    'ACL' => 'public-read',
+                ]);
+
+                error_log("MinIO: Uploaded edited image - {$relative_path}");
+            } catch (Exception $e) {
+                error_log('MinIO Upload Error (edited image): ' . $e->getMessage());
+            }
+        }
 
         return $saved;
     },
