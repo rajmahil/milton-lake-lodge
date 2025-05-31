@@ -410,16 +410,31 @@ add_filter(
 );
 
 // Add this debugging function to your plugin
+// Replace your existing debug function with this enhanced version
 add_action('admin_init', function () {
     if (isset($_GET['debug_minio_urls']) && current_user_can('manage_options')) {
         header('Content-Type: text/plain');
 
         echo "=== MinIO URL Debug ===\n\n";
 
+        // Check environment variables directly
+        echo "Environment Variables:\n";
+        echo 'MINIO_PUBLIC_URL (env): ' . (getenv('MINIO_PUBLIC_URL') ?: 'NOT SET') . "\n";
+        echo 'MINIO_BUCKET (env): ' . (getenv('MINIO_BUCKET') ?: 'NOT SET') . "\n";
+        echo 'MINIO_ENDPOINT (env): ' . (getenv('MINIO_ENDPOINT') ?: 'NOT SET') . "\n\n";
+
         // Check constants
-        echo "Constants:\n";
+        echo "PHP Constants:\n";
         echo 'MINIO_PUBLIC_URL: ' . (defined('MINIO_PUBLIC_URL') ? MINIO_PUBLIC_URL : 'NOT DEFINED') . "\n";
-        echo 'MINIO_BUCKET: ' . (defined('MINIO_BUCKET') ? MINIO_BUCKET : 'NOT DEFINED') . "\n\n";
+        echo 'MINIO_BUCKET: ' . (defined('MINIO_BUCKET') ? MINIO_BUCKET : 'NOT DEFINED') . "\n";
+        echo 'MINIO_ENDPOINT: ' . (defined('MINIO_ENDPOINT') ? MINIO_ENDPOINT : 'NOT DEFINED') . "\n";
+        echo 'MINIO_ACCESS_KEY: ' . (defined('MINIO_ACCESS_KEY') ? 'DEFINED (hidden)' : 'NOT DEFINED') . "\n";
+        echo 'MINIO_SECRET_KEY: ' . (defined('MINIO_SECRET_KEY') ? 'DEFINED (hidden)' : 'NOT DEFINED') . "\n\n";
+
+        // Test MinIO client
+        echo "MinIO Client Test:\n";
+        $s3 = my_minio_client();
+        echo 'Client created: ' . ($s3 ? 'YES' : 'NO') . "\n\n";
 
         // Check upload directory
         $upload_dir = wp_upload_dir();
@@ -437,14 +452,18 @@ add_action('admin_init', function () {
         if ($attachments) {
             $attachment = $attachments[0];
             echo 'Testing with attachment ID: ' . $attachment->ID . "\n";
-            echo 'Original URL: ' . wp_get_attachment_url($attachment->ID) . "\n";
 
-            $attached_file = get_post_meta($attachment->ID, '_wp_attached_file', true);
-            echo 'Attached file: ' . $attached_file . "\n";
+            // Test the URL filter directly
+            $original_url = get_post_meta($attachment->ID, '_wp_attached_file', true);
+            echo 'Attached file meta: ' . $original_url . "\n";
 
-            if (defined('MINIO_PUBLIC_URL') && $attached_file) {
-                $expected_cdn_url = rtrim(MINIO_PUBLIC_URL, '/') . '/' . ltrim($attached_file, '/');
+            $wp_url = wp_get_attachment_url($attachment->ID);
+            echo 'wp_get_attachment_url result: ' . $wp_url . "\n";
+
+            if (defined('MINIO_PUBLIC_URL') && $original_url) {
+                $expected_cdn_url = rtrim(MINIO_PUBLIC_URL, '/') . '/' . ltrim($original_url, '/');
                 echo 'Expected CDN URL: ' . $expected_cdn_url . "\n";
+                echo 'URLs match: ' . ($wp_url === $expected_cdn_url ? 'YES' : 'NO') . "\n";
             }
         }
 
