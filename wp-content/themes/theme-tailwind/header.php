@@ -25,11 +25,7 @@
   <div class="bg-blue-400">
 
     <!-- Menu Items Display -->
-    <div
-      class="prose "
-      data-aos="fade-up"
-      data-aos-delay="200"
-    >
+    <div class="prose ">
       <?php if (!empty($menu_items)) : ?>
       <ul class="list-none flex flex-row gap-4">
         <?php foreach ($menu_items as $item) : ?>

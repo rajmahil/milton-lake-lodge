@@ -15,15 +15,3 @@ function boilerplate_add_support()
 }
 
 add_action('after_setup_theme', 'boilerplate_add_support');
-
-function mytheme_enqueue_scripts()
-{
-    // AOS animation library
-    wp_enqueue_style('aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css');
-    wp_enqueue_script('aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js', [], null, true);
-
-    // Optionally initialize AOS (custom JS in footer or in a separate file)
-    wp_add_inline_script('aos', 'AOS.init();');
-}
-
-add_action('wp_enqueue_scripts', 'mytheme_enqueue_scripts');

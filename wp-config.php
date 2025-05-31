@@ -1,5 +1,5 @@
 <?php
-define( 'WP_CACHE', true );
+define('WP_CACHE', true);
 
 /**
  * The base configuration for WordPress
@@ -55,6 +55,11 @@ define('LOGGED_IN_SALT', getenv('WORDPRESS_LOGGED_IN_SALT') ?: 'S;/K@:F_utKa>X0:
 define('NONCE_SALT', getenv('WORDPRESS_NONCE_SALT') ?: '412~.I|LITT@l6VXITM:Hshk^I]t6|N{8<FY7w3JnS73`Rap*[W[&YM)DwxR+H?k');
 define('WP_CACHE_KEY_SALT', getenv('WORDPRESS_CACHE_KEY_SALT') ?: 'fIs,R_qOo;dp(;B65roya}RUJ@xbiG$:b:oa#hh$j*?EQn`~I~(;=Ka$xsxZ/WYj');
 
+define('MINIO_ENDPOINT', getenv('MINIO_ENDPOINT') ?: 'https://bucket-production-599e.up.railway.app:443');
+define('MINIO_ACCESS_KEY', getenv('MINIO_ACCESS_KEY') ?: '9pXsoXgu8tm4hpjKPanh');
+define('MINIO_SECRET_KEY', getenv('MINIO_SECRET_KEY') ?: 'dEMI8Vb53H834EZf1oFZkSdoWJBsd239v9CFi8kf');
+define('MINIO_BUCKET', getenv('MINIO_BUCKET') ?: 'wpmedia');
+define('MINIO_PUBLIC_URL', getenv('MINIO_PUBLIC_URL') ?: 'https://bucket-production-599e.up.railway.app/wpmedia');
 /**#@-*/
 
 /**
