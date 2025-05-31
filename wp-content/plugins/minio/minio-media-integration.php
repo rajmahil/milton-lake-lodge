@@ -370,15 +370,11 @@ add_filter(
 ); // Late priority
 
 // 9️⃣ Admin notice for configuration check
-add_action('admin_notices', function () {
-    $required_constants = ['MINIO_ACCESS_KEY', 'MINIO_SECRET_KEY', 'MINIO_ENDPOINT', 'MINIO_BUCKET', 'MINIO_PUBLIC_URL'];
-    $missing_constants = [];
-    foreach ($required_constants as $constant) {
-        if (!defined($constant)) {
-            $missing_constants[] = $constant;
-        }
+add_action('plugins_loaded', function () {
+    if (!defined('MINIO_ACCESS_KEY') || !defined('MINIO_SECRET_KEY') || !defined('MINIO_ENDPOINT') || !defined('MINIO_BUCKET') || !defined('MINIO_PUBLIC_URL')) {
+        error_log('MinIO Media Integration: Missing required constants in wp-config.php: MINIO_ACCESS_KEY, MINIO_SECRET_KEY, MINIO_ENDPOINT, MINIO_BUCKET, MINIO_PUBLIC_URL');
+        return;
     }
-    if (!empty($missing_constants)) {
-        echo '<div class="notice notice-error"><p><strong>MinIO Media Integration:</strong> Missing required constants in wp-config.php: ' . esc_html(implode(', ', $missing_constants)) . '</p></div>';
-    }
+
+    // Now safe to initialize your MinIO client, hooks, etc.
 });
