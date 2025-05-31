@@ -129,6 +129,7 @@ add_filter(
                         'SourceFile' => $main_file_path,
                         'ACL' => 'public-read',
                     ]);
+                    unlink($main_file_path);
                 } catch (AwsException $e) {
                     error_log('MinIO Upload Error (wp_generate_attachment_metadata - main): ' . $e->getMessage() . ' for key: ' . $main_key);
                 }
@@ -299,6 +300,7 @@ add_action(
                             'SourceFile' => $main_file_path,
                             'ACL' => 'public-read',
                         ]);
+                        unlink($main_file_path);
 
                         error_log("✅ Uploaded main file to MinIO: $key");
                     }
