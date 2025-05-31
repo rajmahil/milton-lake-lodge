@@ -57,58 +57,45 @@ function my_minio_client()
 }
 
 // 2️⃣ Upload hook — push file to MinIO
-add_filter(
-    'wp_handle_upload',
-    function ($upload) {
-        if (isset($upload['error']) && $upload['error']) {
-            error_log('MinIO Upload Error: ' . $upload['error']);
-            return $upload;
-        }
-
-        if (!defined('MINIO_BUCKET') || !defined('MINIO_PUBLIC_URL')) {
-            error_log('MinIO: MINIO_BUCKET or MINIO_PUBLIC_URL not defined.');
-            return $upload;
-        }
-
-        $bucket = MINIO_BUCKET;
-        $file_path = $upload['file'];
-
-        // Get the filename without the temporary path
-        $filename = basename($file_path);
-
-        // Determine the proper path structure for MinIO
-        $upload_dir_details = wp_upload_dir();
-        $wp_subdir = ltrim($upload_dir_details['subdir'], '/');
-        $key = !empty($wp_subdir) ? $wp_subdir . '/' . $filename : $filename;
-
-        $s3 = my_minio_client();
-        if (!$s3) {
-            error_log("MinIO: S3 client not available for key {$key}.");
-            return $upload;
-        }
-
-        try {
-            $s3->putObject([
-                'Bucket' => $bucket,
-                'Key' => $key,
-                'SourceFile' => $file_path,
-                'ACL' => 'public-read',
-            ]);
-
-            $cdn_base = rtrim(MINIO_PUBLIC_URL, '/');
-            $minio_url = $cdn_base . '/' . $key;
-            $upload['url'] = $minio_url;
-
-            error_log("MinIO: Successfully uploaded {$key} to MinIO");
-        } catch (Exception $e) {
-            error_log('MinIO Upload Error: ' . $e->getMessage() . ' for key: ' . $key);
-        }
-
+add_filter('wp_handle_upload', function ($upload) {
+    if (isset($upload['error']) && $upload['error']) {
         return $upload;
-    },
-    10,
-    1,
-);
+    }
+    if (!defined('MINIO_BUCKET') || !defined('MINIO_PUBLIC_URL')) {
+        error_log('MinIO (wp_handle_upload): MINIO_BUCKET or MINIO_PUBLIC_URL not defined.');
+        return $upload;
+    }
+
+    $bucket = MINIO_BUCKET;
+    $file_path = $upload['file'];
+
+    $upload_dir_details = wp_upload_dir();
+    $wp_subdir = ltrim($upload_dir_details['subdir'], '/');
+    $key_filename = wp_basename($file_path);
+    $key = !empty($wp_subdir) ? $wp_subdir . '/' . $key_filename : $key_filename;
+
+    $s3 = my_minio_client();
+    if (!$s3) {
+        error_log("MinIO (wp_handle_upload): S3 client not available for key {$key}.");
+        return $upload;
+    }
+
+    try {
+        $s3->putObject([
+            'Bucket' => $bucket,
+            'Key' => $key,
+            'SourceFile' => $file_path,
+            'ACL' => 'public-read',
+        ]);
+
+        $cdn_base = rtrim(MINIO_PUBLIC_URL, '/');
+        $minio_url = $cdn_base . '/' . $key;
+        $upload['url'] = $minio_url;
+    } catch (AwsException $e) {
+        error_log('MinIO Upload Error (wp_handle_upload): ' . $e->getMessage() . ' for key: ' . $key);
+    }
+    return $upload;
+});
 
 // 3️⃣ Upload thumbnails and handle attachment metadata
 add_filter(
@@ -142,6 +129,7 @@ add_filter(
                         'SourceFile' => $main_file_path,
                         'ACL' => 'public-read',
                     ]);
+                    unlink($main_file_path);
                 } catch (AwsException $e) {
                     error_log('MinIO Upload Error (wp_generate_attachment_metadata - main): ' . $e->getMessage() . ' for key: ' . $main_key);
                 }
@@ -312,6 +300,7 @@ add_action(
                             'SourceFile' => $main_file_path,
                             'ACL' => 'public-read',
                         ]);
+                        unlink($main_file_path);
 
                         error_log("✅ Uploaded main file to MinIO: $key");
                     }
@@ -390,57 +379,4 @@ add_action('plugins_loaded', function () {
     }
 
     // Now safe to initialize your MinIO client, hooks, etc.
-});
-
-// Add this near the top of your plugin file
-// Replace the existing upload_dir filter with this
-add_filter('upload_dir', function ($uploads) {
-    // Force WordPress to use the Railway persistent volume mount
-    $pv_mount_path = '/wp-content/uploads';
-
-    if (file_exists($pv_mount_path) && is_writable($pv_mount_path)) {
-        // Get the current year/month structure
-        $time = current_time('mysql');
-        $y = substr($time, 0, 4);
-        $m = substr($time, 5, 2);
-        $subdir = "/$y/$m";
-
-        // Create the full path with year/month
-        $full_path = $pv_mount_path . $subdir;
-
-        // Ensure the subdirectory exists
-        if (!file_exists($full_path)) {
-            wp_mkdir_p($full_path);
-        }
-
-        // Override all upload directory settings
-        $uploads['path'] = $full_path;
-        $uploads['basedir'] = $pv_mount_path;
-        $uploads['subdir'] = $subdir;
-
-        // Keep the URLs pointing to the expected location
-        // Our MinIO integration will handle serving from CDN
-
-        error_log("MinIO: Using Railway PV mount - {$full_path}");
-    } else {
-        error_log("MinIO: Railway PV mount not accessible - {$pv_mount_path}");
-
-        // Fallback to temp directory
-        $temp_dir = sys_get_temp_dir() . '/wp-uploads';
-        if (!file_exists($temp_dir)) {
-            wp_mkdir_p($temp_dir);
-        }
-        $uploads['path'] = $temp_dir;
-        $uploads['basedir'] = $temp_dir;
-    }
-
-    return $uploads;
-});
-
-add_action('init', function () {
-    // Ensure the current month's upload directory exists
-    $upload_dir = wp_upload_dir();
-    if (!file_exists($upload_dir['path'])) {
-        wp_mkdir_p($upload_dir['path']);
-    }
 });
