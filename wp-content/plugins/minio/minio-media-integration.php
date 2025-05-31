@@ -408,3 +408,46 @@ add_filter(
     10,
     3,
 );
+
+// Add this debugging function to your plugin
+add_action('admin_init', function () {
+    if (isset($_GET['debug_minio_urls']) && current_user_can('manage_options')) {
+        header('Content-Type: text/plain');
+
+        echo "=== MinIO URL Debug ===\n\n";
+
+        // Check constants
+        echo "Constants:\n";
+        echo 'MINIO_PUBLIC_URL: ' . (defined('MINIO_PUBLIC_URL') ? MINIO_PUBLIC_URL : 'NOT DEFINED') . "\n";
+        echo 'MINIO_BUCKET: ' . (defined('MINIO_BUCKET') ? MINIO_BUCKET : 'NOT DEFINED') . "\n\n";
+
+        // Check upload directory
+        $upload_dir = wp_upload_dir();
+        echo "Upload Directory:\n";
+        echo 'baseurl: ' . $upload_dir['baseurl'] . "\n";
+        echo 'basedir: ' . $upload_dir['basedir'] . "\n\n";
+
+        // Test with a recent attachment
+        $attachments = get_posts([
+            'post_type' => 'attachment',
+            'posts_per_page' => 1,
+            'post_status' => 'inherit',
+        ]);
+
+        if ($attachments) {
+            $attachment = $attachments[0];
+            echo 'Testing with attachment ID: ' . $attachment->ID . "\n";
+            echo 'Original URL: ' . wp_get_attachment_url($attachment->ID) . "\n";
+
+            $attached_file = get_post_meta($attachment->ID, '_wp_attached_file', true);
+            echo 'Attached file: ' . $attached_file . "\n";
+
+            if (defined('MINIO_PUBLIC_URL') && $attached_file) {
+                $expected_cdn_url = rtrim(MINIO_PUBLIC_URL, '/') . '/' . ltrim($attached_file, '/');
+                echo 'Expected CDN URL: ' . $expected_cdn_url . "\n";
+            }
+        }
+
+        exit();
+    }
+});
