@@ -28,11 +28,11 @@ const Hero = ( { heading, subheading, buttonText, buttonUrl, image } ) => {
 			</div>
 			<div className="absolute bottom-0 left-0 w-full h-full bg-linear-to-t  from-black/50 to-black/0"></div>
 			<div className="relative z-[2] max-w-container flex flex-row items-center justify-between ">
-				<div className="flex flex-col gap-4 max-w-[800px] w-full">
+				<div className="flex flex-col gap-4 max-w-[760px] w-full">
 					<h1 className="!my-0 !text-7xl !font-[600] !text-white text-left uppercase">
 						{ heading }
 					</h1>
-					<p className="!my-0 text-xl !text-white text-left">
+					<p className="!my-0 text-2xl !text-white text-left !leading-normal">
 						{ subheading }
 					</p>
 				</div>

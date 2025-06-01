@@ -72,19 +72,16 @@
       <p class="text-white">No menu items found.</p>
       <?php endif; ?>
 
-
+      <!-- Main CTA -->
       <div>
-        <a
-          href="<?php echo esc_url($cta_url); ?>"
-          class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-        >
-          <?php echo esc_html($cta_text); ?>
+        <a href="<?php echo esc_url($cta_url); ?>">
+          <button class="btn btn-primary btn-lg">
+            <?php echo esc_html($cta_text); ?>
+          </button>
         </a>
       </div>
-
     </div>
   </div>
-
   <?php wp_footer(); ?>
 </body>
 
