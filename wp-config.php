@@ -61,21 +61,8 @@ define('MINIO_SECRET_KEY', getenv('MINIO_SECRET_KEY') ?: 'dEMI8Vb53H834EZf1oFZkS
 define('MINIO_BUCKET', getenv('MINIO_BUCKET') ?: 'wpmedia');
 define('MINIO_PUBLIC_URL', getenv('MINIO_PUBLIC_URL') ?: 'https://bucket-production-599e.up.railway.app/wpmedia');
 
-// define('WP_REDIS_URL', getenv('REDIS_URL') ?: 'redis://default:LctkHNPFReQWgebFsfiuieehYcqZvtZl@crossover.proxy.rlwy.net:40516');
-
 // Parse REDIS_URL from Railway into the constants Redis Object Cache actually uses
 // adjust Redis host and port if necessary
-define('WP_REDIS_HOST', getenv('WP_REDIS_HOST'));
-define('WP_REDIS_PORT', getenv('WP_REDIS_PORT'));
-
-// change the prefix and database for each site to avoid cache data collisions
-define('WP_REDIS_PREFIX', 'milton-lake');
-define('WP_REDIS_DATABASE', 0); // 0-15
-
-// reasonable connection and read+write timeouts
-define('WP_REDIS_TIMEOUT', 1);
-define('WP_REDIS_READ_TIMEOUT', 1);
-/**#@-*/
 
 /**
  * WordPress database table prefix.
