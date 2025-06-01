@@ -60,6 +60,8 @@ define('MINIO_ACCESS_KEY', getenv('MINIO_ACCESS_KEY') ?: '9pXsoXgu8tm4hpjKPanh')
 define('MINIO_SECRET_KEY', getenv('MINIO_SECRET_KEY') ?: 'dEMI8Vb53H834EZf1oFZkSdoWJBsd239v9CFi8kf');
 define('MINIO_BUCKET', getenv('MINIO_BUCKET') ?: 'wpmedia');
 define('MINIO_PUBLIC_URL', getenv('MINIO_PUBLIC_URL') ?: 'https://bucket-production-599e.up.railway.app/wpmedia');
+
+define('WP_REDIS_URL', getenv('REDIS_URL') ?: 'redis://default:LctkHNPFReQWgebFsfiuieehYcqZvtZl@crossover.proxy.rlwy.net:40516');
 /**#@-*/
 
 /**
