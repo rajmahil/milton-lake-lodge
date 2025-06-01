@@ -13,6 +13,7 @@ if (!defined('ABSPATH')) {
 
 function registerBlocks()
 {
+    register_block_type(__DIR__ . '/build/hero-section');
     register_block_type(__DIR__ . '/build/my-first-block');
 }
 add_action('init', 'registerBlocks');

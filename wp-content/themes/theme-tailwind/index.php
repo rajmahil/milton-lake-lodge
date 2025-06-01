@@ -16,10 +16,9 @@ if ($menu) {
   <!-- React component mount point    <div id="render-react-example-here"></div> -->
 
   <!-- Posts Content -->
-  <div class="prose max-w-full">
+  <div class="max-w-full">
     <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
     <div class="">
-      <!-- <h3><a href="<?php the_permalink(); ?>" class="text-gray-900 font-semibold"><?php the_title(); ?></a></h3> -->
       <?php the_content(); ?>
     </div>
     <?php endwhile; endif; ?>

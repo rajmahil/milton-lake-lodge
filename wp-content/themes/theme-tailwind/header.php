@@ -25,7 +25,7 @@
   <div class="bg-blue-400">
 
     <!-- Menu Items Display -->
-    <div class="prose ">
+    <div class=" ">
       <?php if (!empty($menu_items)) : ?>
       <ul class="list-none flex flex-row gap-4">
         <?php foreach ($menu_items as $item) : ?>

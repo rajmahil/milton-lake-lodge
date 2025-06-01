@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
+import Hero from '../../components/hero';
 
 const divsToUpdate = document.querySelectorAll( '.tailwind-update-me' );
 
@@ -13,7 +14,7 @@ divsToUpdate.forEach( ( div ) => {
 function OurComponent( props ) {
 	return (
 		<div className="my-unique-plugin-wrapper-class">
-			<div className="h-screen bg-red-200">hellow123</div>
+			<Hero { ...props } />
 		</div>
 	);
 }
