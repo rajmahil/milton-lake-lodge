@@ -1,2 +1,24 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+
+
+@layer components {
+  /* First Block Components */
+.max-w-container {
+  @apply mx-auto w-full !max-w-[1500px];
+}
+
+.section-padding {
+  @apply py-[90px] sm:py-[110px] px-[8px] sm:px-[16px] md:px-[45px];
+}
+
+.section-padding-small {
+  @apply py-[45px] sm:py-[90px] px-[8px] sm:px-[16px] md:px-[45px];
+}
+
+.btn-primary {
+	@apply bg-purple-600 text-white font-semibold py-2 px-4 rounded cursor-pointer;
+}
+
+}

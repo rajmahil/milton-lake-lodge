@@ -22,10 +22,10 @@
   }
   ?>
 >
-  <div class="bg-blue-400">
+  <div class="fixed z-[100] w-full section-padding !py-4">
 
     <!-- Menu Items Display -->
-    <div class=" ">
+    <div class="max-w-container mx-auto ">
       <?php if (!empty($menu_items)) : ?>
       <ul class="list-none flex flex-row gap-4">
         <?php foreach ($menu_items as $item) : ?>

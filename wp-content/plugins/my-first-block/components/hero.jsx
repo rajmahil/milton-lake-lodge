@@ -4,7 +4,7 @@ const Hero = ( { heading, subheading, buttonText, buttonUrl, image } ) => {
 	console.log( image );
 
 	return (
-		<section className="h-screen flex items-end  overflow-hidden relative not-prose section-padding">
+		<section className="h-screen flex items-end  overflow-hidden relative not-prose section-padding w-full">
 			<div className="absolute top-0 left-0 w-full h-full z-[0] pointer-events-none select-none">
 				<img
 					src={
