@@ -64,38 +64,17 @@ define('MINIO_PUBLIC_URL', getenv('MINIO_PUBLIC_URL') ?: 'https://bucket-product
 // define('WP_REDIS_URL', getenv('REDIS_URL') ?: 'redis://default:LctkHNPFReQWgebFsfiuieehYcqZvtZl@crossover.proxy.rlwy.net:40516');
 
 // Parse REDIS_URL from Railway into the constants Redis Object Cache actually uses
-$redis_url = getenv('REDIS_URL');
+// adjust Redis host and port if necessary
+define('WP_REDIS_HOST', getenv('WP_REDIS_HOST'));
+define('WP_REDIS_PORT', getenv('WP_REDIS_PORT'));
 
-if ($redis_url) {
-    // Parse the URL into components
-    $parsed = parse_url($redis_url);
+// change the prefix and database for each site to avoid cache data collisions
+define('WP_REDIS_PREFIX', 'milton-lake');
+define('WP_REDIS_DATABASE', 0); // 0-15
 
-    // Set the required Redis constants
-    define('WP_REDIS_HOST', $parsed['host'] ?? 'localhost');
-    define('WP_REDIS_PORT', $parsed['port'] ?? 6379);
-
-    // Handle password (in URL format it's in the 'pass' component)
-    if (isset($parsed['pass']) && !empty($parsed['pass'])) {
-        define('WP_REDIS_PASSWORD', $parsed['pass']);
-    }
-
-    // Handle username for Redis 6+ ACL (if present)
-    if (isset($parsed['user']) && !empty($parsed['user'])) {
-        define('WP_REDIS_USERNAME', $parsed['user']);
-    }
-
-    // Handle database number (in the path, like /0)
-    if (isset($parsed['path']) && strlen($parsed['path']) > 1) {
-        define('WP_REDIS_DATABASE', intval(substr($parsed['path'], 1)));
-    }
-
-    // Set reasonable timeouts
-    define('WP_REDIS_TIMEOUT', 1);
-    define('WP_REDIS_READ_TIMEOUT', 1);
-
-    // Force Predis client (more reliable if PHP Redis extension isn't available)
-    define('WP_REDIS_CLIENT', 'predis');
-}
+// reasonable connection and read+write timeouts
+define('WP_REDIS_TIMEOUT', 1);
+define('WP_REDIS_READ_TIMEOUT', 1);
 /**#@-*/
 
 /**
