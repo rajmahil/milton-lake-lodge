@@ -2,6 +2,82 @@
 @plugin "@tailwindcss/typography";
 
 
+@theme {
+  --font-sans: "Rubik", "sans-serif"; 
+}
+
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../assets/fonts/Rubik-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 300;
+    src: url('../assets/fonts/Rubik-LightItalic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../assets/fonts/Rubik-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 400;
+    src: url('../assets/fonts/Rubik-Italic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../assets/fonts/Rubik-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 500;
+    src: url('../assets/fonts/Rubik-MediumItalic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../assets/fonts/Rubik-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 700;
+    src: url('../assets/fonts/Rubik-BoldItalic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 900;
+    src: url('../assets/fonts/Rubik-Black.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 900;
+    src: url('../assets/fonts/Rubik-BlackItalic.woff') format('woff');
+}
+
+
 
 @layer components {
   /* First Block Components */
