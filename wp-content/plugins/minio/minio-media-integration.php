@@ -17,20 +17,31 @@ require __DIR__ . '/vendor/autoload.php';
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 
-// 1️⃣ MinIO client - Updated to use environment variables directly
+// Helper function to get MinIO configuration (constants first, then env vars)
+function get_minio_config($key)
+{
+    // Try constant first (local dev), then environment variable (production)
+    $constant_name = strtoupper($key);
+    if (defined($constant_name)) {
+        return constant($constant_name);
+    }
+    return getenv($key);
+}
+
+// 1️⃣ MinIO client - Updated with fallback support
 function my_minio_client()
 {
     static $client;
 
     if (!$client) {
-        // Get values directly from environment variables
-        $minio_access_key = getenv('MINIO_ACCESS_KEY');
-        $minio_secret_key = getenv('MINIO_SECRET_KEY');
-        $minio_endpoint = getenv('MINIO_ENDPOINT');
+        // Try constants first (for local dev), then environment variables (for production)
+        $minio_access_key = get_minio_config('MINIO_ACCESS_KEY');
+        $minio_secret_key = get_minio_config('MINIO_SECRET_KEY');
+        $minio_endpoint = get_minio_config('MINIO_ENDPOINT');
 
         // Check if required values are available
         if (!$minio_access_key || !$minio_secret_key || !$minio_endpoint) {
-            error_log('MinIO Plugin Error: Required environment variables are missing.');
+            error_log('MinIO Plugin Error: Required MinIO configuration is missing.');
             return false;
         }
 
@@ -60,8 +71,8 @@ add_filter('wp_handle_upload', function ($upload) {
         return $upload;
     }
 
-    $minio_bucket = getenv('MINIO_BUCKET');
-    $minio_public_url = getenv('MINIO_PUBLIC_URL');
+    $minio_bucket = get_minio_config('MINIO_BUCKET');
+    $minio_public_url = get_minio_config('MINIO_PUBLIC_URL');
 
     if (!$minio_bucket || !$minio_public_url) {
         error_log('MinIO (wp_handle_upload): MINIO_BUCKET or MINIO_PUBLIC_URL not defined.');
@@ -105,7 +116,7 @@ add_filter('wp_handle_upload', function ($upload) {
 add_filter(
     'wp_generate_attachment_metadata',
     function ($metadata, $attachment_id) {
-        $minio_bucket = getenv('MINIO_BUCKET');
+        $minio_bucket = get_minio_config('MINIO_BUCKET');
         if (!$minio_bucket) {
             error_log('MinIO (wp_generate_attachment_metadata): MINIO_BUCKET not defined.');
             return $metadata;
@@ -174,7 +185,7 @@ add_filter(
 add_filter(
     'wp_get_attachment_url',
     function ($url, $attachment_id) {
-        $minio_public_url = getenv('MINIO_PUBLIC_URL');
+        $minio_public_url = get_minio_config('MINIO_PUBLIC_URL');
         if (!$minio_public_url) {
             return $url;
         }
@@ -194,7 +205,7 @@ add_filter(
 add_filter(
     'wp_get_attachment_image_src',
     function ($image, $attachment_id, $size, $icon) {
-        $minio_public_url = getenv('MINIO_PUBLIC_URL');
+        $minio_public_url = get_minio_config('MINIO_PUBLIC_URL');
         if (!$minio_public_url) {
             return $image;
         }
@@ -226,7 +237,7 @@ add_filter(
 add_filter(
     'wp_prepare_attachment_for_js',
     function ($response, $attachment, $meta) {
-        $minio_public_url = getenv('MINIO_PUBLIC_URL');
+        $minio_public_url = get_minio_config('MINIO_PUBLIC_URL');
         if (!$minio_public_url) {
             return $response;
         }
@@ -267,7 +278,7 @@ add_filter(
             return $saved;
         }
 
-        $minio_bucket = getenv('MINIO_BUCKET');
+        $minio_bucket = get_minio_config('MINIO_BUCKET');
         if (!$minio_bucket) {
             return $saved;
         }
@@ -320,7 +331,7 @@ add_action(
     function ($meta_id, $object_id, $meta_key, $_meta_value) {
         if ($meta_key === '_wp_attached_file') {
             $attachment_id = $object_id;
-            $minio_bucket = getenv('MINIO_BUCKET');
+            $minio_bucket = get_minio_config('MINIO_BUCKET');
 
             if (!$minio_bucket) {
                 return;
@@ -398,7 +409,7 @@ add_filter(
             return $content;
         }
 
-        $minio_public_url = getenv('MINIO_PUBLIC_URL');
+        $minio_public_url = get_minio_config('MINIO_PUBLIC_URL');
         if (!$minio_public_url) {
             return $content;
         }
@@ -420,7 +431,7 @@ add_filter(
 add_filter(
     'wp_get_attachment_image_attributes',
     function ($attr, $attachment, $size) {
-        $minio_public_url = getenv('MINIO_PUBLIC_URL');
+        $minio_public_url = get_minio_config('MINIO_PUBLIC_URL');
         if (!$minio_public_url) {
             return $attr;
         }
@@ -449,11 +460,15 @@ add_action('admin_init', function () {
 
         echo "=== MinIO URL Debug ===\n\n";
 
-        // Check environment variables directly
-        echo "Environment Variables:\n";
+        // Check both constants and environment variables
+        echo "Configuration Sources:\n";
+        echo 'MINIO_PUBLIC_URL (constant): ' . (defined('MINIO_PUBLIC_URL') ? MINIO_PUBLIC_URL : 'NOT DEFINED') . "\n";
         echo 'MINIO_PUBLIC_URL (env): ' . (getenv('MINIO_PUBLIC_URL') ?: 'NOT SET') . "\n";
+        echo 'MINIO_PUBLIC_URL (final): ' . (get_minio_config('MINIO_PUBLIC_URL') ?: 'NOT AVAILABLE') . "\n\n";
+
+        echo 'MINIO_BUCKET (constant): ' . (defined('MINIO_BUCKET') ? MINIO_BUCKET : 'NOT DEFINED') . "\n";
         echo 'MINIO_BUCKET (env): ' . (getenv('MINIO_BUCKET') ?: 'NOT SET') . "\n";
-        echo 'MINIO_ENDPOINT (env): ' . (getenv('MINIO_ENDPOINT') ?: 'NOT SET') . "\n\n";
+        echo 'MINIO_BUCKET (final): ' . (get_minio_config('MINIO_BUCKET') ?: 'NOT AVAILABLE') . "\n\n";
 
         // Test MinIO client
         echo "MinIO Client Test:\n";
@@ -483,7 +498,7 @@ add_action('admin_init', function () {
             $wp_url = wp_get_attachment_url($attachment->ID);
             echo 'wp_get_attachment_url result: ' . $wp_url . "\n";
 
-            $minio_public_url = getenv('MINIO_PUBLIC_URL');
+            $minio_public_url = get_minio_config('MINIO_PUBLIC_URL');
             if ($minio_public_url && $original_url) {
                 $expected_cdn_url = rtrim($minio_public_url, '/') . '/' . ltrim($original_url, '/');
                 echo 'Expected CDN URL: ' . $expected_cdn_url . "\n";
