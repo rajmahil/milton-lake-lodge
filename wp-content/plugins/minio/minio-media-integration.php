@@ -15,39 +15,37 @@ if (!defined('ABSPATH')) {
 require __DIR__ . '/vendor/autoload.php';
 
 use Aws\S3\S3Client;
-use Aws\Exception\AwsException; // Good to use for specific AWS SDK exceptions
+use Aws\Exception\AwsException;
 
-// 1️⃣ MinIO client
+// 1️⃣ MinIO client - Updated to use environment variables directly
 function my_minio_client()
 {
     static $client;
 
     if (!$client) {
-        $required_constants = ['MINIO_ACCESS_KEY', 'MINIO_SECRET_KEY', 'MINIO_ENDPOINT', 'MINIO_BUCKET', 'MINIO_PUBLIC_URL'];
-        foreach ($required_constants as $constant) {
-            if (!defined($constant)) {
-                error_log("MinIO Plugin Error: Constant {$constant} not defined in wp-config.php. This may cause issues.");
-            }
-        }
+        // Get values directly from environment variables
+        $minio_access_key = getenv('MINIO_ACCESS_KEY');
+        $minio_secret_key = getenv('MINIO_SECRET_KEY');
+        $minio_endpoint = getenv('MINIO_ENDPOINT');
 
-        if (!defined('MINIO_ACCESS_KEY') || !defined('MINIO_SECRET_KEY') || !defined('MINIO_ENDPOINT')) {
-            error_log('MinIO Plugin Error: Critical constants for S3Client initialization are missing (MINIO_ACCESS_KEY, MINIO_SECRET_KEY, or MINIO_ENDPOINT).');
+        // Check if required values are available
+        if (!$minio_access_key || !$minio_secret_key || !$minio_endpoint) {
+            error_log('MinIO Plugin Error: Required environment variables are missing.');
             return false;
         }
 
         try {
             $client = new S3Client([
                 'version' => 'latest',
-                'region' => 'us-east-1', // Or your MinIO region
-                'endpoint' => MINIO_ENDPOINT,
+                'region' => 'us-east-1',
+                'endpoint' => $minio_endpoint,
                 'use_path_style_endpoint' => true,
                 'credentials' => [
-                    'key' => MINIO_ACCESS_KEY,
-                    'secret' => MINIO_SECRET_KEY,
+                    'key' => $minio_access_key,
+                    'secret' => $minio_secret_key,
                 ],
             ]);
         } catch (Exception $e) {
-            // Catch generic exceptions during client init
             error_log('MinIO Plugin Error: Failed to create S3 client - ' . $e->getMessage());
             return false;
         }
@@ -57,17 +55,20 @@ function my_minio_client()
 }
 
 // 2️⃣ Upload hook — push file to MinIO
-// Replace your existing wp_handle_upload filter with this enhanced version
 add_filter('wp_handle_upload', function ($upload) {
     if (isset($upload['error']) && $upload['error']) {
         return $upload;
     }
-    if (!defined('MINIO_BUCKET') || !defined('MINIO_PUBLIC_URL')) {
+
+    $minio_bucket = getenv('MINIO_BUCKET');
+    $minio_public_url = getenv('MINIO_PUBLIC_URL');
+
+    if (!$minio_bucket || !$minio_public_url) {
         error_log('MinIO (wp_handle_upload): MINIO_BUCKET or MINIO_PUBLIC_URL not defined.');
         return $upload;
     }
 
-    $bucket = MINIO_BUCKET;
+    $bucket = $minio_bucket;
     $file_path = $upload['file'];
 
     $upload_dir_details = wp_upload_dir();
@@ -89,7 +90,7 @@ add_filter('wp_handle_upload', function ($upload) {
             'ACL' => 'public-read',
         ]);
 
-        $cdn_base = rtrim(MINIO_PUBLIC_URL, '/');
+        $cdn_base = rtrim($minio_public_url, '/');
         $minio_url = $cdn_base . '/' . $key;
         $upload['url'] = $minio_url;
 
@@ -104,11 +105,13 @@ add_filter('wp_handle_upload', function ($upload) {
 add_filter(
     'wp_generate_attachment_metadata',
     function ($metadata, $attachment_id) {
-        if (!defined('MINIO_BUCKET')) {
+        $minio_bucket = getenv('MINIO_BUCKET');
+        if (!$minio_bucket) {
             error_log('MinIO (wp_generate_attachment_metadata): MINIO_BUCKET not defined.');
             return $metadata;
         }
-        $bucket = MINIO_BUCKET;
+
+        $bucket = $minio_bucket;
         $s3 = my_minio_client();
         if (!$s3) {
             error_log("MinIO (wp_generate_attachment_metadata): S3 client not available for attachment ID {$attachment_id}.");
@@ -120,9 +123,8 @@ add_filter(
 
         // Main file
         if (isset($metadata['file'])) {
-            // $metadata['file'] is like '2025/05/image.jpg'
             $main_file_path = $base_dir . '/' . $metadata['file'];
-            $main_key = $metadata['file']; // This is already relative to uploads dir.
+            $main_key = $metadata['file'];
 
             if (file_exists($main_file_path)) {
                 try {
@@ -172,12 +174,14 @@ add_filter(
 add_filter(
     'wp_get_attachment_url',
     function ($url, $attachment_id) {
-        if (!defined('MINIO_PUBLIC_URL')) {
+        $minio_public_url = getenv('MINIO_PUBLIC_URL');
+        if (!$minio_public_url) {
             return $url;
         }
+
         $attached_file = get_post_meta($attachment_id, '_wp_attached_file', true);
         if ($attached_file) {
-            $cdn_base = rtrim(MINIO_PUBLIC_URL, '/');
+            $cdn_base = rtrim($minio_public_url, '/');
             return $cdn_base . '/' . ltrim($attached_file, '/');
         }
         return $url;
@@ -190,9 +194,11 @@ add_filter(
 add_filter(
     'wp_get_attachment_image_src',
     function ($image, $attachment_id, $size, $icon) {
-        if (!defined('MINIO_PUBLIC_URL')) {
+        $minio_public_url = getenv('MINIO_PUBLIC_URL');
+        if (!$minio_public_url) {
             return $image;
         }
+
         if (!$image || !is_array($image) || !isset($image[0])) {
             return $image;
         }
@@ -201,12 +207,12 @@ add_filter(
         $upload_dir_details = wp_upload_dir();
         $local_base_url = $upload_dir_details['baseurl'];
 
-        if (strpos($current_url, rtrim(MINIO_PUBLIC_URL, '/')) === 0) {
+        if (strpos($current_url, rtrim($minio_public_url, '/')) === 0) {
             return $image; // Already a CDN URL
         }
 
         if ($local_base_url && strpos($current_url, $local_base_url) === 0) {
-            $cdn_base = rtrim(MINIO_PUBLIC_URL, '/');
+            $cdn_base = rtrim($minio_public_url, '/');
             $relative_path = str_replace($local_base_url, '', $current_url);
             $image[0] = $cdn_base . ltrim($relative_path, '/');
         }
@@ -220,11 +226,12 @@ add_filter(
 add_filter(
     'wp_prepare_attachment_for_js',
     function ($response, $attachment, $meta) {
-        if (!defined('MINIO_PUBLIC_URL')) {
+        $minio_public_url = getenv('MINIO_PUBLIC_URL');
+        if (!$minio_public_url) {
             return $response;
         }
 
-        $cdn_base = rtrim(MINIO_PUBLIC_URL, '/');
+        $cdn_base = rtrim($minio_public_url, '/');
         $attached_file_path = get_post_meta($attachment->ID, '_wp_attached_file', true);
 
         if ($attached_file_path) {
@@ -255,11 +262,51 @@ add_filter(
 add_filter(
     'wp_save_image_editor_file',
     function ($saved, $filename, $image_editor, $mime_type) {
-        error_log('✅ wp_save_image_editor_file called:');
-        error_log('→ saved: ' . print_r($saved, true));
-        error_log("→ filename: $filename");
-        error_log("→ mime_type: $mime_type");
-        error_log('→ image_editor class: ' . get_class($image_editor));
+        // Only process if the WordPress save was successful
+        if (is_wp_error($saved)) {
+            return $saved;
+        }
+
+        $minio_bucket = getenv('MINIO_BUCKET');
+        if (!$minio_bucket) {
+            return $saved;
+        }
+
+        // Get MinIO client
+        $s3 = my_minio_client();
+        if (!$s3) {
+            return $saved;
+        }
+
+        // Get the file path
+        $file_path = is_array($saved) && isset($saved['path']) ? $saved['path'] : $filename;
+
+        if (!file_exists($file_path)) {
+            error_log("MinIO: Edited image file not found: {$file_path}");
+            return $saved;
+        }
+
+        // Calculate the MinIO key
+        $upload_dir = wp_upload_dir();
+        $base_dir = $upload_dir['basedir'];
+
+        if (strpos($file_path, $base_dir) === 0) {
+            $relative_path = ltrim(str_replace($base_dir, '', $file_path), '/');
+
+            try {
+                // Upload to MinIO
+                $s3->putObject([
+                    'Bucket' => $minio_bucket,
+                    'Key' => $relative_path,
+                    'SourceFile' => $file_path,
+                    'ACL' => 'public-read',
+                ]);
+
+                error_log("MinIO: Uploaded edited image - {$relative_path}");
+            } catch (Exception $e) {
+                error_log('MinIO Upload Error (edited image): ' . $e->getMessage());
+            }
+        }
 
         return $saved;
     },
@@ -267,11 +314,17 @@ add_filter(
     4,
 );
 
+// Updated post meta action
 add_action(
     'updated_post_meta',
     function ($meta_id, $object_id, $meta_key, $_meta_value) {
         if ($meta_key === '_wp_attached_file') {
             $attachment_id = $object_id;
+            $minio_bucket = getenv('MINIO_BUCKET');
+
+            if (!$minio_bucket) {
+                return;
+            }
 
             error_log('✅ _wp_attached_file updated — regenerating attachment metadata...');
 
@@ -280,13 +333,10 @@ add_action(
 
             if ($metadata) {
                 update_post_meta($attachment_id, '_wp_attachment_metadata', $metadata);
-
                 error_log('✅ New attachment metadata generated.');
 
                 // Now upload main file + thumbnails to MinIO:
-                $bucket = MINIO_BUCKET;
                 $s3 = my_minio_client();
-
                 $upload_dir = wp_upload_dir();
                 $base_dir = $upload_dir['basedir'];
 
@@ -298,7 +348,7 @@ add_action(
 
                     if (file_exists($main_file_path)) {
                         $s3->putObject([
-                            'Bucket' => $bucket,
+                            'Bucket' => $minio_bucket,
                             'Key' => $key,
                             'SourceFile' => $main_file_path,
                             'ACL' => 'public-read',
@@ -319,7 +369,7 @@ add_action(
 
                         if (file_exists($thumb_file_path)) {
                             $s3->putObject([
-                                'Bucket' => $bucket,
+                                'Bucket' => $minio_bucket,
                                 'Key' => $thumb_key,
                                 'SourceFile' => $thumb_file_path,
                                 'ACL' => 'public-read',
@@ -340,7 +390,7 @@ add_action(
     4,
 );
 
-// 8️⃣ Filter content on the frontend (with frontend/admin distinction and late priority)
+// 8️⃣ Filter content on the frontend
 add_filter(
     'the_content',
     function ($content) {
@@ -348,54 +398,37 @@ add_filter(
             return $content;
         }
 
-        if (!defined('MINIO_PUBLIC_URL')) {
-            error_log('MinIO (the_content filter - FRONTEND): MINIO_PUBLIC_URL not defined. Exiting.');
+        $minio_public_url = getenv('MINIO_PUBLIC_URL');
+        if (!$minio_public_url) {
             return $content;
         }
 
         $upload_dir_details = wp_upload_dir();
         $local_base_url = $upload_dir_details['baseurl'];
-        $cdn_base_url = rtrim(MINIO_PUBLIC_URL, '/');
+        $cdn_base_url = rtrim($minio_public_url, '/');
 
         if ($local_base_url && $cdn_base_url && $local_base_url !== $cdn_base_url) {
-            $content_before_replace = $content;
             $content = str_replace($local_base_url, $cdn_base_url, $content);
-
-            if ($content !== $content_before_replace) {
-                // error_log('MinIO (the_content filter - FRONTEND): URLs WERE REPLACED. Content changed.'); // Optional: for debugging
-            } else {
-                // error_log("MinIO (the_content filter - FRONTEND): URLs were NOT replaced. str_replace found no matches for '{$local_base_url}'."); // Optional
-            }
-        } else {
-            // error_log("MinIO (the_content filter - FRONTEND): Conditions for replacement not met or URLs are the same. Local: '{$local_base_url}', CDN: '{$cdn_base_url}'."); // Optional
         }
+
         return $content;
     },
     99999,
-); // Late priority
-
-// 9️⃣ Admin notice for configuration check
-add_action('plugins_loaded', function () {
-    if (!defined('MINIO_ACCESS_KEY') || !defined('MINIO_SECRET_KEY') || !defined('MINIO_ENDPOINT') || !defined('MINIO_BUCKET') || !defined('MINIO_PUBLIC_URL')) {
-        error_log('MinIO Media Integration: Missing required constants in wp-config.php: MINIO_ACCESS_KEY, MINIO_SECRET_KEY, MINIO_ENDPOINT, MINIO_BUCKET, MINIO_PUBLIC_URL');
-        return;
-    }
-
-    // Now safe to initialize your MinIO client, hooks, etc.
-});
+);
 
 // Add this to ensure admin/media library shows CDN URLs
 add_filter(
     'wp_get_attachment_image_attributes',
     function ($attr, $attachment, $size) {
-        if (!defined('MINIO_PUBLIC_URL')) {
+        $minio_public_url = getenv('MINIO_PUBLIC_URL');
+        if (!$minio_public_url) {
             return $attr;
         }
 
         if (isset($attr['src'])) {
             $upload_dir = wp_upload_dir();
             $local_base_url = $upload_dir['baseurl'];
-            $cdn_base = rtrim(MINIO_PUBLIC_URL, '/');
+            $cdn_base = rtrim($minio_public_url, '/');
 
             if (strpos($attr['src'], $local_base_url) === 0) {
                 $relative_path = str_replace($local_base_url, '', $attr['src']);
@@ -409,8 +442,7 @@ add_filter(
     3,
 );
 
-// Add this debugging function to your plugin
-// Replace your existing debug function with this enhanced version
+// Enhanced debug function
 add_action('admin_init', function () {
     if (isset($_GET['debug_minio_urls']) && current_user_can('manage_options')) {
         header('Content-Type: text/plain');
@@ -422,14 +454,6 @@ add_action('admin_init', function () {
         echo 'MINIO_PUBLIC_URL (env): ' . (getenv('MINIO_PUBLIC_URL') ?: 'NOT SET') . "\n";
         echo 'MINIO_BUCKET (env): ' . (getenv('MINIO_BUCKET') ?: 'NOT SET') . "\n";
         echo 'MINIO_ENDPOINT (env): ' . (getenv('MINIO_ENDPOINT') ?: 'NOT SET') . "\n\n";
-
-        // Check constants
-        echo "PHP Constants:\n";
-        echo 'MINIO_PUBLIC_URL: ' . (defined('MINIO_PUBLIC_URL') ? MINIO_PUBLIC_URL : 'NOT DEFINED') . "\n";
-        echo 'MINIO_BUCKET: ' . (defined('MINIO_BUCKET') ? MINIO_BUCKET : 'NOT DEFINED') . "\n";
-        echo 'MINIO_ENDPOINT: ' . (defined('MINIO_ENDPOINT') ? MINIO_ENDPOINT : 'NOT DEFINED') . "\n";
-        echo 'MINIO_ACCESS_KEY: ' . (defined('MINIO_ACCESS_KEY') ? 'DEFINED (hidden)' : 'NOT DEFINED') . "\n";
-        echo 'MINIO_SECRET_KEY: ' . (defined('MINIO_SECRET_KEY') ? 'DEFINED (hidden)' : 'NOT DEFINED') . "\n\n";
 
         // Test MinIO client
         echo "MinIO Client Test:\n";
@@ -453,15 +477,15 @@ add_action('admin_init', function () {
             $attachment = $attachments[0];
             echo 'Testing with attachment ID: ' . $attachment->ID . "\n";
 
-            // Test the URL filter directly
             $original_url = get_post_meta($attachment->ID, '_wp_attached_file', true);
             echo 'Attached file meta: ' . $original_url . "\n";
 
             $wp_url = wp_get_attachment_url($attachment->ID);
             echo 'wp_get_attachment_url result: ' . $wp_url . "\n";
 
-            if (defined('MINIO_PUBLIC_URL') && $original_url) {
-                $expected_cdn_url = rtrim(MINIO_PUBLIC_URL, '/') . '/' . ltrim($original_url, '/');
+            $minio_public_url = getenv('MINIO_PUBLIC_URL');
+            if ($minio_public_url && $original_url) {
+                $expected_cdn_url = rtrim($minio_public_url, '/') . '/' . ltrim($original_url, '/');
                 echo 'Expected CDN URL: ' . $expected_cdn_url . "\n";
                 echo 'URLs match: ' . ($wp_url === $expected_cdn_url ? 'YES' : 'NO') . "\n";
             }
