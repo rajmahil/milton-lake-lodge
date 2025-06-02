@@ -26,52 +26,134 @@
   
   ?>
 >
-  <div class="fixed z-[100] w-full section-padding !py-1 bg-black/20 backdrop-blur-md">
+  <div class="fixed z-[100] w-full section-padding !py-1 ">
     <!-- Header Container -->
     <div class="max-w-container mx-auto flex items-center justify-between">
 
-      <!-- Site Logo -->
-      <div class="site-logo">
-        <?php if ( has_custom_logo() ) : ?>
-        <?php
-        $custom_logo_id = get_theme_mod('custom_logo');
-        $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
-        ?>
-        <a href="<?php echo esc_url(home_url('/')); ?>">
-          <img
-            src="<?php echo esc_url($logo[0]); ?>"
-            alt="<?php bloginfo('name'); ?> Logo"
-            class="h-16 w-auto"
+
+      <div class="flex flex-row items-center gap-12">
+        <!-- Site Logo -->
+        <div class="site-logo">
+          <?php if ( has_custom_logo() ) : ?>
+          <?php
+          $custom_logo_id = get_theme_mod('custom_logo');
+          $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
+          ?>
+          <a href="<?php echo esc_url(home_url('/')); ?>">
+            <img
+              src="<?php echo esc_url($logo[0]); ?>"
+              alt="<?php bloginfo('name'); ?> Logo"
+              class="h-16 w-auto"
+            >
+          </a>
+          <?php else : ?>
+          <a
+            href="<?php echo esc_url(home_url('/')); ?>"
+            class="text-white text-xl font-bold"
           >
-        </a>
-        <?php else : ?>
-        <a
-          href="<?php echo esc_url(home_url('/')); ?>"
-          class="text-white text-xl font-bold"
+            <?php bloginfo('name'); ?>
+          </a>
+          <?php endif; ?>
+        </div>
+        <!-- Menu Items Display -->
+        <?php if (!empty($menu_items)) : ?>
+        <nav
+          x-data="{ openDropdown: null }"
+          class="relative"
         >
-          <?php bloginfo('name'); ?>
-        </a>
+          <ul class="list-none flex flex-row gap-4">
+            <?php
+            // Group menu items by parent
+            $menu_tree = [];
+            $parent_items = [];
+            
+            foreach ($menu_items as $item) {
+                if ($item->menu_item_parent == 0) {
+                    $parent_items[] = $item;
+                    $menu_tree[$item->ID] = [
+                        'item' => $item,
+                        'children' => [],
+                    ];
+                } else {
+                    if (isset($menu_tree[$item->menu_item_parent])) {
+                        $menu_tree[$item->menu_item_parent]['children'][] = $item;
+                    }
+                }
+            }
+            ?>
+
+            <?php foreach ($parent_items as $index => $parent_item) : ?>
+            <?php $has_children = !empty($menu_tree[$parent_item->ID]['children']); ?>
+            <li
+              class="relative"
+              <?php if ($has_children) : ?>
+              x-data="{ open: false }"
+              @mouseenter="open = true; openDropdown = <?php echo $index; ?>"
+              @mouseleave="open = false; openDropdown = null"
+              @click.away="open = false; openDropdown = null"
+              <?php endif; ?>
+            >
+              <a
+                href="<?php echo esc_url($parent_item->url); ?>"
+                class="text-white text-lg flex items-center gap-1 hover:text-gray-200 transition-colors duration-200 py-2 px-3 rounded-md hover:bg-white/10"
+                <?php if ($has_children) : ?>
+                @click.prevent="open = !open; openDropdown = open ? <?php echo $index; ?> : null"
+                :class="{ 'bg-white/10': open }"
+                <?php endif; ?>
+              >
+                <?php echo esc_html($parent_item->title); ?>
+                <?php if ($has_children) : ?>
+                <svg
+                  class="w-4 h-4 transition-transform duration-200"
+                  :class="{ 'rotate-180': open }"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+                <?php endif; ?>
+              </a>
+
+              <?php if ($has_children) : ?>
+              <div
+                x-show="open"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95 translate-y-1"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="opacity-0 scale-95 translate-y-1"
+                class="absolute top-full left-0 mt-1 bg-white shadow-xl rounded-lg py-2 min-w-48 z-50 border border-gray-100"
+                style="display: none;"
+              >
+                <ul class="space-y-1">
+                  <?php foreach ($menu_tree[$parent_item->ID]['children'] as $child_item) : ?>
+                  <li>
+                    <a
+                      href="<?php echo esc_url($child_item->url); ?>"
+                      class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors duration-150 text-sm font-medium"
+                    >
+                      <?php echo esc_html($child_item->title); ?>
+                    </a>
+                  </li>
+                  <?php endforeach; ?>
+                </ul>
+              </div>
+              <?php endif; ?>
+            </li>
+            <?php endforeach; ?>
+          </ul>
+        </nav>
+        <?php else : ?>
+        <p class="text-white">No menu items found.</p>
         <?php endif; ?>
       </div>
-
-      <!-- Menu Items Display -->
-      <?php if (!empty($menu_items)) : ?>
-      <ul class="list-none flex flex-row gap-4">
-        <?php foreach ($menu_items as $item) : ?>
-        <li>
-          <a
-            href="<?php echo esc_url($item->url); ?>"
-            class="text-white text-lg"
-          >
-            <?php echo esc_html($item->title); ?>
-          </a>
-        </li>
-        <?php endforeach; ?>
-      </ul>
-      <?php else : ?>
-      <p class="text-white">No menu items found.</p>
-      <?php endif; ?>
-
       <!-- Main CTA -->
       <div>
         <a href="<?php echo esc_url($cta_url); ?>">

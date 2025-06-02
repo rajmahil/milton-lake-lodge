@@ -1,5 +1,5 @@
 @layer theme, base, components, utilities;
-
+@import "tailwindcss";
 @import "tailwindcss/theme.css" layer(theme);
 
 /* Global wrapper class for all your blocks */
@@ -8,12 +8,105 @@
   @import "tailwindcss/utilities.css" layer(utilities);
 }
 
-/* Shared components across all blocks */
+
+
+
+@theme {
+  --font-sans: "Rubik", "sans-serif";
+
+  --color-brand-dark-blue: #112A37;
+  --color-brand-blue: #173C4F;
+  --color-brand-yellow: #FED06E;
+  --color-brand-yellow-dark: #EDBB4F;
+  --color-brand-grey: #F2EDDF;
+  --color-brand-light-grey: #FBF8F0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: theme(--font-sans);
+}
+
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../assets/fonts/Rubik-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 300;
+    src: url('../assets/fonts/Rubik-LightItalic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../assets/fonts/Rubik-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 400;
+    src: url('../assets/fonts/Rubik-Italic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../assets/fonts/Rubik-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 500;
+    src: url('../assets/fonts/Rubik-MediumItalic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../assets/fonts/Rubik-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 700;
+    src: url('../assets/fonts/Rubik-BoldItalic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 900;
+    src: url('../assets/fonts/Rubik-Black.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 900;
+    src: url('../assets/fonts/Rubik-BlackItalic.woff') format('woff');
+}
+
+
+
+
+
+
 @layer components {
   /* First Block Components */
-  .max-w-container {
-    @apply mx-auto w-full max-w-[1500px]
-  }
+.max-w-container {
+  @apply mx-auto w-full !max-w-[1500px];
+}
 
 .section-padding {
   @apply py-[90px] sm:py-[110px] px-[8px] sm:px-[16px] md:px-[45px];
@@ -23,8 +116,37 @@
   @apply py-[45px] sm:py-[90px] px-[8px] sm:px-[16px] md:px-[45px];
 }
 
-.btn-primary {
-	@apply bg-purple-600 text-white font-semibold py-2 px-4 rounded cursor-pointer;
+ .btn {
+    @apply  font-normal inline-flex items-center justify-center rounded-full cursor-pointer transition-all duration-300 ease-in-out;
+  }
+  /* Variants */
+  .btn-primary {
+    @apply bg-brand-yellow text-brand-dark-blue  hover:bg-brand-yellow-dark focus-visible:ring-2 focus-visible:ring-brand-yellow-dark focus-visible:outline-none;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-900 hover:bg-gray-300 focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:outline-none;
+  }
+
+  .btn-outline {
+    @apply border border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none;
+  }
+
+  /* Sizes */
+  .btn-lg {
+    @apply text-base py-2 px-6 h-12;
+  }
+
+  .btn-md {
+    @apply text-base py-2 px-5 h-10;
+  }
+
+  .btn-sm {
+    @apply text-sm py-2 px-3 h-10;
+  }
+
+.footer-social-btn {
+  @apply h-10 w-10 bg-brand-yellow flex items-center justify-center rounded-full p-2 text-brand-dark-blue
 }
 
 }

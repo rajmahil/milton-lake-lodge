@@ -4,6 +4,13 @@ function boilerplate_load_assets()
 {
     wp_enqueue_script('ourmainjs', get_theme_file_uri('/build/index.js'), ['wp-element', 'react-jsx-runtime'], '1.0', true);
     wp_enqueue_style('ourmaincss', get_theme_file_uri('/build/index.css'));
+    wp_enqueue_script(
+        'alpinejs',
+        'https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js',
+        [], // dependencies (none)
+        null, // version (or use '3.x.x' if you want)
+        true, // load in footer (true) or head (false)
+    );
 }
 
 add_action('wp_enqueue_scripts', 'boilerplate_load_assets');

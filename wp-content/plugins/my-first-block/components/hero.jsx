@@ -37,7 +37,7 @@ const Hero = ( { heading, subheading, buttonText, buttonUrl, image } ) => {
 					</p>
 				</div>
 				<a href="#">
-					<button className="btn-primary">
+					<button className="btn btn-primary btn-lg">
 						{ buttonText || 'Learn More' }
 					</button>
 				</a>
