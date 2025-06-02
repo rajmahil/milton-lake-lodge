@@ -137,7 +137,7 @@
             >
               <a
                 href="<?php echo esc_url($parent_item->url); ?>"
-                class="text-white text-lg flex items-center gap-1 hover:text-gray-200 transition-all duration-200 py-2 px-3 rounded-md hover:bg-white/10"
+                class="text-white text-base flex items-center gap-1 hover:text-gray-200 transition-all duration-200 py-2 px-3 rounded-md hover:bg-white/10"
                 <?php if ($has_children) : ?>
                 @click.prevent="open = !open; openDropdown = open ? <?php echo $index; ?> : null"
                 :class="{ 'bg-white/10': open }"

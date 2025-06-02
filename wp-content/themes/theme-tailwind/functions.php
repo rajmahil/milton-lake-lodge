@@ -15,6 +15,16 @@ function boilerplate_load_assets()
 
 add_action('wp_enqueue_scripts', 'boilerplate_load_assets');
 
+function boilerplate_theme_setup()
+{
+    add_theme_support('menus');
+
+    register_nav_menus([
+        'main_menu' => __('Main Menu', 'boilerplate_theme'),
+    ]);
+}
+add_action('after_setup_theme', 'boilerplate_theme_setup');
+
 function boilerplate_add_support()
 {
     add_theme_support('title-tag');
