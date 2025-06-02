@@ -25,12 +25,50 @@
   $cta_url = get_theme_mod('boilerplate_cta_url', '#');
   
   ?>
+  x-data="{
+      scrollY: 0,
+      lastScrollY: 0,
+      showNavbar: true,
+      isScrolled: false,
+      bgFill: false,
+      init() {
+          this.scrollY = window.scrollY;
+          this.lastScrollY = window.scrollY;
+  
+          window.addEventListener('scroll', () => {
+              this.scrollY = window.scrollY;
+              this.isScrolled = this.scrollY > 50;
+  
+              // Show navbar when scrolling up, hide when scrolling down
+              if (this.scrollY > this.lastScrollY && this.scrollY > 100) {
+                  // Scrolling down & past 100px
+                  this.showNavbar = false;
+              } else if (this.scrollY < this.lastScrollY) {
+                  // Scrolling up
+                  this.showNavbar = true;
+              }
+  
+              // Always show navbar when at top
+              if (this.scrollY <= 50) {
+                  this.showNavbar = true;
+              }
+  
+              this.lastScrollY = this.scrollY;
+          });
+      }
+  }"
 >
-  <div class="fixed z-[100] w-full section-padding !py-1 ">
+  <div
+    class="fixed z-[100] w-full section-padding !py-1 transition-all duration-300 ease-in-out border-b border-white/20"
+    :class="{
+        'transform -translate-y-full': !showNavbar,
+        'transform translate-y-0': showNavbar,
+        'bg-brand-dark-blue backdrop-blur-md shadow-lg': isScrolled,
+        'bg-transparent': !isScrolled,
+    }"
+  >
     <!-- Header Container -->
     <div class="max-w-container mx-auto flex items-center justify-between">
-
-
       <div class="flex flex-row items-center gap-12">
         <!-- Site Logo -->
         <div class="site-logo">
@@ -43,7 +81,11 @@
             <img
               src="<?php echo esc_url($logo[0]); ?>"
               alt="<?php bloginfo('name'); ?> Logo"
-              class="h-16 w-auto"
+              class=" w-auto transition-all duration-300"
+              :class="{
+                  'h-14': isScrolled,
+                  'h-16': !isScrolled
+              }"
             >
           </a>
           <?php else : ?>
@@ -55,15 +97,15 @@
           </a>
           <?php endif; ?>
         </div>
+
         <!-- Menu Items Display -->
         <?php if (!empty($menu_items)) : ?>
         <nav
           x-data="{ openDropdown: null }"
           class="relative"
         >
-          <ul class="list-none flex flex-row gap-4">
+          <ul class="list-none flex flex-row gap-2">
             <?php
-            // Group menu items by parent
             $menu_tree = [];
             $parent_items = [];
             
@@ -88,14 +130,14 @@
               class="relative"
               <?php if ($has_children) : ?>
               x-data="{ open: false }"
-              @mouseenter="open = true; openDropdown = <?php echo $index; ?>"
-              @mouseleave="open = false; openDropdown = null"
+              @mouseenter="open = true; bgFill = true; openDropdown = <?php echo $index; ?>"
+              @mouseleave="open = false; bgFill = false; openDropdown = null"
               @click.away="open = false; openDropdown = null"
               <?php endif; ?>
             >
               <a
                 href="<?php echo esc_url($parent_item->url); ?>"
-                class="text-white text-lg flex items-center gap-1 hover:text-gray-200 transition-colors duration-200 py-2 px-3 rounded-md hover:bg-white/10"
+                class="text-white text-lg flex items-center gap-1 hover:text-gray-200 transition-all duration-200 py-2 px-3 rounded-md hover:bg-white/10"
                 <?php if ($has_children) : ?>
                 @click.prevent="open = !open; openDropdown = open ? <?php echo $index; ?> : null"
                 :class="{ 'bg-white/10': open }"
@@ -154,16 +196,22 @@
         <p class="text-white">No menu items found.</p>
         <?php endif; ?>
       </div>
+
       <!-- Main CTA -->
       <div>
         <a href="<?php echo esc_url($cta_url); ?>">
-          <button class="btn btn-primary btn-lg">
+          <button
+            class="btn btn-primary transition-all duration-300"
+            :class="{ 'btn-md': isScrolled, 'btn-lg': !isScrolled }"
+          >
             <?php echo esc_html($cta_text); ?>
           </button>
         </a>
       </div>
     </div>
   </div>
+
+
   <?php wp_footer(); ?>
 </body>
 
