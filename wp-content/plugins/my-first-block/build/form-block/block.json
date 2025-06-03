@@ -8,13 +8,48 @@
   "icon": "smiley",
   "example": {},
   "attributes": {
+    "topHeading": {
+      "type": "string",
+      "default": "Get in Touch"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Contact Us"
+    },
     "formTitle": {
       "type": "string",
       "default": "Contact Us"
     },
     "fields": {
       "type": "array",
-      "default": []
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "fullWidth": {
+            "type": "boolean"
+          },
+          "options": {
+            "type": "array",
+            "default": [],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
     },
     "submitButtonText": {
       "type": "string",

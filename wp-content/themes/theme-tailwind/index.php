@@ -10,11 +10,7 @@ if ($menu) {
 }
 ?>
 
-<div class="p-0">
-
-
-  <!-- React component mount point    <div id="render-react-example-here"></div> -->
-
+<div class="p-0 static-background bg-brand-light-grey">
   <!-- Posts Content -->
   <div class="max-w-full">
     <?php if (have_posts()) : while (have_posts()) : the_post(); ?>

@@ -73,10 +73,9 @@ if ($image) {
     <div class="relative z-[2] max-w-container flex flex-row items-center justify-between">
       <!-- Text Content -->
       <div class="flex flex-col gap-4 max-w-[650px] w-full">
-        <p class="decorative-text text-brand-yellow text-5xl">
+        <p class="decorative-text text-brand-yellow !text-5xl">
           Top Fishing Adventures
         </p>
-
         <h1 class="!my-0 !text-6xl !font-[600] !text-white text-left">
           <?php echo esc_html($heading); ?>
         </h1>

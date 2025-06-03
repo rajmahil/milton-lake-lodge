@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/client';
+import FormBlock from '../../components/form-block';
 
 const divsToUpdate = document.querySelectorAll( '.tailwind-update-form-block' );
 
@@ -12,7 +13,7 @@ divsToUpdate.forEach( ( div ) => {
 function FormComponent( props ) {
 	return (
 		<div className="my-unique-plugin-wrapper-class">
-			<div class="h-screen bg-red-200 w-full"></div>
+			<FormBlock { ...props } />
 		</div>
 	);
 }

@@ -1,5 +1,3 @@
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-
 const Hero = ( { heading, subheading, buttonText, buttonUrl, image } ) => {
 	console.log( image );
 
@@ -29,7 +27,7 @@ const Hero = ( { heading, subheading, buttonText, buttonUrl, image } ) => {
 			<div className="absolute bottom-0 left-0 w-full h-full bg-linear-to-t  from-brand-dark-blue to-black/0"></div>
 			<div className="relative z-[2] max-w-container flex flex-row items-center justify-between ">
 				<div className="flex flex-col gap-4 max-w-[650px] w-full">
-					<p className="decorative-text text-brand-yellow text-5xl">
+					<p className="decorative-text text-brand-yellow !text-5xl !my-0">
 						Top Fishing Adventures
 					</p>
 					<h1 className="!my-0 !text-6xl !font-[600] !text-white text-left ">

@@ -1,4 +1,3 @@
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
@@ -13,7 +12,6 @@ import {
 	Button,
 	TextareaControl,
 } from '@wordpress/components';
-import '../style.css';
 import Hero from '../../components/hero';
 
 export default function Edit( { attributes, setAttributes } ) {
