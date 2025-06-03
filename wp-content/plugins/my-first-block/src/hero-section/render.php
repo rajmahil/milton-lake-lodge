@@ -4,9 +4,6 @@
  * Optimized for performance, SEO, and accessibility
  */
 
-// Enqueue block styles
-// wp_enqueue_style('hero-section-styles', plugin_dir_url(__FILE__) . '../styles.css', [], filemtime(plugin_dir_path(__FILE__) . '../styles.css'));
-
 // Extract attributes with safe defaults
 $heading = $attributes['heading'] ?? 'Your Adventure Awaits';
 $subheading = $attributes['subheading'] ?? 'Discover amazing fishing experiences';
@@ -65,7 +62,7 @@ if ($image) {
       <?php endif; ?>
       <?php else: ?>
       <!-- Placeholder background when no image -->
-      <div class="w-full h-full bg-gradient-to-br from-blue-900 to-blue-600"></div>
+      <div class="w-full h-full bg-gradient-to-br from-brand-dark-blue to-brand-dark-blue/80"></div>
       <?php endif; ?>
     </div>
 
