@@ -5,7 +5,7 @@
  */
 
 // Enqueue block styles
-wp_enqueue_style('hero-section-styles', plugin_dir_url(__FILE__) . '../styles.css', [], filemtime(plugin_dir_path(__FILE__) . '../styles.css'));
+// wp_enqueue_style('hero-section-styles', plugin_dir_url(__FILE__) . '../styles.css', [], filemtime(plugin_dir_path(__FILE__) . '../styles.css'));
 
 // Extract attributes with safe defaults
 $heading = $attributes['heading'] ?? 'Your Adventure Awaits';
