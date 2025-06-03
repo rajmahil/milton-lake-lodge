@@ -1,0 +1,61 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "brad-boilerplate/hero-section",
+  "version": "0.1.0",
+  "title": "Hero Section",
+  "category": "widgets",
+  "icon": "smiley",
+  "description": "Example block scaffolded with Create Block tool.",
+  "example": {},
+  "attributes": {
+    "topHeading": {
+      "type": "string",
+      "selector": "p"
+    },
+    "heading": {
+      "type": "string",
+      "selector": "h1"
+    },
+    "subheading": {
+      "type": "string",
+      "selector": "p"
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Learn More"
+    },
+    "buttonUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "button2Text": {
+      "type": "string",
+      "default": "Learn More"
+    },
+    "button2Url": {
+      "type": "string",
+      "default": "#"
+    },
+    "image": {
+      "type": "object",
+      "default": {}
+    }
+  },
+  "supports": {
+    "html": false,
+    "color": {
+      "background": true,
+      "text": true
+    }
+  },
+  "textdomain": "hero-section-block",
+  "editorScript": "file:./index.js",
+  "editorStyle": [
+    "file:../style-index.css"
+  ],
+  "style": [
+    "file:../style-index.css"
+  ],
+  "render": "file:./render.php"
+}

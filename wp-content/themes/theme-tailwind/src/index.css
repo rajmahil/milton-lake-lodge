@@ -1,0 +1,167 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+
+@theme {
+  --font-sans: "Rubik", "sans-serif"; 
+  --font-decorative: "Caveat", "cursive";
+
+  --color-brand-dark-blue: #112A37;
+  --color-brand-blue: #173C4F;
+  --color-brand-yellow: #FED06E;
+  --color-brand-yellow-dark: #EDBB4F;
+  --color-brand-grey: #F2EDDF;
+  --color-brand-light-grey: #FBF8F0;
+}
+
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../assets/fonts/Rubik-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 300;
+    src: url('../assets/fonts/Rubik-LightItalic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../assets/fonts/Rubik-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 400;
+    src: url('../assets/fonts/Rubik-Italic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../assets/fonts/Rubik-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 500;
+    src: url('../assets/fonts/Rubik-MediumItalic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../assets/fonts/Rubik-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 700;
+    src: url('../assets/fonts/Rubik-BoldItalic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 900;
+    src: url('../assets/fonts/Rubik-Black.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Rubik';
+    font-style: italic;
+    font-weight: 900;
+    src: url('../assets/fonts/Rubik-BlackItalic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Caveat';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../assets/fonts/Caveat-Regular.woff2') format('woff');
+}
+
+@font-face {
+    font-family: 'Caveat';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../assets/fonts/Caveat-Bold.woff2') format('woff');
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: theme(--font-sans);
+}
+
+
+@layer components {
+  /* First Block Components */
+.max-w-container {
+  @apply mx-auto w-full !max-w-[1500px];
+}
+
+.section-padding {
+  @apply py-[90px] sm:py-[110px] px-[8px] sm:px-[16px] md:px-[45px];
+}
+
+.section-padding-small {
+  @apply py-[45px] sm:py-[90px] px-[8px] sm:px-[16px] md:px-[45px];
+}
+
+
+.decorative-text {
+  @apply font-decorative tracking-[-0.3px] font-bold
+} 
+
+
+
+ .btn {
+    @apply  font-normal inline-flex items-center justify-center rounded-full cursor-pointer transition-all duration-300 ease-in-out;
+  }
+  /* Variants */
+  .btn-primary {
+    @apply bg-brand-yellow text-brand-dark-blue  hover:bg-brand-yellow-dark focus-visible:ring-2 focus-visible:ring-brand-yellow-dark focus-visible:outline-none;
+  }
+ 
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-900 hover:bg-gray-300 focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:outline-none;
+  }
+
+  .btn-outline {
+    @apply border border-white text-white hover:bg-white hover:text-brand-dark-blue focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none;
+  }
+
+  /* Sizes */
+  .btn-xl {
+    @apply text-lg py-3 px-8 h-14;
+  }
+  
+  .btn-lg {
+    @apply text-base py-2 px-6 h-12;
+  }
+
+  .btn-md {
+    @apply text-base py-2 px-5 h-10;
+  }
+
+  .btn-sm {
+    @apply text-sm py-2 px-3 h-10;
+  }
+
+.footer-social-btn {
+  @apply h-10 w-10 bg-brand-yellow flex items-center justify-center rounded-full p-2 text-brand-dark-blue
+}
+
+}
