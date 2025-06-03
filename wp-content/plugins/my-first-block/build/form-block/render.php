@@ -24,16 +24,17 @@ $fields = $attributes['fields'] ?? [];
       <form class="grid grid-cols-2 gap-4">
         <?php foreach ( $fields as $index => $field ) : ?>
         <?php
+         error_log( 'Current field: ' . print_r( $field, true ) );
         switch ( $field['type'] ) {
             case 'text':
             case 'email':
             case 'tel':
                 ?>
         <input
-          type="<?php echo esc_attr($type ?? 'text'); ?>"
-          name="<?php echo esc_attr($name ?? ''); ?>"
-          value="<?php echo esc_attr($value ?? ''); ?>"
-          placeholder="<?php echo esc_attr($placeholder ?? ''); ?>"
+          type="<?php echo esc_attr($field['type'] ?? 'text'); ?>"
+          name="<?php echo esc_attr($field['name'] ?? ''); ?>"
+          value="<?php echo esc_attr($field['value'] ?? ''); ?>"
+          placeholder="<?php echo esc_attr($field['placeholder'] ?? ''); ?>"
           class="form-input"
           <?php if (!empty($required)) {
               echo 'required';
@@ -46,14 +47,18 @@ $fields = $attributes['fields'] ?? [];
         <?php
           break;
 
-            case 'textarea':
+        case 'textarea':
                 ?>
         <textarea
-          class="border p-2 w-full"
+          class="form-input pt-4 !min-h-24 <?php if ($field['fullWidth']) {
+              echo '!col-span-2';
+          } ?>"
+          name="<?php echo esc_attr($field['name'] ?? ''); ?>"
+          value="<?php echo esc_attr($field['value'] ?? ''); ?>"
           placeholder="<?php echo esc_attr($field['placeholder'] ?? ''); ?>"
         ></textarea>
         <?php
-                break;
+        break;
 
             case 'select':
                 ?>
