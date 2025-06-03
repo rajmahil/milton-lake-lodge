@@ -11,6 +11,23 @@ function boilerplate_load_assets()
         null, // version (or use '3.x.x' if you want)
         true, // load in footer (true) or head (false)
     );
+
+    add_filter(
+        'script_loader_tag',
+        function ($tag, $handle, $src) {
+            if ('alpinejs' === $handle) {
+                return '<script
+                  src="' .
+                                    esc_url($src) .
+                                    '"
+                  defer
+                ></script>';
+            }
+            return $tag;
+        },
+        10,
+        3,
+    );
 }
 
 add_action('wp_enqueue_scripts', 'boilerplate_load_assets');
@@ -240,3 +257,13 @@ function boilerplate_display_footer_logo()
         echo '<img src="' . esc_url($logo_url) . '" alt="' . esc_attr($logo_alt) . '" class="footer-logo">';
     }
 }
+
+function boilerplate_preload_fonts()
+{
+    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/Caveat-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
+    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/Rubik-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
+    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/Rubik-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
+    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/Rubik-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
+    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/Rubik-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
+}
+add_action('wp_head', 'boilerplate_preload_fonts', 5);
