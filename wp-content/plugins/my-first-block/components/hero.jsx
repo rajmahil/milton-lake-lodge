@@ -18,7 +18,7 @@ const Hero = ( { heading, subheading, buttonText, buttonUrl, image } ) => {
     ${ image?.sizes?.large?.url } 1024w,
     ${ image?.sizes?.full?.url } ${ image?.width }w
   ` }
-					sizes="(max-width: 768px) 100vw, 100vw"
+					sizes="(max-width: 768px) 100vw, 1024px"
 					alt={ image?.alt || '' }
 					width={ image?.width }
 					height={ image?.height }
@@ -27,7 +27,7 @@ const Hero = ( { heading, subheading, buttonText, buttonUrl, image } ) => {
 				/>
 			</div>
 			<div className="absolute bottom-0 left-0 w-full h-full bg-linear-to-t  from-brand-dark-blue to-black/0"></div>
-			<div className="relative z-[2] max-w-container flex flex-row items-end justify-between ">
+			<div className="relative z-[2] max-w-container flex flex-row items-center justify-between ">
 				<div className="flex flex-col gap-4 max-w-[650px] w-full">
 					<p className="decorative-text text-brand-yellow text-5xl">
 						Top Fishing Adventures
@@ -39,6 +39,7 @@ const Hero = ( { heading, subheading, buttonText, buttonUrl, image } ) => {
 						{ subheading }
 					</p>
 				</div>
+
 				<div className="flex flex-row gap-2">
 					<a href="#">
 						<button className="btn btn-outline btn-xl">
