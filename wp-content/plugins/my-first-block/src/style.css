@@ -228,8 +228,20 @@ h1, h2, h3, h4, h5, h6 {
     @apply text-sm py-2 px-3 h-10;
   }
 
+
+  .form-input {
+    @apply file:text-foreground placeholder:text-muted/50 placeholder:text-sm selection:bg-primary selection:text-primary-foreground border border-brand-grey bg-white flex h-14 w-full min-w-0 rounded-md px-3 py-1 text-base transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/20 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive
+  }
+
+
+	.form-label {
+		@apply text-sm mb-1
+	}
+
 .footer-social-btn {
   @apply h-10 w-10 bg-brand-yellow flex items-center justify-center rounded-full p-2 text-brand-dark-blue
 }
+
+
 
 }

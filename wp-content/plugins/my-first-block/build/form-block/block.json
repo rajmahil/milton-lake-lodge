@@ -67,6 +67,5 @@
   "style": [
     "file:../style-index.css"
   ],
-  "render": "file:./render.php",
-  "viewScript": "file:./frontend.js"
+  "render": "file:./render.php"
 }
