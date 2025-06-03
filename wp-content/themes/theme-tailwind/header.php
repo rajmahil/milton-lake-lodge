@@ -69,7 +69,7 @@
     }"
   >
     <!-- Header Container -->
-    <div class="max-w-container mx-auto flex items-center justify-between">
+    <div class="max-w-container mx-auto flex items-center justify-between ">
       <div class="flex flex-row items-center gap-12">
         <!-- Site Logo -->
         <div class="site-logo">

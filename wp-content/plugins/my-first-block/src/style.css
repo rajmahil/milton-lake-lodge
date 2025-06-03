@@ -1,13 +1,13 @@
 @layer theme, base, components, utilities;
 @import "tailwindcss";
 @import "tailwindcss/theme.css" layer(theme);
+@config "../tailwind.config.js";
 
 /* Global wrapper class for all your blocks */
 .my-unique-plugin-wrapper-class {
   @import "tailwindcss/preflight.css" layer(base);
   @import "tailwindcss/utilities.css" layer(utilities);
 }
-
 
 
 
