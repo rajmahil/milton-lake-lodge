@@ -100,9 +100,69 @@ h6 {
 }
 
 @layer components {
+<<<<<<< HEAD
 	/* First Block Components */
 	.max-w-container {
 		@apply mx-auto w-full !max-w-[1500px];
+=======
+  /* First Block Components */
+
+.max-w-container {
+  @apply mx-auto w-full !max-w-[1500px];
+}
+
+.section-padding {
+  @apply py-[90px] sm:py-[110px] px-[8px] sm:px-[16px] md:px-[45px];
+}
+
+.section-padding-small {
+  @apply py-[45px] sm:py-[90px] px-[8px] sm:px-[16px] md:px-[45px];
+}
+
+ .btn {
+    @apply  font-normal inline-flex items-center justify-center rounded-full cursor-pointer transition-all duration-300 ease-in-out;
+  }
+  /* Variants */
+  .btn-primary {
+    @apply bg-brand-yellow text-brand-dark-blue  hover:bg-brand-yellow-dark focus-visible:ring-2 focus-visible:ring-brand-yellow-dark focus-visible:outline-none;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-900 hover:bg-gray-300 focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:outline-none;
+  }
+
+
+  .btn-outline {
+    @apply border border-white text-white hover:bg-white hover:text-brand-dark-blue focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none;
+  }
+
+  /* Sizes */
+  .btn-xl {
+    @apply text-lg py-3 px-8 h-14;
+  }
+
+
+  .btn-lg {
+    @apply text-base py-2 px-6 h-12;
+  }
+
+  .btn-md {
+    @apply text-base py-2 px-5 h-10;
+  }
+
+  .btn-sm {
+    @apply text-sm py-2 px-3 h-10;
+  }
+
+
+  .form-input {
+    @apply file:text-foreground placeholder:text-muted-foreground/50 placeholder:text-base selection:bg-primary selection:text-primary-foreground border border-brand-grey bg-white flex h-14 w-full min-w-0 rounded-md px-3 py-1 text-base transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/20 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive
+  }
+
+
+	.form-label {
+		@apply text-sm mb-1
+>>>>>>> 12f75d8 (update)
 	}
 
 	.section-padding {
