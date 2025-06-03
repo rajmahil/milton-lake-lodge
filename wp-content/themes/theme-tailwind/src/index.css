@@ -4,6 +4,7 @@
 
 @theme {
   --font-sans: "Rubik", "sans-serif"; 
+  --font-decorative: "Caveat", "cursive";
 
   --color-brand-dark-blue: #112A37;
   --color-brand-blue: #173C4F;
@@ -84,6 +85,21 @@
     src: url('../assets/fonts/Rubik-BlackItalic.woff') format('woff');
 }
 
+@font-face {
+    font-family: 'Caveat';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../assets/fonts/Caveat-Regular.woff2') format('woff');
+}
+
+@font-face {
+    font-family: 'Caveat';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../assets/fonts/Caveat-Bold.woff2') format('woff');
+}
+
+
 
 h1, h2, h3, h4, h5, h6 {
   font-family: theme(--font-sans);
@@ -104,6 +120,13 @@ h1, h2, h3, h4, h5, h6 {
   @apply py-[45px] sm:py-[90px] px-[8px] sm:px-[16px] md:px-[45px];
 }
 
+
+.decorative-text {
+  @apply font-decorative tracking-[-0.3px] font-bold
+} 
+
+
+
  .btn {
     @apply  font-normal inline-flex items-center justify-center rounded-full cursor-pointer transition-all duration-300 ease-in-out;
   }
@@ -117,10 +140,14 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .btn-outline {
-    @apply border border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none;
+    @apply border border-white text-white hover:bg-white hover:text-brand-dark-blue focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none;
   }
 
   /* Sizes */
+  .btn-xl {
+    @apply text-lg py-3 px-8 h-14;
+  }
+  
   .btn-lg {
     @apply text-base py-2 px-6 h-12;
   }

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "brad-boilerplate/form-block",
+  "version": "0.1.0",
+  "title": "Form Section",
+  "category": "widgets",
+  "icon": "smiley",
+  "example": {},
+  "attributes": {
+    "formTitle": {
+      "type": "string",
+      "default": "Contact Us"
+    },
+    "fields": {
+      "type": "array",
+      "default": []
+    },
+    "submitButtonText": {
+      "type": "string",
+      "default": "Send Message"
+    }
+  },
+  "supports": {
+    "html": false
+  },
+  "textdomain": "form-section-block",
+  "editorScript": "file:./index.js",
+  "editorStyle": [
+    "file:../style-index.css"
+  ],
+  "style": [
+    "file:../style-index.css"
+  ],
+  "render": "file:./render.php",
+  "viewScript": "file:./frontend.js"
+}

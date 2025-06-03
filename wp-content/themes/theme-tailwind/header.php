@@ -23,6 +23,7 @@
   
   $cta_text = get_theme_mod('boilerplate_cta_text', 'Get Started');
   $cta_url = get_theme_mod('boilerplate_cta_url', '#');
+  $cta_phone = get_theme_mod('boilerplate_cta_phone', '#');
   
   ?>
   x-data="{
@@ -59,7 +60,7 @@
   }"
 >
   <div
-    class="fixed z-[100] w-full section-padding !py-1 transition-all duration-300 ease-in-out border-b border-white/20"
+    class="fixed z-[100] w-full section-padding !py-1.5 transition-all duration-300 ease-in-out"
     :class="{
         'transform -translate-y-full': !showNavbar,
         'transform translate-y-0': showNavbar,
@@ -83,8 +84,8 @@
               alt="<?php bloginfo('name'); ?> Logo"
               class=" w-auto transition-all duration-300"
               :class="{
-                  'h-14': isScrolled,
-                  'h-16': !isScrolled
+                  'h-16': isScrolled,
+                  'h-20': !isScrolled
               }"
             >
           </a>
@@ -198,10 +199,23 @@
       </div>
 
       <!-- Main CTA -->
-      <div>
+      <div class="flex flex-row items-center gap-2">
+        <?php if ($cta_phone) : ?>
+        <a
+          href="tel:<?php echo esc_attr($cta_phone); ?>"
+          class="text-white text-sm  hover:text-gray-200 transition-all duration-200"
+        >
+          <button
+            class="btn btn-outline"
+            :class="{ 'btn-md': isScrolled, 'btn-lg': !isScrolled }"
+          >
+            <?php echo esc_html($cta_phone); ?>
+          </button>
+        </a>
+        <?php endif; ?>
         <a href="<?php echo esc_url($cta_url); ?>">
           <button
-            class="btn btn-primary transition-all duration-300"
+            class="btn btn-primary"
             :class="{ 'btn-md': isScrolled, 'btn-lg': !isScrolled }"
           >
             <?php echo esc_html($cta_text); ?>

@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "create-block/hero-section",
+  "name": "brad-boilerplate/hero-section",
   "version": "0.1.0",
   "title": "Hero Section",
   "category": "widgets",
@@ -37,7 +37,7 @@
       "text": true
     }
   },
-  "textdomain": "my-first-block",
+  "textdomain": "hero-section-block",
   "editorScript": "file:./index.js",
   "editorStyle": [
     "file:../style-index.css"

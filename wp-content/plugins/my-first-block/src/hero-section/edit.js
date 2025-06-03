@@ -107,33 +107,6 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 			</InspectorControls>
 			<Hero { ...attributes } />
-			{ /* <div className="border border-gray-400 rounded-sm p-10 bg-red-200">
-				<RichText
-					tagName="h1"
-					value={ heading }
-					onChange={ ( value ) =>
-						setAttributes( { heading: value } )
-					}
-					placeholder={ __( 'Enter Heading...', 'your-text-domain' ) }
-				/>
-				<RichText
-					tagName="p"
-					value={ subheading }
-					onChange={ ( value ) =>
-						setAttributes( { subheading: value } )
-					}
-					placeholder={ __(
-						'Enter Subheading...',
-						'your-text-domain'
-					) }
-				/>
-				{ imageUrl && <img src={ imageUrl } alt="" /> }
-				{ buttonText && (
-					<a href={ buttonUrl } className="hero-button">
-						{ buttonText }
-					</a>
-				) }
-			</div> */ }
 		</div>
 	);
 }

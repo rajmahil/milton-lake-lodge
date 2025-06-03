@@ -18,7 +18,7 @@ const Hero = ( { heading, subheading, buttonText, buttonUrl, image } ) => {
     ${ image?.sizes?.large?.url } 1024w,
     ${ image?.sizes?.full?.url } ${ image?.width }w
   ` }
-					sizes="(max-width: 768px) 100vw, 1024px"
+					sizes="(max-width: 768px) 100vw, 100vw"
 					alt={ image?.alt || '' }
 					width={ image?.width }
 					height={ image?.height }
@@ -26,21 +26,31 @@ const Hero = ( { heading, subheading, buttonText, buttonUrl, image } ) => {
 					loading="eager" // key point for Hero!
 				/>
 			</div>
-			<div className="absolute bottom-0 left-0 w-full h-full bg-linear-to-t  from-black/70 to-black/0"></div>
-			<div className="relative z-[2] max-w-container flex flex-row items-center justify-between ">
-				<div className="flex flex-col gap-4 max-w-[760px] w-full">
-					<h1 className="!my-0 !text-7xl !font-[600] !text-white text-left uppercase">
+			<div className="absolute bottom-0 left-0 w-full h-full bg-linear-to-t  from-brand-dark-blue to-black/0"></div>
+			<div className="relative z-[2] max-w-container flex flex-row items-end justify-between ">
+				<div className="flex flex-col gap-4 max-w-[650px] w-full">
+					<p className="decorative-text text-brand-yellow text-5xl">
+						Top Fishing Adventures
+					</p>
+					<h1 className="!my-0 !text-6xl !font-[600] !text-white text-left ">
 						{ heading }
 					</h1>
-					<p className="!my-0 text-2xl !text-white text-left !leading-normal">
+					<p className="!my-0 text-xl !text-white text-left !leading-normal">
 						{ subheading }
 					</p>
 				</div>
-				<a href="#">
-					<button className="btn btn-primary btn-lg">
-						{ buttonText || 'Learn More' }
-					</button>
-				</a>
+				<div className="flex flex-row gap-2">
+					<a href="#">
+						<button className="btn btn-outline btn-xl">
+							{ buttonText || 'Learn More' }
+						</button>
+					</a>
+					<a href="#">
+						<button className="btn btn-primary btn-xl">
+							{ buttonText || 'Learn More' }
+						</button>
+					</a>
+				</div>
 			</div>
 		</section>
 	);

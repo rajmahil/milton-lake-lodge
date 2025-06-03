@@ -43,7 +43,7 @@ function boilerplate_customize_register($wp_customize)
 {
     // Section
     $wp_customize->add_section('boilerplate_cta_section', [
-        'title' => __('Main Button', 'boilerplate'),
+        'title' => __('Main Call To Action', 'boilerplate'),
         'priority' => 30,
     ]);
 
@@ -71,6 +71,18 @@ function boilerplate_customize_register($wp_customize)
         'section' => 'boilerplate_cta_section',
         'settings' => 'boilerplate_cta_url',
         'type' => 'url',
+    ]);
+
+    $wp_customize->add_setting('boilerplate_cta_phone', [
+        'default' => '',
+        'transport' => 'refresh',
+    ]);
+
+    $wp_customize->add_control('boilerplate_cta_phone_control', [
+        'label' => __('CTA Phone Number', 'boilerplate'),
+        'section' => 'boilerplate_cta_section',
+        'settings' => 'boilerplate_cta_phone',
+        'type' => 'text', // You can also use 'tel', but Customizer doesn't validate 'tel'
     ]);
 
     // Section for Footer
