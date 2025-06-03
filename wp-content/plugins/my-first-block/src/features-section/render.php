@@ -7,7 +7,7 @@ $heading = $attributes['heading'] ?? '';
 $features = $attributes['features'] ?? [];
 ?>
 
-<section class="not-prose section-padding w-full bg-brand-grey">
+<section class="not-prose section-padding w-full bg-brand-grey relative z-[2]">
   <div class="max-w-container mx-auto flex flex-col gap-16">
 
     <?php if ($heading): ?>

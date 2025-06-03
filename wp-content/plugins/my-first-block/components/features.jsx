@@ -1,6 +1,6 @@
 const Features = ( { heading, features = [] } ) => {
 	return (
-		<section className="not-prose section-padding w-full bg-brand-grey ">
+		<section className="not-prose section-padding w-full bg-brand-grey">
 			<div className=" max-w-container mx-auto flex flex-col gap-16">
 				{ heading && (
 					<h2 className="!my-0  !text-3xl md:!text-4xl lg:!text-5xl !font-[600] !text-brand-dark-blue text-left lg:max-w-[60%]">
