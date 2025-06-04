@@ -23,7 +23,7 @@ $features = $attributes['features'] ?? [];
         $image_url = $image['sizes']['large']['url'] ?? ($image['url'] ?? '');
         $image_alt = $image['alt'] ?? '';
       ?>
-      <div class="flex flex-row items-start lg:items-center gap-8 md:gap-16 <?php echo $is_even ? 'lg:flex-row' : 'lg:flex-row-reverse'; ?>">
+      <div class="flex dflex-row items-start lg:items-center gap-8 md:gap-16 <?php echo $is_even ? 'lg:flex-row' : 'lg:flex-row-reverse'; ?>">
 
         <!-- Image -->
         <div
