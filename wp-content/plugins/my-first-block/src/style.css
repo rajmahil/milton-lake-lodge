@@ -150,3 +150,23 @@ h6 {
 		@apply h-10 w-10 bg-brand-yellow flex items-center justify-center rounded-full p-2 text-brand-dark-blue;
 	}
 }
+
+@layer utilities {
+	@keyframes slide {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(-50%);
+		}
+	}
+
+	.animate-slide {
+		animation: slide 30s linear infinite;
+		animation-play-state: running;
+	}
+
+	.group:hover .animate-slide {
+		animation-play-state: paused;
+	}
+}
