@@ -4,6 +4,8 @@ FROM wordpress:php8.1-apache
 COPY wp-content/ /var/www/html/wp-content
 
 
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
 WORKDIR /var/www/html/wp-content/plugins/my-first-block
 RUN npm ci && npm run build
-
