@@ -34,6 +34,7 @@ $fields = $attributes['fields'] ?? [];
           type="<?php echo esc_attr($field['type'] ?? 'text'); ?>"
           name="<?php echo esc_attr($field['name'] ?? ''); ?>"
           value="<?php echo esc_attr($field['value'] ?? ''); ?>"
+          required="<?php echo !empty($field['required']) ? 'required' : ''; ?>"
           placeholder="<?php echo esc_attr(($field['placeholder'] ?? '') . ($field['required'] === true ? ' *' : '')); ?>"
           class="form-input	<?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
           <?php if (!empty($required)) {
@@ -49,6 +50,7 @@ $fields = $attributes['fields'] ?? [];
           case 'textarea':
       ?>
         <textarea
+          required="<?php echo !empty($field['required']) ? 'required' : ''; ?>"
           class="form-input min-h-24 pt-4 <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
           name="<?php echo esc_attr($field['name'] ?? ''); ?>"
           placeholder="<?php echo esc_attr(($field['placeholder'] ?? '') . ($field['required'] === true ? ' *' : '')); ?>"
@@ -90,7 +92,7 @@ $fields = $attributes['fields'] ?? [];
               x-text="selected ? selected : placeholder"
             ></p>
             <span
-              class="absolute inset-y-0 right-2 top-1/2 -translate-y-1/2 flex items-center pr-2 pointer-events-none">
+              class="absolute inset-y-0 right-1 top-1/2 -translate-y-1/2 flex items-center pr-2 pointer-events-none">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
@@ -167,7 +169,7 @@ $fields = $attributes['fields'] ?? [];
             >
               <label
                 @click="checkboxSelectedValue = option.value"
-                class="flex items-center justify-center p-5 space-x-3 bg-white border border-brand-grey rounded-md  cursor-pointer <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
+                class="flex items-center justify-start p-5 space-x-3 bg-white border border-brand-grey rounded-md  cursor-pointer <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
               >
                 <input
                   type="checkbox"
@@ -179,7 +181,7 @@ $fields = $attributes['fields'] ?? [];
                 <span class="relative flex flex-col text-left space-y-1.5 leading-none">
                   <span
                     x-text="option.title"
-                    class="font-normal tex-left capitalize"
+                    class="font-normal tex-left capitalize leading-none mt-0.5"
                   ></span>
                 </span>
               </label>
@@ -256,6 +258,13 @@ $fields = $attributes['fields'] ?? [];
         }
       ?>
         <?php endforeach; ?>
+
+        <button
+          type="submit"
+          class="btn btn-dark btn-xl col-span-2 h-14 !mt-4"
+        >
+          <?php echo esc_html($attributes['submitButtonText'] ?? 'Submit'); ?>
+        </button>
       </form>
     </div>
 
