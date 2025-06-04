@@ -34,8 +34,8 @@ $fields = $attributes['fields'] ?? [];
           type="<?php echo esc_attr($field['type'] ?? 'text'); ?>"
           name="<?php echo esc_attr($field['name'] ?? ''); ?>"
           value="<?php echo esc_attr($field['value'] ?? ''); ?>"
-          placeholder="<?php echo esc_attr($field['placeholder'] ?? ''); ?>"
-          class="form-input"
+          placeholder="<?php echo esc_attr(($field['placeholder'] ?? '') . ($field['required'] === true ? ' *' : '')); ?>"
+          class="form-input	<?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
           <?php if (!empty($required)) {
               echo 'required';
           } ?>
@@ -51,13 +51,13 @@ $fields = $attributes['fields'] ?? [];
         <textarea
           class="form-input min-h-24 pt-4 <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
           name="<?php echo esc_attr($field['name'] ?? ''); ?>"
-          placeholder="<?php echo esc_attr($field['placeholder'] ?? ''); ?>"
+          placeholder="<?php echo esc_attr(($field['placeholder'] ?? '') . ($field['required'] === true ? ' *' : '')); ?>"
         ><?php echo esc_html($field['value'] ?? ''); ?></textarea>
         <?php
           break;
 
           case 'select':
-      ?>
+     		 ?>
         <select
           name="<?php echo esc_attr($field['name'] ?? ''); ?>"
           class="border p-2 w-full <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
@@ -91,18 +91,57 @@ $fields = $attributes['fields'] ?? [];
 
           case 'radio':
       ?>
-        <label class="flex items-center space-x-2 <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>">
-          <input
-            type="radio"
-            name="<?php echo esc_attr($field['name'] ?? 'radio-group'); ?>"
-            value="<?php echo esc_attr($field['value'] ?? ''); ?>"
-            class="form-radio"
-            <?php if (!empty($field['checked'])) {
-                echo 'checked';
-            } ?>
-          />
-          <span><?php echo esc_html($field['label'] ?? ''); ?></span>
-        </label>
+        <div
+          x-data="{
+              radioGroupSelectedValue: null,
+              radioGroupOptions: JSON.parse($el.dataset.options)
+          }"
+          data-options='<?php echo esc_attr(
+              json_encode(
+                  array_map(function ($option) {
+                      return [
+                          'title' => $option,
+                          'value' => $option,
+                      ];
+                  }, $field['options'] ?? []),
+              ),
+          ); ?>'
+          class="space-y-3"
+        >
+          <?php if ( ! empty( $field['label'] ) ) : ?>
+          <label class="block mb-2 text-medium text-left">
+            <?php echo esc_html($field['label']); ?>
+            <?php if ( ! empty( $field['required'] ) ) : ?>
+            <span class="text-red-500">*</span>
+            <?php endif; ?>
+          </label>
+          <?php endif; ?>
+
+          <template
+            x-for="(option, index) in radioGroupOptions"
+            :key="index"
+          >
+            <label
+              @click="radioGroupSelectedValue = option.value"
+              class="flex items-start p-5 space-x-3 bg-white  rounded-md  hover:bg-gray-50  cursor-pointer"
+            >
+              <input
+                type="radio"
+                name="<?php echo esc_attr($field['name'] ?? 'radio-group'); ?>"
+                :value="option.value"
+                x-model="radioGroupSelectedValue"
+                class="text-gray-900 translate-y-px focus:ring-gray-700"
+              />
+              <span class="relative flex flex-col text-left space-y-1.5 leading-none">
+                <span
+                  x-text="option.title"
+                  class="font-normal"
+                ></span>
+              </span>
+            </label>
+          </template>
+        </div>
+
         <?php
           break;
 
