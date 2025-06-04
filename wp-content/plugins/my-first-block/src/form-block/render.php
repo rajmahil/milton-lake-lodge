@@ -21,7 +21,17 @@ $fields = $attributes['fields'] ?? [];
     </div>
 
     <div class="max-w-2xl w-full mx-auto">
-      <form class="grid grid-cols-2 gap-4">
+      <form
+        class="grid grid-cols-2 gap-4"
+        action="<?php echo esc_url(admin_url('admin-post.php')); ?>"
+        method="POST"
+      >
+        <input
+          type="hidden"
+          name="action"
+          value="my_custom_form_submit"
+        >
+
         <?php foreach ( $fields as $index => $field ) : ?>
         <?php
          error_log( 'Current field: ' . print_r( $field, true ) );
@@ -34,6 +44,7 @@ $fields = $attributes['fields'] ?? [];
           type="<?php echo esc_attr($field['type'] ?? 'text'); ?>"
           name="<?php echo esc_attr($field['name'] ?? ''); ?>"
           value="<?php echo esc_attr($field['value'] ?? ''); ?>"
+          required="<?php echo !empty($field['required']) ? 'required' : ''; ?>"
           placeholder="<?php echo esc_attr(($field['placeholder'] ?? '') . ($field['required'] === true ? ' *' : '')); ?>"
           class="form-input	<?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
           <?php if (!empty($required)) {
@@ -49,6 +60,7 @@ $fields = $attributes['fields'] ?? [];
           case 'textarea':
       ?>
         <textarea
+          required="<?php echo !empty($field['required']) ? 'required' : ''; ?>"
           class="form-input min-h-24 pt-4 <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
           name="<?php echo esc_attr($field['name'] ?? ''); ?>"
           placeholder="<?php echo esc_attr(($field['placeholder'] ?? '') . ($field['required'] === true ? ' *' : '')); ?>"
@@ -65,7 +77,7 @@ $fields = $attributes['fields'] ?? [];
               open: false,
               selected: '',
               placeholder: '<?php echo $field['placeholder']; ?>',
-              items: ['Option 1', 'Option 2', 'Option 3']
+              items: <?php echo esc_attr(json_encode($field['options'] ?? [])); ?>
           }"
           class="relative <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
         >
@@ -73,7 +85,7 @@ $fields = $attributes['fields'] ?? [];
           <label class="block mb-3 text-medium text-center">
             <?php echo esc_html($field['label']); ?>
             <?php if ( ! empty( $field['required'] ) ) : ?>
-            <span class="text-red-500">*</span>
+            <span>*</span>
             <?php endif; ?>
           </label>
           <?php endif; ?>
@@ -82,15 +94,35 @@ $fields = $attributes['fields'] ?? [];
           <button
             @click="open = !open"
             type="button"
-            class="w-full h-14 px-4 py-2 text-left bg-white rounded-md border border-brand-grey"
+            class="w-full form-input cursor-pointer flex items-center justify-start px-4 relative"
           >
-            <span x-text="selected ? selected : placeholder"></span>
+            <p
+              class="text-base capitalize"
+              :class="!selected ? 'text-muted-foreground/50' : ''"
+              x-text="selected ? selected : placeholder"
+            ></p>
+            <span
+              class="absolute inset-y-0 right-1 top-1/2 -translate-y-1/2 flex items-center pr-2 pointer-events-none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+                class="w-6 h-6 text-muted-foreground/50"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </span>
           </button>
 
           <ul
             x-show="open"
             @click.away="open = false"
-            class="absolute left-0 w-full mt-1 bg-white border rounded shadow max-h-40 overflow-auto z-10"
+            class="absolute left-0 w-full mt-1 bg-white border border-brand-grey rounded-md shadow-2xl max-h-50 overflow-auto z-10"
             x-transition
           >
             <template
@@ -99,7 +131,7 @@ $fields = $attributes['fields'] ?? [];
             >
               <li
                 @click="selected = item; open = false"
-                class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                class="px-4 py-3 hover:bg-brand-light-grey cursor-pointer capitalize"
               >
                 <span x-text="item"></span>
               </li>
@@ -109,29 +141,66 @@ $fields = $attributes['fields'] ?? [];
         </div>
 
 
-
-
-
-
         <?php
           break;
 
           case 'checkbox':
       ?>
-        <label class="flex
-          items-center
-          space-x-2
-          <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>">
-          <input
-            type="checkbox"
-            name="<?php echo esc_attr($field['name'] ?? ''); ?>"
-            class="form-checkbox"
-            <?php if (!empty($field['checked'])) {
-                echo 'checked';
-            } ?>
-          />
-          <span><?php echo esc_html($field['label'] ?? ''); ?></span>
-        </label>
+
+        <div
+          class="relative col-span-2"
+          x-data="{
+              checkboxSelectedValue: null,
+              checkboxOptions: JSON.parse($el.dataset.options)
+          }"
+          data-options='<?php echo esc_attr(
+              json_encode(
+                  array_map(function ($option) {
+                      return [
+                          'title' => $option,
+                          'value' => $option,
+                      ];
+                  }, $field['options'] ?? []),
+              ),
+          ); ?>'
+        >
+          <?php if ( ! empty( $field['label'] ) ) : ?>
+          <label class="block mb-3 text-medium text-center">
+            <?php echo esc_html($field['label']); ?>
+            <?php if ( ! empty( $field['required'] ) ) : ?>
+            <span>*</span>
+            <?php endif; ?>
+          </label>
+          <?php endif; ?>
+          <div class="grid grid-cols-2 gap-2">
+            <template
+              x-for="(option, index) in checkboxOptions"
+              :key="index"
+            >
+              <label
+                @click="checkboxSelectedValue = option.value"
+                class="flex items-center justify-start p-5 space-x-3 bg-white border border-brand-grey rounded-md  cursor-pointer <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
+              >
+                <input
+                  type="checkbox"
+                  name="<?php echo esc_attr($field['name'] ?? 'checbox-group'); ?>"
+                  :value="option.value"
+                  x-model="radioGroupSelectedValue"
+                  class="accent-brand-dark-blue translate-y-px focus:ring-brand-dark-blue !h-4.5 !w-4.5"
+                />
+                <span class="relative flex flex-col text-left space-y-1.5 leading-none">
+                  <span
+                    x-text="option.title"
+                    class="font-normal tex-left capitalize leading-none mt-0.5"
+                  ></span>
+                </span>
+              </label>
+
+            </template>
+          </div>
+          </label>
+        </div>
+
         <?php
           break;
 
@@ -158,7 +227,7 @@ $fields = $attributes['fields'] ?? [];
           <label class="block mb-3 text-medium text-center">
             <?php echo esc_html($field['label']); ?>
             <?php if ( ! empty( $field['required'] ) ) : ?>
-            <span class="text-red-500">*</span>
+            <span>*</span>
             <?php endif; ?>
           </label>
           <?php endif; ?>
@@ -181,7 +250,7 @@ $fields = $attributes['fields'] ?? [];
                 <span class="relative flex flex-col text-left space-y-1.5 leading-none">
                   <span
                     x-text="option.title"
-                    class="font-normal tex-left "
+                    class="font-normal tex-left capitalize"
                   ></span>
                 </span>
               </label>
@@ -199,6 +268,12 @@ $fields = $attributes['fields'] ?? [];
         }
       ?>
         <?php endforeach; ?>
+        <button
+          type="submit"
+          class="btn btn-dark btn-xl col-span-2 h-14 !mt-4"
+        >
+          <?php echo esc_html($attributes['submitButtonText'] ?? 'Submit'); ?>
+        </button>
       </form>
     </div>
 

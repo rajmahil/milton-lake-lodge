@@ -1,5 +1,5 @@
-<footer class="section-padding bg-brand-dark-blue">
-  <div class="max-w-container w-full mx-auto">
+<footer class="section-padding bg-brand-dark-blue flex flex-col gap-20 pb-8">
+  <div class="max-w-container w-full mx-auto grid grid-cols-4 gap-10">
 
     <div class="flex flex-col gap-8 items-start max-w-[450px]">
 
@@ -33,6 +33,8 @@
       $youtube = get_theme_mod('boilerplate_youtube_url');
       $tripadvisor = get_theme_mod('boilerplate_tripadvisor_url');
       $linkedin = get_theme_mod('boilerplate_linkedin_url');
+      $terms_conditions = get_theme_mod('boilerplate_terms_conditions_url');
+      $privacy_policy = get_theme_mod('boilerplate_privacy_policy_url');
       ?>
 
       <div class="flex space-x-2">
@@ -183,6 +185,47 @@
       </div>
     </div>
 
+
+  </div>
+
+  <div class="text-white max-w-container w-full mx-auto flex flex-row items-center justify-between">
+    <p>© <?php echo date('Y'); ?> All Rights Reserved. Built By <a
+        class="border-b border-white pb-1 cursor-pointer"
+        target="_blank"
+        href="https://306technologies.com"
+        rel="sponsored"
+      >306
+        Technologies</a>
+    </p>
+
+
+
+    <div class="flex flex-row items-center gap-5">
+
+      <?php if ( $terms_conditions ) : ?>
+      <a
+        target="_blank"
+        rel="sponsored"
+        class="border-b border-white pb-0.6 cursor-pointer"
+        href="<?php echo esc_url($terms_conditions); ?>"
+      >
+        Terms & Conditions
+      </a>
+      <?php endif; ?>
+
+      <?php if ( $privacy_policy ) : ?>
+      <a
+        target="_blank"
+        rel="sponsored"
+        class="border-b border-white pb-0.6 cursor-pointer"
+        href="<?php echo esc_url($privacy_policy); ?>"
+      >
+        Privacy Policy
+      </a>
+      <?php endif; ?>
+
+
+    </div>
   </div>
 </footer>
 

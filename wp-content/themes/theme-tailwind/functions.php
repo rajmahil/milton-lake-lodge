@@ -239,6 +239,34 @@ function boilerplate_customize_register($wp_customize)
         'settings' => 'boilerplate_tripadvisor_url',
         'type' => 'url',
     ]);
+
+    $wp_customize->add_setting('boilerplate_terms_conditions_url', [
+        'default' => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'capability' => 'edit_theme_options',
+        'transport' => 'refresh',
+    ]);
+
+    $wp_customize->add_control('boilerplate_terms_conditions_url', [
+        'label' => __('Terms & Conditions URL', 'boilerplate'),
+        'section' => 'boilerplate_footer_section',
+        'settings' => 'boilerplate_terms_conditions_url',
+        'type' => 'url',
+    ]);
+
+    $wp_customize->add_setting('boilerplate_privacy_policy_url', [
+        'default' => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'capability' => 'edit_theme_options',
+        'transport' => 'refresh',
+    ]);
+
+    $wp_customize->add_control('boilerplate_privacy_policy_url', [
+        'label' => __('Privacy Policy URL', 'boilerplate'),
+        'section' => 'boilerplate_footer_section',
+        'settings' => 'boilerplate_privacy_policy_url',
+        'type' => 'url',
+    ]);
 }
 
 add_action('customize_register', 'boilerplate_customize_register');

@@ -190,6 +190,10 @@ h6 {
 		@apply bg-brand-yellow text-brand-dark-blue  hover:bg-brand-yellow-dark focus-visible:ring-2 focus-visible:ring-brand-yellow-dark focus-visible:outline-none;
 	}
 
+	.btn-dark {
+		@apply bg-brand-blue text-white hover:opacity-80 transition-all ease-in-out  focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:outline-none;
+	}
+
 	.btn-secondary {
 		@apply bg-gray-200 text-gray-900 hover:bg-gray-300 focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:outline-none;
 	}
@@ -197,6 +201,8 @@ h6 {
 	.btn-outline {
 		@apply border border-white text-white hover:bg-white hover:text-brand-dark-blue focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none;
 	}
+
+
 
 	/* Sizes */
 	.btn-xl {
