@@ -26,10 +26,10 @@ $fields = $attributes['fields'] ?? [];
         <?php
          error_log( 'Current field: ' . print_r( $field, true ) );
         switch ( $field['type'] ) {
-            case 'text':
-            case 'email':
-            case 'tel':
-                ?>
+          case 'text':
+          case 'email':
+          case 'tel':
+      ?>
         <input
           type="<?php echo esc_attr($field['type'] ?? 'text'); ?>"
           name="<?php echo esc_attr($field['name'] ?? ''); ?>"
@@ -43,26 +43,25 @@ $fields = $attributes['fields'] ?? [];
               echo 'disabled';
           } ?>
         />
-
         <?php
           break;
 
-        case 'textarea':
-                ?>
+          case 'textarea':
+      ?>
         <textarea
-          class="form-input pt-4 !min-h-24 <?php if ($field['fullWidth']) {
-              echo '!col-span-2';
-          } ?>"
+          class="form-input min-h-24 pt-4 <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
           name="<?php echo esc_attr($field['name'] ?? ''); ?>"
-          value="<?php echo esc_attr($field['value'] ?? ''); ?>"
           placeholder="<?php echo esc_attr($field['placeholder'] ?? ''); ?>"
-        ></textarea>
+        ><?php echo esc_html($field['value'] ?? ''); ?></textarea>
         <?php
-        break;
+          break;
 
-            case 'select':
-                ?>
-        <select class="border p-2 w-full">
+          case 'select':
+      ?>
+        <select
+          name="<?php echo esc_attr($field['name'] ?? ''); ?>"
+          class="border p-2 w-full <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
+        >
           <?php if ( ! empty( $field['options'] ) ) : ?>
           <?php foreach ( $field['options'] as $option ) : ?>
           <option value="<?php echo esc_attr($option['value']); ?>">
@@ -72,40 +71,49 @@ $fields = $attributes['fields'] ?? [];
           <?php endif; ?>
         </select>
         <?php
-                break;
+          break;
 
-            case 'checkbox':
-                ?>
-        <label class="flex items-center space-x-2">
+          case 'checkbox':
+      ?>
+        <label class="flex items-center space-x-2 <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>">
           <input
             type="checkbox"
+            name="<?php echo esc_attr($field['name'] ?? ''); ?>"
             class="form-checkbox"
+            <?php if (!empty($field['checked'])) {
+                echo 'checked';
+            } ?>
           />
           <span><?php echo esc_html($field['label'] ?? ''); ?></span>
         </label>
         <?php
-                break;
+          break;
 
-            case 'radio':
-                ?>
-        <label class="flex items-center space-x-2">
+          case 'radio':
+      ?>
+        <label class="flex items-center space-x-2 <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>">
           <input
             type="radio"
             name="<?php echo esc_attr($field['name'] ?? 'radio-group'); ?>"
+            value="<?php echo esc_attr($field['value'] ?? ''); ?>"
             class="form-radio"
+            <?php if (!empty($field['checked'])) {
+                echo 'checked';
+            } ?>
           />
           <span><?php echo esc_html($field['label'] ?? ''); ?></span>
         </label>
         <?php
-                break;
+          break;
 
-            default:
-                error_log( 'Unknown field type: ' . $field['type'] );
-                break;
+          default:
+            error_log( 'Unknown field type: ' . $field['type'] );
+            break;
         }
-        ?>
+      ?>
         <?php endforeach; ?>
       </form>
     </div>
+
   </div>
 </section>
