@@ -45,9 +45,31 @@ $features = $attributes['features'] ?? [];
             </p>
           </div>
 
+        <!-- Image -->
+        <div
+          class="relative w-full ml-2 max-w-[90%] md:max-w-[70%] lg:max-w-[45%] -rotate-2 border-2 border-black rounded-xl"
+        >
+          <img
+            src="<?php echo esc_url($image_url); ?>"
+            alt="<?php echo esc_attr($image_alt); ?>"
+            class="w-full rounded-lg h-auto object-cover aspect-[1.8/1] relative z-[2]"
+          />
+          <div class="rounded-xl w-full h-full absolute right-2 top-2 bg-black z-[1]"></div>
         </div>
+
+        <!-- Text Area -->
+        <div class="w-full lg:w-1/2 text-brand-dark-blue">
+          <h3 class="text-2xl font-semibold my-4">
+            <?php echo esc_html($feature['heading'] ?? ''); ?>
+          </h3>
+          <p class="text-base leading-relaxed">
+            <?php echo esc_html($feature['text'] ?? ''); ?>
+          </p>
+        </div>
+
+      </div>
       <?php endforeach; ?>
     </div>
-    
+
   </div>
 </section>

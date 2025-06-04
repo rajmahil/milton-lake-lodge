@@ -27,11 +27,7 @@
   },
   "textdomain": "features-section-block",
   "editorScript": "file:./index.js",
-  "editorStyle": [
-    "file:../style-index.css"
-  ],
-  "style": [
-    "file:../style-index.css"
-  ],
+  "editorStyle": "file:../style-index.css",
+  "style": "file:../style-index.css",
   "render": "file:./render.php"
 }

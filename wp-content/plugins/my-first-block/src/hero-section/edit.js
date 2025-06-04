@@ -1,10 +1,7 @@
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
-	RichText,
 	MediaUpload,
-	MediaUploadCheck,
 	InspectorControls,
 } from '@wordpress/block-editor';
 import {

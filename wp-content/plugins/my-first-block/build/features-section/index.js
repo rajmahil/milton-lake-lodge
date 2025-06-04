@@ -1,1 +1,449 @@
-(()=>{"use strict";var e,t={93:()=>{const e=window.wp.blocks,t=window.wp.i18n,a=window.wp.blockEditor,l=window.wp.components,r=window.ReactJSXRuntime,i=({heading:e,features:t=[]})=>(0,r.jsx)("section",{className:"not-prose section-padding w-full  static-background",children:(0,r.jsxs)("div",{className:" max-w-container mx-auto flex flex-col gap-16",children:[e&&(0,r.jsx)("h2",{className:"!my-0  !text-3xl md:!text-4xl lg:!text-5xl !font-[600]  text-left lg:max-w-[60%]",children:e}),(0,r.jsx)("div",{className:"flex flex-col w-full gap-16 lg:gap-24",children:t.map(((e,t)=>{const a=t%2==0;return(0,r.jsxs)("div",{className:`\n          flex flex-col lg:flex-row items-start lg:items-center gap-8 md:gap-16 \n          ${a?"lg:flex-row":"lg:flex-row-reverse"}\n        `,children:[(0,r.jsxs)("div",{className:"relative w-full ml-2 max-w-[90%] md:max-w-[70%] lg:max-w-[45%] -rotate-2 border-2 border-black rounded-xl ",children:[(0,r.jsx)("img",{src:e.image?.sizes?.large?.url||e.image?.url,alt:e.image?.alt||"",className:"w-full rounded-lg h-auto object-cover aspect-[1.8/1] relative z-[2] "}),(0,r.jsx)("div",{className:"rounded-xl w-full h-full absolute right-2 top-2 bg-black z-[1]"})]}),(0,r.jsxs)("div",{className:"w-full lg:w-1/2",children:[(0,r.jsx)("h3",{className:"text-2xl font-semibold my-4",children:e.heading}),(0,r.jsx)("p",{className:"text-base leading-relaxed",children:e.text})]})]},`feature-${t}`)}))})]})}),s=JSON.parse('{"UU":"brad-boilerplate/features-section"}');(0,e.registerBlockType)(s.UU,{edit:function({attributes:e,setAttributes:s}){const{heading:n,features:o}=e,d=(0,a.useBlockProps)({className:"my-unique-plugin-wrapper-class",style:{maxWidth:"100%",margin:"0 auto"}});return(0,r.jsxs)("div",{...d,children:[(0,r.jsxs)(a.InspectorControls,{children:[(0,r.jsx)(l.PanelBody,{title:(0,t.__)("Content","your-text-domain"),children:(0,r.jsx)(l.TextControl,{label:(0,t.__)("Heading","your-text-domain"),value:n,onChange:e=>s({heading:e})})}),(0,r.jsxs)("div",{children:[o.map(((e,i)=>(0,r.jsxs)(l.PanelBody,{title:`${(0,t.__)("Feature","your-text-domain")} ${i+1}`,initialOpen:!1,children:[(0,r.jsx)(l.TextControl,{label:(0,t.__)("Heading","your-text-domain"),value:e.heading,onChange:e=>{const t=[...o];t[i].heading=e,s({features:t})}}),(0,r.jsx)(l.TextareaControl,{label:(0,t.__)("Text","your-text-domain"),value:e.text,onChange:e=>{const t=[...o];t[i].text=e,s({features:t})}}),(0,r.jsx)(a.MediaUpload,{onSelect:e=>{const t=[...o];t[i].image={id:e.id,url:e.url,alt:e.alt,width:e.width,height:e.height,sizes:e.sizes},s({features:t})},allowedTypes:["image"],value:e.image?.id,render:({open:a})=>(0,r.jsx)(l.Button,{onClick:a,isPrimary:!0,children:e.image?.url?(0,t.__)("Replace Image","your-text-domain"):(0,t.__)("Upload Image","your-text-domain")})}),e.image?.url&&(0,r.jsx)("div",{style:{marginTop:"10px"},children:(0,r.jsx)("img",{src:e.image.url,alt:e.image.alt||"",style:{maxWidth:"100%"}})}),(0,r.jsx)(l.Button,{isDestructive:!0,onClick:()=>{const e=o.filter(((e,t)=>t!==i));s({features:e})},style:{marginTop:"10px"},children:(0,t.__)("Remove Feature","your-text-domain")})]},i))),(0,r.jsx)("div",{class:"p-5 pt-0",children:(0,r.jsx)(l.Button,{isSecondary:!0,onClick:()=>s({features:[...o,{heading:"",text:"",image:{}}]}),style:{marginTop:"20px"},children:(0,t.__)("Add Feature","your-text-domain")})})]})]}),(0,r.jsx)(i,{...e})]})}})}},a={};function l(e){var r=a[e];if(void 0!==r)return r.exports;var i=a[e]={exports:{}};return t[e](i,i.exports,l),i.exports}l.m=t,e=[],l.O=(t,a,r,i)=>{if(!a){var s=1/0;for(c=0;c<e.length;c++){for(var[a,r,i]=e[c],n=!0,o=0;o<a.length;o++)(!1&i||s>=i)&&Object.keys(l.O).every((e=>l.O[e](a[o])))?a.splice(o--,1):(n=!1,i<s&&(s=i));if(n){e.splice(c--,1);var d=r();void 0!==d&&(t=d)}}return t}i=i||0;for(var c=e.length;c>0&&e[c-1][2]>i;c--)e[c]=e[c-1];e[c]=[a,r,i]},l.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),(()=>{var e={69:0,904:0};l.O.j=t=>0===e[t];var t=(t,a)=>{var r,i,[s,n,o]=a,d=0;if(s.some((t=>0!==e[t]))){for(r in n)l.o(n,r)&&(l.m[r]=n[r]);if(o)var c=o(l)}for(t&&t(a);d<s.length;d++)i=s[d],l.o(e,i)&&e[i]&&e[i][0](),e[i]=0;return l.O(c)},a=globalThis.webpackChunkmy_first_block=globalThis.webpackChunkmy_first_block||[];a.forEach(t.bind(null,0)),a.push=t.bind(null,a.push.bind(a))})();var r=l.O(void 0,[904],(()=>l(93)));r=l.O(r)})();
+( () => {
+	'use strict';
+	var e,
+		t = {
+			93: () => {
+				const e = window.wp.blocks,
+					t = window.wp.i18n,
+					a = window.wp.blockEditor,
+					l = window.wp.components,
+					r = window.ReactJSXRuntime,
+					i = ( { heading: e, features: t = [] } ) =>
+						( 0, r.jsx )( 'section', {
+							className:
+								'not-prose section-padding w-full  static-background',
+							children: ( 0, r.jsxs )( 'div', {
+								className:
+									' max-w-container mx-auto flex flex-col gap-16',
+								children: [
+									e &&
+										( 0, r.jsx )( 'h2', {
+											className:
+												'!my-0  !text-3xl md:!text-4xl lg:!text-5xl !font-[600]  text-left lg:max-w-[60%]',
+											children: e,
+										} ),
+									( 0, r.jsx )( 'div', {
+										className:
+											'flex flex-col w-full gap-16 lg:gap-24',
+										children: t.map( ( e, t ) => {
+											const a = t % 2 == 0;
+											return ( 0, r.jsxs )(
+												'div',
+												{
+													className: `\n          flex flex-col lg:flex-row items-start lg:items-center gap-8 md:gap-16 \n          ${
+														a
+															? 'lg:flex-row'
+															: 'lg:flex-row-reverse'
+													}\n        `,
+													children: [
+														( 0, r.jsxs )( 'div', {
+															className:
+																'relative w-full ml-2 max-w-[90%] md:max-w-[70%] lg:max-w-[45%] -rotate-2 border-2 border-black rounded-xl ',
+															children: [
+																( 0, r.jsx )(
+																	'img',
+																	{
+																		src:
+																			e
+																				.image
+																				?.sizes
+																				?.large
+																				?.url ||
+																			e
+																				.image
+																				?.url,
+																		alt:
+																			e
+																				.image
+																				?.alt ||
+																			'',
+																		className:
+																			'w-full rounded-lg h-auto object-cover aspect-[1.8/1] relative z-[2] ',
+																	}
+																),
+																( 0, r.jsx )(
+																	'div',
+																	{
+																		className:
+																			'rounded-xl w-full h-full absolute right-2 top-2 bg-black z-[1]',
+																	}
+																),
+															],
+														} ),
+														( 0, r.jsxs )( 'div', {
+															className:
+																'w-full lg:w-1/2',
+															children: [
+																( 0, r.jsx )(
+																	'h3',
+																	{
+																		className:
+																			'text-2xl font-semibold my-4',
+																		children:
+																			e.heading,
+																	}
+																),
+																( 0, r.jsx )(
+																	'p',
+																	{
+																		className:
+																			'text-base leading-relaxed',
+																		children:
+																			e.text,
+																	}
+																),
+															],
+														} ),
+													],
+												},
+												`feature-${ t }`
+											);
+										} ),
+									} ),
+								],
+							} ),
+						} ),
+					s = JSON.parse(
+						'{"UU":"brad-boilerplate/features-section"}'
+					);
+				( 0, e.registerBlockType )( s.UU, {
+					edit: function ( { attributes: e, setAttributes: s } ) {
+						const { heading: n, features: o } = e,
+							d = ( 0, a.useBlockProps )( {
+								className: 'my-unique-plugin-wrapper-class',
+								style: { maxWidth: '100%', margin: '0 auto' },
+							} );
+						return ( 0, r.jsxs )( 'div', {
+							...d,
+							children: [
+								( 0, r.jsxs )( a.InspectorControls, {
+									children: [
+										( 0, r.jsx )( l.PanelBody, {
+											title: ( 0, t.__ )(
+												'Content',
+												'your-text-domain'
+											),
+											children: ( 0, r.jsx )(
+												l.TextControl,
+												{
+													label: ( 0, t.__ )(
+														'Heading',
+														'your-text-domain'
+													),
+													value: n,
+													onChange: ( e ) =>
+														s( { heading: e } ),
+												}
+											),
+										} ),
+										( 0, r.jsxs )( 'div', {
+											children: [
+												o.map( ( e, i ) =>
+													( 0, r.jsxs )(
+														l.PanelBody,
+														{
+															title: `${ ( 0,
+															t.__ )(
+																'Feature',
+																'your-text-domain'
+															) } ${ i + 1 }`,
+															initialOpen: ! 1,
+															children: [
+																( 0, r.jsx )(
+																	l.TextControl,
+																	{
+																		label: ( 0,
+																		t.__ )(
+																			'Heading',
+																			'your-text-domain'
+																		),
+																		value: e.heading,
+																		onChange:
+																			(
+																				e
+																			) => {
+																				const t =
+																					[
+																						...o,
+																					];
+																				( t[
+																					i
+																				].heading =
+																					e ),
+																					s(
+																						{
+																							features:
+																								t,
+																						}
+																					);
+																			},
+																	}
+																),
+																( 0, r.jsx )(
+																	l.TextareaControl,
+																	{
+																		label: ( 0,
+																		t.__ )(
+																			'Text',
+																			'your-text-domain'
+																		),
+																		value: e.text,
+																		onChange:
+																			(
+																				e
+																			) => {
+																				const t =
+																					[
+																						...o,
+																					];
+																				( t[
+																					i
+																				].text =
+																					e ),
+																					s(
+																						{
+																							features:
+																								t,
+																						}
+																					);
+																			},
+																	}
+																),
+																( 0, r.jsx )(
+																	a.MediaUpload,
+																	{
+																		onSelect:
+																			(
+																				e
+																			) => {
+																				const t =
+																					[
+																						...o,
+																					];
+																				( t[
+																					i
+																				].image =
+																					{
+																						id: e.id,
+																						url: e.url,
+																						alt: e.alt,
+																						width: e.width,
+																						height: e.height,
+																						sizes: e.sizes,
+																					} ),
+																					s(
+																						{
+																							features:
+																								t,
+																						}
+																					);
+																			},
+																		allowedTypes:
+																			[
+																				'image',
+																			],
+																		value: e
+																			.image
+																			?.id,
+																		render: ( {
+																			open: a,
+																		} ) =>
+																			( 0,
+																			r.jsx )(
+																				l.Button,
+																				{
+																					onClick:
+																						a,
+																					isPrimary:
+																						! 0,
+																					children:
+																						e
+																							.image
+																							?.url
+																							? ( 0,
+																							  t.__ )(
+																									'Replace Image',
+																									'your-text-domain'
+																							  )
+																							: ( 0,
+																							  t.__ )(
+																									'Upload Image',
+																									'your-text-domain'
+																							  ),
+																				}
+																			),
+																	}
+																),
+																e.image?.url &&
+																	( 0,
+																	r.jsx )(
+																		'div',
+																		{
+																			style: {
+																				marginTop:
+																					'10px',
+																			},
+																			children:
+																				( 0,
+																				r.jsx )(
+																					'img',
+																					{
+																						src: e
+																							.image
+																							.url,
+																						alt:
+																							e
+																								.image
+																								.alt ||
+																							'',
+																						style: {
+																							maxWidth:
+																								'100%',
+																						},
+																					}
+																				),
+																		}
+																	),
+																( 0, r.jsx )(
+																	l.Button,
+																	{
+																		isDestructive:
+																			! 0,
+																		onClick:
+																			() => {
+																				const e =
+																					o.filter(
+																						(
+																							e,
+																							t
+																						) =>
+																							t !==
+																							i
+																					);
+																				s(
+																					{
+																						features:
+																							e,
+																					}
+																				);
+																			},
+																		style: {
+																			marginTop:
+																				'10px',
+																		},
+																		children:
+																			( 0,
+																			t.__ )(
+																				'Remove Feature',
+																				'your-text-domain'
+																			),
+																	}
+																),
+															],
+														},
+														i
+													)
+												),
+												( 0, r.jsx )( 'div', {
+													class: 'p-5 pt-0',
+													children: ( 0, r.jsx )(
+														l.Button,
+														{
+															isSecondary: ! 0,
+															onClick: () =>
+																s( {
+																	features: [
+																		...o,
+																		{
+																			heading:
+																				'',
+																			text: '',
+																			image: {},
+																		},
+																	],
+																} ),
+															style: {
+																marginTop:
+																	'20px',
+															},
+															children: ( 0,
+															t.__ )(
+																'Add Feature',
+																'your-text-domain'
+															),
+														}
+													),
+												} ),
+											],
+										} ),
+									],
+								} ),
+								( 0, r.jsx )( i, { ...e } ),
+							],
+						} );
+					},
+				} );
+			},
+		},
+		a = {};
+	function l( e ) {
+		var r = a[ e ];
+		if ( void 0 !== r ) return r.exports;
+		var i = ( a[ e ] = { exports: {} } );
+		return t[ e ]( i, i.exports, l ), i.exports;
+	}
+	( l.m = t ),
+		( e = [] ),
+		( l.O = ( t, a, r, i ) => {
+			if ( ! a ) {
+				var s = 1 / 0;
+				for ( c = 0; c < e.length; c++ ) {
+					for (
+						var [ a, r, i ] = e[ c ], n = ! 0, o = 0;
+						o < a.length;
+						o++
+					)
+						( ! 1 & i || s >= i ) &&
+						Object.keys( l.O ).every( ( e ) => l.O[ e ]( a[ o ] ) )
+							? a.splice( o--, 1 )
+							: ( ( n = ! 1 ), i < s && ( s = i ) );
+					if ( n ) {
+						e.splice( c--, 1 );
+						var d = r();
+						void 0 !== d && ( t = d );
+					}
+				}
+				return t;
+			}
+			i = i || 0;
+			for ( var c = e.length; c > 0 && e[ c - 1 ][ 2 ] > i; c-- )
+				e[ c ] = e[ c - 1 ];
+			e[ c ] = [ a, r, i ];
+		} ),
+		( l.o = ( e, t ) => Object.prototype.hasOwnProperty.call( e, t ) ),
+		( () => {
+			var e = { 69: 0, 904: 0 };
+			l.O.j = ( t ) => 0 === e[ t ];
+			var t = ( t, a ) => {
+					var r,
+						i,
+						[ s, n, o ] = a,
+						d = 0;
+					if ( s.some( ( t ) => 0 !== e[ t ] ) ) {
+						for ( r in n ) l.o( n, r ) && ( l.m[ r ] = n[ r ] );
+						if ( o ) var c = o( l );
+					}
+					for ( t && t( a ); d < s.length; d++ )
+						( i = s[ d ] ),
+							l.o( e, i ) && e[ i ] && e[ i ][ 0 ](),
+							( e[ i ] = 0 );
+					return l.O( c );
+				},
+				a = ( globalThis.webpackChunkmy_first_block =
+					globalThis.webpackChunkmy_first_block || [] );
+			a.forEach( t.bind( null, 0 ) ),
+				( a.push = t.bind( null, a.push.bind( a ) ) );
+		} )();
+	var r = l.O( void 0, [ 904 ], () => l( 93 ) );
+	r = l.O( r );
+} )();
