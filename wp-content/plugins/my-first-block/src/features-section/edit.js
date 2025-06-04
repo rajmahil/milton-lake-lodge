@@ -35,7 +35,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					/>
 				</PanelBody>
 
-				<PanelBody title={ __( 'Features', 'your-text-domain' ) }>
+				<div>
 					{ features.map( ( feature, index ) => (
 						<PanelBody
 							key={ index }
@@ -114,26 +114,27 @@ export default function Edit( { attributes, setAttributes } ) {
 							</Button>
 						</PanelBody>
 					) ) }
-
-					<Button
-						isSecondary
-						onClick={ () =>
-							setAttributes( {
-								features: [
-									...features,
-									{
-										heading: '',
-										text: '',
-										image: {},
-									},
-								],
-							} )
-						}
-						style={ { marginTop: '20px' } }
-					>
-						{ __( 'Add Feature', 'your-text-domain' ) }
-					</Button>
-				</PanelBody>
+					<div class='p-5 pt-0'>
+						<Button
+							isSecondary
+							onClick={ () =>
+								setAttributes( {
+									features: [
+										...features,
+										{
+											heading: '',
+											text: '',
+											image: {},
+										},
+									],
+								} )
+							}
+							style={ { marginTop: '20px' } }
+						>
+							{ __( 'Add Feature', 'your-text-domain' ) }
+						</Button>
+					</div>
+				</div>
 			</InspectorControls>
 			<Features { ...attributes } />
 		</div>
