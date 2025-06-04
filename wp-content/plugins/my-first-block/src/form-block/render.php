@@ -53,29 +53,75 @@ $fields = $attributes['fields'] ?? [];
           name="<?php echo esc_attr($field['name'] ?? ''); ?>"
           placeholder="<?php echo esc_attr(($field['placeholder'] ?? '') . ($field['required'] === true ? ' *' : '')); ?>"
         ><?php echo esc_html($field['value'] ?? ''); ?></textarea>
+
         <?php
           break;
 
           case 'select':
      		 ?>
-        <select
-          name="<?php echo esc_attr($field['name'] ?? ''); ?>"
-          class="border p-2 w-full <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
+
+        <div
+          x-data="{
+              open: false,
+              selected: '',
+              placeholder: '<?php echo $field['placeholder']; ?>',
+              items: ['Option 1', 'Option 2', 'Option 3']
+          }"
+          class="relative <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
         >
-          <?php if ( ! empty( $field['options'] ) ) : ?>
-          <?php foreach ( $field['options'] as $option ) : ?>
-          <option value="<?php echo esc_attr($option['value']); ?>">
-            <?php echo esc_html($option['label']); ?>
-          </option>
-          <?php endforeach; ?>
+          <?php if ( ! empty( $field['label'] ) ) : ?>
+          <label class="block mb-3 text-medium text-center">
+            <?php echo esc_html($field['label']); ?>
+            <?php if ( ! empty( $field['required'] ) ) : ?>
+            <span class="text-red-500">*</span>
+            <?php endif; ?>
+          </label>
           <?php endif; ?>
-        </select>
+
+          <!-- Button -->
+          <button
+            @click="open = !open"
+            type="button"
+            class="w-full h-14 px-4 py-2 text-left bg-white rounded-md border border-brand-grey"
+          >
+            <span x-text="selected ? selected : placeholder"></span>
+          </button>
+
+          <ul
+            x-show="open"
+            @click.away="open = false"
+            class="absolute left-0 w-full mt-1 bg-white border rounded shadow max-h-40 overflow-auto z-10"
+            x-transition
+          >
+            <template
+              x-for="item in items"
+              :key="item"
+            >
+              <li
+                @click="selected = item; open = false"
+                class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              >
+                <span x-text="item"></span>
+              </li>
+            </template>
+          </ul>
+
+        </div>
+
+
+
+
+
+
         <?php
           break;
 
           case 'checkbox':
       ?>
-        <label class="flex items-center space-x-2 <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>">
+        <label class="flex
+          items-center
+          space-x-2
+          <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>">
           <input
             type="checkbox"
             name="<?php echo esc_attr($field['name'] ?? ''); ?>"
@@ -106,40 +152,42 @@ $fields = $attributes['fields'] ?? [];
                   }, $field['options'] ?? []),
               ),
           ); ?>'
-          class="space-y-3"
+          class="col-span-2 my-2"
         >
           <?php if ( ! empty( $field['label'] ) ) : ?>
-          <label class="block mb-2 text-medium text-left">
+          <label class="block mb-3 text-medium text-center">
             <?php echo esc_html($field['label']); ?>
             <?php if ( ! empty( $field['required'] ) ) : ?>
             <span class="text-red-500">*</span>
             <?php endif; ?>
           </label>
           <?php endif; ?>
-
-          <template
-            x-for="(option, index) in radioGroupOptions"
-            :key="index"
-          >
-            <label
-              @click="radioGroupSelectedValue = option.value"
-              class="flex items-start p-5 space-x-3 bg-white  rounded-md  hover:bg-gray-50  cursor-pointer"
+          <div class="grid grid-cols-2 gap-2">
+            <template
+              x-for="(option, index) in radioGroupOptions"
+              :key="index"
             >
-              <input
-                type="radio"
-                name="<?php echo esc_attr($field['name'] ?? 'radio-group'); ?>"
-                :value="option.value"
-                x-model="radioGroupSelectedValue"
-                class="text-gray-900 translate-y-px focus:ring-gray-700"
-              />
-              <span class="relative flex flex-col text-left space-y-1.5 leading-none">
-                <span
-                  x-text="option.title"
-                  class="font-normal"
-                ></span>
-              </span>
-            </label>
-          </template>
+              <label
+                @click="radioGroupSelectedValue = option.value"
+                class="flex items-start p-5 space-x-3 bg-white border border-brand-grey rounded-md  cursor-pointer <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
+              >
+                <input
+                  type="radio"
+                  name="<?php echo esc_attr($field['name'] ?? 'radio-group'); ?>"
+                  :value="option.value"
+                  x-model="radioGroupSelectedValue"
+                  class="accent-brand-dark-blue translate-y-px focus:ring-brand-dark-blue"
+                />
+                <span class="relative flex flex-col text-left space-y-1.5 leading-none">
+                  <span
+                    x-text="option.title"
+                    class="font-normal tex-left "
+                  ></span>
+                </span>
+              </label>
+
+            </template>
+          </div>
         </div>
 
         <?php

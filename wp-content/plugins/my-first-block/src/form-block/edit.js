@@ -158,14 +158,16 @@ export default function Edit( { attributes, setAttributes } ) {
 								field.type
 							) && (
 								<TextareaControl
-									label="Options (one per line)"
-									value={ field.options.join( '\n' ) }
+									label="Options (comma separated)"
+									defaultValue={ ( field.options || [] ).join(
+										', '
+									) }
 									onChange={ ( value ) =>
 										updateField(
 											index,
 											'options',
 											value
-												.split( '\n' )
+												.split( ',' )
 												.map( ( opt ) => opt.trim() )
 												.filter( Boolean )
 										)
