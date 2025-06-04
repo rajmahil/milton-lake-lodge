@@ -11,11 +11,11 @@
 	"attributes": {
 		"heading": {
 			"type": "string",
-			"default": "FREQUENTLY ASKED QUESTIONS (FAQs)"
+			"default": "Heading Here"
 		},
 		"subheading": {
 			"type": "string",
-			"default": "Just returned from Milton Lake Lodge and am still on a 'Pike High'!  It was a great trip with superb food, great fishing, and a staff that wanted to make sure we were taken care of."
+			"default": "Subheading Here"
 		},
 		"items": {
 			"type": "array",

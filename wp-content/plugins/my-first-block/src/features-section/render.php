@@ -16,7 +16,7 @@ $features = $attributes['features'] ?? [];
       </h2>
     <?php endif; ?>
 
-    <div class="flex flex-col w-full gap-16 lg:gap-24">
+    <div class="!flex !flex-col w-full gap-16 lg:gap-24">
       <?php foreach ($features as $idx => $feature):
         $is_even = $idx % 2 === 0;
         $image = $feature['image'] ?? [];

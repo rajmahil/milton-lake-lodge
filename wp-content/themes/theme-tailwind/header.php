@@ -105,7 +105,7 @@
           x-data="{ openDropdown: null }"
           class="relative"
         >
-          <ul class="list-none flex flex-row gap-2">
+          <ul class="list-none flex flex-row gap-2 ">
             <?php
             $menu_tree = [];
             $parent_items = [];

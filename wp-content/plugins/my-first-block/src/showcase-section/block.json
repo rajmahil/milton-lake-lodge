@@ -32,6 +32,10 @@
 			"items": {
 				"type": "object"
 			}
+		},
+		"imagesSpeed": {
+			"type": "string",
+			"default": "medium"
 		}
 	},
 	"supports": {

@@ -8,9 +8,20 @@ $heading = $attributes['heading'] ?? '';
 $button_text = $attributes['buttonText'] ?? 'Learn More';
 $button_url = $attributes['buttonUrl'] ?? '#';
 $images = $attributes['images'] ?? [];
+$imagesSpeed = $attributes['imagesSpeed'] ?? 'medium'; 
+
+$speed_map = [
+  'slow' => 60,
+  'medium' => 30,
+  'fast' => 15,
+];
+
+$base_duration = $speed_map[$imagesSpeed] ?? 30;
+$reduced_duration = max($base_duration - 15, 5); // prevent negative or zero
+$animation_class = 'showcase-animate-' . uniqid(); // unique class for inline CSS override
 ?>
 
-<section class="flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full  static-background">
+<section class="flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full static-background">
 
   <!-- Header Content -->
   <div class="relative z-[2] max-w-container flex flex-row flex-wrap gap-5 items-end justify-between">
@@ -39,7 +50,10 @@ $images = $attributes['images'] ?? [];
 
   <!-- Sliding Images Gallery -->
   <div class="group relative w-full h-full select-none">
-    <div class="flex w-max animate-slide gap-10 whitespace-nowrap">
+    <div
+      class="flex w-max animate-slide gap-10 whitespace-nowrap <?php echo esc_attr($animation_class); ?>"
+      style="animation-duration: <?php echo esc_attr($base_duration); ?>s;"
+    >
       <?php foreach (array_merge($images, $images) as $idx => $image): 
         $image_url = $image['sizes']['large']['url'] ?? ($image['url'] ?? '');
         $image_alt = $image['alt'] ?? '';
@@ -74,8 +88,16 @@ $images = $attributes['images'] ?? [];
       <?php endforeach; ?>
     </div>
   </div>
-
 </section>
+
+<!-- Responsive animation speed override -->
+<style>
+  @media (max-width: 767px) {
+    .<?php echo $animation_class; ?> {
+      animation-duration: <?php echo esc_attr($reduced_duration); ?>s !important;
+    }
+  }
+</style>
 
 <?php if ($heading): ?>
 <script type="application/ld+json">

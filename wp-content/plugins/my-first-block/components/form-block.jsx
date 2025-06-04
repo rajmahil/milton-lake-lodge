@@ -1,6 +1,216 @@
-import { Input } from './ui/input';
+import React, { useState } from 'react';
 
-const FormBlock = ( { heading, topHeading, fields = [], onSubmit } ) => {
+const FormBlock = ( props ) => {
+	const {
+		heading = 'Your Adventure Awaits',
+		topHeading = 'Your Adventure Awaits',
+		fields = [],
+	} = props;
+
+	// State for form interactions
+	const [ formData, setFormData ] = useState( {} );
+	const [ openSelects, setOpenSelects ] = useState( {} );
+
+	const handleInputChange = ( fieldName, value ) => {
+		setFormData( ( prev ) => ( {
+			...prev,
+			[ fieldName ]: value,
+		} ) );
+	};
+
+	const toggleSelect = ( index ) => {
+		setOpenSelects( ( prev ) => ( {
+			...prev,
+			[ index ]: ! prev[ index ],
+		} ) );
+	};
+
+	const selectOption = ( index, option, fieldName ) => {
+		handleInputChange( fieldName, option );
+		setOpenSelects( ( prev ) => ( {
+			...prev,
+			[ index ]: false,
+		} ) );
+	};
+
+	const renderField = ( field, index ) => {
+		const fieldClasses = `${ field.fullWidth ? 'col-span-2' : '' }`;
+
+		switch ( field.type ) {
+			case 'text':
+			case 'email':
+			case 'tel':
+				return (
+					<input
+						key={ index }
+						type={ field.type || 'text' }
+						name={ field.name || '' }
+						value={ formData[ field.name ] || field.value || '' }
+						placeholder={ `${ field.placeholder || '' }${
+							field.required ? ' *' : ''
+						}` }
+						className={ `form-input ${ fieldClasses }` }
+						required={ field.required }
+						onChange={ ( e ) =>
+							handleInputChange( field.name, e.target.value )
+						}
+					/>
+				);
+
+			case 'textarea':
+				return (
+					<textarea
+						key={ index }
+						className={ `form-input min-h-24 pt-4 ${ fieldClasses }` }
+						name={ field.name || '' }
+						placeholder={ `${ field.placeholder || '' }${
+							field.required ? ' *' : ''
+						}` }
+						value={ formData[ field.name ] || field.value || '' }
+						onChange={ ( e ) =>
+							handleInputChange( field.name, e.target.value )
+						}
+					/>
+				);
+
+			case 'select':
+				const isOpen = openSelects[ index ] || false;
+				const selectedValue = formData[ field.name ] || '';
+
+				return (
+					<div
+						key={ index }
+						className={ `relative ${ fieldClasses }` }
+					>
+						{ field.label && (
+							<label className="block mb-3 text-medium text-center">
+								{ field.label }
+								{ field.required && (
+									<span className="text-red-500">*</span>
+								) }
+							</label>
+						) }
+
+						<button
+							type="button"
+							className="w-full h-14 px-4 py-2 text-left bg-white rounded-md border border-brand-grey"
+							onClick={ () => toggleSelect( index ) }
+						>
+							<span>
+								{ selectedValue ||
+									field.placeholder ||
+									'Select an option' }
+							</span>
+						</button>
+
+						{ isOpen && (
+							<ul className="absolute left-0 w-full mt-1 bg-white border rounded shadow max-h-40 overflow-auto z-10">
+								{ ( field.options || [] ).map(
+									( option, optionIndex ) => (
+										<li
+											key={ optionIndex }
+											className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+											onClick={ () =>
+												selectOption(
+													index,
+													option,
+													field.name
+												)
+											}
+										>
+											{ option }
+										</li>
+									)
+								) }
+							</ul>
+						) }
+					</div>
+				);
+
+			case 'checkbox':
+				return (
+					<label
+						key={ index }
+						className={ `flex items-center space-x-2 ${ fieldClasses }` }
+					>
+						<input
+							type="checkbox"
+							name={ field.name || '' }
+							className="form-checkbox"
+							checked={
+								formData[ field.name ] || field.checked || false
+							}
+							onChange={ ( e ) =>
+								handleInputChange(
+									field.name,
+									e.target.checked
+								)
+							}
+						/>
+						<span>{ field.label || '' }</span>
+					</label>
+				);
+
+			case 'radio':
+				const radioValue = formData[ field.name ] || null;
+
+				return (
+					<div key={ index } className="col-span-2 my-2">
+						{ field.label && (
+							<label className="block mb-3 text-medium text-center">
+								{ field.label }
+								{ field.required && (
+									<span className="text-red-500">*</span>
+								) }
+							</label>
+						) }
+
+						<div className="grid grid-cols-2 gap-2">
+							{ ( field.options || [] ).map(
+								( option, optionIndex ) => (
+									<label
+										key={ optionIndex }
+										className={ `flex items-start p-5 space-x-3 bg-white border border-brand-grey rounded-md cursor-pointer ${
+											field.fullWidth ? 'col-span-2' : ''
+										}` }
+										onClick={ () =>
+											handleInputChange(
+												field.name,
+												option
+											)
+										}
+									>
+										<input
+											type="radio"
+											name={ field.name || 'radio-group' }
+											value={ option }
+											checked={ radioValue === option }
+											className="accent-brand-dark-blue translate-y-px focus:ring-brand-dark-blue"
+											onChange={ () =>
+												handleInputChange(
+													field.name,
+													option
+												)
+											}
+										/>
+										<span className="relative flex flex-col text-left space-y-1.5 leading-none">
+											<span className="font-normal text-left">
+												{ option }
+											</span>
+										</span>
+									</label>
+								)
+							) }
+						</div>
+					</div>
+				);
+
+			default:
+				console.log( 'Unknown field type:', field.type );
+				return null;
+		}
+	};
+
 	return (
 		<section className="my-unique-plugin-wrapper-class">
 			<div className="section-padding static-background flex flex-col gap-12">
@@ -14,175 +224,10 @@ const FormBlock = ( { heading, topHeading, fields = [], onSubmit } ) => {
 				</div>
 
 				<div className="max-w-2xl w-full mx-auto">
-					<form
-						className="grid grid-cols-2 gap-4"
-						onSubmit={ onSubmit }
-					>
-						{ fields.map( ( field, index ) => {
-							const fullWidthClass = field.fullWidth
-								? 'col-span-2'
-								: '';
-							const requiredMark = field.required ? ' *' : '';
-							const baseProps = {
-								key: index,
-								required: field.required,
-								name: field.name,
-								className: `form-input ${ fullWidthClass }`,
-								placeholder: `${
-									field.placeholder || ''
-								}${ requiredMark }`,
-								defaultValue: field.value,
-							};
-
-							switch ( field.type ) {
-								case 'text':
-								case 'email':
-								case 'tel':
-									return (
-										<Input
-											type={ field.type }
-											{ ...baseProps }
-										/>
-									);
-
-								case 'textarea':
-									return (
-										<textarea
-											{ ...baseProps }
-											className={ `form-input min-h-24 pt-4 ${ fullWidthClass }` }
-										/>
-									);
-
-								case 'select':
-									return (
-										<div
-											key={ index }
-											className={ `relative ${ fullWidthClass }` }
-										>
-											{ field.label && (
-												<label className="block mb-3 text-medium text-center">
-													{ field.label }
-													{ field.required && (
-														<span>*</span>
-													) }
-												</label>
-											) }
-											<select
-												name={ field.name }
-												className="form-input w-full cursor-pointer"
-												defaultValue=""
-												required={ field.required }
-											>
-												<option value="" disabled>
-													{ field.placeholder }
-												</option>
-												{ field.options?.map(
-													( opt, i ) => (
-														<option
-															key={ i }
-															value={ opt }
-														>
-															{ opt }
-														</option>
-													)
-												) }
-											</select>
-										</div>
-									);
-
-								case 'checkbox':
-									return (
-										<div
-											key={ index }
-											className="col-span-2"
-										>
-											{ field.label && (
-												<label className="block mb-3 text-medium text-center">
-													{ field.label }
-													{ field.required && (
-														<span>*</span>
-													) }
-												</label>
-											) }
-											<div className="grid grid-cols-2 gap-2">
-												{ field.options?.map(
-													( opt, i ) => (
-														<label
-															key={ i }
-															className={ `flex items-center justify-start p-5 gap-2 bg-white border border-brand-grey rounded-md cursor-pointer ${ fullWidthClass }` }
-														>
-															<input
-																type="checkbox"
-																name={
-																	field.name
-																}
-																value={ opt }
-																className="accent-brand-dark-blue translate-y-px focus:ring-brand-dark-blue !h-4.5 !w-4.5"
-															/>
-															<span className="capitalize">
-																{ opt }
-															</span>
-														</label>
-													)
-												) }
-											</div>
-										</div>
-									);
-
-								case 'radio':
-									return (
-										<div
-											key={ index }
-											className="col-span-2 my-2"
-										>
-											{ field.label && (
-												<label className="block mb-3 text-medium text-center">
-													{ field.label }
-													{ field.required && (
-														<span>*</span>
-													) }
-												</label>
-											) }
-											<div className="grid grid-cols-2 gap-2">
-												{ field.options?.map(
-													( opt, i ) => (
-														<label
-															key={ i }
-															className={ `flex items-center p-5 gap-2 bg-white border border-brand-grey rounded-md cursor-pointer ${ fullWidthClass }` }
-														>
-															<input
-																type="radio"
-																name={
-																	field.name
-																}
-																value={ opt }
-																className="accent-brand-dark-blue translate-y-px focus:ring-brand-dark-blue"
-															/>
-															<span className="capitalize">
-																{ opt }
-															</span>
-														</label>
-													)
-												) }
-											</div>
-										</div>
-									);
-
-								default:
-									console.warn(
-										'Unknown field type:',
-										field.type
-									);
-									return null;
-							}
-						} ) }
-
-						<button
-							type="submit"
-							className="btn btn-dark btn-xl col-span-2 h-14 !mt-4"
-						>
-							Submit
-						</button>
+					<form className="grid grid-cols-2 gap-4">
+						{ fields.map( ( field, index ) =>
+							renderField( field, index )
+						) }
 					</form>
 				</div>
 			</div>
