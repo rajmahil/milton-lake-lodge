@@ -5,23 +5,29 @@ function boilerplate_load_assets()
     wp_enqueue_script('ourmainjs', get_theme_file_uri('/build/index.js'), ['wp-element', 'react-jsx-runtime'], '1.0', true);
     wp_enqueue_style('ourmaincss', get_theme_file_uri('/build/index.css'));
     wp_enqueue_script(
+        'alpinejs-plugin-collapse',
+        'https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js',
+        [],          // no dependencies, loads first
+        null,
+        true         // load in footer
+    );
+    
+    // Enqueue Alpine core and make it dependent on the collapse plugin
+    wp_enqueue_script(
         'alpinejs',
         'https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js',
-        [], // dependencies (none)
-        null, // version (or use '3.x.x' if you want)
-        true, // load in footer (true) or head (false)
+        ['alpinejs-plugin-collapse'],  // depends on collapse plugin
+        null,
+        true
     );
+    
+   
 
     add_filter(
         'script_loader_tag',
         function ($tag, $handle, $src) {
-            if ('alpinejs' === $handle) {
-                return '<script
-                  src="' .
-                                    esc_url($src) .
-                                    '"
-                  defer
-                ></script>';
+            if ('alpinejs' === $handle || 'alpinejs-plugin-collapse' === $handle) {
+                return '<script src="' . esc_url($src) . '" defer></script>';
             }
             return $tag;
         },
