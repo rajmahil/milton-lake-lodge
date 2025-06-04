@@ -11,7 +11,7 @@ const Hero = ( {
 	image,
 } ) => {
 	return (
-		<section className="h-screen flex items-end  overflow-hidden relative not-prose section-padding w-full">
+		<section className="h-screen flex items-end  overflow-hidden relative not-prose section-padding w-full static-background">
 			<div className="absolute top-0 left-0 w-full h-full z-[0] pointer-events-none select-none">
 				<img
 					src={
@@ -39,10 +39,10 @@ const Hero = ( {
 					<p className="decorative-text text-brand-yellow !text-2xl">
 						{ topHeading }
 					</p>
-					<h1 className="!my-0 !text-4xl md:!text-5xl lg:!text-6xl !font-[600] !text-white text-left ">
+					<h1 className="!my-0 !text-4xl md:!text-5xl lg:!text-6xl !font-[600]  text-left ">
 						{ heading }
 					</h1>
-					<p className="!my-0 text-xl !text-white text-left !leading-normal">
+					<p className="!my-0 text-xl  text-left !leading-normal">
 						{ subheading }
 					</p>
 				</div>

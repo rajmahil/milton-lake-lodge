@@ -4,7 +4,7 @@ const FormBlock = ( props ) => {
 	const { heading, topHeading, fields } = props;
 
 	return (
-		<section className="section-padding">
+		<section className="section-padding  static-background">
 			<div class="max-w-3xl mx-auto w-full flex flex-col gap-12">
 				<div className="flex flex-col gap-2">
 					<p className="decorative-text text-brand-yellow-dark !text-4xl !my-0 text-center">

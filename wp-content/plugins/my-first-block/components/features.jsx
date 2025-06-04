@@ -1,9 +1,9 @@
 const Features = ( { heading, features = [] } ) => {
 	return (
-		<section className="not-prose section-padding w-full bg-brand-grey">
+		<section className="not-prose section-padding w-full  static-background">
 			<div className=" max-w-container mx-auto flex flex-col gap-16">
 				{ heading && (
-					<h2 className="!my-0  !text-3xl md:!text-4xl lg:!text-5xl !font-[600] !text-brand-dark-blue text-left lg:max-w-[60%]">
+					<h2 className="!my-0  !text-3xl md:!text-4xl lg:!text-5xl !font-[600]  text-left lg:max-w-[60%]">
 						{ heading }
 					</h2>
 				) }
@@ -33,7 +33,7 @@ const Features = ( { heading, features = [] } ) => {
 								</div>
 
 								{ /* Text Area */ }
-								<div className="w-full lg:w-1/2 text-brand-dark-blue">
+								<div className="w-full lg:w-1/2">
 									<h3 className="text-2xl font-semibold my-4">
 										{ feature.heading }
 									</h3>

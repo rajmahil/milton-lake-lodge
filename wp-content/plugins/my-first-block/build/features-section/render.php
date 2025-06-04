@@ -7,11 +7,11 @@ $heading = $attributes['heading'] ?? '';
 $features = $attributes['features'] ?? [];
 ?>
 
-<section class="not-prose section-padding w-full bg-brand-grey relative z-[2]">
+<section class="not-prose section-padding w-full  relative z-[2] static-background">
   <div class="max-w-container mx-auto flex flex-col gap-16">
 
     <?php if ($heading): ?>
-      <h2 class="!my-0 !text-3xl md:!text-4xl lg:!text-5xl !font-[600] !text-brand-dark-blue text-left lg:max-w-[60%]">
+      <h2 class="!my-0 !text-3xl md:!text-4xl lg:!text-5xl !font-[600]  text-left lg:max-w-[60%]">
         <?php echo esc_html($heading); ?>
       </h2>
     <?php endif; ?>
@@ -36,7 +36,7 @@ $features = $attributes['features'] ?? [];
           </div>
 
           <!-- Text Area -->
-          <div class="w-full lg:w-1/2 text-brand-dark-blue">
+          <div class="w-full lg:w-1/2 ">
             <h3 class="text-2xl font-semibold my-4">
               <?php echo esc_html($feature['heading'] ?? ''); ?>
             </h3>

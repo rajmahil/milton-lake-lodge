@@ -16,6 +16,7 @@ function registerBlocks()
     register_block_type(__DIR__ . '/build/hero-section');
     register_block_type(__DIR__ . '/build/showcase-section');
     register_block_type(__DIR__ . '/build/features-section');
+    register_block_type(__DIR__ . '/build/accordion-section');
     register_block_type(__DIR__ . '/build/form-block');
 }
 add_action('init', 'registerBlocks');

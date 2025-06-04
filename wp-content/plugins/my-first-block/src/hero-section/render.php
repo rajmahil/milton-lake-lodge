@@ -39,7 +39,7 @@ if ($image) {
 ?>
 
 <section class="my-unique-plugin-wrapper-class">
-  <section class="h-screen flex items-end overflow-hidden relative not-prose section-padding w-full hero-section">
+  <section class="h-screen flex items-end overflow-hidden relative not-prose section-padding w-full hero-section static-background">
     <!-- Background Image -->
     <div class="absolute top-0 left-0 w-full h-full z-[0] pointer-events-none select-none">
       <?php if ($image_url): ?>
@@ -80,12 +80,12 @@ if ($image) {
         <?php echo esc_html($top_heading); ?>
         </p>
 
-        <h1 class="!my-0 !text-4xl md:!text-5xl lg:!text-6xl !font-[600] !text-white text-left">
+        <h1 class="!my-0 !text-4xl md:!text-5xl lg:!text-6xl !font-[600]  text-left">
           <?php echo esc_html($heading); ?>
         </h1>
 
         <?php if ($subheading): ?>
-        <p class="!my-0 text-xl !text-white text-left !leading-normal">
+        <p class="!my-0 text-xl  text-left !leading-normal">
           <?php echo esc_html($subheading); ?>
         </p>
         <?php endif; ?>

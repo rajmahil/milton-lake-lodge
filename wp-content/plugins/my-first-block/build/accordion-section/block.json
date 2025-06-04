@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "brad-boilerplate/accordion-section",
+  "version": "0.1.0",
+  "title": "Accordion Section",
+  "category": "widgets",
+  "icon": "smiley",
+  "description": "Accordion section",
+  "example": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "FREQUENTLY ASKED QUESTIONS (FAQs)"
+    },
+    "subheading": {
+      "type": "string",
+      "default": "Just returned from Milton Lake Lodge and am still on a 'Pike High'!  It was a great trip with superb food, great fishing, and a staff that wanted to make sure we were taken care of."
+    },
+    "items": {
+      "type": "array",
+      "default": []
+    }
+  },
+  "supports": {
+    "html": false,
+    "color": {
+      "background": true,
+      "text": true
+    }
+  },
+  "textdomain": "accordion-section-block",
+  "editorScript": "file:./index.js",
+  "editorStyle": [
+    "file:../style-index.css"
+  ],
+  "style": [
+    "file:../style-index.css"
+  ],
+  "render": "file:./render.php"
+}

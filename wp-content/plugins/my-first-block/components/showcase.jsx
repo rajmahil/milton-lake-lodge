@@ -6,7 +6,7 @@ const Showcase = ( {
 	images = [],
 } ) => {
 	return (
-		<section className="flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-dark-blue">
+		<section className="flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full  static-background ">
 			<div className="relative z-[2] max-w-container flex flex-row flex-wrap gap-5 items-end justify-between">
 				<div className="flex flex-col gap-4 lg:max-w-[60%] w-full">
 					{ topHeading && (
@@ -15,7 +15,7 @@ const Showcase = ( {
 						</p>
 					) }
 					{ heading && (
-						<h2 className="!my-0 !text-3xl md:!text-4xl lg:!text-5xl !font-[600] !text-white text-left ">
+						<h2 className="!my-0 !text-3xl md:!text-4xl lg:!text-5xl !font-[600]  text-left ">
 							{ heading }
 						</h2>
 					) }
@@ -29,7 +29,7 @@ const Showcase = ( {
 					</a>
 				</div>
 			</div>
-			<div className="group relative w-full h-full select-none pointer-events-none">
+			<div className="group relative w-full h-full select-none ">
 				<div className="flex w-max animate-slide gap-10 whitespace-nowrap">
 					{ images.concat( images ).map( ( image, idx ) => (
 						<div

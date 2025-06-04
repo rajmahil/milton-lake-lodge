@@ -10,7 +10,7 @@ $button_url = $attributes['buttonUrl'] ?? '#';
 $images = $attributes['images'] ?? [];
 ?>
 
-<section class="flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-dark-blue">
+<section class="flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full  static-background">
 
   <!-- Header Content -->
   <div class="relative z-[2] max-w-container flex flex-row flex-wrap gap-5 items-end justify-between">
@@ -22,7 +22,7 @@ $images = $attributes['images'] ?? [];
       <?php endif; ?>
 
       <?php if ($heading): ?>
-        <h2 class="!my-0 !text-3xl md:!text-4xl lg:!text-5xl !font-[600] !text-white text-left">
+        <h2 class="!my-0 !text-3xl md:!text-4xl lg:!text-5xl !font-[600]  text-left">
           <?php echo esc_html($heading); ?>
         </h2>
       <?php endif; ?>
@@ -38,7 +38,7 @@ $images = $attributes['images'] ?? [];
   </div>
 
   <!-- Sliding Images Gallery -->
-  <div class="group relative w-full h-full select-none pointer-events-none">
+  <div class="group relative w-full h-full select-none">
     <div class="flex w-max animate-slide gap-10 whitespace-nowrap">
       <?php foreach (array_merge($images, $images) as $idx => $image): 
         $image_url = $image['sizes']['large']['url'] ?? ($image['url'] ?? '');
