@@ -21,7 +21,17 @@ $fields = $attributes['fields'] ?? [];
     </div>
 
     <div class="max-w-2xl w-full mx-auto">
-      <form class="grid grid-cols-2 gap-4">
+      <form
+        class="grid grid-cols-2 gap-4"
+        action="<?php echo esc_url(admin_url('admin-post.php')); ?>"
+        method="POST"
+      >
+        <input
+          type="hidden"
+          name="action"
+          value="my_custom_form_submit"
+        >
+
         <?php foreach ( $fields as $index => $field ) : ?>
         <?php
          error_log( 'Current field: ' . print_r( $field, true ) );
@@ -258,7 +268,6 @@ $fields = $attributes['fields'] ?? [];
         }
       ?>
         <?php endforeach; ?>
-
         <button
           type="submit"
           class="btn btn-dark btn-xl col-span-2 h-14 !mt-4"
