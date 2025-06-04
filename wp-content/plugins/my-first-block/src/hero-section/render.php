@@ -39,7 +39,9 @@ if ($image) {
 ?>
 
 <section class="my-unique-plugin-wrapper-class">
-  <section class="h-screen flex items-end overflow-hidden relative not-prose section-padding w-full hero-section static-background">
+  <section
+    class="h-screen flex items-end overflow-hidden relative not-prose section-padding w-full hero-section static-background"
+  >
     <!-- Background Image -->
     <div class="absolute top-0 left-0 w-full h-full z-[0] pointer-events-none select-none">
       <?php if ($image_url): ?>
@@ -77,10 +79,10 @@ if ($image) {
       <!-- Text Content -->
       <div class="flex flex-col gap-4 max-w-[650px] w-full">
         <p class="decorative-text text-brand-yellow text-2xl">
-        <?php echo esc_html($top_heading); ?>
+          <?php echo esc_html($top_heading); ?>
         </p>
 
-        <h1 class="!my-0 !text-4xl md:!text-5xl lg:!text-6xl !font-[600]  text-left">
+        <h1 class="!my-0 !text-4xl md:!text-5xl lg:!text-6xl !font-[600] text-left">
           <?php echo esc_html($heading); ?>
         </h1>
 
