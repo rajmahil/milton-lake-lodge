@@ -38,6 +38,11 @@ module.exports = {
 			'src/form-block',
 			'frontend.js'
 		),
+		'accordion-section/index': path.resolve(
+			process.cwd(),
+			'src/accordion-section',
+			'index.js'
+		),
 	},
 	optimization: {
 		...defaultConfig.optimization,

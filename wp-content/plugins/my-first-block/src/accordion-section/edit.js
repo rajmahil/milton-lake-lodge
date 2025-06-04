@@ -42,7 +42,7 @@ export default function Edit( { attributes, setAttributes } ) {
 							setAttributes( { heading: value } )
 						}
 					/>
-					<TextControl
+					<TextareaControl
 						label={ __( 'Subheading', 'your-text-domain' ) }
 						value={ subheading }
 						onChange={ ( value ) =>

@@ -4,12 +4,18 @@ import {
 	MediaUpload,
 	InspectorControls,
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl, Button } from '@wordpress/components';
+import {
+	PanelBody,
+	TextControl,
+	Button,
+	RadioControl,
+} from '@wordpress/components';
 import '../style.css';
 import Showcase from '../../components/showcase';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { topHeading, heading, buttonText, buttonUrl, images } = attributes;
+	const { topHeading, heading, buttonText, buttonUrl, images, imagesSpeed } =
+		attributes;
 	// This is crucial - it provides the block wrapper with proper WordPress functionality
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
@@ -112,6 +118,20 @@ export default function Edit( { attributes, setAttributes } ) {
 							) ) }
 						</div>
 					) }
+				</PanelBody>
+				<PanelBody title={ __( 'Slider Speed', 'your-text-domain' ) }>
+					<RadioControl
+						label={ __( 'Image Slide Speed', 'your-text-domain' ) }
+						selected={ imagesSpeed }
+						options={ [
+							{ label: 'Slow', value: 'slow' },
+							{ label: 'Medium', value: 'medium' },
+							{ label: 'Fast', value: 'fast' },
+						] }
+						onChange={ ( value ) =>
+							setAttributes( { imagesSpeed: value } )
+						}
+					/>
 				</PanelBody>
 			</InspectorControls>
 			<Showcase { ...attributes } />
