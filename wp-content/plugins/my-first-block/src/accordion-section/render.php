@@ -7,7 +7,7 @@ $subheading = $attributes['subheading'] ?? '';
 $items = $attributes['items'] ?? [];
 ?>
 
-<section class="not-prose section-padding w-full static-background">
+<section class="not-prose section-padding w-full">
   <div
     class="max-w-container mx-auto grid lg:grid-cols-2 gap-8 items-start"
     x-data="{ activeAccordion: null }"
