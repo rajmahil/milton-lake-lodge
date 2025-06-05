@@ -1,11 +1,12 @@
 <footer class="section-padding bg-brand-dark-blue flex flex-col gap-20 pb-8">
-  <div class="max-w-container w-full mx-auto grid grid-cols-4 gap-10">
-
+  <div class="max-w-container w-full mx-auto flex flex-row gap-10">
     <div class="flex flex-col gap-8 items-start max-w-[450px]">
 
       <div class="flex flex-col gap-2 items-start">
         <?php
     $footer_logo_id = get_theme_mod('boilerplate_footer_logo');
+    
+
     if ($footer_logo_id) :
         $footer_logo_url = wp_get_attachment_image_url($footer_logo_id, 'full');
         $footer_logo_alt = get_post_meta($footer_logo_id, '_wp_attachment_image_alt', true) ?: 'Footer Logo';
@@ -183,9 +184,35 @@
         </a>
         <?php endif; ?>
       </div>
+
+
     </div>
 
 
+    <div class="text-white">
+      <?php
+$footer = wp_get_nav_menu_object('Footer Menu');
+$footer_items = [];
+
+if ( $footer ) {
+    $footer_items = wp_get_nav_menu_items( $footer->term_id );
+
+
+    error_log( print_r( $footer_items, true ) );
+}
+
+if ( ! empty( $footer_items ) ) : ?>
+      <ul class="footer-menu">
+        <?php foreach ( $footer_items as $item ) : ?>
+        <li class="footer-menu-item">
+          <a href="<?php echo esc_url($item->url); ?>">
+            <?php echo esc_html($item->title); ?>
+          </a>
+        </li>
+        <?php endforeach; ?>
+      </ul>
+      <?php endif; ?>
+    </div>
   </div>
 
   <div class="text-white max-w-container w-full mx-auto flex flex-row items-center justify-between">
@@ -223,8 +250,6 @@
         Privacy Policy
       </a>
       <?php endif; ?>
-
-
     </div>
   </div>
 </footer>

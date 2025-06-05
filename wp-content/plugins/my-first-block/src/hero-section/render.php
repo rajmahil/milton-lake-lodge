@@ -75,19 +75,19 @@ if ($image) {
     <div class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-brand-dark-blue to-black/0"></div>
 
     <!-- Content -->
-    <div class="relative z-[2] max-w-container flex flex-row gap-5 flex-wrap items-center justify-between">
+    <div class="relative z-[2] max-w-container flex flex-row gap-5 flex-wrap items-end justify-between">
       <!-- Text Content -->
       <div class="flex flex-col gap-4 max-w-[650px] w-full">
-        <p class="decorative-text text-brand-yellow text-2xl">
+        <p class="decorative-text text-brand-yellow text-4xl">
           <?php echo esc_html($top_heading); ?>
         </p>
 
-        <h1 class="!my-0 !text-4xl md:!text-5xl lg:!text-6xl !font-[600] text-left">
+        <h1 class="!my-0 !text-4xl md:!text-5xl lg:!text-6xl !font-[600] text-left text-white">
           <?php echo esc_html($heading); ?>
         </h1>
 
         <?php if ($subheading): ?>
-        <p class="!my-0 text-xl  text-left !leading-normal">
+        <p class="!my-0 text-xl  text-left !leading-normal text-white">
           <?php echo esc_html($subheading); ?>
         </p>
         <?php endif; ?>
