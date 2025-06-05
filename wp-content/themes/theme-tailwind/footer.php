@@ -18,29 +18,50 @@
   </div>
 
   <div class="section-padding bg-brand-dark-blue flex flex-col gap-20 pb-10 shadow-2xl">
-    <div class="max-w-container w-full mx-auto flex flex-row gap-10">
-      <div class="flex flex-col gap-8 items-start max-w-[450px]">
+    <div class="max-w-container w-full mx-auto  grid grid-cols-3 lg:grid-cols-4 gap-2  xl:gap-10 space-y-20">
+      <div
+        class="flex flex-col gap-8 items-center md:items-start lg:col-span-1 col-span-3 max-w-[450px] md:mr-auto mx-auto"
+      >
 
-        <div class="flex flex-col gap-2 items-start">
+        <div class="flex flex-col gap-2 items-center md:items-start">
           <?php
     $footer_logo_id = get_theme_mod('boilerplate_footer_logo');
     
 
     if ($footer_logo_id) :
-        $footer_logo_url = wp_get_attachment_image_url($footer_logo_id, 'full');
-        $footer_logo_alt = get_post_meta($footer_logo_id, '_wp_attachment_image_alt', true) ?: 'Footer Logo';
+         $footer_logo_alt = get_post_meta($footer_logo_id, '_wp_attachment_image_alt', true) ?: 'Footer Logo';
+    
+    // Get multiple image sizes for responsive images
+    $footer_logo_full = wp_get_attachment_image_url($footer_logo_id, 'full');
+    $footer_logo_large = wp_get_attachment_image_url($footer_logo_id, 'large');
+    $footer_logo_medium = wp_get_attachment_image_url($footer_logo_id, 'medium');
+    
+    // Get image metadata for dimensions
+    $image_meta = wp_get_attachment_metadata($footer_logo_id);
+    $width = isset($image_meta['width']) ? $image_meta['width'] : '';
+    $height = isset($image_meta['height']) ? $image_meta['height'] : '';
     ?>
           <img
-            src="<?php echo esc_url($footer_logo_url); ?>"
+            src="<?php echo esc_url($footer_logo_medium ?: $footer_logo_full); ?>"
+            srcset="<?php echo esc_url($footer_logo_medium); ?> 300w, 
+                <?php echo esc_url($footer_logo_large); ?> 1024w, 
+                <?php echo esc_url($footer_logo_full); ?> <?php echo $width; ?>w"
+            sizes="(max-width: 768px) 100px, (max-width: 1024px) 150px, 200px"
             alt="<?php echo esc_attr($footer_logo_alt); ?>"
-            class="h-28 w-auto"
+            class="h-28 w-auto object-contain object-center"
+            loading="lazy"
+            decoding="async"
+            <?php if ($width && $height) : ?>
+            width="<?php echo esc_attr($width); ?>"
+            height="<?php echo esc_attr($height); ?>"
+            <?php endif; ?>
           >
           <?php endif; ?>
 
           <?php
     $footer_description = get_theme_mod('boilerplate_footer_description');
     if ( $footer_description ) : ?>
-          <div class="footer-description text-white leading-relaxed font-normal">
+          <div class="footer-description text-white leading-relaxed font-normal md:text-left text-center">
             <?php echo wp_kses_post($footer_description); ?>
           </div>
           <?php endif; ?>
@@ -204,54 +225,116 @@
           <?php endif; ?>
         </div>
 
-
       </div>
 
 
-      <div class="text-white">
-        <?php
-$footer = wp_get_nav_menu_object('Footer Menu');
-$footer_items = [];
 
-if ( $footer ) {
-    $footer_items = wp_get_nav_menu_items( $footer->term_id );
+      <?php
+  $footer = wp_get_nav_menu_object('Footer Menu');
+  $footer_items = [];
 
-    error_log( print_r( $footer_items, true ) );
-}
+  if ( $footer ) {
+      $footer_items = wp_get_nav_menu_items( $footer->term_id );
+      error_log( print_r( $footer_items, true ) );
+  }
 
-if ( ! empty( $footer_items ) ) : ?>
-        <ul class="footer-menu">
-          <?php foreach ( $footer_items as $item ) : ?>
+  if ( ! empty( $footer_items ) ) :
+      // Organize items by hierarchy
+      $menu_tree = [];
+      $parent_items = [];
+      $child_items = [];
+      
+      // Separate parent and child items
+      foreach ( $footer_items as $item ) {
+          if ( $item->menu_item_parent == 0 ) {
+              $parent_items[$item->ID] = $item;
+              $menu_tree[$item->ID] = [
+                  'item' => $item,
+                  'children' => []
+              ];
+          } else {
+              $child_items[] = $item;
+          }
+      }
+      
+      // Assign children to their parents
+      foreach ( $child_items as $child ) {
+          if ( isset( $menu_tree[$child->menu_item_parent] ) ) {
+              $menu_tree[$child->menu_item_parent]['children'][] = $child;
+          }
+      }
+  ?>
+
+
+      <?php foreach ( $menu_tree as $parent_id => $menu_group ) : ?>
+      <div class="flex flex-col gap-4 items-center w-full md:col-span-1 col-span-3">
+        <!-- Parent Item as Header -->
+        <h4 class="font-medium text-white text-center">
+          <?php if ( !empty($menu_group['item']->url) && $menu_group['item']->url !== '#' ) : ?>
+          <?php echo esc_html($menu_group['item']->title); ?>
+          <?php else : ?>
+          <?php echo esc_html($menu_group['item']->title); ?>
+          <?php endif; ?>
+        </h4>
+
+        <!-- Child Items -->
+        <?php if ( !empty($menu_group['children']) ) : ?>
+        <ul class="flex flex-col items-center space-y-2">
+          <?php foreach ( $menu_group['children'] as $child ) : ?>
           <li class="footer-menu-item">
-            <a href="<?php echo esc_url($item->url); ?>">
-              <?php echo esc_html($item->title); ?>
+            <a
+              href="<?php echo esc_url($child->url); ?>"
+              class="text-gray-300 hover:text-white transition-colors duration-200 text-center"
+            >
+              <?php echo esc_html($child->title); ?>
             </a>
           </li>
           <?php endforeach; ?>
         </ul>
         <?php endif; ?>
       </div>
+      <?php endforeach; ?>
+      <?php endif; ?>
+
+      <div class="flex flex-col gap-4 w-full order-last  md:col-span-1 col-span-3 max-w-[450px] mx-auto">
+        <h4 class="font-medium text-white text-center">Subscribe to Newsletter</h4>
+        <form class="flex flex-col items-center gap-2">
+          <input
+            class="form-input text-primary placeholder:!text-center"
+            placeholder="youremail@gmail.com"
+            type="email"
+            name="email"
+            id="footer-newsletter-email"
+            required
+            aria-label="Email for Newsletter Subscription"
+            aria-describedby="footer-newsletter-email-description"
+            aria-required="true"
+            aria-invalid="false"
+            aria-describedby="footer-newsletter-email-description"
+          />
+          <button class="btn btn-primary btn-lg w-full">Submit</button>
+        </form>
+      </div>
     </div>
 
-    <div class="text-white max-w-container w-full mx-auto flex flex-row items-center justify-between">
+    <div
+      class="text-white max-w-container w-full mx-auto flex flex-col md:flex-row items-center justify-center md:justify-between gap-4"
+    >
       <p>© <?php echo date('Y'); ?> All Rights Reserved. Built By <a
-          class="border-b border-white pb-1 cursor-pointer"
+          class="border-b border-white pb-0.6 cursor-pointer hover:border-brand-yellow hover:text-brand-yellow transition-all duration-300 ease-in-out"
           target="_blank"
           href="https://306technologies.com"
           rel="sponsored"
         >306
           Technologies</a>
       </p>
-
-
-
       <div class="flex flex-row items-center gap-5">
 
         <?php if ( $terms_conditions ) : ?>
         <a
           target="_blank"
           rel="sponsored"
-          class="border-b border-white pb-0.6 cursor-pointer"
+          class="border-b border-white pb-0.6 cursor-pointer hover:border-brand-yellow hover:text-brand-yellow transition-all duration-300 ease-in-out"
           href="<?php echo esc_url($terms_conditions); ?>"
         >
           Terms & Conditions
@@ -262,7 +345,7 @@ if ( ! empty( $footer_items ) ) : ?>
         <a
           target="_blank"
           rel="sponsored"
-          class="border-b border-white pb-0.6 cursor-pointer"
+          class="border-b border-white pb-0.6 cursor-pointer hover:border-brand-yellow hover:text-brand-yellow transition-all duration-300 ease-in-out"
           href="<?php echo esc_url($privacy_policy); ?>"
         >
           Privacy Policy
@@ -278,7 +361,7 @@ if ( ! empty( $footer_items ) ) : ?>
   $footer_bg_image_url = $footer_bg_image_id ? wp_get_attachment_image_url($footer_bg_image_id, 'full') : '';
   ?>
   <div
-    class="h-[300px] sm:h-[400px] md:h-[550px] sticky bottom-0 z-[-1] bg-right w-full bg-cover <?php echo $footer_bg_image_url ? '' : 'bg-[<?php echo esc_attr($footer_bg_color); ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>]'; ?>"
+    class="h-[300px] sm:h-[400px] md:h-[550px] sticky bottom-0 z-[-1] bg-right w-full bg-cover <?php echo $footer_bg_image_url ? '' : 'bg-[<?php echo esc_attr($footer_bg_color); ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>]'; ?>"
     style="<?php if ($footer_bg_image_url) : ?>background-image: url('<?php echo esc_url($footer_bg_image_url); ?>');<?php endif; ?>"
   >
   </div>
