@@ -43,6 +43,21 @@ module.exports = {
 			'src/accordion-section',
 			'index.js'
 		),
+		'reviews-section/index': path.resolve(
+			process.cwd(),
+			'src/reviews-section',
+			'index.js'
+		),
+		'scroll-image-section/index': path.resolve(
+			process.cwd(),
+			'src/scroll-image-section',
+			'index.js'
+		),
+		'cta-section/index': path.resolve(
+			process.cwd(),
+			'src/cta-section',
+			'index.js'
+		),
 	},
 	optimization: {
 		...defaultConfig.optimization,

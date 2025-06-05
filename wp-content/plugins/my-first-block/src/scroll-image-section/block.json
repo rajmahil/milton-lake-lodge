@@ -1,0 +1,47 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "brad-boilerplate/scroll-image-section",
+	"version": "0.1.0",
+	"title": "Scroll Image Section",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
+	"attributes": {
+		"topHeading": {
+			"type": "string",
+			"selector": "p"
+		},
+		"heading": {
+			"type": "string",
+			"selector": "h1"
+		},
+
+		"buttonText": {
+			"type": "string",
+			"default": "Learn More"
+		},
+		"buttonUrl": {
+			"type": "string",
+			"default": "#"
+		},
+
+		"image": {
+			"type": "object",
+			"default": {}
+		}
+	},
+	"supports": {
+		"html": false,
+		"color": {
+			"background": true,
+			"text": true
+		}
+	},
+	"textdomain": "scroll-image-section",
+	"editorScript": "file:./index.js",
+	"editorStyle": [ "file:../style-index.css" ],
+	"style": [ "file:../style-index.css" ],
+	"render": "file:./render.php"
+}
