@@ -49,7 +49,7 @@ const FormBlock = ( props ) => {
 						placeholder={ `${ field.placeholder || '' }${
 							field.required ? ' *' : ''
 						}` }
-						className={ `form-input ${ fieldClasses }` }
+						className={ `form-input !border !border-brand-grey placeholder:!text-muted-foreground/60 ${ fieldClasses }` }
 						required={ field.required }
 						onChange={ ( e ) =>
 							handleInputChange( field.name, e.target.value )
@@ -61,7 +61,7 @@ const FormBlock = ( props ) => {
 				return (
 					<textarea
 						key={ index }
-						className={ `form-input min-h-24 pt-4 ${ fieldClasses }` }
+						className={ `form-input !pt-4 min-h-24 !border !border-brand-grey placeholder:!text-muted-foreground/60  !text-base ${ fieldClasses }` }
 						name={ field.name || '' }
 						placeholder={ `${ field.placeholder || '' }${
 							field.required ? ' *' : ''
@@ -93,62 +93,144 @@ const FormBlock = ( props ) => {
 
 						<button
 							type="button"
-							className="w-full h-14 px-4 py-2 text-left bg-white rounded-md border border-brand-grey"
+							className="w-full h-14 px-4 py-2 text-left bg-white rounded-md border border-brand-grey flex items-center justify-between"
 							onClick={ () => toggleSelect( index ) }
 						>
-							<span>
+							<span
+								className={ `truncate ${
+									! selectedValue
+										? 'text-muted-foreground/60'
+										: ''
+								}` }
+							>
 								{ selectedValue ||
 									field.placeholder ||
 									'Select an option' }
 							</span>
+
+							<span className="ml-2">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="20"
+									height="20"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									className="lucide lucide-chevrons-up-down text-muted-foreground/60"
+								>
+									<path d="m7 15 5 5 5-5" />
+									<path d="m7 9 5-5 5 5" />
+								</svg>
+							</span>
 						</button>
 
-						{ isOpen && (
-							<ul className="absolute left-0 w-full mt-1 bg-white border rounded shadow max-h-40 overflow-auto z-10">
-								{ ( field.options || [] ).map(
-									( option, optionIndex ) => (
-										<li
-											key={ optionIndex }
-											className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-											onClick={ () =>
-												selectOption(
-													index,
-													option,
-													field.name
-												)
-											}
-										>
-											{ option }
-										</li>
-									)
-								) }
-							</ul>
-						) }
+						<div
+							className={ `absolute left-0 w-full top-25 bg-white border border-brand-grey rounded-md shadow-md z-10 list-none overflow-auto transition-all duration-100 ease-out transform origin-center  ${
+								isOpen
+									? 'opacity-100 scale-100 pointer-events-auto max-h-50'
+									: 'opacity-0 scale-95 pointer-events-none max-h-50'
+							}` }
+						>
+							{ ( field.options || [] ).map(
+								( option, optionIndex ) => (
+									<p
+										key={ optionIndex }
+										className="px-4 py-2 hover:bg-brand-light-grey cursor-pointer capitalize !my-0"
+										onClick={ () =>
+											selectOption(
+												index,
+												option,
+												field.name
+											)
+										}
+									>
+										{ option }
+									</p>
+								)
+							) }
+						</div>
 					</div>
 				);
 
 			case 'checkbox':
 				return (
-					<label
-						key={ index }
-						className={ `flex items-center space-x-2 ${ fieldClasses }` }
-					>
-						<input
-							type="checkbox"
-							name={ field.name || '' }
-							className="form-checkbox"
-							checked={
-								formData[ field.name ] || field.checked || false
-							}
-							onChange={ ( e ) =>
-								handleInputChange(
-									field.name,
-									e.target.checked
-								)
-							}
-						/>
-						<span>{ field.label || '' }</span>
-					</label>
+					<div key={ index } className="col-span-2 my-2">
+						{ field.label && (
+							<label className="block mb-3 text-medium text-center">
+								{ field.label }
+								{ field.required && (
+									<span className="text-red-500">*</span>
+								) }
+							</label>
+						) }
+
+						<div className="grid grid-cols-2 gap-2">
+							{ ( field.options || [] ).map(
+								( option, optionIndex ) => {
+									const isChecked = (
+										formData[ field.name ] || []
+									).includes( option );
+
+									const toggleCheckbox = () => {
+										setFormData( ( prev ) => {
+											const currentValues =
+												prev[ field.name ] || [];
+											if ( isChecked ) {
+												return {
+													...prev,
+													[ field.name ]:
+														currentValues.filter(
+															( v ) =>
+																v !== option
+														),
+												};
+											} else {
+												return {
+													...prev,
+													[ field.name ]: [
+														...currentValues,
+														option,
+													],
+												};
+											}
+										} );
+									};
+
+									return (
+										<label
+											key={ optionIndex }
+											className={ `flex items-center p-5 gap-2 bg-white border border-brand-grey rounded-sm cursor-pointer ${
+												field.fullWidth
+													? 'col-span-2'
+													: ''
+											}` }
+											onClick={ toggleCheckbox }
+										>
+											<input
+												type="checkbox"
+												name={
+													field.name ||
+													'checkbox-group'
+												}
+												value={ option }
+												checked={ isChecked }
+												readOnly
+												className=" translate-y-px  !h-4.5 !w-4.5 !bg-white"
+											/>
+											<span className="relative flex flex-col text-left space-y-1.5 leading-none">
+												<span className="font-normal text-left capitalize leading-none ">
+													{ option }
+												</span>
+											</span>
+										</label>
+									);
+								}
+							) }
+						</div>
+					</div>
 				);
 
 			case 'radio':
@@ -170,7 +252,7 @@ const FormBlock = ( props ) => {
 								( option, optionIndex ) => (
 									<label
 										key={ optionIndex }
-										className={ `flex items-start p-5 space-x-3 bg-white border border-brand-grey rounded-md cursor-pointer ${
+										className={ `flex items-center p-5 gap-2 bg-white border border-brand-grey rounded-md cursor-pointer ${
 											field.fullWidth ? 'col-span-2' : ''
 										}` }
 										onClick={ () =>
@@ -185,7 +267,7 @@ const FormBlock = ( props ) => {
 											name={ field.name || 'radio-group' }
 											value={ option }
 											checked={ radioValue === option }
-											className="accent-brand-dark-blue translate-y-px focus:ring-brand-dark-blue"
+											className="accent-black translate-y-px focus:ring-black"
 											onChange={ () =>
 												handleInputChange(
 													field.name,
