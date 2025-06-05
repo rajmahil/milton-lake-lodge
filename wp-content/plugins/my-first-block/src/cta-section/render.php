@@ -1,3 +1,52 @@
+<?php
+/**
+ * CTA Section Block - Render Template
+ */
+
+$top_heading = $attributes['topHeading'] ?? 'Top Heading';
+$heading = $attributes['heading'] ?? 'Main Heading';
+$button_text = $attributes['buttonText'] ?? 'Learn More';
+$button_url = $attributes['buttonUrl'] ?? '#';
+$image1 = $attributes['image'] ?? null;
+$image2 = $attributes['image2'] ?? null;
+
+// Image 1
+$image1_url = '';
+$image1_alt = '';
+$image1_id = null;
+if ($image1) {
+	if (is_array($image1)) {
+		$image1_url = $image1['url'] ?? ($image1['sizes']['large']['url'] ?? '');
+		$image1_alt = $image1['alt'] ?? '';
+		$image1_id = $image1['id'] ?? null;
+	} elseif (is_numeric($image1)) {
+		$image1_id = $image1;
+		$image1_url = wp_get_attachment_image_url($image1_id, 'large');
+		$image1_alt = get_post_meta($image1_id, '_wp_attachment_image_alt', true);
+	} elseif (is_string($image1)) {
+		$image1_url = $image1;
+	}
+}
+
+// Image 2
+$image2_url = '';
+$image2_alt = '';
+$image2_id = null;
+if ($image2) {
+	if (is_array($image2)) {
+		$image2_url = $image2['url'] ?? ($image2['sizes']['large']['url'] ?? '');
+		$image2_alt = $image2['alt'] ?? '';
+		$image2_id = $image2['id'] ?? null;
+	} elseif (is_numeric($image2)) {
+		$image2_id = $image2;
+		$image2_url = wp_get_attachment_image_url($image2_id, 'large');
+		$image2_alt = get_post_meta($image2_id, '_wp_attachment_image_alt', true);
+	} elseif (is_string($image2)) {
+		$image2_url = $image2;
+	}
+}
+?>
+
 <section class="not-prose section-padding w-full static-background">
 	<div class="relative max-w-container mx-auto bg-brand-dark-blue text-white py-16 px-10 rounded-xl w-full">
 		<div class="flex flex-col gap-4 w-full md:max-w-[70%] lg:max-w-[60%]">
@@ -45,3 +94,4 @@
 		<?php endif; ?>
 	</div>
 </section>
+
