@@ -9,7 +9,7 @@ const Accordion = ( { heading, subheading, items = [] } ) => {
 	};
 
 	return (
-		<section className="not-prose section-padding w-full static-background">
+		<section className="not-prose section-padding w-full">
 			<div className="max-w-container mx-auto !grid lg:!grid-cols-2 gap-10 items-start">
 				<div className="flex flex-col !gap-5">
 					{ heading && (

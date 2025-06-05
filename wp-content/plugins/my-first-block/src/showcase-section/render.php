@@ -42,7 +42,7 @@ $animation_class = 'showcase-animate-' . uniqid(); // unique class for inline CS
     <div>
       <a href="<?php echo esc_url($button_url); ?>">
         <button
-          class="btn btn-outline btn-xl"
+          class="btn btn-outline btn-lg"
           type="button"
         >
           <?php echo esc_html($button_text); ?>

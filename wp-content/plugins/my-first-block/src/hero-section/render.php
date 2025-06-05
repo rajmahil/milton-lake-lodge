@@ -39,9 +39,7 @@ if ($image) {
 ?>
 
 <section class="my-unique-plugin-wrapper-class">
-  <section
-    class="h-screen flex items-end overflow-hidden relative not-prose section-padding w-full hero-section static-background"
-  >
+  <section class="h-screen flex items-end overflow-hidden relative not-prose section-padding  w-full static-background">
     <!-- Background Image -->
     <div class="absolute top-0 left-0 w-full h-full z-[0] pointer-events-none select-none">
       <?php if ($image_url): ?>
@@ -78,65 +76,50 @@ if ($image) {
     <!-- Content -->
     <div class="relative z-[2] max-w-container flex flex-row gap-5 flex-wrap items-end justify-between">
       <!-- Text Content -->
-      <div class="flex flex-col gap-4 max-w-[650px] w-full">
-        <p class="decorative-text text-brand-yellow text-4xl lg:text-5xl !my-0">
-          <?php echo esc_html($top_heading); ?>
-        </p>
+      <div class="flex flex-col gap-8 max-w-[650px] w-full">
+        <div class="flex flex-col gap-2">
+          <p class="decorative-text text-brand-yellow text-4xl !my-0">
+            <?php echo esc_html($top_heading); ?>
+          </p>
+          <h1 class="!my-0 !text-4xl md:!text-5xl lg:!text-6xl !font-[600] text-left text-white">
+            <?php echo esc_html($heading); ?>
+          </h1>
 
-        <h1 class="!my-0 !text-4xl md:!text-5xl lg:!text-6xl !font-[600] text-left text-white">
-          <?php echo esc_html($heading); ?>
-        </h1>
+          <?php if ($subheading): ?>
+          <p class="!my-0 text-xl  text-left !leading-normal text-white">
+            <?php echo esc_html($subheading); ?>
+          </p>
+          <?php endif; ?>
+        </div>
+        <div class="flex flex-row gap-2">
+          <?php if ($button_url && $button_text): ?>
+          <a
+            href="<?php echo esc_url($button_url); ?>"
+            class="hero-btn-link"
+          >
+            <button
+              class="btn btn-primary btn-xl"
+              type="button"
+            >
+              <?php echo esc_html($button_text); ?>
+            </button>
+          </a>
 
-        <?php if ($subheading): ?>
-        <p class="!my-0 text-xl  text-left !leading-normal text-white">
-          <?php echo esc_html($subheading); ?>
-        </p>
-        <?php endif; ?>
+          <a
+            href="<?php echo esc_url($button2_url); ?>"
+            class="hero-btn-link"
+          >
+            <button
+              class="btn btn-outline btn-xl"
+              type="button"
+            >
+              <?php echo esc_html($button2_text); ?>
+            </button>
+          </a>
+          <?php endif; ?>
+        </div>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="flex flex-row gap-2">
-        <?php if ($button_url && $button_text): ?>
-        <a
-          href="<?php echo esc_url($button_url); ?>"
-          class="hero-btn-link"
-        >
-          <button
-            class="btn btn-outline btn-xl"
-            type="button"
-          >
-            <?php echo esc_html($button_text); ?>
-          </button>
-        </a>
-
-        <a
-          href="<?php echo esc_url($button2_url); ?>"
-          class="hero-btn-link"
-        >
-          <button
-            class="btn btn-primary btn-xl"
-            type="button"
-          >
-            <?php echo esc_html($button2_text); ?>
-          </button>
-        </a>
-        <?php else: ?>
-        <!-- Default buttons when no URL is set -->
-        <button
-          class="btn btn-outline btn-xl"
-          type="button"
-        >
-          Learn More
-        </button>
-
-        <button
-          class="btn btn-primary btn-xl"
-          type="button"
-        >
-          Get Started
-        </button>
-        <?php endif; ?>
-      </div>
   </section>
 </section>
 
