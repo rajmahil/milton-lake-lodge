@@ -267,9 +267,10 @@
 
 
       <?php foreach ( $menu_tree as $parent_id => $menu_group ) : ?>
-      <div class="flex flex-col gap-4 items-center w-full md:col-span-1 col-span-3">
+      <div
+        class="flex flex-col gap-4 items-center md:items-start w-full md:col-span-1 col-span-3 max-w-[200px] mx-auto">
         <!-- Parent Item as Header -->
-        <h4 class="font-medium text-white text-center">
+        <h4 class="font-medium text-white text-center md:text-left">
           <?php if ( !empty($menu_group['item']->url) && $menu_group['item']->url !== '#' ) : ?>
           <?php echo esc_html($menu_group['item']->title); ?>
           <?php else : ?>
@@ -279,12 +280,12 @@
 
         <!-- Child Items -->
         <?php if ( !empty($menu_group['children']) ) : ?>
-        <ul class="flex flex-col items-center space-y-2">
+        <ul class="flex flex-col items-center md:items-start space-y-2">
           <?php foreach ( $menu_group['children'] as $child ) : ?>
           <li class="footer-menu-item">
             <a
               href="<?php echo esc_url($child->url); ?>"
-              class="text-gray-300 hover:text-white transition-colors duration-200 text-center"
+              class="text-gray-300 hover:text-white transition-colors duration-200 text-left"
             >
               <?php echo esc_html($child->title); ?>
             </a>
@@ -297,10 +298,13 @@
       <?php endif; ?>
 
       <div class="flex flex-col gap-4 w-full order-last  md:col-span-1 col-span-3 max-w-[450px] mx-auto">
-        <h4 class="font-medium text-white text-center">Subscribe to Newsletter</h4>
-        <form class="flex flex-col items-center gap-2">
+        <h4 class="font-medium text-white md:text-left text-center ">Subscribe to Newsletter</h4>
+        <form class="flex
+          flex-col
+          items-center
+          gap-2">
           <input
-            class="form-input text-primary placeholder:!text-center"
+            class="form-input text-primary  "
             placeholder="youremail@gmail.com"
             type="email"
             name="email"
@@ -375,7 +379,7 @@
   $footer_bg_image_url = $footer_bg_image_id ? wp_get_attachment_image_url($footer_bg_image_id, 'full') : '';
   ?>
   <div
-    class="h-[300px] sm:h-[400px] md:h-[550px] sticky bottom-0 z-[-1] bg-right w-full bg-cover <?php echo $footer_bg_image_url ? '' : 'bg-[<?php echo esc_attr($footer_bg_color); ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>]'; ?>"
+    class="h-[300px] sm:h-[400px] md:h-[550px] sticky bottom-0 z-[-1] bg-right w-full bg-cover <?php echo $footer_bg_image_url ? '' : 'bg-[<?php echo esc_attr($footer_bg_color); ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>]'; ?>"
     style="<?php if ($footer_bg_image_url) : ?>background-image: url('<?php echo esc_url($footer_bg_image_url); ?>');<?php endif; ?>"
   >
   </div>

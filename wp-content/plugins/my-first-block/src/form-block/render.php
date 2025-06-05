@@ -94,21 +94,25 @@ $fields = $attributes['fields'] ?? [];
           <button
             @click="open = !open"
             type="button"
-            class="w-full form-input cursor-pointer flex items-center justify-start px-4 relative"
+            class="w-full form-input cursor-pointer flex items-center justify-start px-4 relative "
           >
             <p
               class="text-base capitalize"
               :class="!selected ? 'text-neutral-400' : ''"
               x-text="selected ? selected : placeholder"
             ></p>
+
+
             <span
-              class="absolute inset-y-0 right-1 top-1/2 -translate-y-1/2 flex items-center pr-2 pointer-events-none">
+              class="flex justify-center items-center pointer-events-none  absolute right-0  h-14 px-2 text-neutral-400"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 aria-hidden="true"
-                class="w-6 h-6 text-muted-foreground/50"
+                width="22"
+                height="22"
               >
                 <path
                   fill-rule="evenodd"
@@ -117,6 +121,7 @@ $fields = $attributes['fields'] ?? [];
                 ></path>
               </svg>
             </span>
+
           </button>
 
           <ul
