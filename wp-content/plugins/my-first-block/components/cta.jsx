@@ -8,7 +8,7 @@ const Cta = ( {
 } ) => {
 	return (
 		<section className="not-prose section-padding w-full static-background">
-			<div className="relative max-w-container mx-auto  bg-brand-dark-blue text-white py-16 px-10 rounded-xl w-full">
+			<div className="relative max-w-container mx-auto flex flex-col gap-10 items-center sm:items-start  bg-brand-dark-blue text-white py-16 px-10 rounded-xl w-full">
 				<div className="flex flex-col gap-4 w-full  md:max-w-[70%] lg:max-w-[60%]">
 					<div className="flex flex-col gap-3 w-full">
 						<p className="decorative-text !text-brand-yellow-dark text-3xl lg:!text-4xl !my-0 text-center sm:text-left">
@@ -18,13 +18,16 @@ const Cta = ( {
 							{ heading }
 						</h2>
 					</div>
-					<a href={ buttonUrl || '#' } className="w-fit">
+					<a
+						href={ buttonUrl || '#' }
+						className="w-fit mx-auto sm:mx-0"
+					>
 						<button className="btn btn-outline btn-xl">
 							{ buttonText || 'Learn More' }
 						</button>
 					</a>
 				</div>
-				<div className="absolute right-1/4 md:right-10 w-full flex items-center gap-5 justify-end max-w-[60%] md:max-w-[40%] bottom-[300px] md:bottom-14">
+				<div className="sm:absolute right-1/4 md:right-10 w-full flex items-center gap-5 justify-end max-w-[60%] md:max-w-[40%] bottom-[300px] md:bottom-14">
 					<div className="relative">
 						<div className="flex justify-center items-center relative ">
 							{ image?.url && (

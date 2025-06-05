@@ -47,7 +47,7 @@ export default function ReviewsSection( { topHeading, reviews = [] } ) {
 					transform: translateX( 5px ) rotate( 4deg );
 				}
 			` }</style>
-			<div className="max-w-container mx-auto grid lg:grid-cols-2 gap-8 items-center">
+			<div className="max-w-container mx-auto grid lg:grid-cols-2  items-center">
 				{ /* Images Section */ }
 				<div className="relative">
 					{ currentReview && (

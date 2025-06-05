@@ -105,7 +105,7 @@ $reviews = $attributes['reviews'] ?? [];
     }
   </style>
 
-  <div class="max-w-container mx-auto grid lg:grid-cols-2 gap-8 items-center">
+  <div class="max-w-container mx-auto grid lg:grid-cols-2 items-center">
     <!-- Images that change with review -->
     <div class="relative" id="review-images-container">
       <?php foreach ($reviews as $i => $review): ?>
