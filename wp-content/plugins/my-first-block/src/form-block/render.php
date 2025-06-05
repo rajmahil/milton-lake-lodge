@@ -11,11 +11,11 @@ $fields = $attributes['fields'] ?? [];
 
 <section class="my-unique-plugin-wrapper-class">
   <div class="section-padding static-background flex flex-col gap-12">
-    <div class="max-w-3xl w-full mx-auto">
-      <p class="decorative-text text-brand-yellow-dark !text-4xl !my-0 text-center">
+    <div class="max-w-3xl w-full mx-auto flex flex-col gap-2">
+      <p class="decorative-text text-brand-yellow-dark text-center text-3xl lg:!text-4xl">
         <?php echo esc_html($topHeading); ?>
       </p>
-      <h2 class="!text-4xl font-bold mb-4 text-center !my-0 text-brand-dark-blue">
+      <h2 class="heading-two text-center text-brand-dark-blue">
         <?php echo esc_html($heading); ?>
       </h2>
     </div>
@@ -98,7 +98,7 @@ $fields = $attributes['fields'] ?? [];
           >
             <p
               class="text-base capitalize"
-              :class="!selected ? 'text-muted-foreground/50' : ''"
+              :class="!selected ? 'text-neutral-400' : ''"
               x-text="selected ? selected : placeholder"
             ></p>
             <span

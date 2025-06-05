@@ -13,9 +13,9 @@ $items = $attributes['items'] ?? [];
     x-data="{ activeAccordion: null }"
   >
 
-    <div class="flex flex-col !gap-5">
+    <div class="flex flex-col gap-2">
       <?php if ( $heading ): ?>
-      <h2 class="text-3xl md:text-4xl lg:text-5xl font-semibold text-left">
+      <h2 class="heading-two text-left text-brand-dark-blue">
         <?php echo esc_html($heading); ?>
       </h2>
       <?php endif; ?>

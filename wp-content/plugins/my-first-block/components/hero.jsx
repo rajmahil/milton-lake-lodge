@@ -36,7 +36,7 @@ const Hero = ( {
 			<div className="absolute bottom-0 left-0 w-full h-full bg-linear-to-t  from-brand-dark-blue to-black/0"></div>
 			<div className="relative z-[2] max-w-container flex flex-row gap-5 flex-wrap items-end justify-between ">
 				<div className="flex flex-col gap-4 max-w-[650px] w-full">
-					<p className="decorative-text text-brand-yellow !text-2xl !text-brand-yellow">
+					<p className="decorative-text text-brand-yellow !text-4xl lg:text-5xl !my-0 !text-brand-yellow">
 						{ topHeading }
 					</p>
 					<h1 className="!my-0 !text-4xl md:!text-5xl lg:!text-6xl !font-[600]  text-left  !text-white">

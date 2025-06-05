@@ -72,13 +72,14 @@ if ($image) {
     </div>
 
     <!-- Gradient Overlay -->
-    <div class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-brand-dark-blue to-black/0"></div>
+    <div class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-brand-dark-blue to-brand-dark-blue/20 ">
+    </div>
 
     <!-- Content -->
     <div class="relative z-[2] max-w-container flex flex-row gap-5 flex-wrap items-end justify-between">
       <!-- Text Content -->
       <div class="flex flex-col gap-4 max-w-[650px] w-full">
-        <p class="decorative-text text-brand-yellow text-4xl">
+        <p class="decorative-text text-brand-yellow text-4xl lg:text-5xl !my-0">
           <?php echo esc_html($top_heading); ?>
         </p>
 

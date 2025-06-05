@@ -296,11 +296,11 @@ const FormBlock = ( props ) => {
 	return (
 		<section className="my-unique-plugin-wrapper-class">
 			<div className="section-padding static-background flex flex-col gap-12">
-				<div className="max-w-3xl w-full mx-auto">
-					<p className="decorative-text text-brand-yellow-dark !text-4xl !my-0 text-center">
+				<div class="max-w-3xl w-full mx-auto flex flex-col gap-4">
+					<p class="decorative-text text-brand-yellow-dark text-center text-3xl lg:!text-4xl">
 						{ topHeading }
 					</p>
-					<h2 className="!text-4xl font-bold mb-4 text-center !my-0 text-brand-dark-blue">
+					<h2 class="heading-two text-center text-brand-dark-blue">
 						{ heading }
 					</h2>
 				</div>

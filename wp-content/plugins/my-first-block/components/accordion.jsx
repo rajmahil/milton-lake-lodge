@@ -13,7 +13,7 @@ const Accordion = ( { heading, subheading, items = [] } ) => {
 			<div className="max-w-container mx-auto !grid lg:!grid-cols-2 gap-10 items-start">
 				<div className="flex flex-col !gap-5">
 					{ heading && (
-						<h2 className="!text-3xl md:!text-4xl lg:!text-5xl font-semibold text-left !my-0 !py-0">
+						<h2 className="heading-two text-left text-brand-dark-blue">
 							{ heading }
 						</h2>
 					) }
