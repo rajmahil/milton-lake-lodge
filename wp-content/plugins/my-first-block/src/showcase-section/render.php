@@ -1,6 +1,5 @@
 <?php
 
-
 $top_heading = $attributes['topHeading'] ?? '';
 $heading = $attributes['heading'] ?? '';
 $button_text = $attributes['buttonText'] ?? 'Learn More';
@@ -19,19 +18,16 @@ $reduced_duration = max($base_duration - 15, 5);
 $animation_class = 'showcase-animate-' . uniqid();
 ?>
 
-<section class="flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-dark-blue">
+<section class="flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-[#21536C]">
 
   <!-- Header Content -->
   <div class="relative z-[2] max-w-container flex flex-row flex-wrap gap-5 items-end justify-between">
     <div class="flex flex-col gap-2 lg:max-w-2xl w-full">
       <?php if ($top_heading): ?>
-      <p class="decorative-text text-brand-yellow text-3xl lg:!text-4xl ">
-        <?php echo esc_html($top_heading); ?>
-      </p>
       <?php endif; ?>
 
       <?php if ($heading): ?>
-      <h2 class="heading-two text-left text-white">
+      <h2 class="text-7xl text-left text-white">
         <?php echo esc_html($heading); ?>
       </h2>
       <?php endif; ?>
@@ -67,20 +63,17 @@ $animation_class = 'showcase-animate-' . uniqid();
           default => 'rotate-[-1deg]',
         };
       ?>
-      <div class="px-1 py-1.5 bg-white rounded-lg overflow-hidden <?php echo $rotation_class; ?> 
-          !w-[calc(70vw-40px)]      
-          450:!w-[calc(50vw-40px)]      
-          md:!w-[calc(33.33vw-40px)]   
-          lg:!w-[calc(23vw-40px)]  
-        ">
+      <div
+        class="px-1 py-1.5 bg-white rounded-lg overflow-hidden <?php echo $rotation_class; ?>
+          !w-[calc(100vw-40px)]       /* Mobile: 1 image */
+          sm:!w-[calc(50vw-40px)]     /* SM+: 2 images */
+          md:!w-[calc(33.33vw-40px)]  /* MD+: 3 images */
+          lg:!w-[calc(25vw-40px)]     /* LG+: 4 images */
+        "
+      >
         <img
           src="<?php echo esc_url($image_url); ?>"
-          srcset="<?php echo esc_attr(sprintf('%s 150w, %s 300w, %s 1024w, %s %sw', 
-            $image['sizes']['thumbnail']['url'] ?? '', 
-            $image['sizes']['medium']['url'] ?? '', 
-            $image['sizes']['large']['url'] ?? '', 
-            $image['sizes']['full']['url'] ?? ($image['url'] ?? ''), 
-            $image_width)); ?>"
+          srcset="<?php echo esc_attr(sprintf('%s 150w, %s 300w, %s 1024w, %s %sw', $image['sizes']['thumbnail']['url'] ?? '', $image['sizes']['medium']['url'] ?? '', $image['sizes']['large']['url'] ?? '', $image['sizes']['full']['url'] ?? ($image['url'] ?? ''), $image_width)); ?>"
           sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1023px) 33vw, 25vw"
           alt="<?php echo esc_attr($image_alt); ?>"
           class="flex-shrink-0 h-full aspect-[3/4] w-full object-cover"

@@ -27,9 +27,7 @@ module.exports = {
 	],
 
 	theme: {
-		extend: {
-			// Your @theme variables will be automatically picked up from CSS
-		},
+		extend: {},
 	},
 
 	safelist: [
