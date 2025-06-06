@@ -68,10 +68,10 @@ $animation_class = 'showcase-animate-' . uniqid();
         };
       ?>
       <div class="px-1 py-1.5 bg-white rounded-lg overflow-hidden <?php echo $rotation_class; ?> 
-          !w-[calc(100vw-40px)]       /* Mobile: 1 image */
-          sm:!w-[calc(50vw-40px)]     /* SM+: 2 images */
-          md:!w-[calc(33.33vw-40px)]  /* MD+: 3 images */
-          lg:!w-[calc(25vw-40px)]     /* LG+: 4 images */
+          !w-[calc(70vw-40px)]      
+          450:!w-[calc(50vw-40px)]      
+          md:!w-[calc(33.33vw-40px)]   
+          lg:!w-[calc(23vw-40px)]  
         ">
         <img
           src="<?php echo esc_url($image_url); ?>"

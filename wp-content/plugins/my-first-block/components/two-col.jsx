@@ -10,7 +10,7 @@ const TwoCol = ( {
 } ) => {
 	return (
 		<section className="not-prose section-padding w-full static-background">
-			<div className="relative max-w-container mx-auto w-full flex flex-col md:flex-row items-center gap-10 justify-between">
+			<div className="relative max-w-container mx-auto w-full grid md:grid-cols-2 items-center gap-10 justify-between">
 				<div
 					className={ `${
 						inverted ? 'order-first' : 'order-last'
@@ -55,23 +55,23 @@ const TwoCol = ( {
 						</span>
 					</a>
 				</div>
-				<div className=" w-full flex items-center gap-5 justify-end  md:max-w-[40%] p-4 sm:p-0">
+				<div className=" w-full flex items-center gap-5 justify-end max-w-[300px]  md:max-w-none mx-auto p-4 sm:p-0">
 					<div className="relative mx-auto">
 						<div className="flex justify-center items-center relative ">
 							{ image?.url && (
-								<div className="w-full aspect-[3/4] max-w-[260px] md:max-w-[340px] rounded-lg shadow-lg rotate-[-8deg]  bg-white p-1">
+								<div className="w-full aspect-[3/4] max-w-[260px] md:max-w-[360px] rounded-lg shadow-lg rotate-[-8deg]  bg-white p-1">
 									<img
 										src={ image.url }
-										className="w-full h-full aspect-[3/4] max-w-[260px] md:max-w-[340px] object-cover "
+										className="w-full h-full aspect-[3/4] max-w-[260px] md:max-w-[360px] object-cover "
 									/>
 								</div>
 							) }
 
 							{ image2?.url && (
-								<div className="w-full  aspect-[3/4] max-w-[260px] md:max-w-[340px]  rounded-lg shadow-lg  -ml-24 sm:-ml-32 lg:-ml-[160px] z-10 bg-white p-1 rotate-[2deg]">
+								<div className="w-full  aspect-[3/4] max-w-[260px] md:max-w-[360px]  rounded-lg shadow-lg  -ml-24 sm:-ml-32 lg:-ml-[160px] z-10 bg-white p-1 rotate-[2deg]">
 									<img
 										src={ image2.url }
-										className="w-full h-full aspect-[3/4] max-w-[260px] md:max-w-[340px] object-cover "
+										className="w-full h-full aspect-[3/4] max-w-[260px] md:max-w-[360px] object-cover "
 									/>
 								</div>
 							) }

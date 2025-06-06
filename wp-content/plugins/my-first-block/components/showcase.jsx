@@ -68,10 +68,10 @@ const Showcase = ( {
 					? 'rotate-[2deg]'
 					: 'rotate-[-1deg]'
 			}
-          !w-[calc(100vw-40px)]       // Mobile: 1 image
-          sm:!w-[calc(50vw-40px)]      // SM+: 2 images
-          md:!w-[calc(33.33vw-40px)]   // MD+: 3 images
-          lg:!w-[calc(25vw-40px)]      // LG+: 4 images
+          !w-[calc(70vw-40px)]      
+          450:!w-[calc(50vw-40px)]      
+          md:!w-[calc(33.33vw-40px)]   
+            lg:!w-[calc(23vw-40px)]    
         ` }
 						>
 							<img

@@ -10,10 +10,9 @@
   --color-brand-blue: #173c4f;
   --color-brand-yellow: #fed06e;
   --color-brand-yellow-dark: #edbb4f;
- 	--color-brand-grey: #E4E1D6;
-  --color-brand-light-grey: #F7F6F3;
+  --color-brand-grey: #e4e1d6;
+  --color-brand-light-grey: #f7f6f3;
 }
-
 
 @font-face {
   font-family: "Rubik";
@@ -135,6 +134,10 @@ h6 {
 
   .section-padding {
     @apply py-[90px] sm:py-[110px] px-[8px] sm:px-[16px] md:px-[45px];
+  }
+
+  .section-padding-cta {
+    @apply pb-[90px] pt-[130px] sm:pb-[110px] sm:pt-[150px] px-[8px] sm:px-[16px] md:px-[45px];
   }
 
   .section-padding-small {

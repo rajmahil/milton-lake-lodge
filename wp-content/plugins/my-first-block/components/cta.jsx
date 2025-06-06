@@ -8,42 +8,49 @@ const Cta = ( {
 } ) => {
 	return (
 		<section className="not-prose section-padding w-full static-background">
-			<div className="relative max-w-container mx-auto flex flex-col gap-10 items-center md:items-start  bg-brand-dark-blue text-white py-16 px-10 rounded-xl w-full">
-				<div className="flex flex-col gap-4 w-full  md:max-w-[70%] lg:max-w-[60%]">
-					<div className="flex flex-col gap-3 w-full">
-						<p className="decorative-text !text-brand-yellow-dark text-3xl lg:!text-4xl !my-0 text-center md:text-left">
-							{ topHeading }
-						</p>
-						<h2 className="!my-0 !text-3xl md:!text-4xl lg:!text-5xl !font-[600] max-w-none md:max-w-[60%] text-center md:text-left">
-							{ heading }
-						</h2>
+			<div className="relative max-w-container  grid 1050:grid-cols-2 items-center  gap-20 1050:gap-10 bg-brand-dark-blue text-white py-16 px-10 rounded-xl w-full">
+				<div className="flex flex-col gap-4 w-full">
+					<div className="flex flex-col gap-3 w-full items-center 1050:items-start">
+						{ topHeading && (
+							<p className="decorative-text !text-brand-yellow-dark text-3xl lg:!text-4xl !my-0">
+								{ topHeading }
+							</p>
+						) }
+						{ heading && (
+							<h2 className="!text-3xl md:!text-4xl lg:!text-5xl !font-[600] text-center 1050:text-left  !my-0">
+								{ heading }
+							</h2>
+						) }
 					</div>
-					<a
-						href={ buttonUrl || '#' }
-						className="w-fit mx-auto md:mx-0"
-					>
-						<button className="btn btn-outline btn-xl">
-							{ buttonText || 'Learn More' }
-						</button>
-					</a>
+					{ buttonText && (
+						<a
+							href={ buttonUrl || '#' }
+							className="w-fit mx-auto 1050:mx-0 "
+						>
+							<button className="btn btn-outline btn-xl">
+								{ buttonText }
+							</button>
+						</a>
+					) }
 				</div>
-				<div className="md:absolute right-1/4 md:right-10 w-full flex items-center gap-5 justify-end  md:max-w-[40%] bottom-[300px] md:bottom-14">
-					<div className="relative mx-auto">
-						<div className="flex justify-center items-center relative ">
+				<div class="1050:absolute w-full flex !items-center gap-5 !justify-end !bottom-10 !right-0">
+					<div class="relative mx-auto 1050:mx-0">
+						<div class="flex !justify-center !items-center relative">
 							{ image?.url && (
-								<div className="w-full aspect-[3/4] max-w-[290px] md:max-w-[340px] rounded-lg shadow-lg rotate-[-8deg]  bg-white p-1">
+								<div className="w-full aspect-[3/4] !max-w-[260px] 700:!max-w-[250px] 1050:!max-w-[300px] rotate-[-8deg] rounded-lg shadow-lg bg-white p-1">
 									<img
 										src={ image.url }
-										className="w-full h-full aspect-[3/4] max-w-[290px] md:max-w-[340px] object-cover "
+										alt=""
+										class="w-full h-full !aspect-[3/4] !max-w-[260px] 700:!max-w-[250px] 1050:!max-w-[300px] object-cover"
 									/>
 								</div>
 							) }
-
 							{ image2?.url && (
-								<div className="w-full  aspect-[3/4] max-w-[290px] md:max-w-[340px]  rounded-lg shadow-lg  -ml-24 sm:-ml-32 lg:-ml-[160px] z-10 bg-white p-1 rotate-[2deg]">
+								<div class="w-full aspect-[3/4] !max-w-[260px] 700:!max-w-[250px] 1050:!max-w-[300px]  rounded-lg shadow-lg -ml-[20%] z-10 bg-white p-1 rotate-[2deg]">
 									<img
 										src={ image2.url }
-										className="w-full h-full aspect-[3/4] max-w-[290px] md:max-w-[340px] object-cover "
+										alt=""
+										class="w-full h-full !aspect-[3/4] !max-w-[260px] 700:!max-w-[250px] 1050:!max-w-[300px] object-cover"
 									/>
 								</div>
 							) }

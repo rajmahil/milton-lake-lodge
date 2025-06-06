@@ -82,18 +82,18 @@ $content_order_class = $inverted ? 'order-first' : 'order-last';
 				</span>
 			</a>
 		</div>
-		<div class="w-full flex items-center gap-5 justify-end md:max-w-[40%] p-4">
+		<div class="w-full flex items-center gap-5 justify-end p-4">
 			<div class="relative mx-auto">
 				<div class="flex justify-center items-center relative">
 					<?php if ($image1_url): ?>
-						<div class="w-full aspect-[3/4] max-w-[260px] md:max-w-[340px] rounded-lg shadow-lg rotate-[-8deg] bg-white p-1">
-							<img src="<?php echo esc_url($image1_url); ?>" alt="<?php echo esc_attr($image1_alt); ?>" class="w-full h-full aspect-[3/4] max-w-[260px] md:max-w-[340px] object-cover" />
+						<div class="w-full aspect-[3/4] max-w-[260px] md:max-w-[360px] rounded-lg shadow-lg rotate-[-8deg] bg-white p-1">
+							<img src="<?php echo esc_url($image1_url); ?>" alt="<?php echo esc_attr($image1_alt); ?>" class="w-full h-full aspect-[3/4] max-w-[260px] md:max-w-[360px] object-cover" />
 						</div>
 					<?php endif; ?>
 
 					<?php if ($image2_url): ?>
-						<div class="w-full aspect-[3/4] max-w-[260px] md:max-w-[340px] rounded-lg shadow-lg -ml-24 sm:-ml-32 lg:-ml-[160px] z-10 bg-white p-1 rotate-[2deg]">
-							<img src="<?php echo esc_url($image2_url); ?>" alt="<?php echo esc_attr($image2_alt); ?>" class="w-full h-full aspect-[3/4] max-w-[260px] md:max-w-[340px] object-cover" />
+						<div class="w-full aspect-[3/4] max-w-[260px] md:max-w-[360px] rounded-lg shadow-lg -ml-24 sm:-ml-32 lg:-ml-[160px] z-10 bg-white p-1 rotate-[2deg]">
+							<img src="<?php echo esc_url($image2_url); ?>" alt="<?php echo esc_attr($image2_alt); ?>" class="w-full h-full aspect-[3/4] max-w-[260px] md:max-w-[360px] object-cover" />
 						</div>
 					<?php endif; ?>
 				</div>
