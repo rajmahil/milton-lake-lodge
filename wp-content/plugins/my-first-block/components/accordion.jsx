@@ -32,7 +32,7 @@ const Accordion = ( { heading, subheading, items = [] } ) => {
 						return (
 							<div
 								key={ id }
-								className="!cursor-pointer group !bg-white rounded-xl px-4"
+								className="!cursor-pointer group !bg-white rounded-md !border !border-brand-grey px-4"
 								onClick={ () => toggleAccordion( id ) }
 							>
 								<button

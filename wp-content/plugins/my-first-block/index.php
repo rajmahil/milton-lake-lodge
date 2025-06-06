@@ -20,6 +20,7 @@ function registerBlocks()
     register_block_type(__DIR__ . '/build/reviews-section');
     register_block_type(__DIR__ . '/build/scroll-image-section');
     register_block_type(__DIR__ . '/build/cta-section');
+    register_block_type(__DIR__ . '/build/two-col-section');
     register_block_type(__DIR__ . '/build/form-block');
 }
 add_action('init', 'registerBlocks');

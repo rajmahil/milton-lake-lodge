@@ -49,19 +49,19 @@ if ($image2) {
 
 
 <section class="not-prose section-padding w-full static-background">
-	<div class="relative max-w-container mx-auto flex flex-col gap-10 items-center sm:items-start bg-brand-dark-blue text-white py-16 px-10 rounded-xl w-full">
+	<div class="relative max-w-container mx-auto flex flex-col gap-10 items-center md:items-start bg-brand-dark-blue text-white py-16 px-10 rounded-xl w-full">
 
 		<div class="flex flex-col gap-4 w-full md:max-w-[70%] lg:max-w-[60%]">
 			<div class="flex flex-col gap-3 w-full">
-				<p class="decorative-text !text-brand-yellow-dark text-3xl lg:!text-4xl !my-0 text-center sm:text-left">
+				<p class="decorative-text !text-brand-yellow-dark text-3xl lg:!text-4xl !my-0 text-center md:text-left">
 					<?php echo esc_html($top_heading); ?>
 				</p>
-				<h2 class="!my-0 !text-3xl md:!text-4xl lg:!text-5xl !font-[600] max-w-none md:max-w-[60%] text-center sm:text-left">
+				<h2 class="!my-0 !text-3xl md:!text-4xl lg:!text-5xl !font-[600] max-w-none md:max-w-[60%] text-center md:text-left">
 					<?php echo esc_html($heading); ?>
 				</h2>
 			</div>
 
-			<a href="<?php echo esc_url($button_url); ?>" class="w-fit  mx-auto sm:mx-0">
+			<a href="<?php echo esc_url($button_url); ?>" class="w-fit  mx-auto md:mx-0">
 				<button class="btn btn-outline btn-xl">
 					<?php echo esc_html($button_text); ?>
 				</button>
@@ -69,8 +69,8 @@ if ($image2) {
 		</div>
 
 		<?php if ($image1_url || $image2_url): ?>
-			<div class="sm:absolute right-1/4 md:right-10 w-full flex items-center gap-5 justify-end max-w-[60%] md:max-w-[40%] bottom-[300px] md:bottom-14">
-				<div class="relative">
+			<div class="md:absolute right-1/4 md:right-10 w-full flex items-center gap-5 justify-end md:max-w-[40%] bottom-[300px] md:bottom-14">
+				<div class="relative mx-auto">
 					<div class="flex justify-center items-center relative">
 						<?php if ($image1_url): ?>
 							<div class="w-full aspect-[3/4] max-w-[260px] md:max-w-[340px] rounded-lg shadow-lg rotate-[-8deg] bg-white p-1">

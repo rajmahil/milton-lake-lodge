@@ -4,12 +4,18 @@ import {
 	MediaUpload,
 	InspectorControls,
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl, Button } from '@wordpress/components';
+import {
+	PanelBody,
+	TextControl,
+	Button,
+	TextareaControl,
+	ToggleControl,
+} from '@wordpress/components';
 import '../style.css';
-import Cta from '../../components/cta';
+import TwoCol from '../../components/two-col';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { topHeading, heading, buttonText, buttonUrl } = attributes;
+	const { topHeading, heading, buttonText, buttonUrl, text } = attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
@@ -35,7 +41,6 @@ export default function Edit( { attributes, setAttributes } ) {
 						} )
 					}
 					allowedTypes={ [ 'image' ] }
-					// Removed the value prop that was causing conflicts
 					render={ ( { open } ) => (
 						<Button
 							onClick={ open }
@@ -93,6 +98,13 @@ export default function Edit( { attributes, setAttributes } ) {
 							setAttributes( { heading: value } )
 						}
 					/>
+					<TextareaControl
+						label={ __( 'Text', 'your-text-domain' ) }
+						value={ text }
+						onChange={ ( value ) =>
+							setAttributes( { text: value } )
+						}
+					/>
 				</PanelBody>
 
 				<PanelBody
@@ -118,9 +130,18 @@ export default function Edit( { attributes, setAttributes } ) {
 					{ renderImageUploader( 'image', 'Upload Image' ) }
 					{ renderImageUploader( 'image2', 'Upload Image 2' ) }
 				</PanelBody>
+				<PanelBody title="Inverted" initialOpen={ true }>
+					<ToggleControl
+						label="Invert Orientation"
+						checked={ attributes.inverted }
+						onChange={ ( val ) =>
+							setAttributes( { inverted: val } )
+						}
+					/>
+				</PanelBody>
 			</InspectorControls>
 
-			<Cta { ...attributes } />
+			<TwoCol { ...attributes } />
 		</div>
 	);
 }

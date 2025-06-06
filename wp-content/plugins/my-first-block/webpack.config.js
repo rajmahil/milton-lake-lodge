@@ -58,6 +58,11 @@ module.exports = {
 			'src/cta-section',
 			'index.js'
 		),
+		'two-col-section/index': path.resolve(
+			process.cwd(),
+			'src/two-col-section',
+			'index.js'
+		),
 	},
 	optimization: {
 		...defaultConfig.optimization,
