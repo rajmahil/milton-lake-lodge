@@ -1,7 +1,5 @@
 <?php
-/**
- * Showcase Section Block - Server-side render
- */
+
 
 $top_heading = $attributes['topHeading'] ?? '';
 $heading = $attributes['heading'] ?? '';
@@ -17,8 +15,8 @@ $speed_map = [
 ];
 
 $base_duration = $speed_map[$imagesSpeed] ?? 30;
-$reduced_duration = max($base_duration - 15, 5); // prevent negative or zero
-$animation_class = 'showcase-animate-' . uniqid(); // unique class for inline CSS override
+$reduced_duration = max($base_duration - 15, 5);
+$animation_class = 'showcase-animate-' . uniqid();
 ?>
 
 <section class="flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-dark-blue">
@@ -69,15 +67,23 @@ $animation_class = 'showcase-animate-' . uniqid(); // unique class for inline CS
           default => 'rotate-[-1deg]',
         };
       ?>
-      <div class="px-1 py-1.5 bg-white rounded-lg overflow-hidden <?php echo $rotation_class; ?>">
+      <div class="px-1 py-1.5 bg-white rounded-lg overflow-hidden <?php echo $rotation_class; ?> 
+          !w-[calc(100vw-40px)]       /* Mobile: 1 image */
+          sm:!w-[calc(50vw-40px)]     /* SM+: 2 images */
+          md:!w-[calc(33.33vw-40px)]  /* MD+: 3 images */
+          lg:!w-[calc(25vw-40px)]     /* LG+: 4 images */
+        ">
         <img
           src="<?php echo esc_url($image_url); ?>"
-          srcset="<?php echo esc_attr(sprintf('%s 150w, %s 300w, %s 1024w, %s %sw', $image['sizes']['thumbnail']['url'] ?? '', $image['sizes']['medium']['url'] ?? '', $image['sizes']['large']['url'] ?? '', $image['sizes']['full']['url'] ?? ($image['url'] ?? ''), $image_width)); ?>"
-          sizes="(max-width: 768px) 100vw, 1024px"
+          srcset="<?php echo esc_attr(sprintf('%s 150w, %s 300w, %s 1024w, %s %sw', 
+            $image['sizes']['thumbnail']['url'] ?? '', 
+            $image['sizes']['medium']['url'] ?? '', 
+            $image['sizes']['large']['url'] ?? '', 
+            $image['sizes']['full']['url'] ?? ($image['url'] ?? ''), 
+            $image_width)); ?>"
+          sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1023px) 33vw, 25vw"
           alt="<?php echo esc_attr($image_alt); ?>"
-          width="<?php echo esc_attr($image_width); ?>"
-          height="<?php echo esc_attr($image_height); ?>"
-          class="flex-shrink-0 h-full aspect-[3/4] w-full max-w-[200px] md:max-w-[300px] object-cover"
+          class="flex-shrink-0 h-full aspect-[3/4] w-full object-cover"
           loading="eager"
         />
       </div>
@@ -86,7 +92,6 @@ $animation_class = 'showcase-animate-' . uniqid(); // unique class for inline CS
   </div>
 </section>
 
-<!-- Responsive animation speed override -->
 <style>
   @media (max-width: 767px) {
     .<?php echo $animation_class; ?> {

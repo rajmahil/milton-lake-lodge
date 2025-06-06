@@ -61,28 +61,32 @@ const Showcase = ( {
 								idx / images.length
 							) }` }
 							className={ `px-1 py-1.5 bg-white rounded-lg overflow-hidden
-								${
-									idx % 3 === 0
-										? 'rotate-[-3deg]'
-										: idx % 3 === 1
-										? 'rotate-[2deg]'
-										: 'rotate-[-1deg]'
-								}
-							` }
+          ${
+				idx % 3 === 0
+					? 'rotate-[-3deg]'
+					: idx % 3 === 1
+					? 'rotate-[2deg]'
+					: 'rotate-[-1deg]'
+			}
+          !w-[calc(100vw-40px)]       // Mobile: 1 image
+          sm:!w-[calc(50vw-40px)]      // SM+: 2 images
+          md:!w-[calc(33.33vw-40px)]   // MD+: 3 images
+          lg:!w-[calc(25vw-40px)]      // LG+: 4 images
+        ` }
 						>
 							<img
 								src={ image?.sizes?.large?.url || image?.url }
 								srcSet={ `
-									${ image?.sizes?.thumbnail?.url || '' } 150w,
-									${ image?.sizes?.medium?.url || '' } 300w,
-									${ image?.sizes?.large?.url || '' } 1024w,
-									${ image?.sizes?.full?.url || image?.url || '' } ${ image?.width || '' }w
-								` }
-								sizes="(max-width: 768px) 100vw, 1024px"
+            ${ image?.sizes?.thumbnail?.url || '' } 150w,
+            ${ image?.sizes?.medium?.url || '' } 300w,
+            ${ image?.sizes?.large?.url || '' } 1024w,
+            ${ image?.sizes?.full?.url || image?.url || '' } ${
+				image?.width || ''
+			}w
+          ` }
+								sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1023px) 33vw, 25vw"
 								alt={ image?.alt || '' }
-								width={ image?.width }
-								height={ image?.height }
-								className="flex-shrink-0 h-full aspect-[3/4] w-full max-w-[200px] md:max-w-[300px] object-cover"
+								className="flex-shrink-0 h-full aspect-[3/4] w-full object-cover"
 								loading="eager"
 							/>
 						</div>

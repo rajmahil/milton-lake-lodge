@@ -16,7 +16,7 @@ $reviews = $attributes['reviews'] ?? [];
 
     .review-slides-wrapper {
       display: flex;
-      transition: transform 0.6s ease-in-out;
+      transition: transform 0.4s ease-in-out;
       width: <?php echo count($reviews) * 100; ?>%;
     }
 
@@ -50,42 +50,57 @@ $reviews = $attributes['reviews'] ?? [];
       justify-content: center;
     }
 
-    /* Image animation keyframes */
-    @keyframes slideInTiltLeft {
+    /* Improved image animation keyframes - both start from center */
+    @keyframes slideFromCenterToLeft {
       0% {
-        transform: translateX(0px) translateY(10px) rotate(0deg) scale(0.95);
-       
+        transform: translateX(0) translateY(10px) rotate(0deg) scale(0.9);
+        opacity: 1;
       }
       100% {
-        transform: translateX(-5px) translateY(0) rotate(-7deg) scale(1);
-       
+        transform: translateX(-60px) translateY(0) rotate(-7deg) scale(1);
+        opacity: 1;
       }
     }
 
-    @keyframes slideInTiltRight {
+    @keyframes slideFromCenterToRight {
       0% {
-        transform: translateX(0px) translateY(10px) rotate(0deg) scale(0.95);
-        
+        transform: translateX(0) translateY(10px) rotate(0deg) scale(0.9);
+        opacity: 1;
       }
       100% {
-        transform: translateX(5px) translateY(0) rotate(4deg) scale(1);
-      
+        transform: translateX(60px) translateY(0) rotate(4deg) scale(1);
+        opacity: 1;
       }
     }
 
-    .animate-slide-tilt-left {
-      animation: slideInTiltLeft 0.8s ease-out forwards;
+    .animate-slide-center-left {
+      animation: slideFromCenterToLeft 0.8s ease-out forwards;
     }
 
-    .animate-slide-tilt-right {
-      animation: slideInTiltRight 0.8s ease-out forwards;
+    .animate-slide-center-right {
+      animation: slideFromCenterToRight 0.8s ease-out forwards;
     }
 
-    /* Reset animation class */
+    /* Reset animation class - both images start at center */
     .animate-reset {
       animation: none;
-      transform: translateX(0px) translateY(10px) rotate(0deg) scale(0.95);
-     
+      transform: translateX(0) translateY(10px) rotate(0deg) scale(0.9);
+      opacity: 1;
+    }
+
+    /* Initial positioning for overlapped center start */
+    .image-left, .image-right {
+      transform: translateX(0) translateY(10px) rotate(0deg) scale(0.9);
+      opacity: 1;
+    }
+
+    /* Adjust the static positioning for the final state */
+    .image-left.final-position {
+      transform: translateX(-60px) translateY(0) rotate(-7deg) scale(1);
+    }
+
+    .image-right.final-position {
+      transform: translateX(60px) translateY(0) rotate(4deg) scale(1);
     }
 
     /* Initial fade in for first load */
@@ -101,18 +116,18 @@ $reviews = $attributes['reviews'] ?? [];
     }
 
     .review-slide {
-      animation: fadeInUp 0.6s ease-out forwards;
+      animation: fadeInUp 0.4s ease-out forwards;
     }
   </style>
 
-  <div class="max-w-container mx-auto grid lg:grid-cols-2 items-center justify-center ">
+  <div class="max-w-container mx-auto grid lg:grid-cols-2  !gap-10 items-center justify-center ">
     <!-- Images that change with review -->
-    <div class="relative " id="review-images-container">
+    <div class="relative" id="review-images-container">
       <?php foreach ($reviews as $i => $review): ?>
         <div class="review-images <?php echo $i === 0 ? 'active' : ''; ?>" data-index="<?php echo $i; ?>">
           <div class="flex justify-center items-center relative h-full">
             <?php if (!empty($review['image1']['url'])): ?>
-              <div class="image-left w-full aspect-[3/4] max-w-[170px] sm:max-w-[200px] md:max-w-[300px] rounded-lg shadow-lg animate-slide-tilt-left bg-white p-1">
+              <div class="image-left w-full aspect-[3/4] max-w-[170px] sm:max-w-[200px] md:max-w-[350px] rounded-lg shadow-lg bg-white p-1 absolute">
                 <img
                   src="<?php echo esc_url($review['image1']['url']); ?>"
                   alt="Review image 1"
@@ -122,7 +137,7 @@ $reviews = $attributes['reviews'] ?? [];
             <?php endif; ?>
 
             <?php if (!empty($review['image2']['url'])): ?>
-              <div class="image-right w-full aspect-[3/4] max-w-[170px] sm:max-w-[200px] md:max-w-[300px] rounded-lg shadow-lg animate-slide-tilt-right -ml-16 sm:-ml-20 lg:-ml-24 z-10 bg-white p-1">
+              <div class="image-right w-full aspect-[3/4] max-w-[170px] sm:max-w-[200px] md:max-w-[350px] rounded-lg shadow-lg bg-white p-1 absolute z-10">
                 <img
                   src="<?php echo esc_url($review['image2']['url']); ?>"
                   alt="Review image 2"
@@ -191,30 +206,40 @@ $reviews = $attributes['reviews'] ?? [];
       let currentIndex = 0;
 
       function triggerImageAnimations(imageContainer) {
-        // Reset all animations first
+        // Reset all animations first - both images return to center
         const leftImage = imageContainer.querySelector('.image-left');
         const rightImage = imageContainer.querySelector('.image-right');
         
         if (leftImage) {
-          leftImage.classList.remove('animate-slide-tilt-left');
+          leftImage.classList.remove('animate-slide-center-left', 'final-position');
           leftImage.classList.add('animate-reset');
         }
         if (rightImage) {
-          rightImage.classList.remove('animate-slide-tilt-right');
+          rightImage.classList.remove('animate-slide-center-right', 'final-position');
           rightImage.classList.add('animate-reset');
         }
 
-        // Trigger animations after a short delay
+        // Trigger animations after a short delay - both move from center outward
         setTimeout(() => {
           if (leftImage) {
             leftImage.classList.remove('animate-reset');
-            leftImage.classList.add('animate-slide-tilt-left');
+            leftImage.classList.add('animate-slide-center-left');
           }
           if (rightImage) {
             rightImage.classList.remove('animate-reset');
-            rightImage.classList.add('animate-slide-tilt-right');
+            rightImage.classList.add('animate-slide-center-right');
           }
-        }, 50);
+        }, 100);
+
+        // Add final position classes after animation completes
+        setTimeout(() => {
+          if (leftImage) {
+            leftImage.classList.add('final-position');
+          }
+          if (rightImage) {
+            rightImage.classList.add('final-position');
+          }
+        }, 900);
       }
 
       function showSlide(index) {
@@ -249,6 +274,14 @@ $reviews = $attributes['reviews'] ?? [];
             dot.classList.add('bg-white', 'border', 'border-black');
           }
         });
+      }
+
+      // Initialize first slide animations
+      const firstActiveImage = images[0];
+      if (firstActiveImage) {
+        setTimeout(() => {
+          triggerImageAnimations(firstActiveImage);
+        }, 300);
       }
 
       dots.forEach(dot => {
