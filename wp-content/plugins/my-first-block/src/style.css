@@ -14,12 +14,14 @@
 	--font-sans: "Overused Grotesk", sans-serif;
 	--font-decorative: "Caveat", "cursive";
 
-	--color-brand-dark-blue: #112a37;
-	--color-brand-blue: #173c4f;
+
+
+	--color-brand-green: #00473F;
+	--color-brand-green-dark: #00251E;
 	--color-brand-yellow: #fed06e;
 	--color-brand-yellow-dark: #edbb4f;
 	--color-brand-grey: #e4e1d6;
-	--color-brand-light-grey: #f7f6f3;
+	--color-brand-light-grey: #e8dfd8;
 
 	/* Custom breakpoints */
 	--breakpoint-375: 375px;
@@ -224,15 +226,7 @@ h6 {
 	}
 
 	.section-padding {
-		@apply py-[90px]  px-[8px] sm:px-[16px] md:px-[45px];
-	}
-
-	.section-padding-cta {
-		@apply pb-[90px] pt-[130px] sm:pb-[110px] sm:pt-[150px] px-[8px] sm:px-[16px] md:px-[45px];
-	}
-
-	.section-padding-small {
-		@apply py-[45px] sm:py-[90px] px-[8px] sm:px-[16px] md:px-[45px];
+		@apply py-[110px]  px-[8px] sm:px-[16px] md:px-[45px];
 	}
 
 	.btn {
@@ -240,11 +234,11 @@ h6 {
 	}
 	/* Variants */
 	.btn-primary {
-		@apply bg-brand-yellow text-brand-dark-blue  hover:bg-brand-yellow-dark focus-visible:ring-2 focus-visible:ring-brand-yellow-dark focus-visible:outline-none;
+		@apply bg-brand-yellow text-brand-green-dark  hover:bg-brand-yellow-dark focus-visible:ring-2 focus-visible:ring-brand-yellow-dark focus-visible:outline-none;
 	}
 
 	.btn-dark {
-		@apply bg-brand-blue text-white hover:opacity-80 transition-all ease-in-out  focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:outline-none;
+		@apply bg-brand-green text-white hover:opacity-80 transition-all ease-in-out  focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:outline-none;
 	}
 
 	.btn-secondary {
@@ -252,7 +246,7 @@ h6 {
 	}
 
 	.btn-outline {
-		@apply border border-white text-white hover:bg-white hover:text-brand-dark-blue focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none;
+		@apply border border-white text-white hover:bg-white hover:text-brand-green-dark focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none;
 	}
 
 	/* Sizes */
@@ -281,11 +275,11 @@ h6 {
 	}
 
 	.heading-two {
-		@apply !my-0  !text-4xl  !font-[600] text-brand-dark-blue;
+		@apply !my-0  !text-7xl ;
 	}
 
 	.footer-social-btn {
-		@apply h-10 w-10 bg-brand-yellow flex items-center justify-center rounded-full p-2 text-brand-dark-blue;
+		@apply h-10 w-10 bg-brand-yellow flex items-center justify-center rounded-full p-2 text-brand-green-dark;
 	}
 }
 
@@ -302,6 +296,9 @@ h6 {
 	.animate-slide {
 		animation: slide 30s linear infinite;
 		animation-play-state: running;
+		will-change: transform;
+ 		transform: translate3d(0, 0, 0); /* triggers GPU */
+
 	}
 
 	.group:hover .animate-slide {

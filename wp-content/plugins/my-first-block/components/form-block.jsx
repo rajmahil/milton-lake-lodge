@@ -300,7 +300,7 @@ const FormBlock = ( props ) => {
 					<p class="decorative-text text-brand-yellow-dark text-center text-3xl lg:!text-4xl">
 						{ topHeading }
 					</p>
-					<h2 class="heading-two text-center text-brand-dark-blue">
+					<h2 class="heading-two text-center text-brand-green-dark">
 						{ heading }
 					</h2>
 				</div>

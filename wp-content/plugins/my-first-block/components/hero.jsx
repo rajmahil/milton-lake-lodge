@@ -33,7 +33,7 @@ const Hero = ( {
 					loading="eager" // key point for Hero!
 				/>
 			</div>
-			<div className="absolute bottom-0 left-0 w-full h-full bg-linear-to-t  from-brand-dark-blue to-black/0"></div>
+			<div className="absolute bottom-0 left-0 w-full h-full bg-linear-to-t  from-brand-green-dark to-black/0"></div>
 			<div className="relative z-[2] max-w-container flex flex-row gap-5 flex-wrap items-end justify-between ">
 				<div className="flex flex-col gap-4 max-w-[650px] w-full">
 					<p className="decorative-text text-brand-yellow !text-4xl lg:text-5xl !my-0">

@@ -13,92 +13,84 @@ $image2 = $attributes['image2'] ?? null;
 $inverted = $attributes['inverted'] ?? false;
 
 // Image 1
-$image1_url = '';
+$image1_id = null;
 $image1_alt = '';
+
 if ($image1) {
-	if (is_array($image1)) {
-		$image1_url = $image1['url'] ?? ($image1['sizes']['large']['url'] ?? '');
-		$image1_alt = $image1['alt'] ?? '';
-	} elseif (is_numeric($image1)) {
-		$image1_url = wp_get_attachment_image_url($image1, 'large');
-		$image1_alt = get_post_meta($image1, '_wp_attachment_image_alt', true);
-	} elseif (is_string($image1)) {
-		$image1_url = $image1;
-	}
+    if (is_array($image1)) {
+        $image1_id = $image1['id'] ?? ($image1['ID'] ?? null);
+        $image1_alt = $image1['alt'] ?? '';
+    } elseif (is_numeric($image1)) {
+        $image1_id = $image1;
+        $image1_alt = get_post_meta($image1, '_wp_attachment_image_alt', true);
+    }
 }
 
 // Image 2
-$image2_url = '';
+$image2_id = null;
 $image2_alt = '';
+
 if ($image2) {
-	if (is_array($image2)) {
-		$image2_url = $image2['url'] ?? ($image2['sizes']['large']['url'] ?? '');
-		$image2_alt = $image2['alt'] ?? '';
-	} elseif (is_numeric($image2)) {
-		$image2_url = wp_get_attachment_image_url($image2, 'large');
-		$image2_alt = get_post_meta($image2, '_wp_attachment_image_alt', true);
-	} elseif (is_string($image2)) {
-		$image2_url = $image2;
-	}
+    if (is_array($image2)) {
+        $image2_id = $image2['id'] ?? ($image2['ID'] ?? null);
+        $image2_alt = $image2['alt'] ?? '';
+    } elseif (is_numeric($image2)) {
+        $image2_id = $image2;
+        $image2_alt = get_post_meta($image2, '_wp_attachment_image_alt', true);
+    }
 }
 
 $content_order_class = $inverted ? 'order-first' : 'order-last';
 ?>
 
-<section class="not-prose section-padding w-full static-background">
-	<div class="relative max-w-container mx-auto w-full flex flex-col md:flex-row items-center gap-10 justify-between">
+<section class="not-prose section-padding w-full">
+  <div class="relative max-w-container mx-auto w-full grid grid-cols-5 gap-8 items-center">
+    <div class="<?php echo esc_attr($content_order_class); ?> flex flex-col gap-4 w-full col-span-2 max-w-[600px] mx-auto">
+      <div class='flex flex-col gap-2 w-full'>
+        <h2 class="heading-two text-left">
+          <?php echo esc_html($heading); ?>
+        </h2>
+        <p class="!my-0 text-left text-lg"><?php echo esc_html($text); ?></p>
+      </div>
+      <a href="<?php echo esc_url($button_url); ?>">
+        <button class="flex flex-row items-center w-fit gap-1 border-b border-black pb-0.5 f">
+          <p class="text-black text-base">
+            <?php echo esc_html($button_text); ?>
+          </p>
+      </a>
+    </div>
 
-		<div class="<?php echo esc_attr($content_order_class); ?> flex flex-col gap-4 w-full">
-			<div class='flex flex-col gap-2 w-full'>
-			<div class="flex flex-col gap-1 w-full">
-				<p class="decorative-text !text-brand-yellow-dark text-3xl lg:!text-4xl !my-0 text-center md:text-left">
-					<?php echo esc_html($top_heading); ?>
-				</p>
-				<h2 class="!my-0 !text-3xl md:!text-4xl lg:!text-5xl !font-[600] text-center md:text-left">
-					<?php echo esc_html($heading); ?>
-				</h2>
-			</div>
-			<p class="!my-0 text-base leading-relaxed  text-center md:text-left"><?php echo esc_html($text); ?></p></div>
-			<a href="<?php echo esc_url($button_url); ?>" class="w-fit mx-auto md:mx-0 group">
-				<span class="inline-flex items-center gap-1 border-b border-black pb-[2px]">
-					<span class="text-black text-base">
-						<?php echo esc_html($button_text); ?>
-					</span>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="lucide lucide-arrow-right transition-transform duration-300 ease-in-out group-hover:translate-x-[3px]"
-					>
-						<path d="M5 12h14" />
-						<path d="m12 5 7 7-7 7" />
-					</svg>
-				</span>
-			</a>
-		</div>
-		<div class="w-full flex items-center gap-5 justify-end p-4">
-			<div class="relative mx-auto">
-				<div class="flex justify-center items-center relative">
-					<?php if ($image1_url): ?>
-						<div class="w-full aspect-[3/4] max-w-[260px] md:max-w-[360px] rounded-lg shadow-lg rotate-[-8deg] bg-white p-1">
-							<img src="<?php echo esc_url($image1_url); ?>" alt="<?php echo esc_attr($image1_alt); ?>" class="w-full h-full aspect-[3/4] max-w-[260px] md:max-w-[360px] object-cover" />
-						</div>
-					<?php endif; ?>
 
-					<?php if ($image2_url): ?>
-						<div class="w-full aspect-[3/4] max-w-[260px] md:max-w-[360px] rounded-lg shadow-lg -ml-24 sm:-ml-32 lg:-ml-[160px] z-10 bg-white p-1 rotate-[2deg]">
-							<img src="<?php echo esc_url($image2_url); ?>" alt="<?php echo esc_attr($image2_alt); ?>" class="w-full h-full aspect-[3/4] max-w-[260px] md:max-w-[360px] object-cover" />
-						</div>
-					<?php endif; ?>
-				</div>
-			</div>
-		</div>
 
-	</div>
+    <div class="flex justify-center items-center relative col-span-3">
+      <?php if ($image1_id): ?>
+      <div class="max-w-[400px] w-full rotate-5 relative left-10 shadow-lg">
+        <?php
+        echo wp_get_attachment_image($image1_id, 'medium', false, [
+            'class' => 'aspect-[3/4] w-full object-cover',
+            'loading' => 'lazy',
+            'decoding' => 'async',
+            'fetchpriority' => 'high',
+            'alt' => $image1_alt ?? '',
+        ]);
+        ?>
+      </div>
+      <?php endif; ?>
+      <?php if ($image2_id): ?>
+      <div class="max-w-[400px] w-full rotate-[-10deg] shadow-lg relative right-10">
+        <?php
+        echo wp_get_attachment_image($image2_id, 'large', false, [
+            'class' => 'aspect-[3/4] w-full object-cover',
+            'loading' => 'lazy',
+            'decoding' => 'async',
+            'fetchpriority' => 'auto',
+            'alt' => $image2_alt ?? '',
+        ]);
+        ?>
+      </div>
+      <?php endif; ?>
+    </div>
+
+
+  </div>
 </section>

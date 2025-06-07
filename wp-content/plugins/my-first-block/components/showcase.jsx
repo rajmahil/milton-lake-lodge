@@ -68,10 +68,10 @@ const Showcase = ( {
 					? 'rotate-[2deg]'
 					: 'rotate-[-1deg]'
 			}
-          !w-[calc(70vw-40px)]      
-          450:!w-[calc(50vw-40px)]      
-          md:!w-[calc(33.33vw-40px)]   
-            lg:!w-[calc(23vw-40px)]    
+          !w-[calc(70vw-40px)]
+          450:!w-[calc(50vw-40px)]
+          md:!w-[calc(33.33vw-40px)]
+            lg:!w-[calc(23vw-40px)]
         ` }
 						>
 							<img

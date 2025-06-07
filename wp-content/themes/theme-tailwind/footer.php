@@ -4,20 +4,9 @@
   $footer_bg_image_id = get_theme_mod('boilerplate_footer_bg_image', 0);
   $footer_bg_image_url = $footer_bg_image_id ? wp_get_attachment_image_url($footer_bg_image_id, 'full') : '';
   ?>
-  <div
-    style="background-color: <?php echo esc_attr($footer_bg_color); ?>;"
-    class="static-background w-full pointer-events-none select-none"
-  >
-    <img
-      src="<?php echo wp_upload_dir()['baseurl']; ?>/effects/footer-waves-effect-3.png"
-      alt=""
-      loading="lazy"
-      decoding="async"
-      class="object-cover w-full object-bottom relative top-1"
-    />
-  </div>
 
-  <div class="section-padding bg-brand-dark-blue flex flex-col gap-20 pb-10 shadow-2xl">
+
+  <div class="section-padding bg-brand-green-dark flex flex-col gap-20 pb-10 shadow-2xl rounded-b-4xl overflow-hidden">
     <div class="max-w-container w-full mx-auto  grid grid-cols-3 lg:grid-cols-4 gap-2  xl:gap-10 space-y-20">
       <div
         class="flex flex-col gap-8 items-center md:items-start lg:col-span-1 col-span-3  max-w-[450px] mr-auto ml-auto md:ml-0"
@@ -84,7 +73,7 @@
             href="<?php echo esc_url($facebook); ?>"
             target="_blank"
             rel="noopener noreferrer"
-            class="hover:bg-brand-yellow transition-all duration-300 ease-in-out h-10 w-10 bg-white flex items-center justify-center rounded-full p-1.5 text-brand-dark-blue"
+            class="hover:bg-brand-yellow transition-all duration-300 ease-in-out h-10 w-10 bg-white flex items-center justify-center rounded-full p-1.5 text-brand-green-dark"
           >
             <span class="sr-only">Facebook</span>
             <svg
@@ -106,7 +95,7 @@
             href="<?php echo esc_url($twitter); ?>"
             target="_blank"
             rel="noopener noreferrer"
-            class="hover:bg-brand-yellow transition-all duration-300 ease-in-out h-10 w-10 bg-white flex items-center justify-center rounded-full p-2 text-brand-dark-blue"
+            class="hover:bg-brand-yellow transition-all duration-300 ease-in-out h-10 w-10 bg-white flex items-center justify-center rounded-full p-2 text-brand-green-dark"
           >
             <span class="sr-only">Twitter</span>
             <svg
@@ -128,7 +117,7 @@
             href="<?php echo esc_url($linkedin); ?>"
             target="_blank"
             rel="noopener noreferrer"
-            class="hover:bg-brand-yellow transition-all duration-300 ease-in-out h-10 w-10 bg-white flex items-center justify-center rounded-full p-2 text-brand-dark-blue"
+            class="hover:bg-brand-yellow transition-all duration-300 ease-in-out h-10 w-10 bg-white flex items-center justify-center rounded-full p-2 text-brand-green-dark"
           >
             <span class="sr-only">Linkedin</span>
             <svg
@@ -150,7 +139,7 @@
             href="<?php echo esc_url($instagram); ?>"
             target="_blank"
             rel="noopener noreferrer"
-            class="hover:bg-brand-yellow transition-all duration-300 ease-in-out h-10 w-10 bg-white flex items-center justify-center rounded-full p-2 text-brand-dark-blue"
+            class="hover:bg-brand-yellow transition-all duration-300 ease-in-out h-10 w-10 bg-white flex items-center justify-center rounded-full p-2 text-brand-green-dark"
           >
             <span class="sr-only">Instagram</span>
             <svg
@@ -173,7 +162,7 @@
             href="<?php echo esc_url($youtube); ?>"
             target="_blank"
             rel="noopener noreferrer"
-            class="hover:bg-brand-yellow transition-all duration-300 ease-in-out h-10 w-10 bg-white flex items-center justify-center rounded-full p-2 text-brand-dark-blue"
+            class="hover:bg-brand-yellow transition-all duration-300 ease-in-out h-10 w-10 bg-white flex items-center justify-center rounded-full p-2 text-brand-green-dark"
           >
             <span class="sr-only">Youtube</span>
             <svg
@@ -196,7 +185,7 @@
             href="<?php echo esc_url($tripadvisor); ?>"
             target="_blank"
             rel="noopener noreferrer"
-            class="hover:bg-brand-yellow transition-all duration-300 ease-in-out h-10 w-10 bg-white flex items-center justify-center rounded-full p-1.5 text-brand-dark-blue"
+            class="hover:bg-brand-yellow transition-all duration-300 ease-in-out h-10 w-10 bg-white flex items-center justify-center rounded-full p-1.5 text-brand-green-dark"
           >
             <span class="sr-only">Trip Advisor</span>
             <svg
@@ -270,7 +259,7 @@
       <div
         class="flex flex-col gap-4 items-center md:items-start w-full md:col-span-1 col-span-3 max-w-[200px] mx-auto">
         <!-- Parent Item as Header -->
-        <h4 class="font-medium text-white text-center md:text-left">
+        <h4 class="font-medium text-white text-center md:text-left text-2xl">
           <?php if ( !empty($menu_group['item']->url) && $menu_group['item']->url !== '#' ) : ?>
           <?php echo esc_html($menu_group['item']->title); ?>
           <?php else : ?>
@@ -298,13 +287,13 @@
       <?php endif; ?>
 
       <div class="flex flex-col gap-4 w-full order-last  md:col-span-1 col-span-3 max-w-[450px] mx-auto">
-        <h4 class="font-medium text-white md:text-left text-center ">Subscribe to Newsletter</h4>
+        <h4 class="font-medium text-white text-center text-2xl">Subscribe to Newsletter</h4>
         <form class="flex
           flex-col
           items-center
           gap-2">
           <input
-            class="form-input text-primary  "
+            class="form-input   "
             placeholder="youremail@gmail.com"
             type="email"
             name="email"
@@ -379,7 +368,7 @@
   $footer_bg_image_url = $footer_bg_image_id ? wp_get_attachment_image_url($footer_bg_image_id, 'full') : '';
   ?>
   <div
-    class="h-[300px] sm:h-[400px] md:h-[550px] sticky bottom-0 z-[-1] bg-right w-full bg-cover <?php echo $footer_bg_image_url ? '' : 'bg-[<?php echo esc_attr($footer_bg_color); ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>]'; ?>"
+    class="-mt-8 h-[300px] sm:h-[400px] md:h-[550px] sticky bottom-0 z-[-1] bg-right w-full bg-cover <?php echo $footer_bg_image_url ? '' : 'bg-[<?php echo esc_attr($footer_bg_color); ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>]'; ?>"
     style="<?php if ($footer_bg_image_url) : ?>background-image: url('<?php echo esc_url($footer_bg_image_url); ?>');<?php endif; ?>"
   >
   </div>

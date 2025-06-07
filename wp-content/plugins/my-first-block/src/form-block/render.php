@@ -12,10 +12,7 @@ $fields = $attributes['fields'] ?? [];
 <section class="my-unique-plugin-wrapper-class">
   <div class="section-padding static-background flex flex-col gap-12 !bg-brand-light-grey">
     <div class="max-w-3xl w-full mx-auto flex flex-col gap-2">
-      <p class="decorative-text text-brand-yellow-dark text-center text-3xl lg:!text-4xl">
-        <?php echo esc_html($topHeading); ?>
-      </p>
-      <h2 class="heading-two text-center text-brand-dark-blue">
+      <h2 class="heading-two text-center text-brand-green-dark">
         <?php echo esc_html($heading); ?>
       </h2>
     </div>
@@ -191,7 +188,7 @@ $fields = $attributes['fields'] ?? [];
                   name="<?php echo esc_attr($field['name'] ?? 'checbox-group'); ?>"
                   :value="option.value"
                   x-model="radioGroupSelectedValue"
-                  class="accent-brand-dark-blue translate-y-px focus:ring-brand-dark-blue !h-4.5 !w-4.5"
+                  class="accent-brand-green-dark translate-y-px focus:ring-brand-green-dark !h-4.5 !w-4.5"
                 />
                 <span class="relative flex flex-col text-left space-y-1.5 leading-none">
                   <span
@@ -250,7 +247,7 @@ $fields = $attributes['fields'] ?? [];
                   name="<?php echo esc_attr($field['name'] ?? 'radio-group'); ?>"
                   :value="option.value"
                   x-model="radioGroupSelectedValue"
-                  class="accent-brand-dark-blue translate-y-px focus:ring-brand-dark-blue"
+                  class="accent-brand-green-dark translate-y-px focus:ring-brand-green-dark"
                 />
                 <span class="relative flex flex-col text-left space-y-1.5 leading-none">
                   <span

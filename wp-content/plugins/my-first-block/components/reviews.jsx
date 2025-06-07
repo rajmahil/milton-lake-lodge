@@ -214,7 +214,7 @@ export default function ReviewsSection( { topHeading, reviews = [] } ) {
 									data-index={ i }
 								>
 									<div className="text-center px-4">
-										<p className="!text-2xl leading-relaxed text-brand-dark-blue !mt-0 !mb-4">
+										<p className="!text-2xl leading-relaxed text-brand-green-dark !mt-0 !mb-4">
 											{ review.text || '' }
 										</p>
 										<div className="flex justify-center gap-1 mb-2">

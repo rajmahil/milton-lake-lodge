@@ -15,17 +15,17 @@ $image1_url = '';
 $image1_alt = '';
 $image1_id = null;
 if ($image1) {
-	if (is_array($image1)) {
-		$image1_url = $image1['url'] ?? ($image1['sizes']['large']['url'] ?? '');
-		$image1_alt = $image1['alt'] ?? '';
-		$image1_id = $image1['id'] ?? null;
-	} elseif (is_numeric($image1)) {
-		$image1_id = $image1;
-		$image1_url = wp_get_attachment_image_url($image1_id, 'large');
-		$image1_alt = get_post_meta($image1_id, '_wp_attachment_image_alt', true);
-	} elseif (is_string($image1)) {
-		$image1_url = $image1;
-	}
+    if (is_array($image1)) {
+        $image1_url = $image1['url'] ?? ($image1['sizes']['large']['url'] ?? '');
+        $image1_alt = $image1['alt'] ?? '';
+        $image1_id = $image1['id'] ?? null;
+    } elseif (is_numeric($image1)) {
+        $image1_id = $image1;
+        $image1_url = wp_get_attachment_image_url($image1_id, 'large');
+        $image1_alt = get_post_meta($image1_id, '_wp_attachment_image_alt', true);
+    } elseif (is_string($image1)) {
+        $image1_url = $image1;
+    }
 }
 
 // Image 2
@@ -33,69 +33,76 @@ $image2_url = '';
 $image2_alt = '';
 $image2_id = null;
 if ($image2) {
-	if (is_array($image2)) {
-		$image2_url = $image2['url'] ?? ($image2['sizes']['large']['url'] ?? '');
-		$image2_alt = $image2['alt'] ?? '';
-		$image2_id = $image2['id'] ?? null;
-	} elseif (is_numeric($image2)) {
-		$image2_id = $image2;
-		$image2_url = wp_get_attachment_image_url($image2_id, 'large');
-		$image2_alt = get_post_meta($image2_id, '_wp_attachment_image_alt', true);
-	} elseif (is_string($image2)) {
-		$image2_url = $image2;
-	}
+    if (is_array($image2)) {
+        $image2_url = $image2['url'] ?? ($image2['sizes']['large']['url'] ?? '');
+        $image2_alt = $image2['alt'] ?? '';
+        $image2_id = $image2['id'] ?? null;
+    } elseif (is_numeric($image2)) {
+        $image2_id = $image2;
+        $image2_url = wp_get_attachment_image_url($image2_id, 'large');
+        $image2_alt = get_post_meta($image2_id, '_wp_attachment_image_alt', true);
+    } elseif (is_string($image2)) {
+        $image2_url = $image2;
+    }
 }
 ?>
 
 
-<section class="section-padding-cta w-full static-background">
-	<div class="relative max-w-container  grid 1050:grid-cols-2 items-center  gap-20 1050:gap-10 bg-brand-dark-blue text-white py-16 px-10 rounded-xl w-full">
+<section class="section-padding w-full">
+  <div class="relative max-w-container  grid grid-cols-5 items-center  gap-5 text-white  w-full">
+    <div class="absolute bottom-0 left-0 bg-brand-green w-full  h-[80%] rounded-2xl z-[0]"></div>
+    <div class="flex flex-col gap-4 w-full relative z-[1] items-start section-padding col-span-2">
+      <h2 class="!text-3xl md:!text-4xl lg:!text-5xl !font-[600] text-center 1050:text-left">
+        <?php echo esc_html($heading); ?>
+      </h2>
+      <a href="<?php echo esc_url($button_url); ?>">
+        <button class="btn btn-outline btn-xl">
+          <?php echo esc_html($button_text); ?>
+        </button>
+      </a>
+    </div>
 
-		<div class="flex flex-col gap-4 w-full">
-			<div class="flex flex-col gap-3 w-full items-center 1050:items-start">
-				<p class="decorative-text !text-brand-yellow-dark text-3xl lg:!text-4xl">
-					<?php echo esc_html($top_heading); ?>
-				</p>
-				<h2 class="!text-3xl md:!text-4xl lg:!text-5xl !font-[600] text-center 1050:text-left">
-					<?php echo esc_html($heading); ?>
-				</h2>
-			</div>
+    <?php if ($image1_url || $image2_url): ?>
+    <div class="flex justify-center items-center relative col-span-3">
+      <?php if ($image1_url): ?>
+      <div class="max-w-[400px] w-full rotate-5 relative left-10 shadow-lg">
+        <?php
+        echo wp_get_attachment_image(
+            $image1_id,
+            'medium', // size name (you can also use 'medium', 'full', or custom sizes)
+            true, // icon (false = no icon fallback)
+            [
+                'class' => 'aspect-[3/4] w-full object-cover',
+                'alt' => $image1_alt,
+                'loading' => 'lazy', // lazy load for performance
+                'fetchpriority' => 'auto', // auto or 'high' for above-the-fold
+                'decoding' => 'async', // async decoding
+            ],
+        );
+        ?>
+      </div>
+      <?php endif; ?>
+      <?php if ($image2_url): ?>
+      <div class="max-w-[400px] w-full rotate-[-10deg] shadow-lg relative right-10">
+        <?php
+        echo wp_get_attachment_image(
+            $image2_id,
+            'medium', // size name (you can also use 'medium', 'full', or custom sizes)
+            true, // icon (false = no icon fallback)
+            [
+                'class' => 'aspect-[3/4] w-full object-cover',
+                'alt' => $image2_alt,
+                'loading' => 'lazy', // lazy load for performance
+                'fetchpriority' => 'auto', // auto or 'high' for above-the-fold
+                'decoding' => 'async', // async decoding
+            ],
+        );
+        ?>
+      </div>
+      <?php endif; ?>
+    </div>
 
-			<a href="<?php echo esc_url($button_url); ?>" class="w-fit mx-auto 1050:mx-0 ">
-				<button class="btn btn-outline btn-xl">
-					<?php echo esc_html($button_text); ?>
-				</button>
-			</a>
-		</div>
+    <?php endif; ?>
 
-		<?php if ($image1_url || $image2_url): ?>
-			<div class="1050:absolute w-full flex items-center gap-5 justify-end bottom-10 right-0">
-				<div class="relative mx-auto 1050:mx-0">
-					<div class="flex justify-center items-center relative">
-						<?php if ($image1_url): ?>
-							<div class="w-full aspect-[3/4] max-w-[260px] 700:max-w-[250px] 1050:max-w-[300px] rounded-lg shadow-lg rotate-[-8deg] bg-white p-1">
-								<img
-									src="<?php echo esc_url($image1_url); ?>"
-									alt="<?php echo esc_attr($image1_alt); ?>"
-									class="w-full h-full aspect-[3/4] max-w-[260px] 700:max-w-[250px] 1050:max-w-[300px] object-cover"
-								/>
-							</div>
-						<?php endif; ?>
-
-						<?php if ($image2_url): ?>
-							<div class="w-full aspect-[3/4] max-w-[260px] 700:max-w-[250px] 1050:max-w-[300px]  rounded-lg shadow-lg -ml-[20%] z-10 bg-white p-1 rotate-[2deg]">
-								<img
-									src="<?php echo esc_url($image2_url); ?>"
-									alt="<?php echo esc_attr($image2_alt); ?>"
-									class="w-full h-full aspect-[3/4] max-w-[260px] 700:max-w-[250px] 1050:max-w-[300px] object-cover"
-								/>
-							</div>
-						<?php endif; ?>
-					</div>
-				</div>
-			</div>
-		<?php endif; ?>
-
-	</div>
+  </div>
 </section>
-

@@ -15,7 +15,7 @@ $items = $attributes['items'] ?? [];
 
     <div class="flex flex-col gap-2">
       <?php if ( $heading ): ?>
-      <h2 class="heading-two text-left text-brand-dark-blue">
+      <h2 class="heading-two text-left text-brand-green-dark">
         <?php echo esc_html($heading); ?>
       </h2>
       <?php endif; ?>

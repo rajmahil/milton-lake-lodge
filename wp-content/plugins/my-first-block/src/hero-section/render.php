@@ -38,7 +38,7 @@ if ($image) {
 }
 ?>
 
-<section class="my-unique-plugin-wrapper-class bg-[#21536C]">
+<section class="my-unique-plugin-wrapper-class bg-brand-green">
   <section
     class="h-[95vh] min-h-[800px] flex items-end overflow-hidden relative not-prose section-padding  w-full  rounded-b-4xl overlfow-hidden "
   >
@@ -68,18 +68,18 @@ if ($image) {
       <?php else: ?>
 
 
-      <div class="w-full h-full bg-gradient-to-br from-brand-dark-blue to-brand-dark-blue/80"></div>
+      <div class="w-full h-full bg-gradient-to-br from-brand-green-dark to-brand-green-dark/80"></div>
       <?php endif; ?>
     </div>
 
     <!-- Gradient Overlay -->
-    <div class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/70 to-black/20 ">
+    <div class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/70 to-black/0 ">
     </div>
 
     <!-- Content -->
     <div class="relative z-[2] max-w-container flex flex-row gap-4 flex-wrap items-end justify-between">
       <!-- Text Content -->
-      <div class="flex flex-col gap-10 max-w-[650px] w-full">
+      <div class="flex flex-col gap-8 max-w-[650px] w-full">
         <div class="flex flex-col gap-0">
           <h1 class="!my-0  !text-8xl !font-[700] text-left text-white font-sans drop-shadow-lg ">
             <?php echo esc_html($heading); ?>
@@ -97,7 +97,7 @@ if ($image) {
             class="hero-btn-link"
           >
             <button
-              class="btn btn-primary btn-lg"
+              class="btn btn-primary btn-xl"
               type="button"
             >
               <?php echo esc_html($button_text); ?>
@@ -109,7 +109,7 @@ if ($image) {
             class="hero-btn-link"
           >
             <button
-              class="btn btn-outline btn-lg"
+              class="btn btn-outline btn-xl"
               type="button"
             >
               <?php echo esc_html($button2_text); ?>
