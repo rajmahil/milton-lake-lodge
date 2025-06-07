@@ -51,7 +51,7 @@ if ($image2) {
 <section class="section-padding w-full">
   <div class="relative max-w-container  grid grid-cols-5 items-center  gap-5 text-white  w-full">
     <div class="absolute bottom-0 left-0 bg-brand-green w-full  h-[80%] rounded-2xl z-[0]"></div>
-    <div class="flex flex-col gap-4 w-full relative z-[1] items-start section-padding col-span-2">
+    <div class="flex flex-col gap-4 w-full relative z-[1] items-start section-padding col-span-2  h-[80%] mt-auto">
       <h2 class="!text-3xl md:!text-4xl lg:!text-5xl !font-[600] text-center 1050:text-left">
         <?php echo esc_html($heading); ?>
       </h2>

@@ -81,7 +81,7 @@ if ($image) {
       <!-- Text Content -->
       <div class="flex flex-col gap-8 max-w-[650px] w-full">
         <div class="flex flex-col gap-0">
-          <h1 class="!my-0  !text-8xl !font-[700] text-left text-white font-sans drop-shadow-lg ">
+          <h1 class="!my-0  !text-8xl !font-[700] text-left text-white font-sans drop-shadow-lg !leaind">
             <?php echo esc_html($heading); ?>
           </h1>
           <?php if ($subheading): ?>
@@ -133,8 +133,8 @@ if ($image) {
           <div class="bg-[#33e0a1] text-black h-fit p-2 rounded-full">
             <svg
               fill="currentColor"
-              width="30px"
-              height="30px"
+              width="35px"
+              height="35px"
               viewBox="0 0 32 32"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -188,7 +188,7 @@ if ($image) {
                   />
                 </svg>
               </div>
-              <p class="font-[400]">Rate 4.7/5 stars on Trip Advisor</p>
+              <p class="font-[400]">Rated 4.7/5 stars on Trip Advisor</p>
             </div>
 
           </div>

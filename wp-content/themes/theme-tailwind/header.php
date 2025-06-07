@@ -65,7 +65,7 @@
         'transform -translate-y-full':
             !showNavbar,
         'transform translate-y-0': showNavbar,
-        'bg-brand-green-dark/50 backdrop-blur-md shadow-lg': isScrolled,
+        'bg-brand-green-dark/70 backdrop-blur-md shadow-lg': isScrolled,
         'bg-transparent':
             !isScrolled,
     }"
@@ -104,96 +104,139 @@
         <!-- Menu Items Display -->
         <?php if (!empty($menu_items)) : ?>
         <nav
-          x-data="{ openDropdown: null }"
-          class="relative"
+          x-data="{
+              navigationMenuOpen: false,
+              navigationMenu: '',
+              navigationMenuCloseDelay: 200,
+              navigationMenuCloseTimeout: null,
+              navigationMenuLeave() {
+                  let that = this;
+                  this.navigationMenuCloseTimeout = setTimeout(() => {
+                      that.navigationMenuClose();
+                  }, this.navigationMenuCloseDelay);
+              },
+              navigationMenuReposition(navElement) {
+                  this.navigationMenuClearCloseTimeout();
+                  this.$refs.navigationDropdown.style.left = navElement.offsetLeft + 'px';
+                  this.$refs.navigationDropdown.style.marginLeft = (navElement.offsetWidth / 2) + 'px';
+              },
+              navigationMenuClearCloseTimeout() {
+                  clearTimeout(this.navigationMenuCloseTimeout);
+              },
+              navigationMenuClose() {
+                  this.navigationMenuOpen = false;
+                  this.navigationMenu = '';
+              }
+          }"
+          class="relative z-10 w-auto lg:block hidden"
         >
-          <ul class="list-none hidden lg:flex flex-row ">
-            <?php
-            $menu_tree = [];
-            $parent_items = [];
-            
-            foreach ($menu_items as $item) {
-                if ($item->menu_item_parent == 0) {
-                    $parent_items[] = $item;
-                    $menu_tree[$item->ID] = [
-                        'item' => $item,
-                        'children' => [],
-                    ];
-                } else {
-                    if (isset($menu_tree[$item->menu_item_parent])) {
-                        $menu_tree[$item->menu_item_parent]['children'][] = $item;
-                    }
-                }
-            }
-            ?>
-
-            <?php foreach ($parent_items as $index => $parent_item) : ?>
-            <?php $has_children = !empty($menu_tree[$parent_item->ID]['children']); ?>
-            <li
-              class="relative"
-              <?php if ($has_children) : ?>
-              x-data="{ open: false }"
-              @mouseenter="open = true; bgFill = true; openDropdown = <?php echo $index; ?>"
-              @mouseleave="open = false; bgFill = false; openDropdown = null"
-              @click.away="open = false; openDropdown = null"
-              <?php endif; ?>
-            >
-              <a
-                href="<?php echo esc_url($parent_item->url); ?>"
-                class="text-white text-base flex items-center gap-1 hover:text-gray-200 transition-all duration-300 py-2 px-3 rounded-md hover:bg-white/10"
-                <?php if ($has_children) : ?>
-                @click.prevent="open = !open; openDropdown = open ? <?php echo $index; ?> : null"
-                :class="{ 'bg-white/10': open }"
-                <?php endif; ?>
-              >
-                <?php echo esc_html($parent_item->title); ?>
-                <?php if ($has_children) : ?>
-                <svg
-                  class="w-4 h-4 transition-transform duration-300"
-                  :class="{ 'rotate-180': open }"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+          <div class="relative">
+            <ul class="flex items-center gap-0 list-none  rounded-md  group">
+              <?php
+              $menu_tree = [];
+              $parent_items = [];
+              
+              foreach ($menu_items as $item) {
+                  if ($item->menu_item_parent == 0) {
+                      $parent_items[] = $item;
+                      $menu_tree[$item->ID] = [
+                          'item' => $item,
+                          'children' => [],
+                      ];
+                  } else {
+                      if (isset($menu_tree[$item->menu_item_parent])) {
+                          $menu_tree[$item->menu_item_parent]['children'][] = $item;
+                      }
+                  }
+              }
+              
+              ?>
+              <?php foreach ($parent_items as $index => $parent_item) : ?>
+              <?php
+              $has_children = !empty($menu_tree[$parent_item->ID]['children']);
+              $menu_key = $parent_item->post_name; // or any dynamic value you want
+              ?>
+              <li>
+                <button
+                  :class="{
+                      'bg-white/15 rounded-md ': navigationMenu ==
+                          '<?php echo esc_js($menu_key); ?>',
+                  }"
+                  class="flex flex-row gap-0.5 items-center px-2.5 py-1 text-white"
+                  @mouseover="navigationMenuOpen = true; navigationMenuReposition($el); navigationMenu = '<?php echo esc_js($menu_key); ?>'"
+                  @mouseleave="navigationMenuLeave()"
                 >
-                  <path
+                  <?php echo esc_html($parent_item->title); ?>
+                  <?php if ($has_children) : ?>
+                  <svg
+                    :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == '<?php echo esc_js($menu_key); ?>' }"
+                    class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-                <?php endif; ?>
-              </a>
+                    aria-hidden="true"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                  <?php endif; ?>
+                </button>
+              </li>
+              <?php endforeach; ?>
+            </ul>
+          </div>
+          <div
+            x-ref="navigationDropdown"
+            x-show="navigationMenuOpen"
+            x-transition:enter="transition ease-out duration-100"
+            x-transition:enter-start="opacity-0 scale-90"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-100"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-90"
+            @mouseover="navigationMenuClearCloseTimeout()"
+            @mouseleave="navigationMenuLeave()"
+            class="absolute top-0 pt-3 duration-200 ease-out -translate-x-1/2 translate-y-11"
+            x-cloak
+          >
+            <?php foreach ($parent_items as $index => $parent_item) : ?>
+            <?php
+            $has_children = !empty($menu_tree[$parent_item->ID]['children']);
+            $menu_key = $parent_item->post_name; // or any dynamic value you want
+            ?>
+            <?php if ($has_children) : ?>
+            <div
+              x-show="navigationMenu == '<?php echo esc_js($menu_key); ?>'"
+              class="flex items-stretch justify-center w-full max-w-2xl p-3 gap-x-3 bg-white  rounded-md"
+            >
+              <div class="flex-shrink-0 w-48 rounded pt-28 pb-7 bg-gradient-to-br from-neutral-800 to-black">
+                <div class="relative px-7 space-y-1.5 text-white bg-gradient-to-br from-neutral-800 to-black">
 
-              <?php if ($has_children) : ?>
-              <div
-                x-show="open"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 scale-95 translate-y-1"
-                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-                x-transition:leave-end="opacity-0 scale-95 translate-y-1"
-                class="absolute top-full left-0 mt-1 bg-white shadow-xl rounded-lg py-2 min-w-48 z-50 border border-gray-100"
-                style="display: none;"
-              >
-                <ul class="space-y-1">
-                  <?php foreach ($menu_tree[$parent_item->ID]['children'] as $child_item) : ?>
-                  <li>
-                    <a
-                      href="<?php echo esc_url($child_item->url); ?>"
-                      class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors duration-150 text-sm font-medium"
-                    >
-                      <?php echo esc_html($child_item->title); ?>
-                    </a>
-                  </li>
-                  <?php endforeach; ?>
-                </ul>
+                </div>
               </div>
-              <?php endif; ?>
-            </li>
-            <?php endforeach; ?>
-          </ul>
+
+
+              <ul class="w-72">
+                <?php foreach ($menu_tree[$parent_item->ID]['children'] as $child_item) : ?>
+                <li>
+                  <a
+                    @click="navigationMenuClose()"
+                    href="<?php echo esc_url($child_item->url); ?>"
+                    class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors duration-150 text-sm font-medium"
+                  >
+                    <?php echo esc_html($child_item->title); ?>
+                  </a>
+                </li>
+                <?php endforeach; ?>
+              </ul>
+
+
+            </div>
+            <?php endif ?>
+            <?php endforeach ?>
         </nav>
         <?php else : ?>
         <p class="text-white">No menu items found.</p>
