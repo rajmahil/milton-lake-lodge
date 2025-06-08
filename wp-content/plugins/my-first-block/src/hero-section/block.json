@@ -40,6 +40,14 @@
 		"image": {
 			"type": "object",
 			"default": {}
+		},
+		"tripAdvisorStars": {
+			"type": "number",
+			"default": 1
+		},
+		"tripAdvisorReviews": {
+			"type": "array",
+			"default": []
 		}
 	},
 	"supports": {

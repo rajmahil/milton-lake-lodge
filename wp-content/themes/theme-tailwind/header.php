@@ -162,7 +162,7 @@
                       'bg-white/15 rounded-md ': navigationMenu ==
                           '<?php echo esc_js($menu_key); ?>',
                   }"
-                  class="flex flex-row gap-0.5 items-center px-2.5 py-1 text-white"
+                  class="flex flex-row gap-0.5 items-center px-2.5 py-1 text-white transition-all ease-in-out duration-300"
                   @mouseover="navigationMenuOpen = true; navigationMenuReposition($el); navigationMenu = '<?php echo esc_js($menu_key); ?>'"
                   @mouseleave="navigationMenuLeave()"
                 >
@@ -170,7 +170,7 @@
                   <?php if ($has_children) : ?>
                   <svg
                     :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == '<?php echo esc_js($menu_key); ?>' }"
-                    class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300"
+                    class="relative top-[1px] ml-1 h-3 w-3 ease-in-out duration-300"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="none"
@@ -191,15 +191,15 @@
           <div
             x-ref="navigationDropdown"
             x-show="navigationMenuOpen"
-            x-transition:enter="transition ease-out duration-100"
+            x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0 scale-90"
             x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-100"
+            x-transition:leave="transition ease-in duration-300"
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-90"
             @mouseover="navigationMenuClearCloseTimeout()"
             @mouseleave="navigationMenuLeave()"
-            class="absolute top-0 pt-3 duration-200 ease-out -translate-x-1/2 translate-y-11"
+            class="absolute top-0 pt-5 duration-300 ease-in-out -translate-x-1/2 translate-y-11"
             x-cloak
           >
             <?php foreach ($parent_items as $index => $parent_item) : ?>
@@ -210,24 +210,26 @@
             <?php if ($has_children) : ?>
             <div
               x-show="navigationMenu == '<?php echo esc_js($menu_key); ?>'"
-              class="flex items-stretch justify-center w-full max-w-2xl p-3 gap-x-3 bg-white  rounded-md"
+              class="relative flex items-stretch justify-center w-full max-w-2xl p-3 gap-x-3 bg-white  rounded-md shadow-2xl"
             >
-              <div class="flex-shrink-0 w-48 rounded pt-28 pb-7 bg-gradient-to-br from-neutral-800 to-black">
-                <div class="relative px-7 space-y-1.5 text-white bg-gradient-to-br from-neutral-800 to-black">
+              <div class="absolute h-4.5 w-4.5 bg-white -top-1.5 left-1/2 -translate-x-1/2 rotate-45 rounded-xs"></div>
 
-                </div>
-              </div>
-
-
-              <ul class="w-72">
+              <ul class="w-50">
                 <?php foreach ($menu_tree[$parent_item->ID]['children'] as $child_item) : ?>
-                <li>
+                <li class="py-1 px-2 group opacity-50 hover:opacity-100 transition-opacity duration-300">
                   <a
                     @click="navigationMenuClose()"
                     href="<?php echo esc_url($child_item->url); ?>"
-                    class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors duration-150 text-sm font-medium"
+                    class="text-base flex flex-row items-center justify-between"
                   >
                     <?php echo esc_html($child_item->title); ?>
+                    <?php
+                    get_template_part('template-parts/icons/arrow-right', null, [
+                        'size' => 14,
+                        'color' => 'currentColor',
+                        'class' => 'ml-1 scale-0 group-hover:scale-100 transition-transform duration-300 ease-in-out',
+                    ]);
+                    ?>
                   </a>
                 </li>
                 <?php endforeach; ?>
@@ -327,103 +329,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="relative flex-1 px-4 mt-5 sm:px-5">
-                          <div class="absolute inset-0 px-4 sm:px-5">
-                            <div
-                              class="relative h-full overflow-hidden border border-dashed rounded-md border-neutral-300"
-                            >
-                              <nav class="w-full h-full overflow-y-auto">
-                                <ul class="space-y-1">
-                                  <?php
-                                  $render_menu_items = function ($items, $parent_id = 0, $level = 0) use (&$render_menu_items) {
-                                      $output = '';
-                                      foreach ($items as $item) {
-                                          if ($item->menu_item_parent == $parent_id) {
-                                              $has_children = false;
-                                              $children = [];
-                                              foreach ($items as $child) {
-                                                  if ($child->menu_item_parent == $item->ID) {
-                                                      $has_children = true;
-                                                      $children[] = $child;
-                                                  }
-                                              }
-                                  
-                                              $output .= '<li class="w-full ml-2 !mr-2">';
-                                  
-                                              if ($has_children) {
-                                                  $output .= '<div x-data="{ open: false }" class="w-full">';
-                                                  $output .= '<div class="flex items-stretch w-full rounded-md hover:bg-gray-50 group">';
-                                  
-                                                  $text_size = $level === 0 ? 'text-base' : ($level === 1 ? 'text-sm' : 'text-xs');
-                                                  $font_weight = $level === 0 ? 'font-medium' : ($level === 1 ? 'font-normal' : 'font-light');
-                                                  $padding_left = $level === 0 ? 'pl-4' : ($level === 1 ? 'pl-8' : ($level === 2 ? 'pl-12' : 'pl-16'));
-                                  
-                                                  $output .= '<a href="' . esc_url($item->url) . '" class="flex-1 py-3 pr-4 ' . $padding_left . ' ' . $text_size . ' ' . $font_weight . ' text-gray-900 group-hover:bg-gray-50 rounded-md">';
-                                                  $output .= esc_html($item->title);
-                                                  $output .= '</a>';
-                                  
-                                                  $output .= '<button @click="open = !open" class="flex items-center justify-center px-3 py-3 text-gray-900 hover:bg-gray-100 rounded-md ml-2" aria-label="Toggle submenu for ' . esc_attr($item->title) . '">';
-                                                  $output .= '<svg class="w-4 h-4 transition-transform duration-300" :class="{ \'rotate-180\': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">';
-                                                  $output .= '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>';
-                                                  $output .= '</svg>';
-                                                  $output .= '</button>';
-                                  
-                                                  $output .= '</div>';
-                                  
-                                                  $output .= '<div x-show="open" x-collapse class="mt-1">';
-                                                  $output .= '<ul class="space-y-1">';
-                                                  $output .= $render_menu_items($items, $item->ID, $level + 1);
-                                                  $output .= '</ul>';
-                                                  $output .= '</div>';
-                                  
-                                                  $output .= '</div>';
-                                              } else {
-                                                  $text_size = $level === 0 ? 'text-base' : ($level === 1 ? 'text-sm' : 'text-xs');
-                                                  $font_weight = $level === 0 ? 'font-medium' : ($level === 1 ? 'font-normal' : 'font-light');
-                                                  $padding_left = $level === 0 ? 'pl-4' : ($level === 1 ? 'pl-8' : ($level === 2 ? 'pl-12' : 'pl-16'));
-                                  
-                                                  $output .= '<a href="' . esc_url($item->url) . '" class="block py-3 pr-4 ' . $padding_left . ' ' . $text_size . ' ' . $font_weight . ' text-gray-900 hover:bg-gray-50 rounded-md transition-colors duration-200">';
-                                                  $output .= esc_html($item->title);
-                                                  $output .= '</a>';
-                                              }
-                                  
-                                              $output .= '</li>';
-                                          }
-                                      }
-                                      return $output;
-                                  };
-                                  
-                                  echo $render_menu_items($menu_items);
-                                  ?>
-                                </ul>
 
-                                <div class="mt-8 space-y-3">
-                                  <?php if ($cta_phone) : ?>
-                                  <a
-                                    href="tel:<?php echo esc_attr($cta_phone); ?>"
-                                    class="btn btn-outline btn-lg w-full flex items-center justify-center transition-colors duration-200"
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="20"
-                                      height="20"
-                                      fill="currentColor"
-                                      viewBox="0 0 256 256"
-                                      class="mr-2 flex-shrink-0"
-                                      aria-hidden="true"
-                                    >
-                                      <path
-                                        d="M144.27,45.93a8,8,0,0,1,9.8-5.66,86.22,86.22,0,0,1,61.66,61.66,8,8,0,0,1-5.66,9.8A8.23,8.23,0,0,1,208,112a8,8,0,0,1-7.73-5.94,70.35,70.35,0,0,0-50.33-50.33A8,8,0,0,1,144.27,45.93Zm-2.33,41.8c13.79,3.68,22.65,12.54,26.33,26.33A8,8,0,0,0,176,120a8.23,8.23,0,0,0,2.07-.27,8,8,0,0,0,5.66-9.8c-5.12-19.16-18.5-32.54-37.66-37.66a8,8,0,1,0-4.13,15.46Zm81.94,95.35A56.26,56.26,0,0,1,168,232C88.6,232,24,167.4,24,88A56.26,56.26,0,0,1,72.92,32.12a16,16,0,0,1,16.62,9.52l21.12,47.15,0,.12A16,16,0,0,1,109.39,104c-.18.27-.37.52-.57.77L88,129.45c7.49,15.22,23.41,31,38.83,38.51l24.34-20.71a8.12,8.12,0,0,1,.75-.56,16,16,0,0,1,15.17-1.4l.13.06,47.11,21.11A16,16,0,0,1,223.88,183.08Zm-15.88-2s-.07,0-.11,0h0l-47-21.05-24.35,20.71a8.44,8.44,0,0,1-.74.56,16,16,0,0,1-15.75,1.14c-18.73-9.05-37.4-27.58-46.46-46.11a16,16,0,0,1,1-15.7,6.13,6.13,0,0,1,.57-.77L96,95.15l-21-47a.61.61,0,0,1,0-.12A40.2,40.2,0,0,0,40,88A128.14,128.14,0,0,0,168,216A40.21,40.21,0,0,0,208,181.07Z"
-                                      ></path>
-                                    </svg>
-                                    <span><?php echo esc_html($cta_phone); ?></span>
-                                  </a>
-                                  <?php endif; ?>
-                                </div>
-                              </nav>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>

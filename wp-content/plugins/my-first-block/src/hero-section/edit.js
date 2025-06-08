@@ -3,13 +3,16 @@ import {
 	useBlockProps,
 	MediaUpload,
 	InspectorControls,
+	MediaUploadCheck,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	TextControl,
 	Button,
 	TextareaControl,
+	RangeControl,
 } from '@wordpress/components';
+
 import '../style.css';
 import Hero from '../../components/hero';
 
@@ -23,12 +26,34 @@ export default function Edit( { attributes, setAttributes } ) {
 		button2Text,
 		button2Url,
 		image,
+		tripAdvisorStars,
+		tripAdvisorReviews,
 	} = attributes;
 	// This is crucial - it provides the block wrapper with proper WordPress functionality
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
 		style: { maxWidth: '100%', margin: '0 auto' },
 	} );
+
+	const addReview = () => {
+		const newReviews = [ ...tripAdvisorReviews, { image: '', text: '' } ];
+		setAttributes( { tripAdvisorReviews: newReviews } );
+	};
+
+	const updateReview = ( index, field, value ) => {
+		const newReviews = tripAdvisorReviews.map( ( review, i ) => {
+			if ( i === index ) {
+				return { ...review, [ field ]: value };
+			}
+			return review;
+		} );
+		setAttributes( { tripAdvisorReviews: newReviews } );
+	};
+
+	const removeReview = ( index ) => {
+		const newReviews = tripAdvisorReviews.filter( ( _, i ) => i !== index );
+		setAttributes( { tripAdvisorReviews: newReviews } );
+	};
 
 	return (
 		<div { ...blockProps }>
@@ -129,6 +154,90 @@ export default function Edit( { attributes, setAttributes } ) {
 							/>
 						</div>
 					) }
+				</PanelBody>
+
+				<PanelBody title={ __( 'TripAdvisor', 'your-text-domain' ) }>
+					<RangeControl
+						label="TripAdvisor Stars"
+						value={ tripAdvisorStars }
+						onChange={ ( value ) =>
+							setAttributes( { tripAdvisorStars: value } )
+						}
+						min={ 1 }
+						max={ 5 }
+						step={ 0.1 }
+					/>
+					<h4>{ __( 'Reviews', 'your-text-domain' ) }</h4>
+					{ tripAdvisorReviews.map( ( review, index ) => (
+						<div
+							key={ index }
+							style={ {
+								border: '1px solid #ddd',
+								padding: '10px',
+								marginBottom: '10px',
+								borderRadius: '4px',
+							} }
+						>
+							<MediaUploadCheck>
+								<MediaUpload
+									onSelect={ ( media ) =>
+										updateReview(
+											index,
+											'image',
+											media.url
+										)
+									}
+									allowedTypes={ [ 'image' ] }
+									render={ ( { open } ) => (
+										<Button
+											onClick={ open }
+											variant="secondary"
+										>
+											{ review.image
+												? __(
+														'Change Image',
+														'your-text-domain'
+												  )
+												: __(
+														'Select Image',
+														'your-text-domain'
+												  ) }
+										</Button>
+									) }
+								/>
+							</MediaUploadCheck>
+							{ review.image && (
+								<img
+									src={ review.image }
+									alt=""
+									style={ {
+										maxWidth: '100%',
+										marginTop: '10px',
+									} }
+								/>
+							) }
+
+							<TextareaControl
+								label="Review Text"
+								value={ review.text }
+								onChange={ ( value ) =>
+									updateReview( index, 'text', value )
+								}
+							/>
+
+							<Button
+								variant="link"
+								isDestructive
+								onClick={ () => removeReview( index ) }
+							>
+								{ __( 'Remove Review', 'your-text-domain' ) }
+							</Button>
+						</div>
+					) ) }
+
+					<Button variant="primary" onClick={ addReview }>
+						{ __( 'Add Review', 'your-text-domain' ) }
+					</Button>
 				</PanelBody>
 			</InspectorControls>
 			<Hero { ...attributes } />

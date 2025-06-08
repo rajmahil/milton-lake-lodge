@@ -14,6 +14,9 @@ $button2_text = $attributes['button2Text'] ?? 'Learn More';
 $button2_url = $attributes['button2Url'] ?? '#';
 $image = $attributes['image'] ?? null;
 
+$tripAdvisorStars = $attributes['tripAdvisorStars'];
+$tripAdvisorReviews = $attributes['tripAdvisorReviews'];
+
 // Simplified image handling - works with most WordPress block formats
 $image_url = '';
 $image_alt = '';
@@ -40,7 +43,7 @@ if ($image) {
 
 <section class="my-unique-plugin-wrapper-class bg-brand-green">
   <section
-    class="h-[95vh] min-h-[800px] flex items-end overflow-hidden relative not-prose section-padding  w-full  rounded-b-4xl overlfow-hidden "
+    class="h-[95vh] min-h-[800px] flex items-end overflow-hidden relative not-prose section-padding pb-6  w-full  rounded-b-4xl overlfow-hidden "
   >
     <!-- Background Image -->
     <div class="absolute top-0 left-0 w-full h-full z-[0] pointer-events-none select-none">
@@ -77,10 +80,10 @@ if ($image) {
     </div>
 
     <!-- Content -->
-    <div class="relative z-[2] max-w-container flex flex-row gap-4 flex-wrap items-end justify-between">
+    <div class="relative z-[2] max-w-container overflow-hidden flex flex-col gap-14">
       <!-- Text Content -->
-      <div class="flex flex-col gap-8 max-w-[650px] w-full">
-        <div class="flex flex-col gap-0">
+      <div class="flex flex-row items-end justify-between gap-8 w-full">
+        <div class="flex flex-col gap-0 max-w-[650px] ">
           <h1 class="!my-0  !text-8xl !font-[700] text-left text-white font-sans drop-shadow-lg !leaind">
             <?php echo esc_html($heading); ?>
           </h1>
@@ -120,17 +123,9 @@ if ($image) {
       </div>
 
 
-      <div class="flex flex-col gap-4 max-w-[350px] w-full">
-        <div class="bg-white p-2 rounded-lg flex flex-row gap-4 items-center">
-          <div class="h-12 w-12 aspect-square rounded-full bg-red-300">
-          </div>
-          <p>
-            "Milton Lake lodge provided a trip of a lifetime."
-          </p>
-
-        </div>
-        <div class="flex flex-row gap-4 p-2 text-black bg-white rounded-lg">
-          <div class="bg-[#33e0a1] text-black h-fit p-2 rounded-full">
+      <div class="grid grid-cols-5 gap-0  w-full p-2 bg-black/50 rounded-md relative overflow-hidden">
+        <div class="flex flex-row gap-3 p-2 text-white  rounded-lg w-full px-2 items-center justify-start">
+          <div class="bg-[#33e0a1] text-black h-fit p-1 rounded-full">
             <svg
               fill="currentColor"
               width="35px"
@@ -179,7 +174,7 @@ if ($image) {
                   fill="currentColor"
                   height="25"
                   width="25"
-                  style="clip-path: inset(0 50% 0 0);"
+                  style="clip-path: inset(0 30% 0 0);"
                 >
                   <path
                     fill-rule="evenodd"
@@ -188,10 +183,35 @@ if ($image) {
                   />
                 </svg>
               </div>
-              <p class="font-[400]">Rated 4.7/5 stars on Trip Advisor</p>
+              <p class="font-[400] text-sm">Rated <?php echo esc_html($tripAdvisorStars); ?>/5 stars on Trip Advisor</p>
             </div>
-
           </div>
+          <div class="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-black to-transparent z-[100]"></div>
+        </div>
+        <div class="col-span-4 overflow-hidden flex flex-row items-center relative">
+          <div class="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-black to transparent z-[100]"></div>
+
+          <?php for($x =1 ; $x <=2; $x++): ?>
+          <div class="flex flex-row flex-nowrap text-white animate-slide">
+            <?php foreach ( $tripAdvisorReviews as $tripAdvisorReview ) : ?>
+            <div class="py-2 px-4 rounded-lg flex flex-row gap-4 items-center w-[350px]">
+              <div class="h-12 w-12 aspect-square rounded-full bg-red-300">
+                <?php if ( ! empty( $tripAdvisorReview['image'] ) ) : ?>
+                <img
+                  src="<?php echo esc_url($tripAdvisorReview['image']); ?>"
+                  alt=""
+                  class="h-full w-full object-cover rounded-full"
+                />
+                <?php endif; ?>
+              </div>
+              <p class="text-sm text-left">
+                <?php echo !empty($tripAdvisorReview['text']) ? esc_html($tripAdvisorReview['text']) : ''; ?>
+              </p>
+            </div>
+            <?php endforeach; ?>
+          </div>
+          <?php endfor; ?>
+
         </div>
       </div>
 
