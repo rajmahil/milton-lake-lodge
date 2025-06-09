@@ -7,7 +7,7 @@ const Cta = ( {
 	image2,
 } ) => {
 	return (
-		<section className="not-prose section-padding w-full static-background">
+		<section className="plugin-custom-block not-prose section-padding w-full static-background">
 			<div className="relative max-w-container  grid 1050:grid-cols-2 items-center  gap-20 1050:gap-10 bg-brand-green-dark text-white py-16 px-10 rounded-xl w-full">
 				<div className="flex flex-col gap-4 w-full">
 					<div className="flex flex-col gap-3 w-full items-center 1050:items-start">

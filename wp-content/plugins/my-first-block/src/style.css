@@ -90,12 +90,12 @@
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.plugin-custom-block h1,
+.plugin-custom-block h2,
+.plugin-custom-block h3,
+.plugin-custom-block h4,
+.plugin-custom-block h5,
+.plugin-custom-block h6  {
   font-family: theme(--font-heading);
   text-transform:  uppercase;
   letter-spacing: 0.01em;
@@ -334,6 +334,11 @@ h6 {
 
 	.fc .fc-h-event {
 		@apply !border-0 !bg-transparent
+	}
+
+	.fc .fc-view-harness {
+
+		@apply min-w-[800px]  md:min-w-[1000px]
 	}
 
 	.footer-social-btn {

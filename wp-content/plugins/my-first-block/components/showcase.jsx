@@ -29,7 +29,7 @@ const Showcase = ( {
 	}, [ imagesSpeed ] );
 
 	return (
-		<section className="flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full  static-background ">
+		<section className=" plugin-custom-block flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full  static-background ">
 			<div className="relative z-[2] max-w-container flex flex-row flex-wrap gap-5 items-end justify-between">
 				<div className="flex flex-col gap-4 lg:max-w-2xl w-full">
 					{ topHeading && (

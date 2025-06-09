@@ -19,7 +19,7 @@ const PriceTable = ( { heading, tabs } ) => {
 	}, [ tabs ] );
 
 	return (
-		<section className="not-prose section-padding w-full static-background">
+		<section className="plugin-custom-block not-prose section-padding w-full static-background">
 			<div className=" max-w-container mx-auto flex flex-col gap-8">
 				<h2 className="!my-0 text-center !text-4xl md:!text-5xl font-extrabold uppercase text-[#123C2A]">
 					{ heading }

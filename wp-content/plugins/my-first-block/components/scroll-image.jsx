@@ -8,7 +8,7 @@ const ScrollImage = ( {
 	image,
 } ) => {
 	return (
-		<section className="section-padding static-background">
+		<section className="plugin-custom-block  section-padding static-background">
 			<div className="relative w-full overflow-hidden rounded-lg max-w-container mx-auto h-screen flex items-start justify-start not-prose p-10">
 				<div
 					className="absolute inset-0 z-0 transform origin-center transition-transform duration-300 ease-out"

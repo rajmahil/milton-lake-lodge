@@ -1,6 +1,6 @@
 const Features = ( { heading, features = [] } ) => {
 	return (
-		<section className="not-prose section-padding w-full  static-background">
+		<section className="plugin-custom-block  not-prose section-padding w-full  static-background">
 			<div className=" max-w-container mx-auto flex flex-col gap-16">
 				{ heading && (
 					<h2 className="!my-0  !text-3xl md:!text-4xl lg:!text-5xl !font-[600]  text-left lg:max-w-[60%]">
@@ -15,7 +15,7 @@ const Features = ( { heading, features = [] } ) => {
 							<div
 								key={ `feature-${ idx }` }
 								className={ `
-          flex flex-col lg:flex-row items-start lg:items-center gap-8 md:gap-16 
+          flex flex-col lg:flex-row items-start lg:items-center gap-8 md:gap-16
           ${ isEven ? 'lg:flex-row' : 'lg:flex-row-reverse' }
         ` }
 							>

@@ -294,7 +294,7 @@ const FormBlock = ( props ) => {
 	};
 
 	return (
-		<section className="my-unique-plugin-wrapper-class">
+		<section className="my-unique-plugin-wrapper-class plugin-custom-block ">
 			<div className="section-padding static-background flex flex-col gap-12 !bg-brand-light-grey">
 				<div class="max-w-3xl w-full mx-auto flex flex-col gap-4">
 					<p class="decorative-text text-brand-yellow-dark text-center text-3xl lg:!text-4xl">

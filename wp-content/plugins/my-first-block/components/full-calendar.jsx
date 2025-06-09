@@ -48,12 +48,13 @@ const FullCalendarComp = ( props ) => {
 						title: slot.trip_type,
 						start: slot.start_date,
 						end: addDayToYYYYMMDD( slot.end_date ),
-
 						extendedProps: {
 							backgroundColor:
 								slotType.background_color || '#fef3c7', // default yellow
 							textColor: slotType.text_color || '#1f2937', // default gray-800
 							status: slot.status,
+							startDate: slot.start_date,
+							endDate: slot.end_date,
 						},
 					};
 				} );
@@ -77,52 +78,96 @@ const FullCalendarComp = ( props ) => {
 	console.log( slots, 'Selected Post' );
 
 	return (
-		<section className="section-padding">
+		<section className="plugin-custom-block  section-padding">
 			<div className="max-w-container w-full mx-auto flex flex-col gap-12">
 				<h2 className="heading-two text-center">
 					2025 Season Availability
 				</h2>
 				<div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-					<div className="p-6 xl:col-span-3 bg-white rounded-lg my-calendar-wrapper overflow-x-scroll  ">
-						<FullCalendar
-							headerToolbar={ {
-								left: 'title',
-								right: 'prev,today,next',
-							} }
-							plugins={ [ dayGridPlugin ] }
-							initialView="dayGridMonth"
-							events={ slots }
-							eventContent={ ( arg ) => {
-								const bgColor =
-									hexToRgba(
-										arg.event.extendedProps.backgroundColor,
-										0.1
-									) || '#fef3c7';
-								const textColor =
-									arg.event.extendedProps.textColor ||
-									'#1f2937';
-								const status =
-									arg.event.extendedProps.status.label;
+					<div className="p-6 xl:col-span-3 bg-white rounded-lg my-calendar-wrapper">
+						<div className="overflow-x-scroll  w-full">
+							<FullCalendar
+								headerToolbar={ {
+									left: 'title',
+									right: 'prev,today,next',
+								} }
+								plugins={ [ dayGridPlugin ] }
+								initialView="dayGridMonth"
+								events={ slots }
+								eventContent={ ( arg ) => {
+									const bgColorFrom =
+										hexToRgba(
+											arg.event.extendedProps
+												.backgroundColor,
+											0.1
+										) || '#fef3c7';
 
-								console.log( bgColor );
+									const bgColorTo =
+										hexToRgba(
+											arg.event.extendedProps
+												.backgroundColor,
+											0.2
+										) || '#fef3c7';
+									const textColor =
+										arg.event.extendedProps.textColor ||
+										'#1f2937';
+									const status =
+										arg.event.extendedProps.status.label;
 
-								return (
-									<div
-										style={ {
-											backgroundColor: bgColor,
-											color: textColor,
-											border: `1px solid`,
-										} }
-										className="p-2 rounded-md h-22 text-base font-medium  text-wrap !leading-[1.1] flex flex-col gap-2 items-start justify-between"
-									>
-										<p className="">{ arg.event.title }</p>
-										<div className="text-xs py-0.5 px-2 rounded-full bg-brand-green-dark text-white">
-											{ status }
+									const start = arg.event.start;
+									const end = arg.event.end;
+
+									const options = {
+										year: 'numeric',
+										month: 'short',
+										day: 'numeric',
+									};
+
+									const startFormatted =
+										start.toLocaleDateString(
+											undefined,
+											options
+										);
+									const endFormatted = end
+										? end.toLocaleDateString(
+												undefined,
+												options
+										  )
+										: startFormatted;
+
+									const rangeText =
+										startFormatted === endFormatted
+											? startFormatted
+											: `${ startFormatted } → ${ endFormatted }`;
+
+									const statusClasses = {
+										Open: 'bg-green-700 text-white text-xs py-0.5 px-2 rounded-full',
+										Pending:
+											'bg-yellow-300 text-black text-xs py-0.5 px-2 rounded-full',
+										Booked: 'bg-red-600 text-white text-xs py-0.5 px-2 rounded-full',
+									};
+
+									console.log( start, end, 'Event Dates' );
+
+									return (
+										<div
+											style={ {
+												backgroundImage: `linear-gradient(135deg, ${ bgColorFrom } 0%, ${ bgColorTo } 100%)`,
+												color: textColor,
+											} }
+											className="p-2 rounded-md h-22 font-medium  text-wrap flex flex-col gap-2 items-start justify-between"
+										>
+											<p className="text-sm !leading-[1.1] ">
+												{ arg.event.title }
+											</p>
+											<p className="text-xs leading-[1.1]">
+												{ rangeText }
+											</p>
 										</div>
-									</div>
-								);
-							} }
-						/>
+									);
+								} }
+							/>
+						</div>
 					</div>
 					<div className="flex flex-col gap-4 ">
 						<div className="p-4 rounded-lg bg-white flex flex-col gap-2 w-full">
