@@ -17,6 +17,15 @@ function addDayToYYYYMMDD( dateStr ) {
 	return `${ yyyy }${ mm }${ dd }`;
 }
 
+function hexToRgba( hex, opacity ) {
+	const parsed = hex.replace( '#', '' );
+	const bigint = parseInt( parsed, 16 );
+	const r = ( bigint >> 16 ) & 255;
+	const g = ( bigint >> 8 ) & 255;
+	const b = bigint & 255;
+	return `rgba(${ r }, ${ g }, ${ b }, ${ opacity })`;
+}
+
 const FullCalendarComp = ( props ) => {
 	const { selectedPostId } = props;
 
@@ -74,7 +83,7 @@ const FullCalendarComp = ( props ) => {
 					2025 Season Availability
 				</h2>
 				<div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-					<div className="p-6 xl:col-span-3 bg-white rounded-lg my-calendar-wrapper ">
+					<div className="p-6 xl:col-span-3 bg-white rounded-lg my-calendar-wrapper overflow-x-scroll  ">
 						<FullCalendar
 							headerToolbar={ {
 								left: 'title',
@@ -85,8 +94,10 @@ const FullCalendarComp = ( props ) => {
 							events={ slots }
 							eventContent={ ( arg ) => {
 								const bgColor =
-									arg.event.extendedProps.backgroundColor ||
-									'#fef3c7';
+									hexToRgba(
+										arg.event.extendedProps.backgroundColor,
+										0.2
+									) || '#fef3c7';
 								const textColor =
 									arg.event.extendedProps.textColor ||
 									'#1f2937';
@@ -99,7 +110,7 @@ const FullCalendarComp = ( props ) => {
 											backgroundColor: bgColor,
 											color: textColor,
 										} }
-										className="p-2 rounded-lg h-22 text-base font-medium  text-wrap !leading-[1.1] flex flex-col gap-2 items-start justify-between"
+										className=" p-2 rounded-lg h-22 text-base font-medium  text-wrap !leading-[1.1] flex flex-col gap-2 items-start justify-between"
 									>
 										<p className="">{ arg.event.title }</p>
 										<div className="text-xs py-0.5 px-2 rounded-full bg-brand-green-dark text-white">
