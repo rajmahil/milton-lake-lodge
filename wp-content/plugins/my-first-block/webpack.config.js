@@ -63,6 +63,11 @@ module.exports = {
 			'src/two-col-section',
 			'index.js'
 		),
+		'pricing-table/index': path.resolve(
+			process.cwd(),
+			'src/pricing-table',
+			'index.js'
+		),
 	},
 	optimization: {
 		...defaultConfig.optimization,
