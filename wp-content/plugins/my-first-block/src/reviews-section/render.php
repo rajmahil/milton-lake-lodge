@@ -128,7 +128,6 @@ $reviews = $attributes['reviews'] ?? [];
           rightImage.classList.add('animate-reset');
         }
 
-        // Trigger animations after a short delay - both move from center outward
         setTimeout(() => {
           if (leftImage) {
             leftImage.classList.remove('animate-reset');
@@ -140,7 +139,6 @@ $reviews = $attributes['reviews'] ?? [];
           }
         }, 100);
 
-        // Add final position classes after animation completes
         setTimeout(() => {
           if (leftImage) {
             leftImage.classList.add('final-position');

@@ -6,6 +6,7 @@ import {
 	TextareaControl,
 	ToggleControl,
 	Button,
+	Notice,
 } from '@wordpress/components';
 import '../style.css';
 import PriceTable from '../../components/price-table';
@@ -56,7 +57,24 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const updateFeature = ( tabIndex, featureIndex, field, value ) => {
 		const updatedTabs = [ ...tabs ];
-		updatedTabs[ tabIndex ].features[ featureIndex ][ field ] = value;
+
+		// Special handling for price field when in currency mode
+		if (
+			field === 'price' &&
+			updatedTabs[ tabIndex ].features[ featureIndex ].priceType ===
+				'currency'
+		) {
+			// Only allow numeric values (including decimals) for currency
+			const numericRegex = /^\d*\.?\d*$/;
+			if ( value === '' || numericRegex.test( value ) ) {
+				updatedTabs[ tabIndex ].features[ featureIndex ][ field ] =
+					value;
+			}
+			// If invalid, don't update the value (effectively blocking the input)
+		} else {
+			updatedTabs[ tabIndex ].features[ featureIndex ][ field ] = value;
+		}
+
 		setAttributes( { tabs: updatedTabs } );
 	};
 
@@ -64,6 +82,28 @@ export default function Edit( { attributes, setAttributes } ) {
 		const updatedTabs = [ ...tabs ];
 		updatedTabs[ tabIndex ].features.splice( featureIndex, 1 );
 		setAttributes( { tabs: updatedTabs } );
+	};
+
+	// Helper function to validate if a price is numeric
+	const isValidPrice = ( price, priceType ) => {
+		if ( priceType !== 'currency' ) return true;
+		if ( price === '' ) return true; // Allow empty values
+		return /^\d+(\.\d{0,2})?$/.test( price );
+	};
+
+	// Helper function to get validation message
+	const getPriceValidationMessage = ( price, priceType ) => {
+		if (
+			priceType === 'currency' &&
+			price &&
+			! isValidPrice( price, priceType )
+		) {
+			return __(
+				'Please enter a valid number (e.g., 100 or 99.99)',
+				'your-text-domain'
+			);
+		}
+		return null;
 	};
 
 	return (
@@ -117,93 +157,180 @@ export default function Edit( { attributes, setAttributes } ) {
 								marginTop: '10px',
 							} }
 						>
-							{ tab.features?.map( ( feature, fIndex ) => (
-								<PanelBody
-									key={ fIndex }
-									title={
-										feature.title ||
-										__(
-											'Untitled Feature',
-											'your-text-domain'
-										)
-									}
-									initialOpen={ false }
-								>
-									<TextControl
-										label="Feature Title"
-										value={ feature.title }
-										onChange={ ( value ) =>
-											updateFeature(
-												index,
-												fIndex,
-												'title',
-												value
+							{ tab.features?.map( ( feature, fIndex ) => {
+								const validationMessage =
+									getPriceValidationMessage(
+										feature.price,
+										feature.priceType
+									);
+
+								return (
+									<PanelBody
+										key={ fIndex }
+										title={
+											feature.title ||
+											__(
+												'Untitled Feature',
+												'your-text-domain'
 											)
 										}
-									/>
-
-									<TextareaControl
-										label="Feature Description"
-										value={ feature.description }
-										onChange={ ( value ) =>
-											updateFeature(
-												index,
-												fIndex,
-												'description',
-												value
-											)
-										}
-									/>
-
-									<ToggleControl
-										label={
-											feature.priceType === 'note'
-												? 'Note Mode Enabled'
-												: 'Currency Mode Enabled'
-										}
-										checked={ feature.priceType === 'note' }
-										onChange={ ( checked ) =>
-											updateFeature(
-												index,
-												fIndex,
-												'priceType',
-												checked ? 'note' : 'currency'
-											)
-										}
-									/>
-
-									<TextControl
-										label={
-											feature.priceType === 'currency'
-												? 'Price'
-												: 'Note'
-										}
-										value={ feature.price }
-										onChange={ ( value ) =>
-											updateFeature(
-												index,
-												fIndex,
-												'price',
-												value
-											)
-										}
-									/>
-
-									<Button
-										isDestructive
-										variant="link"
-										onClick={ () =>
-											removeFeature( index, fIndex )
-										}
-										style={ { marginTop: '10px' } }
+										initialOpen={ false }
 									>
-										{ __(
-											'Remove Feature',
-											'your-text-domain'
+										<TextControl
+											label="Feature Title"
+											value={ feature.title }
+											onChange={ ( value ) =>
+												updateFeature(
+													index,
+													fIndex,
+													'title',
+													value
+												)
+											}
+										/>
+
+										<TextareaControl
+											label="Feature Description"
+											value={ feature.description }
+											onChange={ ( value ) =>
+												updateFeature(
+													index,
+													fIndex,
+													'description',
+													value
+												)
+											}
+										/>
+
+										<ToggleControl
+											label={
+												feature.priceType === 'note'
+													? 'Note Mode Enabled'
+													: 'Currency Mode Enabled'
+											}
+											checked={
+												feature.priceType === 'note'
+											}
+											onChange={ ( checked ) => {
+												const newPriceType = checked
+													? 'note'
+													: 'currency';
+												updateFeature(
+													index,
+													fIndex,
+													'priceType',
+													newPriceType
+												);
+												// Clear price when switching to currency mode if it's not numeric
+												if (
+													newPriceType ===
+														'currency' &&
+													feature.price &&
+													! /^\d*\.?\d*$/.test(
+														feature.price
+													)
+												) {
+													updateFeature(
+														index,
+														fIndex,
+														'price',
+														''
+													);
+												}
+											} }
+											help={
+												feature.priceType === 'currency'
+													? __(
+															'Currency mode: Only numbers allowed',
+															'your-text-domain'
+													  )
+													: __(
+															'Note mode: Any text allowed',
+															'your-text-domain'
+													  )
+											}
+										/>
+
+										<TextControl
+											label={
+												feature.priceType === 'currency'
+													? 'Price (CAD)'
+													: 'Note'
+											}
+											value={ feature.price }
+											onChange={ ( value ) =>
+												updateFeature(
+													index,
+													fIndex,
+													'price',
+													value
+												)
+											}
+											type={
+												feature.priceType === 'currency'
+													? 'number'
+													: 'text'
+											}
+											step={
+												feature.priceType === 'currency'
+													? '0.01'
+													: undefined
+											}
+											min={
+												feature.priceType === 'currency'
+													? '0'
+													: undefined
+											}
+											placeholder={
+												feature.priceType === 'currency'
+													? __(
+															'Enter price (e.g., 100 or 99.99)',
+															'your-text-domain'
+													  )
+													: __(
+															'Enter note text',
+															'your-text-domain'
+													  )
+											}
+											help={
+												feature.priceType === 'currency'
+													? __(
+															'Enter numeric value only. Will be converted to USD automatically.',
+															'your-text-domain'
+													  )
+													: __(
+															'Any text can be entered here.',
+															'your-text-domain'
+													  )
+											}
+										/>
+
+										{ validationMessage && (
+											<Notice
+												status="error"
+												isDismissible={ false }
+												style={ { marginTop: '10px' } }
+											>
+												{ validationMessage }
+											</Notice>
 										) }
-									</Button>
-								</PanelBody>
-							) ) }
+
+										<Button
+											isDestructive
+											variant="link"
+											onClick={ () =>
+												removeFeature( index, fIndex )
+											}
+											style={ { marginTop: '10px' } }
+										>
+											{ __(
+												'Remove Feature',
+												'your-text-domain'
+											) }
+										</Button>
+									</PanelBody>
+								);
+							} ) }
 						</div>
 
 						<div style={ { marginTop: '20px' } }>
