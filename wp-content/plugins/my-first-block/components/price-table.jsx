@@ -129,7 +129,7 @@ const PriceTable = ( { heading, tabs } ) => {
 																	{ feature.priceType ===
 																	'currency' ? (
 																		<>
-																			<span className="!text-lg md:!text-xl !font-medium">
+																			<span className="!text-lg md:!text-xl !font-medium self-end">
 																				$
 																				{ currency ===
 																				'USD'
