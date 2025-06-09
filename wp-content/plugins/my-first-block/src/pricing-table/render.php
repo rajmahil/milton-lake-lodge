@@ -9,7 +9,7 @@ $tabs = $attributes['tabs'] ?? [];
 $exchange_rate = $attributes['exchange_rate'] ?? 1.25; // CAD to USD rate
 ?>
 
-<section class="not-prose section-padding w-full static-background" <?php echo get_block_wrapper_attributes(); ?>>
+<section class="not-prose section-padding w-full" <?php echo get_block_wrapper_attributes(); ?>>
     <div class="max-w-container mx-auto flex flex-col gap-8">
     
         <h2 class="!my-0 text-center !text-4xl 750:!text-5xl font-extrabold uppercase text-brand-green">

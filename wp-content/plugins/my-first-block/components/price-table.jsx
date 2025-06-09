@@ -143,7 +143,11 @@ const PriceTable = ( { heading, tabs } ) => {
 																			</span>
 																		</>
 																	) : (
-																		feature.price
+																		<span className="!text-base md:!text-lg !my-0">
+																			{
+																				feature.price
+																			}
+																		</span>
 																	) }
 																</p>
 															</div>
