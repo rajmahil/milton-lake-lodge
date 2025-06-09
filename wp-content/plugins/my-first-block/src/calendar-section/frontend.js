@@ -15,7 +15,7 @@ function OurComponent( props ) {
 
 	return (
 		<div className="my-unique-plugin-wrapper-class">
-			<FullCalendar />
+			<FullCalendar { ...props } />
 		</div>
 	);
 }
