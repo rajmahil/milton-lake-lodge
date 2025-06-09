@@ -12,7 +12,6 @@ import {
 	Button,
 	RangeControl,
 } from '@wordpress/components';
-import '../style.css';
 import Reviews from '../../components/reviews';
 
 export default function Edit( { attributes, setAttributes } ) {

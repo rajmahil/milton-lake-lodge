@@ -11,7 +11,6 @@ import {
 	TextareaControl,
 	ToggleControl,
 } from '@wordpress/components';
-import '../style.css';
 import TwoCol from '../../components/two-col';
 
 export default function Edit( { attributes, setAttributes } ) {

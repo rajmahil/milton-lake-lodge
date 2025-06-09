@@ -22,6 +22,7 @@ $imageHeight = $image['height'] ?? '';
 <section
   x-data="optimizedScrollScale()"
   x-init="init()"
+  class="plugin-custom-block"
 >
   <div
     class="relative w-full overflow-hidden rounded-2xl h-[150vh] flex items-start justify-start not-prose"

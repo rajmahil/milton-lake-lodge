@@ -33,11 +33,6 @@ module.exports = {
 			'src/form-block',
 			'index.js'
 		),
-		'form-block/frontend': path.resolve(
-			process.cwd(),
-			'src/form-block',
-			'frontend.js'
-		),
 		'accordion-section/index': path.resolve(
 			process.cwd(),
 			'src/accordion-section',
@@ -62,6 +57,18 @@ module.exports = {
 			process.cwd(),
 			'src/two-col-section',
 			'index.js'
+		),
+
+		// Component entry points (JS only - no CSS imports), two entry points for client component (frontend.js)
+		'calendar-section/index': path.resolve(
+			process.cwd(),
+			'src/calendar-section',
+			'index.js'
+		),
+		'calendar-section/frontend': path.resolve(
+			process.cwd(),
+			'src/calendar-section',
+			'frontend.js'
 		),
 	},
 	optimization: {

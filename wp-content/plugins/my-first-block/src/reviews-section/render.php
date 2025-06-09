@@ -7,7 +7,7 @@ $topHeading = $attributes['topHeading'] ?? '';
 $reviews = $attributes['reviews'] ?? [];
 ?>
 
-<section class="not-prose section-padding w-full ">
+<section class="plugin-custom-block not-prose section-padding w-full ">
   <div class="max-w-container mx-auto grid lg:grid-cols-2  !gap-10 items-center justify-center ">
     <div
       class="relative"

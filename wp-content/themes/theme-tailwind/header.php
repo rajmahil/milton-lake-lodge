@@ -11,6 +11,7 @@
 </head>
 
 <body
+  class="static-background bg-brand-light-grey"
   <?php body_class(); ?>
   <?php
   // Get menu items from the menu named "Main Menu"
@@ -247,99 +248,13 @@
 
       <!-- Main CTA -->
       <div class="flex flex-row items-center gap-2">
-        <div
-          x-data="{
-              slideOverOpen: false
-          }"
-          class="relative z-50 w-auto h-auto "
-        >
-          <button
-            @click="slideOverOpen=true"
-            class="btn btn-outline btn-lg lg:hidden flex"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              viewBox="0 0 256 256"
-              class="mr-1"
-            >
-              <path
-                d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"
-              ></path>
-            </svg>
-            Menu</button>
-          <template x-teleport="body">
-            <div
-              x-show="slideOverOpen"
-              @keydown.window.escape="slideOverOpen=false"
-              class="relative z-[101]"
-            >
-              <div
-                x-show="slideOverOpen"
-                x-transition.opacity.duration.600ms
-                @click="slideOverOpen = false"
-                class="fixed inset-0 bg-black/50 backdrop-blur-md bg-opacity-10"
-              ></div>
-              <div class="fixed inset-0 overflow-hidden">
-                <div class="absolute inset-0 overflow-hidden">
-                  <div class="fixed inset-y-0 right-0 flex max-w-full pl-10">
-                    <div
-                      x-show="slideOverOpen"
-                      @click.away="slideOverOpen = false"
-                      x-transition:enter="transform transition ease-in-out duration-300"
-                      x-transition:enter-start="translate-x-full"
-                      x-transition:enter-end="translate-x-0"
-                      x-transition:leave="transform transition ease-in-out duration-300"
-                      x-transition:leave-start="translate-x-0"
-                      x-transition:leave-end="translate-x-full"
-                      class="w-screen max-w-md"
-                    >
-                      <div
-                        class="flex flex-col h-full py-5 overflow-y-scroll bg-white border-l shadow-lg border-neutral-100/70"
-                      >
-                        <div class="px-4 sm:px-5">
-                          <div class="flex items-start justify-between pb-1">
-                            <h2
-                              class="text-base font-semibold leading-6 text-gray-900"
-                              id="slide-over-title"
-                            >Menu</h2>
-                            <div class="flex items-center h-auto ml-3">
-                              <button
-                                @click="slideOverOpen=false"
-                                class="absolute top-0 right-0 z-30 flex items-center justify-center px-3 py-2 mt-4 mr-5 space-x-1 text-xs font-medium uppercase border rounded-md border-neutral-200 text-neutral-600 hover:bg-neutral-100"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke-width="1.5"
-                                  stroke="currentColor"
-                                  class="w-4 h-4"
-                                >
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M6 18L18 6M6 6l12 12"
-                                  ></path>
-                                </svg>
-                                <span>Close</span>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </template>
-        </div>
-
-
+        <?php
+        set_query_var('menu_items', $menu_items);
+        set_query_var('menu_tree', $menu_tree);
+        set_query_var('parent_items', $parent_items);
+        
+        get_template_part('template-parts/components/menu-drawer');
+        ?>
         <?php if ($cta_phone) : ?>
         <a
           href="tel:<?php echo esc_attr($cta_phone); ?>"

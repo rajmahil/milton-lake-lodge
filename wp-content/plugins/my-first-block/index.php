@@ -22,5 +22,6 @@ function registerBlocks()
     register_block_type(__DIR__ . '/build/cta-section');
     register_block_type(__DIR__ . '/build/two-col-section');
     register_block_type(__DIR__ . '/build/form-block');
+    register_block_type(__DIR__ . '/build/calendar-section');
 }
 add_action('init', 'registerBlocks');

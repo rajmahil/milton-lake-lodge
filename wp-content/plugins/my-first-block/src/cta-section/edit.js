@@ -5,7 +5,6 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { PanelBody, TextControl, Button } from '@wordpress/components';
-import '../style.css';
 import Cta from '../../components/cta';
 
 export default function Edit( { attributes, setAttributes } ) {

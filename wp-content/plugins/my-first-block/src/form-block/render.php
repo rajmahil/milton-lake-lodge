@@ -9,7 +9,7 @@ $heading = $attributes['heading'] ?? 'Your Adventure Awaits';
 $fields = $attributes['fields'] ?? [];
 ?>
 
-<section class="my-unique-plugin-wrapper-class">
+<section class="plugin-custom-block">
   <div class="section-padding static-background flex flex-col gap-12 !bg-brand-light-grey">
     <div class="max-w-3xl w-full mx-auto flex flex-col gap-2">
       <h2 class="heading-two text-center text-brand-green-dark">

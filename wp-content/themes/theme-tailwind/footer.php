@@ -3,10 +3,32 @@
   $footer_bg_color = get_theme_mod('boilerplate_footer_bg_color', '#ffffff');
   $footer_bg_image_id = get_theme_mod('boilerplate_footer_bg_image', 0);
   $footer_bg_image_url = $footer_bg_image_id ? wp_get_attachment_image_url($footer_bg_image_id, 'full') : '';
+  
+  $upload_dir = wp_upload_dir();
+  $upload_url = $upload_dir['baseurl'];
   ?>
 
+  <div
+    x-data="{ rotation: 0 }"
+    x-init="window.addEventListener('scroll', () => {
+        rotation = window.scrollY * 0.2; // adjust speed here
+    });"
+    class="static-background w-full bg-brand-light-grey flex items-center justify-center"
+  >
+    <div class="w-40 h-40 bg-brand-green-dark rounded-full relative translate-y-[60%] p-4">
+      <img
+        src="<?php echo esc_url($upload_url . '/effects/compass-footer.png'); ?>"
+        alt="Milton Lake Lodge | Fishing Saskatchewan"
+        width="160"
+        height="160"
+        class="select-none pointer-events-none transition-transform duration-500 ease-in-out will-change-transform"
+        :style="'transform: rotate(' + rotation + 'deg)'"
+      >
+    </div>
+  </div>
 
-  <div class="section-padding bg-brand-green-dark flex flex-col gap-20 pb-10 shadow-2xl rounded-b-4xl overflow-hidden">
+
+  <div class="section-padding bg-brand-green-dark flex flex-col gap-20 pb-8  overflow-hidden">
     <div class="max-w-container w-full mx-auto  grid grid-cols-3 lg:grid-cols-4 gap-2  xl:gap-10 space-y-20">
       <div
         class="flex flex-col gap-8 items-center md:items-start lg:col-span-1 col-span-3  max-w-[450px] mr-auto ml-auto md:ml-0"
@@ -368,7 +390,7 @@
   $footer_bg_image_url = $footer_bg_image_id ? wp_get_attachment_image_url($footer_bg_image_id, 'full') : '';
   ?>
   <div
-    class="-mt-8 h-[300px] sm:h-[400px] md:h-[550px] sticky bottom-0 z-[-1] bg-right w-full bg-cover <?php echo $footer_bg_image_url ? '' : 'bg-[<?php echo esc_attr($footer_bg_color); ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>]'; ?>"
+    class="hidden -mt-8 h-[300px] sm:h-[400px] md:h-[550px] sticky bottom-0 z-[-1] bg-right w-full bg-cover <?php echo $footer_bg_image_url ? '' : 'bg-[<?php echo esc_attr($footer_bg_color); ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>]'; ?>"
     style="<?php if ($footer_bg_image_url) : ?>background-image: url('<?php echo esc_url($footer_bg_image_url); ?>');<?php endif; ?>"
   >
   </div>

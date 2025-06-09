@@ -149,6 +149,7 @@
 
 
 
+
 h1,
 h2,
 h3,
@@ -171,9 +172,15 @@ h6 {
 
 @layer components {
   /* First Block Components */
+
+
+
+
   .max-w-container {
     @apply mx-auto w-full !max-w-[1500px];
   }
+
+
 
   .section-padding {
     @apply py-[110px] sm:py-[110px] px-[8px] sm:px-[16px] md:px-[45px];
@@ -220,4 +227,8 @@ h6 {
   .footer-social-btn {
     @apply h-10 w-10 bg-brand-yellow flex items-center justify-center rounded-full p-2 text-brand-green-dark;
   }
+
+
+
+
 }

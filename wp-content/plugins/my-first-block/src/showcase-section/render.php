@@ -18,7 +18,9 @@ $reduced_duration = max($base_duration - 15, 5);
 $animation_class = 'showcase-animate-' . uniqid();
 ?>
 
-<section class="flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-green">
+<section
+  class="plugin-custom-block flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-green"
+>
 
   <div class="relative z-[2] max-w-container flex flex-row flex-wrap gap-5 items-end justify-between">
     <div class="flex flex-col gap-2 lg:max-w-2xl w-full">
