@@ -96,7 +96,7 @@ const FullCalendarComp = ( props ) => {
 								const bgColor =
 									hexToRgba(
 										arg.event.extendedProps.backgroundColor,
-										0.2
+										0.1
 									) || '#fef3c7';
 								const textColor =
 									arg.event.extendedProps.textColor ||
@@ -104,13 +104,16 @@ const FullCalendarComp = ( props ) => {
 								const status =
 									arg.event.extendedProps.status.label;
 
+								console.log( bgColor );
+
 								return (
 									<div
 										style={ {
 											backgroundColor: bgColor,
 											color: textColor,
+											border: `1px solid`,
 										} }
-										className=" p-2 rounded-lg h-22 text-base font-medium  text-wrap !leading-[1.1] flex flex-col gap-2 items-start justify-between"
+										className="p-2 rounded-md h-22 text-base font-medium  text-wrap !leading-[1.1] flex flex-col gap-2 items-start justify-between"
 									>
 										<p className="">{ arg.event.title }</p>
 										<div className="text-xs py-0.5 px-2 rounded-full bg-brand-green-dark text-white">
