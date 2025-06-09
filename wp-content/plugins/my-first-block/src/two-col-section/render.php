@@ -43,7 +43,7 @@ if ($image2) {
 $content_order_class = $inverted ? 'order-first' : 'order-last';
 ?>
 
-<section class="not-prose section-padding w-full">
+<section class="plugin-custom-block not-prose section-padding w-full">
   <div class="relative max-w-container mx-auto w-full grid grid-cols-5 gap-8 items-center">
     <div class="<?php echo esc_attr($content_order_class); ?> flex flex-col gap-4 w-full col-span-2 max-w-[600px] mx-auto">
       <div class='flex flex-col gap-2 w-full'>

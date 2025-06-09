@@ -12,8 +12,6 @@ import {
 	TextareaControl,
 	RangeControl,
 } from '@wordpress/components';
-
-import '../style.css';
 import Hero from '../../components/hero';
 
 export default function Edit( { attributes, setAttributes } ) {

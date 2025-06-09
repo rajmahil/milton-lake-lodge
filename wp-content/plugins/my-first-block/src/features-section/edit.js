@@ -10,7 +10,6 @@ import {
 	Button,
 	TextareaControl,
 } from '@wordpress/components';
-import '../style.css';
 import Features from '../../components/features';
 
 export default function Edit( { attributes, setAttributes } ) {
@@ -114,7 +113,7 @@ export default function Edit( { attributes, setAttributes } ) {
 							</Button>
 						</PanelBody>
 					) ) }
-					<div class='p-5 pt-0'>
+					<div class="p-5 pt-0">
 						<Button
 							isSecondary
 							onClick={ () =>

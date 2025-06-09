@@ -335,3 +335,28 @@ function boilerplate_preload_fonts()
     echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/Rubik-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
 }
 add_action('wp_head', 'boilerplate_preload_fonts', 5);
+
+add_filter('acf/load_field/name=trip_type', function ($field) {
+    global $post;
+
+    if (!$post) {
+        return $field; // fallback for safety
+    }
+
+    // Get the slot_types repeater from this post:
+    $slot_types = get_field('slot_types', $post->ID);
+
+    $field['choices'] = [];
+
+    if (!empty($slot_types)) {
+        foreach ($slot_types as $item) {
+            $label = $item['label_'] ?? '';
+
+            if ($label !== '') {
+                // Use label as both value and label
+                $field['choices'][$label] = $label;
+            }
+        }
+    }
+    return $field;
+});

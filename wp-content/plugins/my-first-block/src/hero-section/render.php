@@ -41,7 +41,7 @@ if ($image) {
 }
 ?>
 
-<section class="my-unique-plugin-wrapper-class bg-brand-green">
+<section class="plugin-custom-block bg-brand-green">
   <section
     class="h-[95vh] min-h-[800px] flex items-end overflow-hidden relative not-prose section-padding pb-6  w-full  rounded-b-4xl overlfow-hidden "
   >
@@ -204,7 +204,7 @@ if ($image) {
                 />
                 <?php endif; ?>
               </div>
-              <p class="text-sm text-left">
+              <p class="text-sm text-left !leading-tight">
                 <?php echo !empty($tripAdvisorReview['text']) ? esc_html($tripAdvisorReview['text']) : ''; ?>
               </p>
             </div>

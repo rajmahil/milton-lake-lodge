@@ -10,7 +10,6 @@ import {
 	Button,
 	RadioControl,
 } from '@wordpress/components';
-import '../style.css';
 import Showcase from '../../components/showcase';
 
 export default function Edit( { attributes, setAttributes } ) {

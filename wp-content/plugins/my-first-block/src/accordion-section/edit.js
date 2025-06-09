@@ -6,7 +6,6 @@ import {
 	TextareaControl,
 	Button,
 } from '@wordpress/components';
-import '../style.css';
 import Accordion from '../../components/accordion';
 
 export default function Edit( { attributes, setAttributes } ) {
