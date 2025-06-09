@@ -12,7 +12,7 @@ export default function ReviewsSection( { topHeading, reviews = [] } ) {
 	const totalSlides = reviews.length;
 
 	return (
-		<section className="not-prose section-padding w-full static-background">
+		<section className="plugin-custom-block  not-prose section-padding w-full static-background">
 			<style jsx>{ `
 				.review-carousel-container {
 					overflow: hidden;

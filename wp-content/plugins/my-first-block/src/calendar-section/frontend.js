@@ -11,11 +11,9 @@ divsToUpdate.forEach( ( div ) => {
 } );
 
 function OurComponent( props ) {
-	console.log( 'propos', props );
-
 	return (
 		<div className="my-unique-plugin-wrapper-class">
-			<FullCalendar />
+			<FullCalendar { ...props } />
 		</div>
 	);
 }

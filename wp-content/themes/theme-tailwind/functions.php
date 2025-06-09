@@ -328,11 +328,10 @@ function boilerplate_display_footer_logo()
 
 function boilerplate_preload_fonts()
 {
-    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/Caveat-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
-    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/Rubik-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
-    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/Rubik-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
-    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/Rubik-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
-    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/Rubik-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
+    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/Bebas-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
+    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/OverusedGrotesk-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
+    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/OverusedGrotesk-Roman.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
+    echo '<link rel="preload" href="' . esc_url(get_template_directory_uri()) . '/assets/fonts/OverusedGrotesk-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">' . "\n";
 }
 add_action('wp_head', 'boilerplate_preload_fonts', 5);
 

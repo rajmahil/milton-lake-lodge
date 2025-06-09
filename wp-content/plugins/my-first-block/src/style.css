@@ -90,12 +90,12 @@
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.plugin-custom-block h1,
+.plugin-custom-block h2,
+.plugin-custom-block h3,
+.plugin-custom-block h4,
+.plugin-custom-block h5,
+.plugin-custom-block h6  {
   font-family: theme(--font-heading);
   text-transform:  uppercase;
   letter-spacing: 0.01em;
@@ -276,6 +276,69 @@ h6 {
 
 	.heading-two {
 		@apply !my-0  !text-7xl ;
+	}
+
+
+	.my-calendar-wrapper .fc-theme-standard .fc-scrollgrid {
+  		@apply !border-0
+	}
+
+	.my-calendar-wrapper .fc-theme-standard td, .fc-theme-standard th {
+		@apply !border-0;
+	}
+
+	.fc .fc-toolbar-title {
+		@apply !text-4xl
+	}
+
+	.fc .fc-button-primary {
+		@apply !rounded-full  !capitalize h-10 !bg-transparent !text-brand-green-dark !border-0
+	}
+
+	.fc .fc-button-group {
+		@apply border border-brand-green-dark rounded-lg overflow-hidden
+	}
+
+	.fc .fc-prev-button {
+		@apply  !border-r border-dashed !rounded-none w-10 !text-xs hover:!bg-brand-light-grey duration-300 ease-in-out transition-all
+	}
+
+	.fc .fc-next-button {
+		@apply  !border-l border-dashed !rounded-none w-10 !text-xs hover:!bg-brand-light-grey duration-300 ease-in-out transition-all
+	}
+
+	.fc .fc-today-button {
+		@apply !px-5 !rounded-none !text-sm;
+	}
+
+	.fc .fc-col-header {
+		@apply bg-brand-light-grey rounded-lg;
+	}
+
+	.fc .fc-col-header-cell-cushion  {
+		@apply !py-2  flex items-center justify-center font-medium
+	}
+
+
+
+
+
+	/* .fc .fc-event-title-container {
+		@apply rounded-md h-12 !p-2 ;
+	} */
+
+
+	.fc .fc-day-today {
+		@apply !bg-brand-light-grey rounded-lg
+	}
+
+	.fc .fc-h-event {
+		@apply !border-0 !bg-transparent
+	}
+
+	.fc .fc-view-harness {
+
+		@apply min-w-[800px]  md:min-w-[1000px]
 	}
 
 	.footer-social-btn {

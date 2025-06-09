@@ -17,9 +17,9 @@
 			"type": "string",
 			"default": "Subheading Here"
 		},
-		"items": {
-			"type": "array",
-			"default": []
+		"selectedPostId": {
+			"type": "number",
+			"default": null
 		}
 	},
 	"supports": {

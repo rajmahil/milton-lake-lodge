@@ -9,7 +9,7 @@ const TwoCol = ( {
 	inverted,
 } ) => {
 	return (
-		<section className="not-prose section-padding w-full static-background">
+		<section className="plugin-custom-block  not-prose section-padding w-full static-background">
 			<div className="relative max-w-container mx-auto w-full grid md:grid-cols-2 items-center gap-10 justify-between">
 				<div
 					className={ `${
