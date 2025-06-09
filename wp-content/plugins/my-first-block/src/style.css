@@ -341,6 +341,7 @@
 		@apply min-w-[800px]  md:min-w-[1000px]
 	}
 
+
 	.footer-social-btn {
 		@apply h-10 w-10 bg-brand-yellow flex items-center justify-center rounded-full p-2 text-brand-green-dark;
 	}
