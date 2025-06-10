@@ -100,7 +100,7 @@ $exchange_rate = $attributes['exchange_rate'] ?? 1.25; // CAD to USD rate
             <?php foreach ($tab['features'] as $feature): ?>
             <div class="grid grid-cols-3 md:grid-cols-2 pb-6 gap-3 lg:gap-10 !pt-0 px-4 sm:px-8 ">
               <div class="mb-2 md:mb-0 col-span-2 md:col-span-1">
-                <h3 class="text-lg sm:!text-xl !font-medium !capitalize">
+                <h3 class="text-lg sm:!text-xl !font-medium !font-sans !capitalize ">
                   <?php echo esc_html($feature['title']); ?>
                 </h3>
                 <?php if (!empty($feature['description'])): ?>
