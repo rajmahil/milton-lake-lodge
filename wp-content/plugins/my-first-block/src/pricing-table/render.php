@@ -50,7 +50,7 @@ $exchange_rate = $attributes['exchange_rate'] ?? 1.25; // CAD to USD rate
       class="flex flex-col gap-8"
     >
 
-      <div class="bg-white rounded-lg sm:rounded-full w-full sm:w-fit mx-auto p-1">
+      <div class="bg-white rounded-lg sm:rounded-full w-fit mx-auto p-1">
         <div class="flex flex-col sm:flex-row justify-center">
           <?php foreach ($tabs as $index => $tab): ?>
           <button
