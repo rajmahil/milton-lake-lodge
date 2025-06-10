@@ -1,0 +1,37 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "brad-boilerplate/carousel-section",
+	"version": "0.1.0",
+	"title": "Carousel Section",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "Carousel section",
+	"example": {},
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": "Heading Here"
+		},
+		"subheading": {
+			"type": "string",
+			"selector": "p"
+		},
+		"items": {
+			"type": "array",
+			"default": []
+		}
+	},
+	"supports": {
+		"html": false,
+		"color": {
+			"background": true,
+			"text": true
+		}
+	},
+	"textdomain": "carousel-section-block",
+	"editorScript": "file:./index.js",
+	"editorStyle": [ "file:../style-index.css" ],
+	"style": [ "file:../style-index.css" ],
+	"render": "file:./render.php"
+}

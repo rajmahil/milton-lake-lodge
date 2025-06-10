@@ -26,7 +26,9 @@ $totalImages = count($images);
             },
             imageGalleryClose() {
                 this.imageGalleryOpened = false;
-                this.imageGalleryActiveUrl = null;
+                setTimeout(() => {
+                    this.imageGalleryActiveUrl = null;
+                }, 200); 
             },
             imageGalleryNext(){
                 this.imageGalleryImageIndex = (this.imageGalleryImageIndex >= this.totalImages - 1) ? 0 : (this.imageGalleryImageIndex + 1);
@@ -180,7 +182,7 @@ $totalImages = count($images);
 
                     <div 
                         @click="imageGalleryClose" 
-                        class="absolute top-0 right-0 flex items-center justify-center text-white bg-white/10 w-12 h-12 rounded-full cursor-pointer hover:bg-white/20 transition-colors duration-200 m-4"
+                        class="fixed top-6 right-4 flex items-center justify-center text-white bg-white/10 w-12 h-12 rounded-full cursor-pointer hover:bg-white/20 transition-colors duration-200 m-4"
                     >
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />

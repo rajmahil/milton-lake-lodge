@@ -17,8 +17,7 @@ $image = $attributes['image'] ?? null;
         <div class="relative z-10 text-center px-4 flex items-center justify-center w-full">
             <div class="flex flex-col items-center gap-2 max-w-screen-xl mx-auto">
                 <?php if (!empty($heading)): ?>
-                    <h1 class="!my-0 !text-5xl md:!text-6xl lg:!text-7xl !font-[600] text-center !text-white !uppercase"
-                        style="font-family: 'Bebas Neue Pro', sans-serif;">
+                    <h1 class="!my-0 !text-5xl md:!text-6xl lg:!text-7xl !font-[600] text-center !text-white !uppercase">
                         <?php echo esc_html($heading); ?>
                     </h1>
                 <?php endif; ?>
@@ -28,8 +27,8 @@ $image = $attributes['image'] ?? null;
                         <ol class="!p-0 !my-0 !flex justify-center flex-wrap items-center text-sm text-white gap-2">
                             <?php foreach ($breadcrumbs as $i => $crumb): ?>
                                 <li class="flex items-center gap-1">
-                                    <?php if (!empty($crumb['url'])): ?>
-                                        <a href="<?php echo esc_url($crumb['url']); ?>" class="!text-white !text-base">
+                                    <?php if (!empty($crumb['link'])): ?>
+                                        <a href="<?php echo esc_url($crumb['link']); ?>" class="!text-white !text-base">
                                             <?php echo esc_html($crumb['text']); ?>
                                         </a>
                                     <?php else: ?>

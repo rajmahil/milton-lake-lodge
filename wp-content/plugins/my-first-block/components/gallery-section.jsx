@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 
 const GallerySection = ( { heading, images = [] } ) => {
 	const [ isOpen, setIsOpen ] = useState( false );
+	const [ isClosing, setIsClosing ] = useState( false );
 	const [ activeIndex, setActiveIndex ] = useState( 0 );
 	const modalRef = useRef( null );
 	const overlayRef = useRef( null );
@@ -12,7 +13,12 @@ const GallerySection = ( { heading, images = [] } ) => {
 	}, [] );
 
 	const handleClose = useCallback( () => {
-		setIsOpen( false );
+		setIsClosing( true );
+
+		setTimeout( () => {
+			setIsOpen( false );
+			setIsClosing( false );
+		}, 200 );
 	}, [] );
 
 	const handleNext = useCallback( () => {
@@ -77,58 +83,36 @@ const GallerySection = ( { heading, images = [] } ) => {
 					</h2>
 				) }
 
-				{ groupedImages.map( ( group, groupIndex ) => (
-					<div
-						key={ groupIndex }
-						className="flex flex-col gap-2 sm:gap-4"
-					>
-						<div className="flex flex-col md:flex-row gap-2 sm:gap-4">
-							{ group[ 0 ] && (
-								<div
-									className="flex-1 aspect-[3/2] relative overflow-hidden rounded-xl cursor-zoom-in"
-									onClick={ () =>
-										handleOpen( groupIndex * 10 )
-									}
-								>
-									<img
-										src={ group[ 0 ].url }
-										alt={ group[ 0 ].alt || '' }
-										className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-									/>
-								</div>
-							) }
-
-							<div className="flex-1 grid grid-cols-2 gap-2 sm:gap-4">
-								{ group.slice( 1, 5 ).map( ( img, idx ) => (
+				<div className="flex flex-col !gap-2 sm:!gap-4">
+					{ groupedImages.map( ( group, groupIndex ) => (
+						<div
+							key={ groupIndex }
+							className="flex flex-col gap-2 sm:gap-4"
+						>
+							<div className="flex flex-col md:flex-row gap-2 sm:gap-4">
+								{ group[ 0 ] && (
 									<div
-										key={ idx }
-										className="aspect-[3/2] relative overflow-hidden rounded-xl cursor-zoom-in"
+										className="flex-1 aspect-[3/2] relative overflow-hidden rounded-xl cursor-zoom-in"
 										onClick={ () =>
-											handleOpen(
-												groupIndex * 10 + idx + 1
-											)
+											handleOpen( groupIndex * 10 )
 										}
 									>
 										<img
-											src={ img.url }
-											alt={ img.alt || '' }
+											src={ group[ 0 ].url }
+											alt={ group[ 0 ].alt || '' }
 											className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
 										/>
 									</div>
-								) ) }
-							</div>
-						</div>
+								) }
 
-						{ group.length > 5 && (
-							<div className="flex flex-col md:flex-row gap-2 sm:gap-4">
 								<div className="flex-1 grid grid-cols-2 gap-2 sm:gap-4">
-									{ group.slice( 5, 9 ).map( ( img, idx ) => (
+									{ group.slice( 1, 5 ).map( ( img, idx ) => (
 										<div
 											key={ idx }
 											className="aspect-[3/2] relative overflow-hidden rounded-xl cursor-zoom-in"
 											onClick={ () =>
 												handleOpen(
-													groupIndex * 10 + idx + 5
+													groupIndex * 10 + idx + 1
 												)
 											}
 										>
@@ -140,27 +124,57 @@ const GallerySection = ( { heading, images = [] } ) => {
 										</div>
 									) ) }
 								</div>
-
-								{ group[ 9 ] && (
-									<div
-										className="flex-1 aspect-[3/2] relative overflow-hidden rounded-xl cursor-zoom-in"
-										onClick={ () =>
-											handleOpen( groupIndex * 10 + 9 )
-										}
-									>
-										<img
-											src={ group[ 9 ].url }
-											alt={ group[ 9 ].alt || '' }
-											className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-										/>
-									</div>
-								) }
 							</div>
-						) }
-					</div>
-				) ) }
 
-				{ isOpen && (
+							{ group.length > 5 && (
+								<div className="flex flex-col md:flex-row gap-2 sm:gap-4 ">
+									<div className="flex-1 grid grid-cols-2 gap-2 sm:gap-4">
+										{ group
+											.slice( 5, 9 )
+											.map( ( img, idx ) => (
+												<div
+													key={ idx }
+													className="aspect-[3/2] relative overflow-hidden rounded-xl cursor-zoom-in"
+													onClick={ () =>
+														handleOpen(
+															groupIndex * 10 +
+																idx +
+																5
+														)
+													}
+												>
+													<img
+														src={ img.url }
+														alt={ img.alt || '' }
+														className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+													/>
+												</div>
+											) ) }
+									</div>
+
+									{ group[ 9 ] && (
+										<div
+											className="flex-1 aspect-[3/2] relative overflow-hidden rounded-xl cursor-zoom-in"
+											onClick={ () =>
+												handleOpen(
+													groupIndex * 10 + 9
+												)
+											}
+										>
+											<img
+												src={ group[ 9 ].url }
+												alt={ group[ 9 ].alt || '' }
+												className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+											/>
+										</div>
+									) }
+								</div>
+							) }
+						</div>
+					) ) }
+				</div>
+
+				{ ( isOpen || isClosing ) && (
 					<div
 						ref={ overlayRef }
 						className="fixed inset-0 !z-[1000] bg-black/90 flex items-center justify-center"
@@ -219,7 +233,7 @@ const GallerySection = ( { heading, images = [] } ) => {
 
 							<button
 								onClick={ handleClose }
-								className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+								className="fixed top-4 right-4 bg-white/10 hover:bg-white/20 text-white w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
 								aria-label="Close gallery"
 							>
 								<svg

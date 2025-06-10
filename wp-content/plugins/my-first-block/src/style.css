@@ -3,13 +3,11 @@
 @import "tailwindcss";
 @import "tailwindcss/theme.css" layer(theme);
 
-
+/* 
 @source inline("md:grid-cols-2");
 @source inline("sm:rounded-full");
 @source inline("sm:flex-row");
-@source inline("sm:w-fit")
-
-
+@source inline("sm:w-fit") */
 
 /* Global wrapper class for all your blocks */
 .my-unique-plugin-wrapper-class {
@@ -22,15 +20,12 @@
 	--font-sans: "Overused Grotesk", sans-serif;
 	--font-decorative: "Caveat", "cursive";
 
-
-
-	--color-brand-green: #00473F;
-	--color-brand-green-dark: #00251E;
+	--color-brand-green: #00473f;
+	--color-brand-green-dark: #00251e;
 	--color-brand-yellow: #fed06e;
 	--color-brand-yellow-dark: #edbb4f;
 	--color-brand-grey: #e4e1d6;
 	--color-brand-light-grey: #e8dfd8;
-
 
 	--color-background: #ffffff;
 	--color-foreground: #0b0f19;
@@ -61,12 +56,12 @@
 }
 
 @keyframes imageZoom {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.25);
-  }
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(1.25);
+	}
 }
 
 .plugin-custom-block h1,
@@ -74,11 +69,10 @@
 .plugin-custom-block h3,
 .plugin-custom-block h4,
 .plugin-custom-block h5,
-.plugin-custom-block h6  {
-  font-family: theme(--font-heading);
-  text-transform:  uppercase;
-  letter-spacing: 0.01em;
-
+.plugin-custom-block h6 {
+	font-family: theme(--font-heading);
+	text-transform: uppercase;
+	letter-spacing: 0.01em;
 }
 
 .decorative-text {
@@ -91,7 +85,6 @@
 	background-size: "auto";
 	background-blend-mode: "color-burn", normal;
 }
-
 
 @font-face {
 	font-family: "Bebas Neue Pro";
@@ -109,93 +102,93 @@
 	font-display: swap;
 }
 
-
-
 /* Book */
 @font-face {
-  font-family: "Overused Grotesk";
-  font-style: normal;
-  font-weight: 450;
-  src: url("../assets/fonts/OverusedGrotesk-Book.woff2") format("woff2");
-  font-display: swap;
+	font-family: "Overused Grotesk";
+	font-style: normal;
+	font-weight: 450;
+	src: url("../assets/fonts/OverusedGrotesk-Book.woff2") format("woff2");
+	font-display: swap;
 }
 
 @font-face {
-  font-family: "Overused Grotesk";
-  font-style: italic;
-  font-weight: 450;
-  src: url("../assets/fonts/OverusedGrotesk-BookItalic.woff2") format("woff2");
-  font-display: swap;
+	font-family: "Overused Grotesk";
+	font-style: italic;
+	font-weight: 450;
+	src: url("../assets/fonts/OverusedGrotesk-BookItalic.woff2") format("woff2");
+	font-display: swap;
 }
 
 /* Medium */
 @font-face {
-  font-family: "Overused Grotesk";
-  font-style: normal;
-  font-weight: 500;
-  src: url("../assets/fonts/OverusedGrotesk-Medium.woff2") format("woff2");
-  font-display: swap;
+	font-family: "Overused Grotesk";
+	font-style: normal;
+	font-weight: 500;
+	src: url("../assets/fonts/OverusedGrotesk-Medium.woff2") format("woff2");
+	font-display: swap;
 }
 
 @font-face {
-  font-family: "Overused Grotesk";
-  font-style: italic;
-  font-weight: 500;
-  src: url("../assets/fonts/OverusedGrotesk-MediumItalic.woff2") format("woff2");
-  font-display: swap;
+	font-family: "Overused Grotesk";
+	font-style: italic;
+	font-weight: 500;
+	src: url("../assets/fonts/OverusedGrotesk-MediumItalic.woff2")
+		format("woff2");
+	font-display: swap;
 }
 
 /* SemiBold */
 @font-face {
-  font-family: "Overused Grotesk";
-  font-style: normal;
-  font-weight: 600;
-  src: url("../assets/fonts/OverusedGrotesk-SemiBold.woff2") format("woff2");
-  font-display: swap;
+	font-family: "Overused Grotesk";
+	font-style: normal;
+	font-weight: 600;
+	src: url("../assets/fonts/OverusedGrotesk-SemiBold.woff2") format("woff2");
+	font-display: swap;
 }
 
 @font-face {
-  font-family: "Overused Grotesk";
-  font-style: italic;
-  font-weight: 600;
-  src: url("../assets/fonts/OverusedGrotesk-SemiBoldItalic.woff2") format("woff2");
-  font-display: swap;
+	font-family: "Overused Grotesk";
+	font-style: italic;
+	font-weight: 600;
+	src: url("../assets/fonts/OverusedGrotesk-SemiBoldItalic.woff2")
+		format("woff2");
+	font-display: swap;
 }
 
 /* Bold */
 @font-face {
-  font-family: "Overused Grotesk";
-  font-style: normal;
-  font-weight: 700;
-  src: url("../assets/fonts/OverusedGrotesk-Bold.woff2") format("woff2");
-  font-display: swap;
+	font-family: "Overused Grotesk";
+	font-style: normal;
+	font-weight: 700;
+	src: url("../assets/fonts/OverusedGrotesk-Bold.woff2") format("woff2");
+	font-display: swap;
 }
 
 @font-face {
-  font-family: "Overused Grotesk";
-  font-style: italic;
-  font-weight: 700;
-  src: url("../assets/fonts/OverusedGrotesk-BoldItalic.woff2") format("woff2");
-  font-display: swap;
+	font-family: "Overused Grotesk";
+	font-style: italic;
+	font-weight: 700;
+	src: url("../assets/fonts/OverusedGrotesk-BoldItalic.woff2") format("woff2");
+	font-display: swap;
 }
 
 /* ExtraBold */
 @font-face {
-  font-family: "Overused Grotesk";
-  font-style: normal;
-  font-weight: 800;
-  src: url("../assets/fonts/OverusedGrotesk-ExtraBold.woff2") format("woff2");
-  font-display: swap;
+	font-family: "Overused Grotesk";
+	font-style: normal;
+	font-weight: 800;
+	src: url("../assets/fonts/OverusedGrotesk-ExtraBold.woff2") format("woff2");
+	font-display: swap;
 }
 
 @font-face {
-  font-family: "Overused Grotesk";
-  font-style: italic;
-  font-weight: 800;
-  src: url("../assets/fonts/OverusedGrotesk-ExtraBoldItalic.woff2") format("woff2");
-  font-display: swap;
+	font-family: "Overused Grotesk";
+	font-style: italic;
+	font-weight: 800;
+	src: url("../assets/fonts/OverusedGrotesk-ExtraBoldItalic.woff2")
+		format("woff2");
+	font-display: swap;
 }
-
 
 @layer components {
 	/* First Block Components */
@@ -254,36 +247,36 @@
 	}
 
 	.heading-two {
-		@apply !my-0  !text-7xl ;
+		@apply !my-0  !text-7xl;
 	}
-
 
 	.my-calendar-wrapper .fc-theme-standard .fc-scrollgrid {
-  		@apply !border-0
+		@apply !border-0;
 	}
 
-	.my-calendar-wrapper .fc-theme-standard td, .fc-theme-standard th {
+	.my-calendar-wrapper .fc-theme-standard td,
+	.fc-theme-standard th {
 		@apply !border-0;
 	}
 
 	.fc .fc-toolbar-title {
-		@apply !text-4xl
+		@apply !text-4xl;
 	}
 
 	.fc .fc-button-primary {
-		@apply !rounded-full  !capitalize h-10 !bg-transparent !text-brand-green-dark !border-0
+		@apply !rounded-full  !capitalize h-10 !bg-transparent !text-brand-green-dark !border-0;
 	}
 
 	.fc .fc-button-group {
-		@apply border border-brand-green-dark rounded-lg overflow-hidden
+		@apply border border-brand-green-dark rounded-lg overflow-hidden;
 	}
 
 	.fc .fc-prev-button {
-		@apply  !border-r border-dashed !rounded-none w-10 !text-xs hover:!bg-brand-light-grey duration-300 ease-in-out transition-all
+		@apply !border-r border-dashed !rounded-none w-10 !text-xs hover:!bg-brand-light-grey duration-300 ease-in-out transition-all;
 	}
 
 	.fc .fc-next-button {
-		@apply  !border-l border-dashed !rounded-none w-10 !text-xs hover:!bg-brand-light-grey duration-300 ease-in-out transition-all
+		@apply !border-l border-dashed !rounded-none w-10 !text-xs hover:!bg-brand-light-grey duration-300 ease-in-out transition-all;
 	}
 
 	.fc .fc-today-button {
@@ -294,32 +287,25 @@
 		@apply bg-brand-light-grey rounded-lg;
 	}
 
-	.fc .fc-col-header-cell-cushion  {
-		@apply !py-2  flex items-center justify-center font-medium
+	.fc .fc-col-header-cell-cushion {
+		@apply !py-2  flex items-center justify-center font-medium;
 	}
-
-
-
-
 
 	/* .fc .fc-event-title-container {
 		@apply rounded-md h-12 !p-2 ;
 	} */
 
-
 	.fc .fc-day-today {
-		@apply !bg-brand-light-grey rounded-lg
+		@apply !bg-brand-light-grey rounded-lg;
 	}
 
 	.fc .fc-h-event {
-		@apply !border-0 !bg-transparent
+		@apply !border-0 !bg-transparent;
 	}
 
 	.fc .fc-view-harness {
-
-		@apply min-w-[800px]  md:min-w-[1000px]
+		@apply min-w-[800px]  md:min-w-[1000px];
 	}
-
 
 	.footer-social-btn {
 		@apply h-10 w-10 bg-brand-yellow flex items-center justify-center rounded-full p-2 text-brand-green-dark;
@@ -340,8 +326,7 @@
 		animation: slide 30s linear infinite;
 		animation-play-state: running;
 		will-change: transform;
- 		transform: translate3d(0, 0, 0); /* triggers GPU */
-
+		transform: translate3d(0, 0, 0); /* triggers GPU */
 	}
 
 	.group:hover .animate-slide {
