@@ -124,7 +124,7 @@ $exchange_rate = $attributes['exchange_rate'] ?? 1.25; // CAD to USD rate
                                                             </span>
                                                         <?php endif; ?>
                                                         <?php else: ?>
-                                                            <span class="text-lg sm:!text-xl break-words whitespace-normal block max-w-full text-right">
+                                                            <span class="text-base sm:!text-lg md:!text-xl break-words whitespace-normal block max-w-full text-right">
                                                                 <?php echo esc_html($feature['price']); ?>
                                                             </span>
                                                         <?php endif; ?>
