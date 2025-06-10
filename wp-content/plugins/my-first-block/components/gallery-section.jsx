@@ -52,11 +52,56 @@ const GallerySection = ( { heading, images = [] } ) => {
 
 	useEffect( () => {
 		if ( isOpen ) {
+			// Prevent all scrolling like in PHP version
+			const originalStyle = window.getComputedStyle(
+				document.body
+			).overflow;
+			const originalDocStyle = window.getComputedStyle(
+				document.documentElement
+			).overflow;
+
 			document.body.style.overflow = 'hidden';
+			document.documentElement.style.overflow = 'hidden';
+			document.body.style.position = 'fixed';
+			document.body.style.width = '100%';
+			document.body.style.height = '100%';
+
 			window.addEventListener( 'keydown', handleKeyDown );
 			document.addEventListener( 'mousedown', handleOutsideClick );
+
+			// Prevent scroll events on window
+			const preventScroll = ( e ) => {
+				e.preventDefault();
+				return false;
+			};
+
+			window.addEventListener( 'scroll', preventScroll, {
+				passive: false,
+			} );
+			window.addEventListener( 'touchmove', preventScroll, {
+				passive: false,
+			} );
+			window.addEventListener( 'wheel', preventScroll, {
+				passive: false,
+			} );
+
+			return () => {
+				document.body.style.overflow = originalStyle;
+				document.documentElement.style.overflow = originalDocStyle;
+				document.body.style.position = '';
+				document.body.style.width = '';
+				document.body.style.height = '';
+				window.removeEventListener( 'scroll', preventScroll );
+				window.removeEventListener( 'touchmove', preventScroll );
+				window.removeEventListener( 'wheel', preventScroll );
+			};
 		} else {
+			// Restore scrolling
 			document.body.style.overflow = '';
+			document.documentElement.style.overflow = '';
+			document.body.style.position = '';
+			document.body.style.width = '';
+			document.body.style.height = '';
 			window.removeEventListener( 'keydown', handleKeyDown );
 			document.removeEventListener( 'mousedown', handleOutsideClick );
 		}
@@ -65,6 +110,10 @@ const GallerySection = ( { heading, images = [] } ) => {
 			window.removeEventListener( 'keydown', handleKeyDown );
 			document.removeEventListener( 'mousedown', handleOutsideClick );
 			document.body.style.overflow = '';
+			document.documentElement.style.overflow = '';
+			document.body.style.position = '';
+			document.body.style.width = '';
+			document.body.style.height = '';
 		};
 	}, [ isOpen, handleKeyDown, handleOutsideClick ] );
 
@@ -100,7 +149,7 @@ const GallerySection = ( { heading, images = [] } ) => {
 										<img
 											src={ group[ 0 ].url }
 											alt={ group[ 0 ].alt || '' }
-											className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+											className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 select-none"
 										/>
 									</div>
 								) }
@@ -119,7 +168,7 @@ const GallerySection = ( { heading, images = [] } ) => {
 											<img
 												src={ img.url }
 												alt={ img.alt || '' }
-												className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+												className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 select-none"
 											/>
 										</div>
 									) ) }
@@ -146,7 +195,7 @@ const GallerySection = ( { heading, images = [] } ) => {
 													<img
 														src={ img.url }
 														alt={ img.alt || '' }
-														className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+														className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 select-none"
 													/>
 												</div>
 											) ) }
@@ -164,7 +213,7 @@ const GallerySection = ( { heading, images = [] } ) => {
 											<img
 												src={ group[ 9 ].url }
 												alt={ group[ 9 ].alt || '' }
-												className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+												className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 select-none"
 											/>
 										</div>
 									) }
@@ -177,82 +226,161 @@ const GallerySection = ( { heading, images = [] } ) => {
 				{ ( isOpen || isClosing ) && (
 					<div
 						ref={ overlayRef }
-						className="fixed inset-0 !z-[1000] bg-black/90 flex items-center justify-center"
+						className="fixed inset-0 !z-[1000] w-screen h-screen bg-black/90 select-none cursor-zoom-out overflow-hidden touch-none"
+						style={ { overscrollBehavior: 'none' } }
+						onTouchMove={ ( e ) => e.preventDefault() }
+						onWheel={ ( e ) => e.preventDefault() }
+						onScroll={ ( e ) => e.preventDefault() }
 					>
-						<div
-							ref={ modalRef }
-							className="relative w-full h-full max-w-[90%] max-h-[90vh] flex items-center justify-center p-4"
-						>
-							<button
-								onClick={ handlePrev }
-								className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
-								aria-label="Previous image"
+						<div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+							<div
+								ref={ modalRef }
+								className="relative w-full h-full max-w-[90vw] max-h-[90vh] pointer-events-auto"
 							>
-								<svg
-									className="w-6 h-6"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									fill="none"
+								{ /* Desktop navigation - left side */ }
+								<button
+									onClick={ ( e ) => {
+										e.stopPropagation();
+										handlePrev();
+									} }
+									className="absolute !z-[1001] left-4 top-1/2 -translate-y-1/2 hidden xl:flex items-center justify-center text-white rounded-full cursor-pointer bg-white/10 w-14 h-14 hover:bg-white/20 transition-colors duration-200"
+									aria-label="Previous image"
 								>
-									<path
-										d="M15 6l-6 6 6 6"
+									<svg
+										className="w-6 h-6"
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
 										strokeWidth="1.5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
+										stroke="currentColor"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											d="M15.75 19.5L8.25 12l7.5-7.5"
+										/>
+									</svg>
+								</button>
+
+								{ /* Image container */ }
+								<div className="relative flex items-center justify-center w-full h-full">
+									<img
+										src={ images[ activeIndex ]?.url }
+										alt={ images[ activeIndex ]?.alt || '' }
+										className="object-contain object-center w-full h-full max-w-[90vw] max-h-[85vh] select-none cursor-zoom-out rounded-lg shadow-xl"
 									/>
-								</svg>
-							</button>
 
-							<div className="w-full h-full flex items-center justify-center">
-								<img
-									src={ images[ activeIndex ]?.url }
-									alt={ images[ activeIndex ]?.alt || '' }
-									className="max-w-full max-h-full object-contain rounded-lg shadow-xl"
-								/>
-							</div>
+									{ /* Desktop counter - bottom center */ }
+									<div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-black/90 text-white py-1 px-4 rounded-full text-sm font-medium xl:block hidden">
+										<span>{ activeIndex + 1 }</span>
+										<span>/</span>
+										<span>{ images.length }</span>
+									</div>
 
-							<button
-								onClick={ handleNext }
-								className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
-								aria-label="Next image"
-							>
-								<svg
-									className="w-6 h-6"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									fill="none"
+									{ /* Mobile navigation - bottom center */ }
+									<div className="absolute bottom-14 left-1/2 transform -translate-x-1/2 flex items-center gap-4 xl:hidden">
+										<button
+											onClick={ ( e ) => {
+												e.stopPropagation();
+												handlePrev();
+											} }
+											className="flex items-center justify-center text-white rounded-full cursor-pointer bg-white/10 w-10 sm:w-14 h-10 sm:h-14 hover:bg-white/20 transition-colors duration-200"
+											aria-label="Previous image"
+										>
+											<svg
+												className="w-5 sm:w-6 h-5 sm:h-6"
+												xmlns="http://www.w3.org/2000/svg"
+												fill="none"
+												viewBox="0 0 24 24"
+												strokeWidth="1.5"
+												stroke="currentColor"
+											>
+												<path
+													strokeLinecap="round"
+													strokeLinejoin="round"
+													d="M15.75 19.5L8.25 12l7.5-7.5"
+												/>
+											</svg>
+										</button>
+
+										<div className="bg-black/90 text-white flex items-center py-2 px-4 rounded-full text-sm font-medium">
+											<span>{ activeIndex + 1 }</span>
+											<span>/</span>
+											<span>{ images.length }</span>
+										</div>
+
+										<button
+											onClick={ ( e ) => {
+												e.stopPropagation();
+												handleNext();
+											} }
+											className="flex items-center justify-center text-white rounded-full cursor-pointer bg-white/10 w-10 sm:w-14 h-10 sm:h-14 hover:bg-white/20 transition-colors duration-200"
+											aria-label="Next image"
+										>
+											<svg
+												className="w-5 sm:w-6 h-5 sm:h-6"
+												xmlns="http://www.w3.org/2000/svg"
+												fill="none"
+												viewBox="0 0 24 24"
+												strokeWidth="1.5"
+												stroke="currentColor"
+											>
+												<path
+													strokeLinecap="round"
+													strokeLinejoin="round"
+													d="M8.25 4.5l7.5 7.5-7.5 7.5"
+												/>
+											</svg>
+										</button>
+									</div>
+								</div>
+
+								{ /* Desktop navigation - right side */ }
+								<button
+									onClick={ ( e ) => {
+										e.stopPropagation();
+										handleNext();
+									} }
+									className="absolute !z-[1001] right-4 top-1/2 -translate-y-1/2 hidden xl:flex items-center justify-center text-white rounded-full cursor-pointer bg-white/10 w-14 h-14 hover:bg-white/20 transition-colors duration-200"
+									aria-label="Next image"
 								>
-									<path
-										d="M9 6l6 6-6 6"
+									<svg
+										className="w-6 h-6"
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
 										strokeWidth="1.5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</svg>
-							</button>
+										stroke="currentColor"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											d="M8.25 4.5l7.5 7.5-7.5 7.5"
+										/>
+									</svg>
+								</button>
 
-							<button
-								onClick={ handleClose }
-								className="fixed top-4 right-4 bg-white/10 hover:bg-white/20 text-white w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
-								aria-label="Close gallery"
-							>
-								<svg
-									className="w-6 h-6"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									fill="none"
+								{ /* Close button */ }
+								<button
+									onClick={ handleClose }
+									className="absolute top-4 right-4 flex items-center justify-center text-white bg-white/10 w-12 h-12 rounded-full cursor-pointer hover:bg-white/20 transition-colors duration-200"
+									aria-label="Close gallery"
 								>
-									<path
-										d="M6 6l12 12M6 18L18 6"
+									<svg
+										className="w-6 h-6"
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
 										strokeWidth="1.5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</svg>
-							</button>
-
-							<div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-black/50 text-white py-1 px-3 rounded-full text-sm">
-								{ activeIndex + 1 } / { images.length }
+										stroke="currentColor"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											d="M6 18L18 6M6 6l12 12"
+										/>
+									</svg>
+								</button>
 							</div>
 						</div>
 					</div>
