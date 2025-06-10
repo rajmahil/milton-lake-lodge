@@ -152,7 +152,7 @@ $exchange_rate = $attributes['exchange_rate'] ?? 1.25; // CAD to USD rate
             </div>
         <?php else: ?>
             <div class="text-center px-4 sm:px-8 !py-0 !pb-5 text-gray-500">
-                No packages available yet. Please add packages in the editor.
+                No package available yet. Please add packages in the editor.
             </div>
         <?php endif; ?>
     </div>
