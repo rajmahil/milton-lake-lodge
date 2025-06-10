@@ -23,35 +23,7 @@
 	--color-brand-grey: #e4e1d6;
 	--color-brand-light-grey: #e8dfd8;
 
-	/* Custom breakpoints */
-	--breakpoint-375: 375px;
-	--breakpoint-400: 400px;
-	--breakpoint-450: 450px;
-	--breakpoint-500: 500px;
-	--breakpoint-550: 550px;
-	--breakpoint-600: 600px;
-	--breakpoint-650: 650px;
-	--breakpoint-700: 700px;
-	--breakpoint-750: 750px;
-	--breakpoint-800: 800px;
-	--breakpoint-850: 850px;
-	--breakpoint-900: 900px;
-	--breakpoint-950: 950px;
-	--breakpoint-1000: 1000px;
-	--breakpoint-1050: 1050px;
-	--breakpoint-1100: 1100px;
-	--breakpoint-1150: 1150px;
-	--breakpoint-1200: 1200px;
-	--breakpoint-1250: 1250px;
-	--breakpoint-1300: 1300px;
-	--breakpoint-1350: 1350px;
-	--breakpoint-1400: 1400px;
-	--breakpoint-1450: 1450px;
-	--breakpoint-1500: 1500px;
-	--breakpoint-1550: 1550px;
-	--breakpoint-1600: 1600px;
-	--breakpoint-1650: 1650px;
-	--breakpoint-1700: 1700px;
+
 
 	--color-background: #ffffff;
 	--color-foreground: #0b0f19;
