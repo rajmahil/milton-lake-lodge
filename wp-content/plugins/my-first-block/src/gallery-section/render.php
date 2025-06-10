@@ -11,7 +11,7 @@ $groups = array_chunk($images, 10);
 $totalImages = count($images);
 ?>
 
-<section class="plugin-custom-block not-prose section-padding w-full static-background">
+<section class="plugin-custom-block not-prose section-padding w-full">
   <div
     class="max-w-container mx-auto flex flex-col gap-16"
     x-data="{
@@ -26,7 +26,9 @@ $totalImages = count($images);
         },
         imageGalleryClose() {
             this.imageGalleryOpened = false;
-            this.imageGalleryActiveUrl = null;
+            setTimeout(() => {
+                this.imageGalleryActiveUrl = null;
+            }, 200);
         },
         imageGalleryNext() {
             this.imageGalleryImageIndex = (this.imageGalleryImageIndex >= this.totalImages - 1) ? 0 : (this.imageGalleryImageIndex + 1);
@@ -56,8 +58,8 @@ $totalImages = count($images);
       x-ref="gallery"
     >
       <?php
-                $globalIndex = 0;
-                foreach ($groups as $groupIndex => $groupImages) : ?>
+      $globalIndex = 0;
+      foreach ($groups as $groupIndex => $groupImages) : ?>
       <div class="flex flex-col gap-2 sm:gap-4">
         <div class="flex flex-col md:flex-row gap-2 sm:gap-4">
           <?php if (!empty($groupImages[0]['url'])) : ?>
@@ -73,9 +75,139 @@ $totalImages = count($images);
           <?php $globalIndex++; ?>
           <?php endif; ?>
 
-          <<<<<<<
-            HEAD
+          <div class="flex-1 grid grid-cols-2 gap-2 sm:gap-4">
+            <?php for ($i = 1; $i <= 4; $i++) :
+                                    if (!empty($groupImages[$i]['url'])) : ?>
+            <div class="aspect-[3/2] relative overflow-hidden rounded-xl">
+              <img
+                src="<?php echo esc_url($groupImages[$i]['url']); ?>"
+                alt="<?php echo esc_attr($groupImages[$i]['alt'] ?? ''); ?>"
+                data-index="<?php echo $globalIndex; ?>"
+                @click="imageGalleryOpen"
+                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none"
+              >
+            </div>
+            <?php $globalIndex++; ?>
+            <?php endif;
+                                endfor; ?>
+          </div>
+        </div>
+
+        <?php if (count($groupImages) > 5) : ?>
+        <div class="flex flex-col md:flex-row gap-2 sm:gap-4">
+          <div class="flex-1 grid grid-cols-2 gap-2 sm:gap-4">
+            <?php for ($i = 5; $i <= 8; $i++) :
+                                        if (!empty($groupImages[$i]['url'])) : ?>
+            <div class="aspect-[3/2] relative overflow-hidden rounded-xl">
+              <img
+                src="<?php echo esc_url($groupImages[$i]['url']); ?>"
+                alt="<?php echo esc_attr($groupImages[$i]['alt'] ?? ''); ?>"
+                data-index="<?php echo $globalIndex; ?>"
+                @click="imageGalleryOpen"
+                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none"
+              >
+            </div>
+            <?php $globalIndex++; ?>
+            <?php endif;
+                                    endfor; ?>
+          </div>
+
+          <?php if (!empty($groupImages[9]['url'])) : ?>
+          <div class="flex-1 aspect-[3/2] relative overflow-hidden rounded-xl">
+            <img
+              src="<?php echo esc_url($groupImages[9]['url']); ?>"
+              alt="<?php echo esc_attr($groupImages[9]['alt'] ?? ''); ?>"
+              data-index="<?php echo $globalIndex; ?>"
+              @click="imageGalleryOpen"
+              class="w-full h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none"
+            >
+          </div>
+          <?php $globalIndex++; ?>
+          <?php endif; ?>
+        </div>
+        <?php endif; ?>
+      </div>
+      <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
+
+    <template x-teleport="body">
+      <div
+        x-show="imageGalleryOpened"
+        x-transition:enter="transition ease-in-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:leave="transition ease-in-in duration-300"
+        x-transition:leave-end="opacity-0"
+        @click="imageGalleryClose"
+        @keydown.window.escape="imageGalleryClose"
+        x-trap.inert.noscroll="imageGalleryOpened"
+        class="fixed inset-0 !z-[1000] flex items-center justify-center bg-black/90 select-none cursor-zoom-out"
+        x-cloak
+      >
+        <div class="relative flex items-center justify-center w-11/12 xl:w-4/5 h-11/12">
+          <div
+            @click="$event.stopPropagation(); imageGalleryPrev()"
+            class="absolute !z-[1000] left-0 flex items-center justify-center text-white translate-x-10 rounded-full cursor-pointer xl:-translate-x-24 2xl:-translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20 transition-colors duration-200"
+          >
+            <svg
+              class="w-6 h-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
+            </svg>
+          </div>
+
+          <div class="relative flex items-center justify-center w-full h-full">
+            <img
+              x-show="imageGalleryOpened"
+              x-transition:enter="transition ease-in-out duration-300"
+              x-transition:enter-start="opacity-0 transform scale-50"
+              x-transition:leave="transition ease-in-in duration-300"
+              x-transition:leave-end="opacity-0 transform scale-50"
+              class="object-contain object-center w-full h-full max-w-[90vw] max-h-[85vh] select-none cursor-zoom-out"
+              :src="imageGalleryActiveUrl"
+              alt=""
+            >
+
+            <!-- Image counter -->
             <div
+              class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-black/90 text-white py-1 px-4 rounded-full text-sm font-medium"
+            >
+              <span x-text="imageGalleryImageIndex + 1"></span>
+              <span>/</span>
+              <span x-text="totalImages"></span>
+            </div>
+          </div>
+
+          <div
+            @click="$event.stopPropagation(); imageGalleryNext()"
+            class="absolute right-0 flex items-center justify-center text-white -translate-x-10 rounded-full cursor-pointer xl:translate-x-24 2xl:translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20 transition-colors duration-200"
+          >
+            <svg
+              class="w-6 h-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </div>
+
+          <div
             @click="imageGalleryClose"
             class="fixed top-6 right-4 flex items-center justify-center text-white bg-white/10 w-12 h-12 rounded-full cursor-pointer hover:bg-white/20 transition-colors duration-200 m-4"
           >
@@ -93,186 +225,9 @@ $totalImages = count($images);
                 d="M6 18L18 6M6 6l12 12"
               />
             </svg>
-        </div>
-      </div>
-      =======
-      <div class="flex-1 grid grid-cols-2 gap-2 sm:gap-4">
-        <?php for ($i = 1; $i <= 4; $i++) :
-                                    if (!empty($groupImages[$i]['url'])) : ?>
-        <div class="aspect-[3/2] relative overflow-hidden rounded-xl">
-          <img
-            src="<?php echo esc_url($groupImages[$i]['url']); ?>"
-            alt="<?php echo esc_attr($groupImages[$i]['alt'] ?? ''); ?>"
-            data-index="<?php echo $globalIndex; ?>"
-            @click="imageGalleryOpen"
-            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none"
-          >
-          >>>>>>> a10f633 (update)
-        </div>
-        <?php $globalIndex++; ?>
-        <?php endif;
-                                endfor; ?>
-      </div>
-    </div>
-
-    <?php if (count($groupImages) > 5) : ?>
-    <div class="flex flex-col md:flex-row gap-2 sm:gap-4">
-      <div class="flex-1 grid grid-cols-2 gap-2 sm:gap-4">
-        <?php for ($i = 5; $i <= 8; $i++) :
-                                        if (!empty($groupImages[$i]['url'])) : ?>
-        <div class="aspect-[3/2] relative overflow-hidden rounded-xl">
-          <img
-            src="<?php echo esc_url($groupImages[$i]['url']); ?>"
-            alt="<?php echo esc_attr($groupImages[$i]['alt'] ?? ''); ?>"
-            data-index="<?php echo $globalIndex; ?>"
-            @click="imageGalleryOpen"
-            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none"
-          >
-        </div>
-        <?php $globalIndex++; ?>
-        <?php endif;
-                                    endfor; ?>
-      </div>
-
-      <?php if (!empty($groupImages[9]['url'])) : ?>
-      <div class="flex-1 aspect-[3/2] relative overflow-hidden rounded-xl">
-        <img
-          src="<?php echo esc_url($groupImages[9]['url']); ?>"
-          alt="<?php echo esc_attr($groupImages[9]['alt'] ?? ''); ?>"
-          data-index="<?php echo $globalIndex; ?>"
-          @click="imageGalleryOpen"
-          class="w-full h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none"
-        >
-      </div>
-      <?php $globalIndex++; ?>
-      <?php endif; ?>
-    </div>
-    <?php endif; ?>
-  </div>
-  <?php endforeach; ?>
-  </div>
-  <?php endif; ?>
-
-  <template x-teleport="body">
-    <div
-      x-show="imageGalleryOpened"
-      x-transition:enter="transition ease-in-out duration-300"
-      x-transition:enter-start="opacity-0"
-      x-transition:leave="transition ease-in-in duration-300"
-      x-transition:leave-end="opacity-0"
-      @click="imageGalleryClose"
-      @keydown.window.escape="imageGalleryClose"
-      x-trap.inert.noscroll="imageGalleryOpened"
-      class="fixed inset-0 !z-[1000] flex items-center justify-center bg-black/90 select-none cursor-zoom-out"
-      x-cloak
-    >
-      <div class="relative flex items-center justify-center w-11/12 xl:w-4/5 h-11/12">
-        <div
-          @click="$event.stopPropagation(); imageGalleryPrev()"
-          class="absolute !z-[1000] left-0 flex items-center justify-center text-white translate-x-10 rounded-full cursor-pointer xl:-translate-x-24 2xl:-translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20 transition-colors duration-200"
-        >
-          <svg
-            class="w-6 h-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15.75 19.5L8.25 12l7.5-7.5"
-            />
-          </svg>
-        </div>
-
-        <div class="relative flex items-center justify-center w-full h-full">
-          <img
-            x-show="imageGalleryOpened"
-            x-transition:enter="transition ease-in-out duration-300"
-            x-transition:enter-start="opacity-0 transform scale-50"
-            x-transition:leave="transition ease-in-in duration-300"
-            x-transition:leave-end="opacity-0 transform scale-50"
-            class="object-contain object-center w-full h-full max-w-[90vw] max-h-[85vh] select-none cursor-zoom-out"
-            :src="imageGalleryActiveUrl"
-            alt=""
-          >
-
-          <!-- Image counter -->
-          <div
-            class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-black/90 text-white py-1 px-4 rounded-full text-sm font-medium"
-          >
-            <span x-text="imageGalleryImageIndex + 1"></span>
-            <span>/</span>
-            <span x-text="totalImages"></span>
           </div>
         </div>
-
-        <div
-          @click="$event.stopPropagation(); imageGalleryNext()"
-          class="absolute right-0 flex items-center justify-center text-white -translate-x-10 rounded-full cursor-pointer xl:translate-x-24 2xl:translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20 transition-colors duration-200"
-        >
-          <svg
-            class="w-6 h-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M8.25 4.5l7.5 7.5-7.5 7.5"
-            />
-          </svg>
-        </div>
-
-        <div
-          @click="imageGalleryClose"
-          class="absolute top-0 right-0 flex items-center justify-center text-white bg-white/10 w-12 h-12 rounded-full cursor-pointer hover:bg-white/20 transition-colors duration-200 m-4"
-        >
-          <svg
-            class="w-6 h-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </div>
       </div>
-    </div>
-  </template>
-  </div>
-  <div
-    @click="imageGalleryClose"
-    class="fixed top-6 right-4 flex items-center justify-center text-white bg-white/10 w-12 h-12 rounded-full cursor-pointer hover:bg-white/20 transition-colors duration-200 m-4"
-  >
-    <svg
-      class="w-6 h-6"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M6 18L18 6M6 6l12 12"
-      />
-    </svg>
-  </div>
-  </div>
-  </div>
-  </template>
+    </template>
   </div>
 </section>
