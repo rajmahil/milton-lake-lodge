@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "brad-boilerplate/gallery-section",
+	"version": "0.1.0",
+	"title": "Gallery Section",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "Gallery section",
+	"example": {},
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": "Heading Here"
+		},
+		"images": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object"
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"color": {
+			"background": true,
+			"text": true
+		}
+	},
+	"textdomain": "gallery-section-block",
+	"editorScript": "file:./index.js",
+	"editorStyle": [ "file:../style-index.css" ],
+	"style": [ "file:../style-index.css" ],
+	"render": "file:./render.php"
+}

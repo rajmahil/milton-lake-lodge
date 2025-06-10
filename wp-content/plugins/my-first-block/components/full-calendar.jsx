@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 
 function addDayToYYYYMMDD( dateStr ) {
 	const year = parseInt( dateStr.slice( 0, 4 ) );
-	const month = parseInt( dateStr.slice( 4, 6 ) ) - 1; // 0-based
+	const month = parseInt( dateStr.slice( 4, 6 ) ) - 1;
 	const day = parseInt( dateStr.slice( 6, 8 ) );
 
 	const date = new Date( year, month, day );

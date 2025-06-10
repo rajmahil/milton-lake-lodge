@@ -63,7 +63,16 @@ module.exports = {
 			'src/pricing-table',
 			'index.js'
 		),
-
+		'page-header-section/index': path.resolve(
+			process.cwd(),
+			'src/page-header-section',
+			'index.js'
+		),
+		'gallery-section/index': path.resolve(
+			process.cwd(),
+			'src/gallery-section',
+			'index.js'
+		),
 		// Component entry points (JS only - no CSS imports), two entry points for client component (frontend.js)
 		'calendar-section/index': path.resolve(
 			process.cwd(),
