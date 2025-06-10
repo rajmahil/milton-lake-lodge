@@ -14,6 +14,7 @@ if ($menu) {
   <!-- Posts Content -->
   <div class="max-w-full">
     <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+
     <div class="">
       <?php the_content(); ?>
     </div>

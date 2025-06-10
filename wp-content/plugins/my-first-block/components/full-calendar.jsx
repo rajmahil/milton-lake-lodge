@@ -75,8 +75,6 @@ const FullCalendarComp = ( props ) => {
 		);
 	}
 
-	console.log( slots, 'Selected Post' );
-
 	return (
 		<section className="plugin-custom-block  section-padding">
 			<div className="max-w-container w-full mx-auto flex flex-col gap-12">
@@ -87,6 +85,8 @@ const FullCalendarComp = ( props ) => {
 					<div className="p-6 xl:col-span-3 bg-white rounded-lg my-calendar-wrapper">
 						<div className="overflow-x-scroll  w-full">
 							<FullCalendar
+								aspectRatio={ 1.35 }
+								height="auto"
 								headerToolbar={ {
 									left: 'title',
 									right: 'prev,today,next',
