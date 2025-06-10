@@ -107,8 +107,8 @@ $totalImages = count($images);
                                         <?php $globalIndex++; ?>
                                     <?php endif;
                                 endfor; ?>
-                            </div>
-                        </div>
+          </div>
+        </div>
 
                         <?php if (count($groupImages) > 5) : ?>
                             <div class="flex flex-col md:flex-row gap-2 sm:gap-4">
@@ -134,7 +134,7 @@ $totalImages = count($images);
                                             <?php $globalIndex++; ?>
                                         <?php endif;
                                     endfor; ?>
-                                </div>
+          </div>
 
                                 <?php if (!empty($groupImages[9])) : 
                                     $image = $groupImages[9];
