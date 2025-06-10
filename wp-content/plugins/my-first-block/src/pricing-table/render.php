@@ -64,7 +64,7 @@ $exchange_rate = $attributes['exchange_rate'] ?? 1.25; // CAD to USD rate
                     </div>
                 </div>
 
-                <div class="relative overflow-hidden" style="height: auto; min-height: 300px;">
+                <div class="relative overflow-hidden !h-auto !min-h-[300px]">
                     <?php foreach ($tabs as $index => $tab): ?>
                         <div 
                             x-show="activeTab === <?php echo $index + 1; ?>"
