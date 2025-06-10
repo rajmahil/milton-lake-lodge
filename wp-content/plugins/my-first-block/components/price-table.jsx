@@ -1,5 +1,27 @@
 import { useState, useEffect, useRef } from 'react';
 
+function convertPrice( price, fromCAD = true ) {
+	const currency = 'CAD';
+	const exchangeRate = 1.25;
+	if ( ! price || isNaN( parseFloat( price ) ) ) return price;
+	const numPrice = parseFloat( price );
+	if ( currency === 'CAD' ) {
+		return fromCAD ? numPrice : numPrice * exchangeRate;
+	} else {
+		return fromCAD ? numPrice / exchangeRate : numPrice;
+	}
+}
+
+function formatPrice( price, priceType ) {
+	if ( priceType !== 'currency' ) return price;
+	if ( ! price || isNaN( parseFloat( price ) ) ) return 'N/A';
+	const converted = convertPrice( price, true );
+	return new Intl.NumberFormat( 'en-US', {
+		minimumFractionDigits: 0,
+		maximumFractionDigits: 0,
+	} ).format( Math.round( converted ) );
+}
+
 const PriceTable = ( { heading, tabs } ) => {
 	const [ activeTab, setActiveTab ] = useState( 1 );
 	const [ slideDirection, setSlideDirection ] = useState( 'right' );
@@ -21,14 +43,14 @@ const PriceTable = ( { heading, tabs } ) => {
 	return (
 		<section className="plugin-custom-block not-prose section-padding w-full static-background">
 			<div className=" max-w-container mx-auto flex flex-col gap-8">
-				<h2 className="!my-0 text-center !text-4xl md:!text-5xl font-extrabold uppercase text-brand-green">
+				<h2 className="!my-0 text-center heading-two font-extrabold uppercase text-brand-green">
 					{ heading }
 				</h2>
 
 				{ tabs.length > 0 ? (
 					<div className="flex flex-col gap-8">
-						<div class="bg-white rounded-lg 600:rounded-full w-full 600:w-fit mx-auto p-1">
-							<div class="flex flex-col 600:flex-row justify-center">
+						<div className="bg-white rounded-lg sm:rounded-full w-full sm:w-fit mx-auto p-1">
+							<div className="flex flex-col sm:flex-row justify-center">
 								{ tabs.map( ( tab, index ) => (
 									<button
 										key={ index }
@@ -67,11 +89,11 @@ const PriceTable = ( { heading, tabs } ) => {
 									}` }
 								>
 									<div className="bg-white rounded-2xl  overflow-hidden">
-										<div class="!grid !grid-cols-2 py-6 px-4 500:px-8 !text-base !text-gray-800 gap-5 1000:gap-10">
-											<p className="!my-0">
+										<div className="!grid !grid-cols-3 md:!grid-cols-2 py-6 px-4 sm:px-8 !text-base !text-gray-800 gap-5 lg:gap-10">
+											<p className="!col-span-2 md:!col-span-1 !my-0">
 												Package Type
 											</p>
-											<div className="flex items-center gap-4 1000:gap-10 flex-wrap">
+											<div className="!flex !justify-end md:!justify-start items-center gap-4 lg:gap-10 flex-wrap">
 												<p className="!my-0">
 													Per Person
 												</p>
@@ -101,40 +123,52 @@ const PriceTable = ( { heading, tabs } ) => {
 												</div>
 											</div>
 										</div>
-										<div class="pt-8 750:pt-0">
+										<div className="pt-8 md:pt-0">
 											{ tab.features &&
 											tab.features.length > 0 ? (
 												tab.features.map(
 													( feature, i ) => (
 														<div
 															key={ i }
-															className="grid grid-cols-2 gap-5 1000:gap-10 pb-6 !pt-0 px-4 500:px-8"
+															className="grid !grid-cols-3 md:!grid-cols-2 gap-5 lg:gap-10 pb-6 !pt-0 px-4 sm:px-8"
 														>
-															<div className="mb-2 md:mb-0">
-																<p className="!my-0 !text-lg md:!text-xl font-bold !capitalize">
+															<div className="mb-2 md:mb-0  !col-span-2 md:!col-span-1">
+																<h3
+																	className="!my-0 !text-lg md:!text-xl !capitalize"
+																	style={ {
+																		fontFamily:
+																			'"Overused Grotesk"',
+																		fontWeight: 500,
+																	} }
+																>
 																	{
 																		feature.title
 																	}
-																</p>
+																</h3>
 																{ feature.description && (
-																	<p className="!text-sm !my-0 750:!max-w-[70%]">
+																	<p className="!text-sm !my-0 md:!max-w-[70%]">
 																		{
 																			feature.description
 																		}
 																	</p>
 																) }
 															</div>
-															<div>
-																<p className="!my-0">
+															<div className="!flex !justify-end md:!justify-start items-start ">
+																<p className="!my-0 !text-right">
 																	{ feature.priceType ===
 																	'currency' ? (
 																		<>
-																			<span className="!text-lg md:!text-xl !font-medium self-end">
+																			<span
+																				className="!text-lg md:!text-xl"
+																				style={ {
+																					fontWeight: 500,
+																				} }
+																			>
 																				$
-																				{ currency ===
-																				'USD'
-																					? feature.price
-																					: feature.price }
+																				{ formatPrice(
+																					feature.price,
+																					'currency'
+																				) }
 																			</span>{ ' ' }
 																			<span className="!text-sm">
 																				{
@@ -143,7 +177,7 @@ const PriceTable = ( { heading, tabs } ) => {
 																			</span>
 																		</>
 																	) : (
-																		<span className="!text-base md:!text-lg !my-0">
+																		<span className="!text-base sm:!text-lg break-words whitespace-normal block max-w-full !text-right">
 																			{
 																				feature.price
 																			}
@@ -155,7 +189,7 @@ const PriceTable = ( { heading, tabs } ) => {
 													)
 												)
 											) : (
-												<p className="text-gray-800 px-4 500:px-8 !py-0 !pb-5 !text-base">
+												<p className="text-gray-800 px-4 sm:px-8 !py-0 !pb-5 !text-base">
 													No features avaialble for
 													this package.
 												</p>
@@ -163,7 +197,7 @@ const PriceTable = ( { heading, tabs } ) => {
 										</div>
 
 										{ tab.note && (
-											<div className="border-t border-brand-grey !p-4 500:!p-8 text-gray-800">
+											<div className="border-t border-brand-grey !p-4 sm:!p-8 text-gray-800">
 												<p className="!text-sm ">
 													{ tab.note }
 												</p>
@@ -175,7 +209,7 @@ const PriceTable = ( { heading, tabs } ) => {
 						</div>
 					</div>
 				) : (
-					<div className="text-center px-4 500:px-8 !py-0 !pb-5 text-gray-500">
+					<div className="text-center px-4 sm:px-8 !py-0 !pb-5 text-gray-500">
 						No packages added yet. Please add packages in the
 						editor.
 					</div>

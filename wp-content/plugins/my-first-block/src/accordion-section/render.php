@@ -38,7 +38,7 @@ $items = $attributes['items'] ?? [];
           type="button"
           class="w-full text-left flex items-center justify-between text-xl font-medium select-none "
         >
-          <h3 class="text-lg font-normal !normal-case flex flex-row w-full items-center justify-between">
+          <h3 class="text-lg !cursor-pointer font-normal !normal-case flex flex-row w-full items-center justify-between">
             <?php echo esc_html($item['title'] ?? ''); ?></p>
             <svg
               class="accordion-icon w-5 h-5 transition-transform duration-300 ease-out flex-shrink-0"
@@ -66,7 +66,7 @@ $items = $attributes['items'] ?? [];
         </button>
 
         <div
-          class="accordion-content text-base text-neutral-500"
+          class="accordion-content text-base text-neutral-500 !cursor-default"
           x-show="activeAccordion === '<?php echo $id; ?>'"
           x-collapse
           x-cloak
