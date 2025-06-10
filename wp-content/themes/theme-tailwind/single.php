@@ -7,47 +7,18 @@ get_header(); ?>
       the_post(); 
 
       $published_date = get_the_date('F j, Y'); // e.g., "January 15, 2024"
-      $published_time = get_the_time('g:i A'); // e.g., "2:30 PM"
-      $iso_date = get_the_date('c'); // ISO 8601 format for schema markup
+      // $published_time = get_the_time('g:i A'); // e.g., "2:30 PM" - Not used in current output
+      // $iso_date = get_the_date('c'); // ISO 8601 format for schema markup - Not used in current output
       
       // Get the post content
       $content = get_the_content();
       
       // Parse blocks from content
       $blocks = parse_blocks($content);
-      
-      // Separate blocks by checking rendered HTML for the custom class
-      $gutenberg_blocks = [];
-      $custom_blocks = [];
-      
-      foreach ($blocks as $block) {
-        if (empty($block['blockName'])) {
-          // Handle classic content or empty blocks
-          continue;
-        }
-        
-        // Render the block to check its HTML content
-        $rendered_block = render_block($block);
-        
-        // Check if the rendered HTML contains the custom wrapper class
-        if (strpos($rendered_block, 'plugin-custom-block') !== false) {
-          $custom_blocks[] = [
-            'block' => $block,
-            'rendered' => $rendered_block
-          ];
-        } else {
-          // Standard Gutenberg blocks
-          $gutenberg_blocks[] = [
-            'block' => $block,
-            'rendered' => $rendered_block
-          ];
-        }
-      }
       ?>
 
-
   <div
-    class="w-full section-padding h-[450px]  flex items-center justify-center bg-gradient-to-br from-brand-green-dark to-brand-green"
+    class="w-full section-padding h-[450px] flex items-center justify-center bg-gradient-to-br from-brand-green-dark to-brand-green"
   >
     <div class="max-w-container flex flex-col gap-2 items-center justify-center mt-4">
       <h1 class="text-6xl text-center text-white !mb-0"><?php the_title(); ?></h1>
@@ -56,34 +27,40 @@ get_header(); ?>
   </div>
 
   <div class="w-full min-h-screen content-wrapper">
-    <!-- Render Standard Gutenberg Blocks -->
-    <?php if (!empty($gutenberg_blocks)) : ?>
-    <div class="section-padding">
-      <div class="max-w-container w-full mx-auto">
-        <?php
-        foreach ($gutenberg_blocks as $block_data) {
-            echo $block_data['rendered'];
-        }
-        ?>
-      </div>
-    </div>
-    <?php endif; ?>
-
-    <!-- Render Custom Blocks (with my-unique-plugin-wrapper-class) -->
-    <?php if (!empty($custom_blocks)) : ?>
-
     <?php
-    foreach ($custom_blocks as $block_data) {
-        echo $block_data['rendered'];
-        echo '</div>';
+    if (!empty($blocks)) {
+        foreach ($blocks as $block) {
+            // It's good practice to check if innerHTML exists, especially for empty or non-rendering blocks.
+            // However, render_block should handle most cases.
+            if (empty($block['blockName']) && empty($block['innerHTML'])) {
+                // Skip truly empty blocks or blocks that might cause issues if innerHTML is not present.
+                continue;
+            }
+    
+            // Render the block to check its HTML content
+            $rendered_block = render_block($block);
+    
+            // Check if the rendered HTML contains the custom wrapper class
+            if (strpos($rendered_block, 'plugin-custom-block') !== false) {
+                // Custom block: render directly without standard wrappers
+                echo $rendered_block;
+            } else {
+                // Standard Gutenberg block: wrap with standard containers
+                // Only render if the block actually produced some output
+                if (!empty(trim($rendered_block))) {
+                    echo '<div class="section-padding !py-0">';
+                    echo '  <div class="max-w-container w-full mx-auto">';
+                    echo $rendered_block;
+                    echo '  </div>';
+                    echo '</div>';
+                }
+            }
+        }
     }
     ?>
-
-    <?php endif; ?>
-
   </div>
-  <?php }
-  } ?>
+  <?php } // end while
+  } // end if ?>
 </div>
 
 <?php get_footer(); ?>
