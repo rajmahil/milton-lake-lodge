@@ -175,7 +175,7 @@ $totalImages = count($images);
         @wheel.prevent
         @scroll.prevent
         x-trap.inert.noscroll="imageGalleryOpened"
-        class="fixed inset-0 !z-[100] w-screen h-screen bg-black/90 select-none cursor-zoom-out overflow-hidden touch-none"
+        class="fixed inset-0 !z-[100] w-screen h-screen bg-black/50 backdrop-blur-lg select-none cursor-zoom-out overflow-hidden touch-none"
         x-cloak
         style="overscroll-behavior: none;"
       >
@@ -209,7 +209,7 @@ $totalImages = count($images);
                   x-transition:enter-start="opacity-0 transform scale-50"
                   x-transition:leave="transition ease-in-in duration-300"
                   x-transition:leave-end="opacity-0 transform scale-50"
-                  class="object-contain object-center w-full h-full max-w-[90vw] sm:max-w-[80vw] max-h-[80vh] select-none cursor-zoom-out"
+                  class="object-contain object-center w-fit h-fit max-w-[90vw] sm:max-w-[80vw] max-h-[80vh] select-none cursor-zoom-out bg-white rounded-lg overflow-hidden shadow-2xl"
                   :src="imageGalleryActiveUrl"
                   alt=""
                 >
