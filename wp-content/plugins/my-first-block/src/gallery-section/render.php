@@ -1,4 +1,8 @@
 <?php
+/**
+ * Gallery Section Block - PHP Render Version with Alpine.js Dialog
+ * Now with image counter functionality and responsive navigation positioning
+ */
 
 $heading = $attributes['heading'] ?? '';
 $images = $attributes['images'] ?? [];
@@ -60,15 +64,15 @@ $totalImages = count($images);
       x-ref="gallery"
     >
       <?php
-        $globalIndex = 0;
-      foreach ($groups as $groupIndex => $groupImages) : ?>
+                $globalIndex = 0;
+                foreach ($groups as $groupIndex => $groupImages) : ?>
       <div class="flex flex-col gap-2 sm:gap-4">
         <div class="flex flex-col md:flex-row gap-2 sm:gap-4">
           <?php if (!empty($groupImages[0])) :
-                $image = $groupImages[0];
-                $image_id = $image['id'] ?? 0;
-                $image_alt = $image['alt'] ?? '';
-          ?>
+                                $image = $groupImages[0];
+                                $image_id = $image['id'] ?? 0;
+                                $image_alt = $image['alt'] ?? '';
+                            ?>
           <div class="flex-1 aspect-[3/2] relative overflow-hidden rounded-xl">
             <?php echo wp_get_attachment_image($image_id, 'large', false, [
                 'class' => '!w-full !h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
@@ -86,11 +90,11 @@ $totalImages = count($images);
 
           <div class="flex-1 grid grid-cols-2 gap-2 sm:gap-4">
             <?php for ($i = 1; $i <= 4; $i++) :
-              if (!empty($groupImages[$i])) :
-                $image = $groupImages[$i];
-                $image_id = $image['id'] ?? 0;
-                $image_alt = $image['alt'] ?? '';
-              ?>
+                                    if (!empty($groupImages[$i])) :
+                                        $image = $groupImages[$i];
+                                        $image_id = $image['id'] ?? 0;
+                                        $image_alt = $image['alt'] ?? '';
+                                    ?>
             <div class="aspect-[3/2] relative overflow-hidden rounded-xl">
               <?php echo wp_get_attachment_image($image_id, 'large', false, [
                   'class' => '!w-full !h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
@@ -105,18 +109,18 @@ $totalImages = count($images);
             </div>
             <?php $globalIndex++; ?>
             <?php endif;
-             endfor; ?>
+                                endfor; ?>
           </div>
         </div>
         <?php if (count($groupImages) > 5) : ?>
         <div class="flex flex-col md:flex-row gap-2 sm:gap-4">
           <div class="flex-1 grid grid-cols-2 gap-2 sm:gap-4">
             <?php for ($i = 5; $i <= 8; $i++) :
-              if (!empty($groupImages[$i])) :
-                  $image = $groupImages[$i];
-                  $image_id = $image['id'] ?? 0;
-                  $image_alt = $image['alt'] ?? '';
-            ?>
+                                        if (!empty($groupImages[$i])) :
+                                            $image = $groupImages[$i];
+                                            $image_id = $image['id'] ?? 0;
+                                            $image_alt = $image['alt'] ?? '';
+                                        ?>
             <div class="aspect-[3/2] relative overflow-hidden rounded-xl">
               <?php echo wp_get_attachment_image($image_id, 'large', false, [
                   'class' => '!w-full !h-full object-cover object-center transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
@@ -134,10 +138,10 @@ $totalImages = count($images);
           endfor; ?>
           </div>
           <?php if (!empty($groupImages[9])) :
-                  $image = $groupImages[9];
-                  $image_id = $image['id'] ?? 0;
-                  $image_alt = $image['alt'] ?? '';
-          ?>
+                                    $image = $groupImages[9];
+                                    $image_id = $image['id'] ?? 0;
+                                    $image_alt = $image['alt'] ?? '';
+                                ?>
           <div class="flex-1 aspect-[3/2] relative overflow-hidden rounded-xl">
             <?php echo wp_get_attachment_image($image_id, 'large', false, [
                 'class' => '!w-full !h-full object-cover object-center transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
@@ -199,34 +203,36 @@ $totalImages = count($images);
               </div>
 
               <div class="relative flex items-center justify-center w-full h-full">
-                <?php foreach ($images as $modalIndex => $image) :
-                    $image_id = $image['id'] ?? 0;
-                    $image_alt = $image['alt'] ?? '';
-                ?>
-                <div 
-                  x-show="imageGalleryImageIndex === <?php echo $modalIndex; ?>"
-                  x-transition:enter="transition ease-in-out duration-200"
-                  x-transition:enter-start="opacity-0"
-                  x-transition:enter-end="opacity-100"
-                  x-transition:leave="transition ease-in-out duration-150"
-                  x-transition:leave-start="opacity-100"
-                  x-transition:leave-end="opacity-0"
-                  class="absolute inset-0 flex items-center justify-center"
-                  @click.stop
+              <?php foreach ($images as $modalIndex => $image) :
+                  $image_id = $image['id'] ?? 0;
+                  $image_alt = $image['alt'] ?? '';
+              ?>
+              <div 
+                x-show="imageGalleryImageIndex === <?php echo $modalIndex; ?>"
+                x-transition:enter="transition ease-in-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in-out duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="absolute inset-0 flex items-center justify-center"
+              >
+                <?php echo wp_get_attachment_image($image_id, 'large', false, [
+                    'class' => 'object-contain w-auto h-auto max-w-[90vw] max-h-[90vh] select-none bg-white rounded-lg shadow-2xl',
+                    'loading' => 'eager',
+                    'decoding' => 'async',
+                    'alt' => $image_alt,
+                ]); ?>
+              </div>
+              <?php endforeach; ?>
+                <div
+                  class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-black/90 text-white py-1 px-4 rounded-full text-sm font-medium lg:block !hidden"
                 >
-                  <?php echo wp_get_attachment_image($image_id, 'large', false, [
-                      'class' => 'object-contain w-auto h-auto max-w-[90vw] max-h-[90vh] select-none bg-white rounded-lg shadow-2xl',
-                      'loading' => 'eager',
-                      'decoding' => 'async',
-                      'alt' => $image_alt,
-                  ]); ?>
-                </div>
-                <?php endforeach; ?>
-                <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-black/90 text-white py-1 px-4 rounded-full text-sm font-medium hidden lg:block">
                   <span x-text="imageGalleryImageIndex + 1"></span>
                   <span>/</span>
-                  <span x-text="totalImages"></span>
+                  <spand x-text="totalImages"></spand>
                 </div>
+
                 <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex items-center gap-4 lg:!hidden">
                   <div
                     @click="$event.stopPropagation(); imageGalleryPrev()"

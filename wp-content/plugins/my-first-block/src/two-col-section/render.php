@@ -53,7 +53,7 @@ $content_order_class = $inverted ? 'order-first' : 'order-last';
         <p class="!my-0 text-left text-lg"><?php echo esc_html($text); ?></p>
       </div>
       <a href="<?php echo esc_url($button_url); ?>">
-        <button class="flex flex-row items-center w-fit gap-1 border-b border-black pb-0.5 f">
+        <button class="flex flex-row items-center w-fit gap-1 border-b border-black pb-0.5">
           <p class="text-black text-base">
             <?php echo esc_html($button_text); ?>
           </p>
