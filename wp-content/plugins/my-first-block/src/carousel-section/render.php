@@ -159,7 +159,7 @@ $total_items = count($items);
                 style="background-image: url('<?php echo esc_url($item['image']['url']); ?>');"
               ></div>
 
-              <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
               <?php endif; ?>
 

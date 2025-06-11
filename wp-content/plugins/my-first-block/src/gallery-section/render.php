@@ -135,7 +135,7 @@ $totalImages = count($images);
             </div>
             <?php $globalIndex++; ?>
             <?php endif;
-                                    endfor; ?>
+          endfor; ?>
           </div>
           <?php if (!empty($groupImages[9])) :
                                     $image = $groupImages[9];
