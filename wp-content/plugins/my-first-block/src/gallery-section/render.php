@@ -123,7 +123,7 @@ $totalImages = count($images);
                                         ?>
             <div class="aspect-[3/2] relative overflow-hidden rounded-xl">
               <?php echo wp_get_attachment_image($image_id, 'large', false, [
-                  'class' => '!w-full !h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
+                  'class' => '!w-full !h-full object-cover object-center transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
                   'loading' => $globalIndex < 5 ? 'eager' : 'lazy',
                   'fetchpriority' => $globalIndex < 5 ? 'high' : 'auto',
                   'decoding' => 'async',
@@ -144,7 +144,7 @@ $totalImages = count($images);
                                 ?>
           <div class="flex-1 aspect-[3/2] relative overflow-hidden rounded-xl">
             <?php echo wp_get_attachment_image($image_id, 'large', false, [
-                'class' => '!w-full !h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
+                'class' => '!w-full !h-full object-cover object-center transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
                 'loading' => $globalIndex < 5 ? 'eager' : 'lazy',
                 'fetchpriority' => $globalIndex < 5 ? 'high' : 'auto',
                 'decoding' => 'async',
@@ -219,7 +219,7 @@ $totalImages = count($images);
                 >
                   <span x-text="imageGalleryImageIndex + 1"></span>
                   <span>/</span>
-                  <span x-text="totalImages"></span>
+                  <spand x-text="totalImages"></spand>
                 </div>
 
                 <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex items-center gap-4 lg:!hidden">
