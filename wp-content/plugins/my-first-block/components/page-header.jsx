@@ -14,7 +14,7 @@ export default function PageHeader( {
 				<div className="absolute inset-0 bg-black/40" />
 
 				<div className="relative z-10 text-center px-4 flex items-center justify-center">
-					<div className="flex flex-col items-center gap-3 !pt-10 sm:!pt-0">
+					<div className="flex flex-col items-center gap-3 !pt-14 lg:!pt-5">
 						{ heading && (
 							<h1 className="!my-0 !text-5xl md:!text-6xl lg:!text-7xl !font-[600]  text-center !uppercase !text-white">
 								{ heading }

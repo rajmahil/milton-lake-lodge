@@ -72,7 +72,7 @@ $totalImages = count($images);
                             ?>
                                 <div class="flex-1 aspect-[3/2] relative overflow-hidden rounded-xl">
                                     <?php echo wp_get_attachment_image($image_id, 'large', false, [
-                                        'class' => 'w-full h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
+                                        'class' => '!w-full !h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
                                         'loading' => $globalIndex < 5 ? 'eager' : 'lazy',
                                         'fetchpriority' => $globalIndex < 5 ? 'high' : 'auto',
                                         'decoding' => 'async',
@@ -94,7 +94,7 @@ $totalImages = count($images);
                                     ?>
                                         <div class="aspect-[3/2] relative overflow-hidden rounded-xl">
                                             <?php echo wp_get_attachment_image($image_id, 'large', false, [
-                                                'class' => 'w-full h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
+                                                'class' => '!w-full !h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
                                                 'loading' => $globalIndex < 5 ? 'eager' : 'lazy',
                                                 'fetchpriority' => $globalIndex < 5 ? 'high' : 'auto',
                                                 'decoding' => 'async',
@@ -107,9 +107,8 @@ $totalImages = count($images);
                                         <?php $globalIndex++; ?>
                                     <?php endif;
                                 endfor; ?>
-          </div>
-        </div>
-
+                            </div>
+                        </div>
                         <?php if (count($groupImages) > 5) : ?>
                             <div class="flex flex-col md:flex-row gap-2 sm:gap-4">
                                 <div class="flex-1 grid grid-cols-2 gap-2 sm:gap-4">
@@ -121,7 +120,7 @@ $totalImages = count($images);
                                         ?>
                                             <div class="aspect-[3/2] relative overflow-hidden rounded-xl">
                                                 <?php echo wp_get_attachment_image($image_id, 'large', false, [
-                                                    'class' => 'w-full h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
+                                                    'class' => '!w-full !h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
                                                     'loading' => $globalIndex < 5 ? 'eager' : 'lazy',
                                                     'fetchpriority' => $globalIndex < 5 ? 'high' : 'auto',
                                                     'decoding' => 'async',
@@ -134,8 +133,7 @@ $totalImages = count($images);
                                             <?php $globalIndex++; ?>
                                         <?php endif;
                                     endfor; ?>
-          </div>
-
+                                </div>
                                 <?php if (!empty($groupImages[9])) : 
                                     $image = $groupImages[9];
                                     $image_id = $image['id'] ?? 0;
@@ -143,7 +141,7 @@ $totalImages = count($images);
                                 ?>
                                     <div class="flex-1 aspect-[3/2] relative overflow-hidden rounded-xl">
                                         <?php echo wp_get_attachment_image($image_id, 'large', false, [
-                                            'class' => 'w-full h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
+                                            'class' => '!w-full !h-full object-cover transition-transform duration-500 hover:scale-110 cursor-zoom-in select-none',
                                             'loading' => $globalIndex < 5 ? 'eager' : 'lazy',
                                             'fetchpriority' => $globalIndex < 5 ? 'high' : 'auto',
                                             'decoding' => 'async',
@@ -161,7 +159,6 @@ $totalImages = count($images);
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
-
         <template x-teleport="body">
             <div 
                 x-show="imageGalleryOpened" 
@@ -175,7 +172,7 @@ $totalImages = count($images);
                 @wheel.prevent
                 @scroll.prevent
                 x-trap.inert.noscroll="imageGalleryOpened"
-                class="fixed inset-0 !z-[1000] w-screen h-screen bg-black/90 select-none cursor-zoom-out overflow-hidden touch-none" 
+                class="fixed inset-0 !z-[100] w-screen h-screen bg-black/90 select-none cursor-zoom-out overflow-hidden touch-none" 
                 x-cloak
                 style="overscroll-behavior: none;"
             >
@@ -184,7 +181,7 @@ $totalImages = count($images);
                     <div class="relative w-full h-full max-w-[90vw] max-h-[90vh] pointer-events-auto">
                         <div 
                             @click="$event.stopPropagation(); imageGalleryPrev()" 
-                            class="absolute !z-[1001] left-4 top-1/2 transform -translate-y-1/2 hidden xl:flex items-center justify-center text-white rounded-full cursor-pointer bg-white/10 w-14 h-14 hover:bg-white/20 transition-colors duration-200"
+                            class="absolute !z-[101] left-4 top-1/2 transform -translate-y-1/2 hidden xl:flex items-center justify-center text-white rounded-full cursor-pointer bg-white/10 w-14 h-14 hover:bg-white/20 transition-colors duration-200"
                         >
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -198,7 +195,7 @@ $totalImages = count($images);
                                 x-transition:enter-start="opacity-0 transform scale-50" 
                                 x-transition:leave="transition ease-in-in duration-300" 
                                 x-transition:leave-end="opacity-0 transform scale-50" 
-                                class="object-contain object-center w-full h-full max-w-[90vw] max-h-[85vh] select-none cursor-zoom-out" 
+                                class="object-contain object-center w-full h-full max-w-[90vw] sm:max-w-[80vw] max-h-[80vh] select-none cursor-zoom-out" 
                                 :src="imageGalleryActiveUrl" 
                                 alt=""
                             >
@@ -238,7 +235,7 @@ $totalImages = count($images);
                         
                         <div 
                             @click="$event.stopPropagation(); imageGalleryNext()" 
-                            class="absolute !z-[1001] right-4 top-1/2 transform -translate-y-1/2 hidden xl:flex items-center justify-center text-white rounded-full cursor-pointer bg-white/10 w-14 h-14 hover:bg-white/20 transition-colors duration-200"
+                            class="absolute !z-[101] right-4 top-1/2 transform -translate-y-1/2 hidden xl:flex items-center justify-center text-white rounded-full cursor-pointer bg-white/10 w-14 h-14 hover:bg-white/20 transition-colors duration-200"
                         >
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -247,7 +244,7 @@ $totalImages = count($images);
 
                         <div 
                             @click="imageGalleryClose" 
-                            class="fixed top-10 right-10 flex items-center justify-center text-white bg-white/10 w-12 h-12 rounded-full cursor-pointer hover:bg-white/20 transition-colors duration-200"
+                            class="fixed top-4 right-4 sm:top-10 sm:right-10 flex items-center justify-center text-white bg-white/10 w-10 h-10 sm:w-12 sm:h-12 rounded-full cursor-pointer hover:bg-white/20 transition-colors duration-200"
                         >
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />

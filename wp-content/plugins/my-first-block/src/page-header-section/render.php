@@ -17,7 +17,7 @@ $image = $attributes['image'] ?? null;
     <div class="absolute inset-0 bg-black/40"></div>
 
     <div class="relative z-10 text-center px-4 flex items-center justify-center w-full">
-      <div class="flex flex-col items-center gap-2 max-w-screen-xl mx-auto">
+      <div class="flex flex-col items-center gap-2 max-w-screen-xl mx-auto !pt-14 lg:!pt-5">
         <?php if (!empty($heading)): ?>
         <h1 class="!my-0 !text-5xl md:!text-6xl lg:!text-7xl !font-[600] text-center !text-white !uppercase">
           <?php echo esc_html($heading); ?>

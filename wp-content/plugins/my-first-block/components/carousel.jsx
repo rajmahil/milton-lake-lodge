@@ -148,9 +148,9 @@ const CarouselBlock = ( { heading, subheading, items } ) => {
 						</div>
 					</div>
 
-					<div className="relative w-full overflow-hidden section-padding sm:pr-0 !pt-0">
+					<div className="relative w-full overflow-hidden section-padding  !pt-0">
 						<div
-							className="carousel-track flex transition-transform duration-500 ease-in-out max-w-container mr-auto gap-5"
+							className="carousel-track flex transition-transform duration-500 ease-in-out max-w-container gap-5"
 							style={ {
 								transform: `translateX(-${
 									currentIndex * ( 100 / slidesPerView )

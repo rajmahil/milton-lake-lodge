@@ -33,7 +33,7 @@ $reviews = $attributes['reviews'] ?? [];
 
           <?php if (!empty($review['image2']['url'])): ?>
           <div
-            class="image-right w-full aspect-[3/4] max-w-[170px] sm:max-w-[200px] md:max-w-[350px] rounded-lg shadow-lg bg-white p-1 absolute z-10"
+            class="image-right w-full aspect-[3/4] max-w-[170px] sm:max-w-[200px] md:max-w-[350px] rounded-lg shadow-lg bg-white p-1  z-10"
           >
             <img
               src="<?php echo esc_url($review['image2']['url']); ?>"

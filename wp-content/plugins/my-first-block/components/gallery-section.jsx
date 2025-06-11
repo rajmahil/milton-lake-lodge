@@ -40,7 +40,6 @@ const GallerySection = ( { heading, images = [] } ) => {
 		[ handleClose, handleNext, handlePrev ]
 	);
 
-	// Handle outside click
 	const handleOutsideClick = useCallback(
 		( e ) => {
 			if ( overlayRef.current && overlayRef.current === e.target ) {
@@ -52,7 +51,6 @@ const GallerySection = ( { heading, images = [] } ) => {
 
 	useEffect( () => {
 		if ( isOpen ) {
-			// Prevent all scrolling like in PHP version
 			const originalStyle = window.getComputedStyle(
 				document.body
 			).overflow;
@@ -69,7 +67,6 @@ const GallerySection = ( { heading, images = [] } ) => {
 			window.addEventListener( 'keydown', handleKeyDown );
 			document.addEventListener( 'mousedown', handleOutsideClick );
 
-			// Prevent scroll events on window
 			const preventScroll = ( e ) => {
 				e.preventDefault();
 				return false;
@@ -96,7 +93,6 @@ const GallerySection = ( { heading, images = [] } ) => {
 				window.removeEventListener( 'wheel', preventScroll );
 			};
 		} else {
-			// Restore scrolling
 			document.body.style.overflow = '';
 			document.documentElement.style.overflow = '';
 			document.body.style.position = '';
@@ -117,7 +113,6 @@ const GallerySection = ( { heading, images = [] } ) => {
 		};
 	}, [ isOpen, handleKeyDown, handleOutsideClick ] );
 
-	// Group images into sets of 10
 	const groupedImages = [];
 	for ( let i = 0; i < images.length; i += 10 ) {
 		groupedImages.push( images.slice( i, i + 10 ) );
@@ -237,7 +232,6 @@ const GallerySection = ( { heading, images = [] } ) => {
 								ref={ modalRef }
 								className="relative w-full h-full max-w-[90vw] max-h-[90vh] pointer-events-auto"
 							>
-								{ /* Desktop navigation - left side */ }
 								<button
 									onClick={ ( e ) => {
 										e.stopPropagation();
@@ -262,7 +256,6 @@ const GallerySection = ( { heading, images = [] } ) => {
 									</svg>
 								</button>
 
-								{ /* Image container */ }
 								<div className="relative flex items-center justify-center w-full h-full">
 									<img
 										src={ images[ activeIndex ]?.url }
@@ -270,14 +263,12 @@ const GallerySection = ( { heading, images = [] } ) => {
 										className="object-contain object-center w-full h-full max-w-[90vw] max-h-[85vh] select-none cursor-zoom-out rounded-lg shadow-xl"
 									/>
 
-									{ /* Desktop counter - bottom center */ }
 									<div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-black/90 text-white py-1 px-4 rounded-full text-sm font-medium lg:block !hidden">
 										<span>{ activeIndex + 1 }</span>
 										<span>/</span>
 										<span>{ images.length }</span>
 									</div>
 
-									{ /* Mobile navigation - bottom center */ }
 									<div className="absolute bottom-14 left-1/2 transform -translate-x-1/2 flex items-center gap-4 lg:!hidden">
 										<button
 											onClick={ ( e ) => {
@@ -335,7 +326,6 @@ const GallerySection = ( { heading, images = [] } ) => {
 									</div>
 								</div>
 
-								{ /* Desktop navigation - right side */ }
 								<button
 									onClick={ ( e ) => {
 										e.stopPropagation();
@@ -360,7 +350,6 @@ const GallerySection = ( { heading, images = [] } ) => {
 									</svg>
 								</button>
 
-								{ /* Close button */ }
 								<button
 									onClick={ handleClose }
 									className="fixed top-4 right-4 flex items-center justify-center text-white bg-white/10 w-12 h-12 rounded-full cursor-pointer hover:bg-white/20 transition-colors duration-200"

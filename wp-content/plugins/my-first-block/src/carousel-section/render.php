@@ -10,7 +10,7 @@ $items = $attributes['items'] ?? [];
 $total_items = count($items);
 ?>
 
-<section class="plugin-custom-block not-prose  w-full">
+<section class="plugin-custom-block not-prose w-full">
   <div class="text-center flex flex-col gap-16">
     <?php if (!empty($items)) : ?>
       <div 
@@ -18,6 +18,8 @@ $total_items = count($items);
           currentIndex: 0,
           totalSlides: <?php echo $total_items; ?>,
           slidesPerView: 1,
+          slideWidthPercentage: 100,
+          gapPercentage: 1.5, // 1.5% of container width for gap
           
           init() {
             this.updateSlidesPerView();
@@ -27,13 +29,18 @@ $total_items = count($items);
           updateSlidesPerView() {
             if (window.innerWidth >= 1024) { // lg+
               this.slidesPerView = 3;
+            } else if (window.innerWidth >= 768) { // md+
+              this.slidesPerView = 2;
             } else if (window.innerWidth >= 640) { // sm+
               this.slidesPerView = 2;
             } else { // sm-
               this.slidesPerView = 1;
             }
             
-            // Adjust current index if needed
+            // Calculate slide width as percentage
+            this.slideWidthPercentage = (100 - (this.slidesPerView - 1) * this.gapPercentage) / this.slidesPerView;
+            
+            // Adjust current index to prevent overscrolling
             const maxIndex = Math.max(0, this.totalSlides - this.slidesPerView);
             if (this.currentIndex > maxIndex) {
               this.currentIndex = maxIndex;
@@ -73,7 +80,7 @@ $total_items = count($items);
         class="relative w-full overflow-hidden"
       >
       <div class='section-padding pb-0'>
-        <div class='flex items-end justify-between flex-wrap gap-5 mb-10 sm:mb-16 max-w-container mx-auto'>
+        <div class='flex items-end justify-between flex-wrap gap-5 mb-10 sm:mb-16 max-w-container'>
           <div class='flex flex-col gap-2 items-start'>
             <?php if ($heading) : ?>
               <h2 class="heading-two font-bold !text-left"><?php echo esc_html($heading); ?></h2>
@@ -111,19 +118,14 @@ $total_items = count($items);
         </div>
         </div>
 
-        <div class="relative w-full overflow-hidden section-padding sm:pr-0 !pt-0">
+        <div class="relative w-full overflow-hidden section-padding !pt-0 ">
           <div
-            class="carousel-track flex transition-transform duration-500 ease-in-out max-w-container mr-auto gap-5"
-            :style="'transform: translateX(-' + (currentIndex * (100 / slidesPerView)) + '%)'"
+            class="carousel-track flex transition-transform duration-500 ease-in-out max-w-container mx-auto"
+            :style="'transform: translateX(-' + (currentIndex * (slideWidthPercentage + gapPercentage)) + '%)'"
           >
             <?php foreach ($items as $item) : ?>
-              <div class="carousel-slide flex-shrink-0 " 
-                   :class="{
-                     'w-full': slidesPerView === 1,
-                     'w-1/2': slidesPerView === 2,
-                     'w-1/3': slidesPerView === 3,
-                     'w-1/4': slidesPerView === 4
-                   }">
+              <div class="carousel-slide flex-shrink-0" 
+                   :style="{ 'width': slideWidthPercentage + '%', 'margin-right': gapPercentage + '%' }">
                 <div class="relative rounded-2xl overflow-hidden aspect-[10/11]">
                   <?php if (!empty($item['image']['url'])) : ?>
                     <div 
@@ -131,7 +133,8 @@ $total_items = count($items);
                       style="background-image: url('<?php echo esc_url($item['image']['url']); ?>');"
                     ></div>
                     
-                    <div class="absolute inset-0 bg-black/20"></div>
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
+
                   <?php endif; ?>
                   
                   <div class="absolute bottom-0 left-0 right-0 p-4 lg:p-6 text-white">
@@ -154,7 +157,6 @@ $total_items = count($items);
             <?php endforeach; ?>
           </div>
         </div>
-      </div>
     <?php endif; ?>
   </div>
 </section>
