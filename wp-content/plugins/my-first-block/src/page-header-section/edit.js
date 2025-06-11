@@ -34,7 +34,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	};
 
 	return (
-		<div { ...blockProps }>
+		<div { ...blockProps } className="plugin-custom-block">
 			<InspectorControls>
 				{ /* Heading */ }
 				<PanelBody
