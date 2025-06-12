@@ -17,6 +17,8 @@
 	@import "tailwindcss/utilities.css" layer(utilities);
 }
 
+
+
 @theme {
 	--font-heading: "Bebas Neue Pro", sans-serif;
 	--font-sans: "Overused Grotesk", sans-serif;
