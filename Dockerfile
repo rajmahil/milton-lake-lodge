@@ -15,5 +15,8 @@ RUN npm ci && npm run build
 WORKDIR /var/www/html/wp-content/themes/theme-tailwind
 RUN npm ci && npm run build
 
+
+COPY wp-config.php /var/www/html/wp-config.php
+
 # FINAL — reset WORKDIR so entrypoint works!
 WORKDIR /var/www/html
