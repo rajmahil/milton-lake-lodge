@@ -63,6 +63,21 @@ define('MINIO_PUBLIC_URL', getenv('MINIO_PUBLIC_URL') ?: 'https://bucket-product
 
 // Parse REDIS_URL from Railway into the constants Redis Object Cache actually uses
 
+define('WP_REDIS_SCHEME', 'tcp');
+define('WP_REDIS_HOST', getenv('WP_REDIS_HOST'));
+define('WP_REDIS_PORT', getenv('WP_REDIS_PORT'));
+define('WP_REDIS_CLIENT', 'predis');
+
+define('WP_REDIS_USERNAME', getenv('WP_REDIS_USERNAME')); // always "default" on Railway
+define('WP_REDIS_PASSWORD', getenv('WP_REDIS_PORT')); // from Railway Redis service
+
+// change the prefix and database for each site to avoid cache data collisions
+define('WP_REDIS_PREFIX', 'miltonlake_');
+define('WP_REDIS_DATABASE', 0); // 0-15
+
+// reasonable connection and read+write timeouts
+define('WP_REDIS_TIMEOUT', 1);
+define('WP_REDIS_READ_TIMEOUT', 1);
 /**
  * WordPress database table prefix.
  *
