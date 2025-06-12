@@ -334,19 +334,20 @@
 
 	@keyframes slideFromCenterToLeft {
 		0% {
-			transform: translateX(0) translateY(10px) rotate(0deg) scale(0.9);
+			transform: translateX(-40px) translateY(10px) rotate(-7deg)
+				scale(0.9);
 		}
 		100% {
-			transform: translateX(-70px) translateY(0) rotate(-7deg) scale(1);
+			transform: translateX(0) translateY(0) rotate(0deg) scale(1);
 		}
 	}
 
 	@keyframes slideFromCenterToRight {
 		0% {
-			transform: translateX(0) translateY(10px) rotate(0deg) scale(0.9);
+			transform: translateX(40) translateY(10px) rotate(4deg) scale(0.9);
 		}
 		100% {
-			transform: translateX(70px) translateY(0) rotate(4deg) scale(1);
+			transform: translateX(0px) translateY(0) rotate(0deg) scale(1);
 		}
 	}
 

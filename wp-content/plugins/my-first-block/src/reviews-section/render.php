@@ -1,6 +1,6 @@
 <?php
 /**
- * Reviews Section Block - Drag on text slider + image animations kept
+ * Reviews Section Block - Drag on text slider + image animations + animated arrow
  */
 
 $topHeading = $attributes['topHeading'] ?? '';
@@ -68,7 +68,7 @@ $totalSlides = count($reviews);
     }
   }"
 >
-  <div class="max-w-container mx-auto grid lg:grid-cols-2 items-center justify-center gap-10">
+  <div class="max-w-container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center justify-center gap-10">
     <div class="relative min-h-[300px] sm:min-h-[400px] w-full flex items-center justify-center">
       <?php foreach ($reviews as $i => $review): ?>
         <?php
@@ -114,12 +114,12 @@ $totalSlides = count($reviews);
           <div
             x-ref="left-<?php echo $i; ?>"
             x-show="currentIndex === <?php echo $i; ?>"
-            class="image-left w-full aspect-[3/4] max-w-[190px] sm:max-w-[230px] md:max-w-[270px] lg:max-w-[400px] z-0 translate-x-0 translate-y-2 scale-90 rotate-0"
+            class="max-w-[400px] w-full rotate-5 relative left-10 shadow-lg"
           >
           
             <?php
               echo wp_get_attachment_image($image1_id, 'large', false, [
-                  'class' => 'w-full h-full object-cover',
+                  'class' => 'aspect-[3/4] w-full h-full object-cover',
                   'loading' => 'lazy',
                   'decoding' => 'async',
                   'fetchpriority' => 'high',
@@ -133,11 +133,11 @@ $totalSlides = count($reviews);
           <div
             x-ref="right-<?php echo $i; ?>"
             x-show="currentIndex === <?php echo $i; ?>"
-            class="image-right w-full aspect-[3/4] max-w-[190px] sm:max-w-[230px] md:max-w-[270px] lg:max-w-[400px] absolute z-10 translate-x-0 translate-y-2 scale-90 rotate-0"
+            class="max-w-[400px] w-full rotate-[-10deg] shadow-lg relative right-10"
           >
             <?php
             echo wp_get_attachment_image($image2_id, 'large', false, [
-                'class' => 'w-full h-full object-cover',
+                'class' => 'aspect-[3/4]  w-full h-full object-cover',
                 'loading' => 'lazy',
                 'decoding' => 'async',
                 'fetchpriority' => 'auto',
@@ -149,7 +149,34 @@ $totalSlides = count($reviews);
       <?php endforeach; ?>
     </div>
 
-    <div class="w-full flex flex-col items-center gap-5">
+    <div class="w-full flex flex-col items-center gap-5 relative">
+      <div 
+        x-show="currentIndex < totalSlides - 1" 
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="absolute right-0 top-1/2 transform -translate-y-1/2 z-10"
+      >
+        <svg 
+          class="w-6 h-6 text-brand-green-dark cursor-pointer animate-pulse" 
+          style="animation-duration: 2s;"
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+          @click="goToSlide(currentIndex + 1)"
+        >
+          <path 
+            stroke-linecap="round" 
+            stroke-linejoin="round" 
+            stroke-width="2" 
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </div>
+
       <div class='flex flex-col gap-6'>
       <?php if ($topHeading): ?>
         <h2 class="heading-two text-center">
@@ -158,7 +185,7 @@ $totalSlides = count($reviews);
       <?php endif; ?>
 
       <div
-        class="w-full overflow-hidden !cursor-grab"
+        class="w-full overflow-hidden !cursor-grab "
         @mousedown="onDragStart"
         @mouseup="onDragEnd"
         @touchstart="onDragStart"
@@ -167,7 +194,7 @@ $totalSlides = count($reviews);
         style="touch-action: pan-y;"
       >
         <div
-          class="flex transition-transform duration-500 ease-in-out select-none"
+          class="flex transition-transform duration-500 ease-in-out select-none  items-center max-w-[90vw]"
           :style="'transform: translateX(-' + (currentIndex * 100) + '%)'"
           x-ref="slider"
         >
@@ -200,15 +227,20 @@ $totalSlides = count($reviews);
       </div>
       </div>
 
-      <div class="flex justify-center gap-2 mt-6">
-        <?php foreach ($reviews as $i => $_): ?>
-          <button
-            class="h-3.5 w-3.5 rounded-full transition-colors"
-            :class="currentIndex === <?php echo $i; ?> ? 'bg-black' : 'bg-white border border-black'"
-            @click="goToSlide(<?php echo $i; ?>)"
-            aria-label="Go to review <?php echo $i + 1; ?>"
-          ></button>
-        <?php endforeach; ?>
+      <div class="flex flex-col items-center gap-2 mt-6">
+        <div class="text-base text-gray-700 font-medium">
+          <span x-text="currentIndex + 1"></span> / <span x-text="totalSlides"></span>
+        </div>
+        <div class="flex justify-center gap-2">
+          <?php foreach ($reviews as $i => $_): ?>
+            <button
+              class="h-5 w-5 rounded-full transition-colors !cursor-pointer"
+              :class="currentIndex === <?php echo $i; ?> ? 'bg-black' : 'bg-white border border-black'"
+              @click="goToSlide(<?php echo $i; ?>)"
+              aria-label="Go to review <?php echo $i + 1; ?>"
+            ></button>
+          <?php endforeach; ?>
+        </div>
       </div>
     </div>
   </div>
