@@ -6,6 +6,8 @@
 @source inline("sm:rounded-full");
 @source inline("sm:flex-row");
 @source inline("sm:w-fit");
+@source inline("lg:grid-cols-2");
+@source inline("lg:grid");
 
 @theme {
   --font-heading: "Bebas Neue Pro", sans-serif;

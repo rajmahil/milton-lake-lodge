@@ -62,26 +62,14 @@ define('MINIO_BUCKET', getenv('MINIO_BUCKET') ?: 'wpmedia');
 define('MINIO_PUBLIC_URL', getenv('MINIO_PUBLIC_URL') ?: 'https://bucket-production-599e.up.railway.app/wpmedia');
 
 // Parse REDIS_URL from Railway into the constants Redis Object Cache actually uses
-// adjust Redis host and port if necessary
-define('WP_CACHE', true); // Required to enable object caching
+define('WP_REDIS_HOST', 'redis.railway.internal');
+define('WP_REDIS_PORT', 6379);
 
-if (getenv('WP_REDIS_URL')) {
-    // Connect to Railway Redis using full redis:// URL
-    define('WP_REDIS_URL', getenv('WP_REDIS_URL'));
-} else {
-    // Fallback if URL isn't set
-    define('WP_REDIS_HOST', 'redis.railway.internal');
-    define('WP_REDIS_PORT', 6379);
-    define('WP_REDIS_CLIENT', 'predis');
-}
+// change the prefix and database for each site to avoid cache data collisions
+define('WP_REDIS_PREFIX', 'miltonlake_');
+define('WP_REDIS_DATABASE', 0); // 0-15
 
-// Optional: use Redis DB 0–15 if needed
-define('WP_REDIS_DATABASE', 0);
-
-// Optional: prevent cache key collisions if running multisite or multiple projects
-define('WP_REDIS_PREFIX', 'miltonlodge_');
-
-// Optional: set timeouts
+// reasonable connection and read+write timeouts
 define('WP_REDIS_TIMEOUT', 1);
 define('WP_REDIS_READ_TIMEOUT', 1);
 /**
