@@ -6,7 +6,8 @@
 
 $heading = $attributes['heading'] ?? 'Milton Lake Lodge Mini-Lodge & Outpost Combo Trips';
 $tabs = $attributes['tabs'] ?? [];
-$exchange_rate = $attributes['exchange_rate'] ?? 1.25; // CAD to USD rate
+$rates = get_exchange_rates('USD');
+$exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.25;
 ?>
 
 <section

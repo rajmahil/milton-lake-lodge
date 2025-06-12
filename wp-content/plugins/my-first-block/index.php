@@ -50,6 +50,37 @@ add_action('wp_enqueue_scripts', function () {
 add_action('admin_post_nopriv_my_custom_form_submit', 'handle_custom_form_email');
 add_action('admin_post_my_custom_form_submit', 'handle_custom_form_email');
 
+
+function get_exchange_rates($base = 'USD')
+{
+    // Replace this with your actual API key
+    $api_key = defined('EXCHANGE_RATE_API_KEY') ? EXCHANGE_RATE_API_KEY : '';
+    if (!$api_key) {
+        error_log('ExchangeRate API key is missing.');
+        return false;
+    }
+
+    $url = "https://v6.exchangerate-api.com/v6/{$api_key}/latest/{$base}";
+
+    $response = wp_remote_get($url);
+
+    if (is_wp_error($response)) {
+        error_log('Exchange Rate API request failed: ' . $response->get_error_message());
+        return false;
+    }
+
+    $body = wp_remote_retrieve_body($response);
+    $data = json_decode($body, true);
+
+    if (isset($data['conversion_rates'])) {
+        return $data['conversion_rates'];
+    }
+
+    error_log('Invalid exchange rate data: ' . $body);
+    return false;
+}
+
+
 function handle_custom_form_email()
 {
     error_log('Form handler triggered');

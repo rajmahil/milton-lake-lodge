@@ -183,7 +183,7 @@ const CarouselBlock = ( { heading, subheading, items } ) => {
 													</h3>
 												) }
 												{ item.text && (
-													<p className="!my-0 !text-lg leading-relaxed">
+													<p className="!my-0 !text-base sm:!text-lg sm:!leading-relaxed !text-left">
 														{ item.text }
 													</p>
 												) }
