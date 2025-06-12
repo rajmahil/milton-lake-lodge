@@ -1,35 +1,28 @@
 <?php
-
 /*
-  Plugin Name: Brad&rsquo;s Boilerplate Block Plugin
+  Plugin Name: Brad’s Boilerplate Block Plugin
   Version: 1.0
   Author: Brad
   Author URI: https://github.com/LearnWebCode
 */
 
-if (!defined('ABSPATH')) {
-    exit();
-} // Exit if accessed directly
+if (!defined('ABSPATH')) exit();
 
-function registerBlocks()
-{
-    register_block_type(__DIR__ . '/build/hero-section');
-    register_block_type(__DIR__ . '/build/showcase-section');
-    register_block_type(__DIR__ . '/build/features-section');
-    register_block_type(__DIR__ . '/build/accordion-section');
-    register_block_type(__DIR__ . '/build/reviews-section');
-    register_block_type(__DIR__ . '/build/scroll-image-section');
-    register_block_type(__DIR__ . '/build/cta-section');
-    register_block_type(__DIR__ . '/build/two-col-section');
-    register_block_type(__DIR__ . '/build/pricing-table');
-    register_block_type(__DIR__ . '/build/form-block');
-    register_block_type(__DIR__ . '/build/page-header-section');
-    register_block_type(__DIR__ . '/build/gallery-section');
-    register_block_type(__DIR__ . '/build/carousel-section');
-    register_block_type(__DIR__ . '/build/calendar-section');
+// Register all blocks
+function register_custom_blocks() {
+    $blocks = [
+        'hero-section', 'showcase-section', 'features-section', 'accordion-section', 'reviews-section',
+        'scroll-image-section', 'cta-section', 'two-col-section', 'pricing-table', 'form-block',
+        'page-header-section', 'gallery-section', 'carousel-section', 'calendar-section'
+    ];
+
+    foreach ($blocks as $block) {
+        register_block_type(__DIR__ . "/build/$block");
+    }
 }
-add_action('init', 'registerBlocks');
+add_action('init', 'register_custom_blocks');
 
+// Pass season_calendar posts to the frontend
 add_action('wp_enqueue_scripts', function () {
     $posts = get_posts([
         'post_type' => 'season_calendar',
@@ -37,7 +30,7 @@ add_action('wp_enqueue_scripts', function () {
         'post_status' => 'publish',
     ]);
 
-    $formatted_posts = array_map(function ($post) {
+    $formatted = array_map(function ($post) {
         return [
             'id' => $post->ID,
             'title' => get_the_title($post),
@@ -49,71 +42,69 @@ add_action('wp_enqueue_scripts', function () {
         ];
     }, $posts);
 
-    wp_enqueue_script('my-calendar-frontend', plugins_url('src/calendar-section/frontend.js', __FILE__), [], null, true);
+    wp_enqueue_script(
+        'my-calendar-frontend',
+        plugins_url('src/calendar-section/frontend.js', __FILE__),
+        [],
+        null,
+        true
+    );
 
-    wp_localize_script('my-calendar-frontend', 'myCalendarData', [
-        'posts' => $formatted_posts,
-    ]);
+    wp_localize_script('my-calendar-frontend', 'myCalendarData', ['posts' => $formatted]);
 });
 
+// Handle custom form email
 add_action('admin_post_nopriv_my_custom_form_submit', 'handle_custom_form_email');
 add_action('admin_post_my_custom_form_submit', 'handle_custom_form_email');
 
-function handle_custom_form_email()
-{
-    error_log('Handler fired');
+function handle_custom_form_email() {
+    error_log('Form handler triggered');
 
-    // Skip internal keys like action, _wpnonce, etc.
-    $skip_keys = ['action', '_wpnonce', '_wp_http_referer'];
-
-    $sanitized_data = [];
+    $skip = ['action', '_wpnonce', '_wp_http_referer'];
+    $data = [];
 
     foreach ($_POST as $key => $value) {
-        if (in_array($key, $skip_keys)) {
-            continue;
-        }
+        if (in_array($key, $skip)) continue;
 
-        // Basic sanitization
         if (is_array($value)) {
-            $sanitized_value = array_map('sanitize_text_field', $value);
+            $data[$key] = array_map('sanitize_text_field', $value);
         } elseif (filter_var($value, FILTER_VALIDATE_EMAIL)) {
-            $sanitized_value = sanitize_email($value);
+            $data[$key] = sanitize_email($value);
         } elseif (preg_match('/message|comments?|notes?/i', $key)) {
-            $sanitized_value = sanitize_textarea_field($value);
+            $data[$key] = sanitize_textarea_field($value);
         } else {
-            $sanitized_value = sanitize_text_field($value);
+            $data[$key] = sanitize_text_field($value);
         }
-
-        $sanitized_data[$key] = $sanitized_value;
     }
 
-    // Build HTML body
-    $body = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>';
-    $body .= '<h2 style="color:#1f2937;">New Form Submission</h2>';
-    $body .= '<table cellspacing="0" cellpadding="8" style="border-collapse:collapse;width:100%;max-width:600px;font-family:sans-serif;">';
+    $rows = '';
+    foreach ($data as $key => $value) {
+        $label = ucwords(str_replace('_', ' ', $key));
+        $val = is_array($value) ? implode(', ', $value) : nl2br(esc_html($value));
 
-    foreach ($sanitized_data as $key => $value) {
-        $display_key = ucwords(str_replace('_', ' ', $key));
-        $display_value = is_array($value) ? implode(', ', $value) : nl2br(esc_html($value));
-
-        $body .= "<tr>
-                    <td style='background:#f9f9f9;border:1px solid #e0e0e0;font-weight:bold;width:35%;'>$display_key</td>
-                    <td style='border:1px solid #e0e0e0;'>$display_value</td>
-                  </tr>";
+        $rows .= "<div style=\"display: flex; margin-bottom: 8px; column-gap: 12px;\">
+        <div style=\"font-weight: bold; color: #374151; white-space: nowrap;\">$label:</div>
+        <div style=\"color: #111827;\">$val</div>
+    </div>";
     }
+  
 
-    $body .= '</table>';
-    $body .= '</body></html>';
+    $template_path = plugin_dir_path(__FILE__) . 'components/email-templates/email-template.php';
+    $template_html = file_get_contents($template_path);
+    $template_html = str_replace('{{dynamic_rows}}', $rows, $template_html);
 
-    // Email config
-    $to = 'raj@306technologies.com';
-    $subject = 'New Form Submission';
-    $headers = ['Content-Type: text/html; charset=UTF-8'];
+    
 
-    error_log('Sanitized submission: ' . print_r($sanitized_data, true));
+    
+    wp_mail(
+      'ayush@306technologies.com',
+      'New Form Submission',
+      $template_html,
+      ['Content-Type: text/html; charset=UTF-8']
+    );
+    
 
-    wp_mail($to, $subject, $body, $headers);
-
+    error_log('Form submitted: ' . print_r($data, true));
     wp_redirect(home_url('/thank-you'));
     exit();
 }
