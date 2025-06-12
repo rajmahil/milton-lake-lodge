@@ -6,6 +6,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 
 # Copy wp-content (themes/plugins only!)
 COPY wp-content/ /var/www/html/wp-content
+COPY wp-config.php /var/www/html/wp-config.php
 
 # Build first plugin
 WORKDIR /var/www/html/wp-content/plugins/my-first-block
