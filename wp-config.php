@@ -1,5 +1,4 @@
 <?php
-define('WP_CACHE', true);
 
 /**
  * The base configuration for WordPress
@@ -63,6 +62,10 @@ define('MINIO_PUBLIC_URL', getenv('MINIO_PUBLIC_URL') ?: 'https://bucket-product
 
 // Parse REDIS_URL from Railway into the constants Redis Object Cache actually uses
 // adjust Redis host and port if necessary
+
+define('WP_REDIS_URL', 'redis://default:LctkHNPFReQWgebFsfiuieehYcqZvtZl@crossover.proxy.rlwy.net:40516');
+define('WP_REDIS_CLIENT', 'phpredis');
+define('WP_CACHE', true); // Always needed for caching
 
 /**
  * WordPress database table prefix.
