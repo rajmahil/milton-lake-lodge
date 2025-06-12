@@ -59,7 +59,7 @@ if ($image) {
       ]); ?>
       <?php else: ?>
       <!-- Fallback for direct URLs -->
-      <img
+      <imgb
         src="<?php echo esc_url($image_url); ?>"
         alt="<?php echo esc_attr($image_alt); ?>"
         class="object-cover object-center w-full h-full"
@@ -195,7 +195,7 @@ if ($image) {
           <div class="flex flex-row flex-nowrap text-white animate-slide">
             <?php foreach ( $tripAdvisorReviews as $tripAdvisorReview ) : ?>
             <div class="py-2 px-4 rounded-lg flex flex-row gap-4 items-center w-[350px]">
-              <div class="h-12 w-12 aspect-square rounded-full bg-red-300">
+              <div class="h-12 w-12 aspect-square rounded-full bg-white">
                 <?php if ( ! empty( $tripAdvisorReview['image'] ) ) : ?>
                 <img
                   src="<?php echo esc_url($tripAdvisorReview['image']); ?>"

@@ -26,6 +26,10 @@
   $cta_url = get_theme_mod('boilerplate_cta_url', '#');
   $cta_phone = get_theme_mod('boilerplate_cta_phone', '#');
   
+  //change the navbar theme based off this
+  $current_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+  error_log('This is the Current Path: ' . $current_path);
+  
   ?>
   x-data="{
       scrollY: 0,
