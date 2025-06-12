@@ -403,21 +403,7 @@
   >
   </div>
 
-  <?php if (current_user_can('administrator')): ?>
-  <pre style="background:#111;color:#0f0;padding:2rem;">
-<?php
-echo "REDIS DEBUG\n==========\n";
-echo 'WP_REDIS_HOST: ' . (defined('WP_REDIS_HOST') ? WP_REDIS_HOST : 'NOT SET') . "\n";
-echo 'WP_REDIS_PORT: ' . (defined('WP_REDIS_PORT') ? WP_REDIS_PORT : 'NOT SET') . "\n";
-echo 'WP_REDIS_USERNAME: ' . (defined('WP_REDIS_USERNAME') ? WP_REDIS_USERNAME : 'NOT SET') . "\n";
-echo 'WP_REDIS_PASSWORD: ' . (defined('WP_REDIS_PASSWORD') ? '********' : 'NOT SET') . "\n";
-echo 'Env HOST: ' . getenv('WP_REDIS_HOST') . "\n";
-echo 'Env PORT: ' . getenv('WP_REDIS_PORT') . "\n";
-echo 'Env USERNAME: ' . getenv('WP_REDIS_USERNAME') . "\n";
-echo 'Env PASSWORD: ' . (getenv('WP_REDIS_PASSWORD') ? '********' : 'NOT SET') . "\n";
-?>
-</pre>
-  <?php endif; ?>
+
 </footer>
 
 <?php wp_footer(); ?>
