@@ -117,11 +117,9 @@ function handle_custom_form_email()
 
     $template_path = plugin_dir_path(__FILE__) . 'components/email-templates/email-template.php';
     $template_html = file_get_contents($template_path);
-    $template_html = str_replace('{{dynamic_rows}}', $rows, $template_html);
+    $template_html = str_replace('{{ dynamic_rows }}', $rows, $template_html);
 
-
-
-    wp_mail('ayush@306technologies.com', 'New Form Submission', $template_html, ['Content-Type: text/html; charset=UTF-8']);
+    wp_mail('raj@306technologies.com', 'New Form Submission', $template_html, ['Content-Type: text/html; charset=UTF-8']);
 
     error_log('Form submitted: ' . print_r($data, true));
     wp_redirect(home_url('/thank-you'));

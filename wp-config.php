@@ -23,6 +23,21 @@
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 // ** Database settings from environment ** //
+define('WP_REDIS_SCHEME', 'tcp');
+define('WP_REDIS_HOST', 'crossover.proxy.rlwy.net');
+define('WP_REDIS_PORT', 40516);
+define('WP_REDIS_CLIENT', 'predis');
+define('WP_REDIS_USERNAME', 'default');
+define('WP_REDIS_PASSWORD', 'LctkHNPFReQWgebFsfiuieehYcqZvtZl');
+define('WP_REDIS_PREFIX', 'miltonlake_');
+define('WP_REDIS_DATABASE', 0);
+define('WP_REDIS_TIMEOUT', 1);
+define('WP_REDIS_READ_TIMEOUT', 1);
+define('WP_REDIS_SSL_CONTEXT', [
+    'verify_peer' => false,
+    'verify_peer_name' => false,
+]);
+
 define('WPCACHEHOME', '/Users/rajmahil/Local Sites/wp-test/app/public/wp-content/plugins/wp-super-cache/');
 define('DB_NAME', getenv('WORDPRESS_DB_NAME') ?: 'local');
 define('DB_USER', getenv('WORDPRESS_DB_USER') ?: 'root');
@@ -64,21 +79,6 @@ define('MINIO_PUBLIC_URL', getenv('MINIO_PUBLIC_URL') ?: 'https://bucket-product
 
 // Parse REDIS_URL from Railway into the constants Redis Object Cache actually uses
 
-define('WP_REDIS_SCHEME', 'tcp');
-define('WP_REDIS_HOST', getenv('WP_REDIS_HOST'));
-define('WP_REDIS_PORT', getenv('WP_REDIS_PORT'));
-define('WP_REDIS_CLIENT', 'predis');
-
-define('WP_REDIS_USERNAME', getenv('WP_REDIS_USERNAME')); // always "default" on Railway
-define('WP_REDIS_PASSWORD', getenv('WP_REDIS_PORT')); // from Railway Redis service
-
-// change the prefix and database for each site to avoid cache data collisions
-define('WP_REDIS_PREFIX', 'miltonlake_');
-define('WP_REDIS_DATABASE', 0); // 0-15
-
-// reasonable connection and read+write timeouts
-define('WP_REDIS_TIMEOUT', 1);
-define('WP_REDIS_READ_TIMEOUT', 1);
 /**
  * WordPress database table prefix.
  *
