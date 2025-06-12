@@ -69,7 +69,7 @@ define('WP_REDIS_PORT', getenv('WP_REDIS_PORT') ?: 40516);
 define('WP_REDIS_CLIENT', 'predis');
 
 define('WP_REDIS_USERNAME', getenv('WP_REDIS_USERNAME') ?: 'default'); // always "default" on Railway
-define('WP_REDIS_PASSWORD', getenv('WP_REDIS_PASSWORD')); // from Railway Redis service
+define('WP_REDIS_PASSWORD', getenv('WP_REDIS_PASSWORD') ?: 'LctkHNPFReQWgebFsfiuieehYcqZvtZl'); // from Railway Redis service
 
 // change the prefix and database for each site to avoid cache data collisions
 define('WP_REDIS_PREFIX', 'miltonlake_');
