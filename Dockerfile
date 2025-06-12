@@ -6,7 +6,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# 2) Copy wp-content (themes & plugins) into the image
+# 2) Copy all of wp-content (themes + plugins)
 COPY wp-content/ /var/www/html/wp-content/
 
 # 3) Build your block plugin
@@ -17,8 +17,12 @@ RUN npm ci && npm run build
 WORKDIR /var/www/html/wp-content/themes/theme-tailwind
 RUN npm ci && npm run build
 
-# 5) Copy in wp-config (so your credentials end up in the image)
+# 5) Now copy in wp-config.php (credentials only get added here,
+#    so they don’t confuse npm or any build tool)
 COPY wp-config.php /var/www/html/wp-config.php
 
-# 6) Reset to webroot so Apache’s entrypoint works
+# 6) Fix permissions (optional but recommended)
+RUN chown -R www-data:www-data /var/www/html
+
+# 7) Reset WORKDIR so Apache’s entrypoint works
 WORKDIR /var/www/html
