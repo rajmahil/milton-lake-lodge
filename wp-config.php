@@ -64,12 +64,12 @@ define('MINIO_PUBLIC_URL', getenv('MINIO_PUBLIC_URL') ?: 'https://bucket-product
 // Parse REDIS_URL from Railway into the constants Redis Object Cache actually uses
 
 define('WP_REDIS_SCHEME', 'tcp');
-define('WP_REDIS_HOST', getenv('WP_REDIS_HOST') ?: 'crossover.proxy.rlwy.net');
-define('WP_REDIS_PORT', getenv('WP_REDIS_PORT') ?: 40516);
+define('WP_REDIS_HOST', $_SERVER['WP_REDIS_HOST'] ?? ($_ENV['WP_REDIS_HOST'] ?? 'crossover.proxy.rlwy.net'));
+define('WP_REDIS_PORT', $_SERVER['WP_REDIS_PORT'] ?? ($_ENV['WP_REDIS_PORT'] ?? 40516));
 define('WP_REDIS_CLIENT', 'predis');
 
-define('WP_REDIS_USERNAME', getenv('WP_REDIS_USERNAME') ?: 'default'); // always "default" on Railway
-define('WP_REDIS_PASSWORD', getenv('WP_REDIS_PASSWORD') ?: 'LctkHNPFReQWgebFsfiuieehYcqZvtZl'); // from Railway Redis service
+define('WP_REDIS_USERNAME', $_SERVER['WP_REDIS_USERNAME'] ?? ($_ENV['WP_REDIS_USERNAME'] ?? 'default')); // always "default" on Railway
+define('WP_REDIS_PASSWORD', $_SERVER['WP_REDIS_PASSWORD'] ?? ($_ENV['WP_REDIS_PASSWORD'] ?? 'LctkHNPFReQWgebFsfiuieehYcqZvtZl')); // from Railway Redis service
 
 // change the prefix and database for each site to avoid cache data collisions
 define('WP_REDIS_PREFIX', 'miltonlake_');
