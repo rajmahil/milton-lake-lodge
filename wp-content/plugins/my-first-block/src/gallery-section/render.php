@@ -101,7 +101,7 @@ $totalImages = count($images);
                   'loading' => $globalIndex < 5 ? 'eager' : 'lazy',
                   'fetchpriority' => $globalIndex < 5 ? 'high' : 'auto',
                   'decoding' => 'async',
-                  'alt' => $image_alt || "",
+                  'alt' => $image_alt || '',
                   'data-index' => $globalIndex,
                   'data-full-url' => esc_url($image['url']),
                   '@click' => 'imageGalleryOpen',
@@ -203,30 +203,31 @@ $totalImages = count($images);
               </div>
 
               <div class="relative flex items-center justify-center w-full h-full">
-              <?php foreach ($images as $modalIndex => $image) :
-                  $image_id = $image['id'] ?? 0;
-                  $image_alt = $image['alt'] ?? '';
-              ?>
-              <div 
-                x-show="imageGalleryImageIndex === <?php echo $modalIndex; ?>"
-                x-transition:enter="transition ease-in-out duration-200"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in-out duration-150"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
-                class="absolute inset-0 flex items-center justify-center"
-              >
-                <?php echo wp_get_attachment_image($image_id, 'large', false, [
-                    'class' => 'object-contain w-auto h-auto max-w-[90vw] max-h-[90vh] select-none bg-white rounded-lg shadow-2xl',
-                    'loading' => 'eager',
-                    'decoding' => 'async',
-                    'alt' => $image_alt,
-                ]); ?>
-              </div>
-              <?php endforeach; ?>
+                <?php foreach ($images as $modalIndex => $image) :
+                    $image_id = $image['id'] ?? 0;
+                    $image_alt = $image['alt'] ?? '';
+                ?>
                 <div
-                  class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-black/90 text-white py-1 px-4 rounded-full text-sm font-medium lg:block !hidden"
+                  x-show="imageGalleryImageIndex === <?php echo $modalIndex; ?>"
+                  x-transition:enter="transition ease-in-out duration-200"
+                  x-transition:enter-start="opacity-0"
+                  x-transition:enter-end="opacity-100"
+                  x-transition:leave="transition ease-in-out duration-150"
+                  x-transition:leave-start="opacity-100"
+                  x-transition:leave-end="opacity-0"
+                  class="absolute inset-0 flex items-center justify-center"
+                  @click.stop
+                >
+                  <?php echo wp_get_attachment_image($image_id, 'large', false, [
+                      'class' => 'object-contain w-auto h-auto max-w-[90vw] max-h-[90vh] select-none bg-white rounded-lg shadow-2xl',
+                      'loading' => 'eager',
+                      'decoding' => 'async',
+                      'alt' => $image_alt,
+                  ]); ?>
+                </div>
+                <?php endforeach; ?>
+                <div
+                  class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-black/90 text-white py-1 px-4 rounded-full text-sm font-medium hidden lg:block"
                 >
                   <span x-text="imageGalleryImageIndex + 1"></span>
                   <span>/</span>

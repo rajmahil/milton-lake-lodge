@@ -61,12 +61,12 @@
   }"
 >
   <div
-    class="fixed z-[100] w-full section-padding !py-2 transition-all duration-300 ease-in-out "
+    class="fixed z-[100] w-full section-padding !py-2 transition-all duration-300 ease-in-out isolate"
     :class="{
         'transform -translate-y-full':
             !showNavbar,
         'transform translate-y-0': showNavbar,
-        'bg-brand-green-dark/70 backdrop-blur-md shadow-lg': isScrolled,
+        'bg-brand-green-dark/50 backdrop-blur-xl shadow-lg ring-1 ring-black/5 ': isScrolled,
         'bg-transparent':
             !isScrolled,
     }"

@@ -45,6 +45,17 @@
   --color-chart-5: #f9983d;
 
   --radius: 0.5rem;
+
+  --shadow-offset: 0;
+  --shadow-blur: 20px;
+  --shadow-spread: -5px;
+  --shadow-color: rgba(0, 2, 30, 0.7);
+  --tint-color: 0, 37, 30;
+  --tint-opacity: 0.4;
+  --frost-blur: 7px;
+  --noise-frequency: 0.008;
+  --distortion-strength: 77;
+  --outer-shadow-blur: 24px;
 }
 
 @font-face {
@@ -167,6 +178,9 @@ h6 {
   background-size: "auto";
   background-blend-mode: color-burn, normal;
 }
+
+
+
 
 @layer components {
   /* First Block Components */
