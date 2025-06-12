@@ -14,9 +14,6 @@
 	@import "tailwindcss/utilities.css" layer(utilities);
 }
 
-
-
-
 @theme {
 	--font-heading: "Bebas Neue Pro", sans-serif;
 	--font-sans: "Overused Grotesk", sans-serif;
@@ -340,7 +337,7 @@
 			transform: translateX(0) translateY(10px) rotate(0deg) scale(0.9);
 		}
 		100% {
-			transform: translateX(-60px) translateY(0) rotate(-7deg) scale(1);
+			transform: translateX(-70px) translateY(0) rotate(-7deg) scale(1);
 		}
 	}
 
@@ -349,7 +346,7 @@
 			transform: translateX(0) translateY(10px) rotate(0deg) scale(0.9);
 		}
 		100% {
-			transform: translateX(60px) translateY(0) rotate(4deg) scale(1);
+			transform: translateX(70px) translateY(0) rotate(4deg) scale(1);
 		}
 	}
 

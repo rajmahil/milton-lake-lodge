@@ -216,18 +216,19 @@ $totalImages = count($images);
                   x-transition:leave-start="opacity-100"
                   x-transition:leave-end="opacity-0"
                   class="absolute inset-0 flex items-center justify-center"
-                  @click.stop
                 >
-                  <?php echo wp_get_attachment_image($image_id, 'large', false, [
-                      'class' => 'object-contain w-auto h-auto max-w-[90vw] max-h-[90vh] select-none bg-white rounded-lg shadow-2xl',
-                      'loading' => 'eager',
-                      'decoding' => 'async',
-                      'alt' => $image_alt,
-                  ]); ?>
+                  <div @click.stop>
+                    <?php echo wp_get_attachment_image($image_id, 'large', false, [
+                        'class' => 'object-contain w-auto h-auto max-w-[80vw] max-h-[80vh] select-none bg-white rounded-lg shadow-2xl',
+                        'loading' => 'eager',
+                        'decoding' => 'async',
+                        'alt' => $image_alt,
+                    ]); ?>
+                  </div>
                 </div>
                 <?php endforeach; ?>
                 <div
-                  class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-black/90 text-white py-1 px-4 rounded-full text-sm font-medium hidden lg:block"
+                  class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-black/90 text-white py-1 px-4 rounded-full text-sm font-medium  "
                 >
                   <span x-text="imageGalleryImageIndex + 1"></span>
                   <span>/</span>
