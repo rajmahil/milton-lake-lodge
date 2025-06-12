@@ -53,9 +53,8 @@ $fields = $attributes['fields'] ?? [];
         />
         <?php
           break;
-
           case 'textarea':
-      ?>
+        ?>
         <textarea
           required="<?php echo !empty($field['required']) ? 'required' : ''; ?>"
           class="form-input min-h-24 pt-4 <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
@@ -65,44 +64,45 @@ $fields = $attributes['fields'] ?? [];
 
         <?php
           break;
-
           case 'select':
-     		 ?>
-
-        <div
-          x-data="{
-              open: false,
-              selected: '',
-              placeholder: '<?php echo $field['placeholder']; ?>',
-              items: <?php echo esc_attr(json_encode($field['options'] ?? [])); ?>
-          }"
-          class="relative <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
-        >
-          <?php if ( ! empty( $field['label'] ) ) : ?>
-          <label class="block mb-3 text-medium text-center">
-            <?php echo esc_html($field['label']); ?>
-            <?php if ( ! empty( $field['required'] ) ) : ?>
-            <span>*</span>
-            <?php endif; ?>
-          </label>
-          <?php endif; ?>
-
-          <!-- Button -->
-          <button
-            @click="open = !open"
-            type="button"
-            class="w-full form-input cursor-pointer flex items-center justify-start px-4 relative "
-          >
-            <p
-              class="text-base capitalize"
-              :class="!selected ? 'text-neutral-400' : ''"
-              x-text="selected ? selected : placeholder"
-            ></p>
-
-
-            <span
-              class="flex justify-center items-center pointer-events-none  absolute right-0  h-14 px-2 text-neutral-400"
+            ?>
+            <div
+                x-data="{
+                    open: false,
+                    selected: '',
+                    placeholder: '<?php echo $field['placeholder']; ?>',
+                    items: <?php echo esc_attr(json_encode($field['options'] ?? [])); ?>
+                }"
+                class="relative <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
             >
+                <?php if (!empty($field['label'])) : ?>
+                    <label class="block mb-3 text-medium text-center">
+                        <?php echo esc_html($field['label']); ?>
+                        <?php if (!empty($field['required'])) : ?>
+                            <span>*</span>
+                        <?php endif; ?>
+                    </label>
+                <?php endif; ?>
+            
+                <input 
+                    type="hidden" 
+                    name="<?php echo esc_attr($field['name'] ?? ''); ?>" 
+                    x-model="selected"
+                    <?php if (!empty($field['required'])) echo 'required'; ?>
+                >
+            
+                <button
+                    @click="open = !open"
+                    type="button"
+                    class="w-full form-input cursor-pointer flex items-center justify-start px-4 relative"
+                >
+                    <p
+                        class="text-base capitalize"
+                        :class="!selected ? 'text-neutral-400' : ''"
+                        x-text="selected ? selected : placeholder"
+                    ></p>
+                    
+                    <span class="flex justify-center items-center pointer-events-none absolute right-0 h-14 px-2 text-neutral-400">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
@@ -119,33 +119,26 @@ $fields = $attributes['fields'] ?? [];
               </svg>
             </span>
 
-          </button>
+            </button>
 
-          <ul
-            x-show="open"
-            @click.away="open = false"
-            class="absolute left-0 w-full mt-1 bg-white border border-brand-grey rounded-md shadow-2xl max-h-50 overflow-auto z-10"
-            x-transition
-          >
-            <template
-              x-for="item in items"
-              :key="item"
-            >
-              <li
-                @click="selected = item; open = false"
-                class="px-4 py-3 hover:bg-brand-light-grey cursor-pointer capitalize"
+              <ul
+                  x-show="open"
+                  @click.away="open = false"
+                  class="absolute left-0 w-full mt-1 bg-white border border-brand-grey rounded-md shadow-2xl max-h-50 overflow-auto z-10"
+                  x-transition
               >
-                <span x-text="item"></span>
-              </li>
-            </template>
-          </ul>
-
-        </div>
-
-
-        <?php
+                  <template x-for="item in items" :key="item">
+                      <li
+                          @click="selected = item; open = false"
+                          class="px-4 py-3 hover:bg-brand-light-grey cursor-pointer capitalize"
+                      >
+                          <span x-text="item"></span>
+                      </li>
+                  </template>
+              </ul>
+          </div>
+          <?php
           break;
-
           case 'checkbox':
       ?>
 
