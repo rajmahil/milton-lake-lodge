@@ -19,7 +19,8 @@ $animation_class = 'showcase-animate-' . uniqid();
 ?>
 
 <section
-  class="plugin-custom-block flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-green"
+  class="plugin-custom-block flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-green bg-repeat  bg-size-[450px] bg-blend-hard-light"
+  style="background-image: url('<?php echo esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
 >
 
   <div class="relative z-[2] max-w-container flex flex-row flex-wrap gap-5 items-end justify-between">

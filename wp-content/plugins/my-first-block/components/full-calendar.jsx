@@ -158,9 +158,9 @@ const FullCalendarComp = ( props ) => {
 											className="p-2 rounded-md h-22 font-medium  text-wrap flex flex-col gap-2 items-start justify-between"
 										>
 											<p className="text-sm !leading-[1.1] ">
-												{ arg.event.title }
+												{ arg.event.title }{ ' ' }
 											</p>
-											<p className="text-xs leading-[1.1]">
+											<p className="text-sm leading-[1.1]">
 												{ rangeText }
 											</p>
 										</div>

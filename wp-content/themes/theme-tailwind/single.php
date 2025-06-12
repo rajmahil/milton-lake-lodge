@@ -18,7 +18,8 @@ get_header(); ?>
       ?>
 
   <div
-    class="w-full section-padding h-[450px] flex items-center justify-center bg-gradient-to-br from-brand-green-dark to-brand-green"
+    class="w-full section-padding h-[450px] flex items-center justify-center bg-brand-green bg-repeat  bg-size-[450px] bg-blend-hard-light"
+    style="background-image: url('<?php echo esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
   >
     <div class="max-w-container flex flex-col gap-2 items-center justify-center mt-4">
       <h1 class="text-6xl text-center text-white !mb-0"><?php the_title(); ?></h1>

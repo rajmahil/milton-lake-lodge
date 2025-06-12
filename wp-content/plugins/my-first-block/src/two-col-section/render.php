@@ -53,10 +53,21 @@ $content_order_class = $inverted ? 'order-first' : 'order-last';
         <p class="!my-0 text-left text-lg"><?php echo esc_html($text); ?></p>
       </div>
       <a href="<?php echo esc_url($button_url); ?>">
-        <button class="flex flex-row items-center w-fit gap-1 border-b border-black pb-0.5">
-          <p class="text-black text-base">
-            <?php echo esc_html($button_text); ?>
-          </p>
+        <button class="flex flex-row items-center w-fit gap-1 border-b border-black pb-0.5 cursor-pointer text-lg group">
+          <?php echo esc_html($button_text); ?>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            fill="#000000"
+            viewBox="0 0 256 256"
+            class="group-hover:ml-3 transition-all duration-300 ease-in-out ml-1"
+          >
+            <path
+              d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
+            ></path>
+          </svg>
+        </button>
       </a>
     </div>
 

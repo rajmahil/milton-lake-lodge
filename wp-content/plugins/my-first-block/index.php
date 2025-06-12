@@ -55,3 +55,65 @@ add_action('wp_enqueue_scripts', function () {
         'posts' => $formatted_posts,
     ]);
 });
+
+add_action('admin_post_nopriv_my_custom_form_submit', 'handle_custom_form_email');
+add_action('admin_post_my_custom_form_submit', 'handle_custom_form_email');
+
+function handle_custom_form_email()
+{
+    error_log('Handler fired');
+
+    // Skip internal keys like action, _wpnonce, etc.
+    $skip_keys = ['action', '_wpnonce', '_wp_http_referer'];
+
+    $sanitized_data = [];
+
+    foreach ($_POST as $key => $value) {
+        if (in_array($key, $skip_keys)) {
+            continue;
+        }
+
+        // Basic sanitization
+        if (is_array($value)) {
+            $sanitized_value = array_map('sanitize_text_field', $value);
+        } elseif (filter_var($value, FILTER_VALIDATE_EMAIL)) {
+            $sanitized_value = sanitize_email($value);
+        } elseif (preg_match('/message|comments?|notes?/i', $key)) {
+            $sanitized_value = sanitize_textarea_field($value);
+        } else {
+            $sanitized_value = sanitize_text_field($value);
+        }
+
+        $sanitized_data[$key] = $sanitized_value;
+    }
+
+    // Build HTML body
+    $body = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>';
+    $body .= '<h2 style="color:#1f2937;">New Form Submission</h2>';
+    $body .= '<table cellspacing="0" cellpadding="8" style="border-collapse:collapse;width:100%;max-width:600px;font-family:sans-serif;">';
+
+    foreach ($sanitized_data as $key => $value) {
+        $display_key = ucwords(str_replace('_', ' ', $key));
+        $display_value = is_array($value) ? implode(', ', $value) : nl2br(esc_html($value));
+
+        $body .= "<tr>
+                    <td style='background:#f9f9f9;border:1px solid #e0e0e0;font-weight:bold;width:35%;'>$display_key</td>
+                    <td style='border:1px solid #e0e0e0;'>$display_value</td>
+                  </tr>";
+    }
+
+    $body .= '</table>';
+    $body .= '</body></html>';
+
+    // Email config
+    $to = 'raj@306technologies.com';
+    $subject = 'New Form Submission';
+    $headers = ['Content-Type: text/html; charset=UTF-8'];
+
+    error_log('Sanitized submission: ' . print_r($sanitized_data, true));
+
+    wp_mail($to, $subject, $body, $headers);
+
+    wp_redirect(home_url('/thank-you'));
+    exit();
+}
