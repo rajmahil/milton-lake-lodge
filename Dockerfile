@@ -15,5 +15,9 @@ RUN npm ci && npm run build
 WORKDIR /var/www/html/wp-content/themes/theme-tailwind
 RUN npm ci && npm run build
 
+
+# Add custom PHP upload limits
+COPY uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+
 # FINAL — reset WORKDIR so entrypoint works!
 WORKDIR /var/www/html

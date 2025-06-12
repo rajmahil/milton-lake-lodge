@@ -11,61 +11,61 @@ $totalSlides = count($reviews);
 <section
   class="plugin-custom-block not-prose section-padding w-full"
   x-data="{
-    currentIndex: 0,
-    totalSlides: <?php echo $totalSlides; ?>,
-    startX: 0,
-    dragging: false,
-
-    goToSlide(index) {
-      if (index < 0) index = 0;
-      if (index >= this.totalSlides) index = this.totalSlides - 1;
-      this.currentIndex = index;
-      this.$nextTick(() => this.triggerAnimations());
-    },
-
-    triggerAnimations() {
-      const leftImage = this.$refs[`left-${this.currentIndex}`];
-      const rightImage = this.$refs[`right-${this.currentIndex}`];
-      if (leftImage) {
-        leftImage.classList.remove('translate-x-0', 'translate-y-2', 'scale-90', 'rotate-0');
-        leftImage.classList.add('animate-slide-center-left');
+      currentIndex: 0,
+      totalSlides: <?php echo $totalSlides; ?>,
+      startX: 0,
+      dragging: false,
+  
+      goToSlide(index) {
+          if (index < 0) index = 0;
+          if (index >= this.totalSlides) index = this.totalSlides - 1;
+          this.currentIndex = index;
+          this.$nextTick(() => this.triggerAnimations());
+      },
+  
+      triggerAnimations() {
+          const leftImage = this.$refs[`left-${this.currentIndex}`];
+          const rightImage = this.$refs[`right-${this.currentIndex}`];
+          if (leftImage) {
+              leftImage.classList.remove('translate-x-0', 'translate-y-2', 'scale-90', 'rotate-0');
+              leftImage.classList.add('animate-slide-center-left');
+          }
+          if (rightImage) {
+              rightImage.classList.remove('translate-x-0', 'translate-y-2', 'scale-90', 'rotate-0');
+              rightImage.classList.add('animate-slide-center-right');
+          }
+      },
+  
+      onDragStart(event) {
+          this.dragging = true;
+          this.startX = event.type.includes('touch') ? event.touches[0].clientX : event.clientX;
+      },
+  
+      onDragMove(event) {
+          if (!this.dragging) return;
+          // Optional: you can implement dragging feedback here if needed
+      },
+  
+      onDragEnd(event) {
+          if (!this.dragging) return;
+          this.dragging = false;
+  
+          let endX = event.type.includes('touch') ? (event.changedTouches[0]?.clientX ?? this.startX) : event.clientX;
+          let deltaX = endX - this.startX;
+          let threshold = 50; // px threshold to change slide
+  
+          if (deltaX < -threshold && this.currentIndex < this.totalSlides - 1) {
+              this.goToSlide(this.currentIndex + 1);
+          } else if (deltaX > threshold && this.currentIndex > 0) {
+              this.goToSlide(this.currentIndex - 1);
+          } else {
+              this.goToSlide(this.currentIndex); // snap back if no slide change
+          }
+      },
+  
+      init() {
+          this.$nextTick(() => this.triggerAnimations());
       }
-      if (rightImage) {
-        rightImage.classList.remove('translate-x-0', 'translate-y-2', 'scale-90', 'rotate-0');
-        rightImage.classList.add('animate-slide-center-right');
-      }
-    },
-
-    onDragStart(event) {
-      this.dragging = true;
-      this.startX = event.type.includes('touch') ? event.touches[0].clientX : event.clientX;
-    },
-
-    onDragMove(event) {
-      if (!this.dragging) return;
-      // Optional: you can implement dragging feedback here if needed
-    },
-
-    onDragEnd(event) {
-      if (!this.dragging) return;
-      this.dragging = false;
-
-      let endX = event.type.includes('touch') ? (event.changedTouches[0]?.clientX ?? this.startX) : event.clientX;
-      let deltaX = endX - this.startX;
-      let threshold = 50; // px threshold to change slide
-
-      if (deltaX < -threshold && this.currentIndex < this.totalSlides - 1) {
-        this.goToSlide(this.currentIndex + 1);
-      } else if (deltaX > threshold && this.currentIndex > 0) {
-        this.goToSlide(this.currentIndex - 1);
-      } else {
-        this.goToSlide(this.currentIndex); // snap back if no slide change
-      }
-    },
-
-    init() {
-      this.$nextTick(() => this.triggerAnimations());
-    }
   }"
 >
   <div class="max-w-container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center justify-center gap-10">
@@ -178,11 +178,11 @@ $totalSlides = count($reviews);
       </div>
 
       <div class='flex flex-col gap-6'>
-      <?php if ($topHeading): ?>
+        <?php if ($topHeading): ?>
         <h2 class="heading-two text-center">
           <?php echo esc_html($topHeading); ?>
         </h2>
-      <?php endif; ?>
+        <?php endif; ?>
 
       <div
         class="w-full overflow-hidden !cursor-grab "
@@ -207,24 +207,24 @@ $totalSlides = count($reviews);
                 <?php
                   $stars = intval($review['stars'] ?? 0);
                   for ($s = 1; $s <= 5; $s++): ?>
-                  <svg
-                    class="w-6 h-6 <?php echo $s <= $stars ? 'text-[#EDBB4F]' : 'text-gray-300'; ?>"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.955a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.955c.3.921-.755 1.688-1.538 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.783.57-1.838-.197-1.538-1.118l1.287-3.955a1 1 0 00-.364-1.118L2.067 9.382c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.955z"
-                    />
-                  </svg>
+                <svg
+                  class="w-6 h-6 <?php echo $s <= $stars ? 'text-[#EDBB4F]' : 'text-gray-300'; ?>"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.955a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.955c.3.921-.755 1.688-1.538 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.783.57-1.838-.197-1.538-1.118l1.287-3.955a1 1 0 00-.364-1.118L2.067 9.382c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.955z"
+                  />
+                </svg>
                 <?php endfor; ?>
               </div>
               <p class="text-sm text-gray-600 font-medium capitalize">
                 <?php echo esc_html($review['name'] ?? ''); ?>
               </p>
             </div>
-          <?php endforeach; ?>
+            <?php endforeach; ?>
+          </div>
         </div>
-      </div>
       </div>
 
       <div class="flex flex-col items-center gap-2 mt-6">
