@@ -78,6 +78,12 @@ define('WP_REDIS_DATABASE', 0); // 0-15
 // reasonable connection and read+write timeouts
 define('WP_REDIS_TIMEOUT', 1);
 define('WP_REDIS_READ_TIMEOUT', 1);
+
+define('WP_REDIS_SSL_CONTEXT', [
+    'verify_peer' => false,
+    'verify_peer_name' => false,
+]);
+
 /**
  * WordPress database table prefix.
  *
