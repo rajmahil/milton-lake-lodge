@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Redis Configurator
  * Description: Provides an admin interface to configure Redis settings, writes them to a drop-in config file, and generates a proper object-cache.php stub.
- * Version: 1.1
+ * Version: 1.2
  * Author: ChatGPT
  */
 
@@ -20,15 +20,14 @@ define( 'REDIS_CONFIG_FILE', REDIS_CONFIG_DIR . '/redis-config.php' );
 define( 'REDIS_DROPIN_FILE', WP_CONTENT_DIR . '/object-cache.php' );
 
 // Activation: ensure config dir and write both files
-register_activation_hook( __FILE__, function() {
+egister_activation_hook( __FILE__, function() {
     if ( ! file_exists( REDIS_CONFIG_DIR ) ) {
         wp_mkdir_p( REDIS_CONFIG_DIR );
     }
     Redis_Configurator::write_config();
 });
 
-// Init plugin
-add_action( 'plugins_loaded', [ 'Redis_Configurator', 'init' ] );
+// Init plugin\add_action( 'plugins_loaded', [ 'Redis_Configurator', 'init' ] );
 
 class Redis_Configurator {
     public static function init() {
@@ -56,12 +55,12 @@ class Redis_Configurator {
         add_settings_section( 'redis_main', 'Connection Settings', '__return_false', 'redis-configurator' );
         $fields = [
             'scheme'   => 'tcp',
-            'host'     => '127.0.0.1',
-            'port'     => '6379',
+            'host'     => '',
+            'port'     => '',
             'username' => '',
             'password' => '',
-            'prefix'   => 'site_',
-            'database' => '0',
+            'prefix'   => '',
+            'database' => '',
         ];
         foreach ( $fields as $key => $default ) {
             add_settings_field(
@@ -70,18 +69,19 @@ class Redis_Configurator {
                 [ __CLASS__, 'field_callback' ],
                 'redis-configurator',
                 'redis_main',
-                [ 'id' => $key, 'default' => $default ]
+                [ 'id' => $key ]
             );
         }
     }
 
     public static function field_callback( $args ) {
         $options = get_option( 'redis_settings', [] );
-        $value   = isset( $options[ $args['id'] ] ) ? esc_attr( $options[ $args['id'] ] ) : $args['default'];
+        $value   = isset( $options[ $args['id'] ] ) ? esc_attr( $options[ $args['id'] ] ) : '';
         printf(
-            '<input type="text" name="redis_settings[%1$s]" value="%2$s" class="regular-text" />',
+            '<input type="text" name="redis_settings[%1$s]" value="%2$s" class="regular-text" placeholder="%3$s" />',
             esc_attr( $args['id'] ),
-            $value
+            $value,
+            esc_attr( strtoupper( $args['id'] ) )
         );
     }
 
@@ -100,36 +100,51 @@ class Redis_Configurator {
         <?php
     }
 
+    // Fetch either user-saved options or environment vars
+    protected static function get_config_value( $key, $default = '' ) {
+        $opts = get_option( 'redis_settings', [] );
+        if ( ! empty( $opts[ $key ] ) ) {
+            return $opts[ $key ];
+        }
+        // Fallback to environment var
+        $env_key = 'WP_REDIS_' . strtoupper( $key );
+        $env_val = getenv( $env_key ) ?: getenv( 'REDIS_' . strtoupper( $key ) );
+        return $env_val !== false ? $env_val : $default;
+    }
+
     public static function write_config() {
         // Ensure config directory
         if ( ! file_exists( REDIS_CONFIG_DIR ) ) {
             wp_mkdir_p( REDIS_CONFIG_DIR );
         }
 
-        $opts = get_option( 'redis_settings', [] );
-        // Build define lines
+        // Keys to define
+        $keys = [ 'scheme' => 'tcp', 'host' => '', 'port' => '', 'username' => '', 'password' => '', 'prefix' => '', 'database' => '' ];
         $defines = [];
-        foreach ( $opts as $key => $val ) {
-            $constant = 'WP_REDIS_' . strtoupper( $key );
-            $value    = var_export( $val, true );
-            $defines[] = "define('{$constant}', {$value});";
+        foreach ( $keys as $key => $default ) {
+            $val = self::get_config_value( $key, $default );
+            $const = 'WP_REDIS_' . strtoupper( $key );
+            $defines[] = sprintf("define('%s', %s);", $const, var_export( $val, true ) );
         }
-        // Always enable cache
+        // Additional constants
         $defines[] = "define('WP_CACHE', true);";
+        $defines[] = "define('WP_REDIS_TIMEOUT', 1);";
+        $defines[] = "define('WP_REDIS_READ_TIMEOUT', 1);";
+        $defines[] = "define('WP_REDIS_SSL_CONTEXT', ['verify_peer'=>false,'verify_peer_name'=>false]);";
 
-        // Write the config file
+        // Write config file
         $content  = "<?php\n// Auto-generated Redis config drop-in\n" . implode( "\n", $defines ) . "\n";
         file_put_contents( REDIS_CONFIG_FILE, $content );
 
         // Generate object-cache.php stub
         $dropin = "<?php\n";
-        $dropin .= "// Auto-generated stub to include Redis config and Redis Object Cache drop-in\n";
+        $dropin .= "// Auto-generated stub to include Redis config and real drop-in\n";
         $dropin .= "if ( file_exists( __DIR__ . '/redis-cache-config/redis-config.php' ) ) {\n";
-        $dropin .= "    require_once __DIR__ . '/redis-cache-config/redis-config.php';\n";
+        $dropin .= "  require_once __DIR__ . '/redis-cache-config/redis-config.php';\n";
         $dropin .= "}\n";
-        // include real object-cache.php from the Redis plugin
+        $dropin .= "// Load Redis Object Cache drop-in from plugin\n";
         $dropin .= "if ( file_exists( WP_PLUGIN_DIR . '/redis-cache/includes/object-cache.php' ) ) {\n";
-        $dropin .= "    require_once WP_PLUGIN_DIR . '/redis-cache/includes/object-cache.php';\n";
+        $dropin .= "  require_once WP_PLUGIN_DIR . '/redis-cache/includes/object-cache.php';\n";
         $dropin .= "}\n";
         file_put_contents( REDIS_DROPIN_FILE, $dropin );
     }
