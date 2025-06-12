@@ -23,6 +23,7 @@
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 // ** Database settings from environment ** //
+define( 'WPCACHEHOME', '/Users/rajmahil/Local Sites/wp-test/app/public/wp-content/plugins/wp-super-cache/' );
 define('DB_NAME', getenv('WORDPRESS_DB_NAME') ?: 'local');
 define('DB_USER', getenv('WORDPRESS_DB_USER') ?: 'root');
 define('DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD') ?: 'root');
@@ -64,7 +65,7 @@ define('MINIO_PUBLIC_URL', getenv('MINIO_PUBLIC_URL') ?: 'https://bucket-product
 // adjust Redis host and port if necessary
 
 define('WP_REDIS_URL', 'redis://default:LctkHNPFReQWgebFsfiuieehYcqZvtZl@crossover.proxy.rlwy.net:40516');
-define('WP_REDIS_CLIENT', 'phpredis');
+define('WP_REDIS_CLIENT', 'predis');
 define('WP_CACHE', true); // Always needed for caching
 
 /**
