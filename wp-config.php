@@ -38,6 +38,8 @@ define('WP_REDIS_SSL_CONTEXT', [
     'verify_peer_name' => false,
 ]);
 
+error_log('[PROD] REDIS_HOST constant is: ' . (defined('WP_REDIS_HOST') ? WP_REDIS_HOST : 'NOT DEFINED'));
+
 define('WPCACHEHOME', '/Users/rajmahil/Local Sites/wp-test/app/public/wp-content/plugins/wp-super-cache/');
 define('DB_NAME', getenv('WORDPRESS_DB_NAME') ?: 'local');
 define('DB_USER', getenv('WORDPRESS_DB_USER') ?: 'root');
