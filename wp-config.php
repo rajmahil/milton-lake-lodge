@@ -22,7 +22,6 @@
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('WP_CACHE', true);
 define('WP_REDIS_SCHEME', 'tcp');
 define('WP_REDIS_HOST', 'crossover.proxy.rlwy.net');
 define('WP_REDIS_PORT', 40516);

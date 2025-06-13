@@ -50,10 +50,10 @@ add_action('wp_enqueue_scripts', function () {
 add_action('admin_post_nopriv_my_custom_form_submit', 'handle_custom_form_email');
 add_action('admin_post_my_custom_form_submit', 'handle_custom_form_email');
 
-
 function get_exchange_rates($base = 'USD')
 {
     // Replace this with your actual API key
+
     $api_key = defined('EXCHANGE_RATE_API_KEY') ? EXCHANGE_RATE_API_KEY : '';
     if (!$api_key) {
         error_log('ExchangeRate API key is missing.');
@@ -79,7 +79,6 @@ function get_exchange_rates($base = 'USD')
     error_log('Invalid exchange rate data: ' . $body);
     return false;
 }
-
 
 function handle_custom_form_email()
 {
