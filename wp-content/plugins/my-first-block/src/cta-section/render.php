@@ -49,24 +49,24 @@ if ($image2) {
 
 
 <section class="plugin-custom-block section-padding w-full ">
-  <div class="relative max-w-container  grid grid-cols-5 !items-end  gap-5 text-white  w-full ">
-    <div
-      class="absolute bottom-0 left-0 bg-brand-green w-full h-[80%] rounded-2xl z-[0] bg-repeat  bg-size-[400px] bg-blend-hard-light"
+  <div class="relative max-w-container bg-brand-green bg-blend-hard-light grid grid-cols-5 !items-center  gap-5 text-white  w-full rounded-2xl z-[0] bg-repeat" style="background-image: url('<?php echo esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');">
+    <!-- <div
+      class="absolute bottom-0 left-0 bg-brand-green w-full h-[100%] rounded-2xl z-[0] bg-repeat  bg-size-[400px] bg-blend-hard-light"
       style="background-image: url('<?php echo esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
-    ></div>
-    <div class="flex flex-col gap-4 w-full relative z-[1] items-start justify-center section-padding col-span-2  ">
-      <h2 class="heading-two text-left text-white">
-        <?php echo esc_html($heading); ?>
+    ></div> -->
+    <div class="flex flex-col gap-4 w-full relative z-[1] items-start justify-center section-padding col-span-5 900:col-span-2">
+      <h2 class="heading-two text-center 900:text-left text-white ">
+        <?php echo esc_html($heading); ?>1
       </h2>
-      <a href="<?php echo esc_url($button_url); ?>">
-        <button class="btn btn-outline btn-xl">
+      <a href="<?php echo esc_url($button_url); ?>" class="mx-auto 900:mx-0">
+        <button class="btn btn-outline btn-xl ">
           <?php echo esc_html($button_text); ?>
         </button>
       </a>
     </div>
 
     <?php if ($image1_url || $image2_url): ?>
-    <div class="flex justify-center items-center relative col-span-3">
+    <div class="flex justify-center items-center relative col-span-5 900:col-span-3 ">
       <?php if ($image1_url): ?>
       <div class="max-w-[400px] w-full rotate-5 relative left-10 ">
         <?php

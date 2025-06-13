@@ -1,24 +1,24 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 
 const Accordion = ( { heading, subheading, items = [] } ) => {
 	const [ activeAccordion, setActiveAccordion ] = useState( null );
-	const contentRefs = useRef( {} ); // store refs to content divs
 
 	const toggleAccordion = ( id ) => {
 		setActiveAccordion( ( prev ) => ( prev === id ? null : id ) );
 	};
 
 	return (
-		<section className="plugin-custom-block  not-prose section-padding w-full">
-			<div className="max-w-container mx-auto !grid lg:!grid-cols-2 gap-10 items-start">
-				<div className="flex flex-col !gap-5">
+		<section className="plugin-custom-block not-prose section-padding w-full">
+			<div className="max-w-container mx-auto grid lg:grid-cols-2 gap-8 items-start">
+				<div className="flex flex-col gap-2">
 					{ heading && (
-						<h2 className="heading-two text-left text-brand-green-dark">
+						<h2 className="!my-0 heading-two text-left">
 							{ heading }
 						</h2>
 					) }
+
 					{ subheading && (
-						<p className="!text-lg text-left max-w-2xl !mt-0 !pt-0">
+						<p className="!my-0 text-lg text-left max-w-2xl">
 							{ subheading }
 						</p>
 					) }
@@ -32,48 +32,54 @@ const Accordion = ( { heading, subheading, items = [] } ) => {
 						return (
 							<div
 								key={ id }
-								className="!cursor-pointer group !bg-white rounded-md !border !border-brand-grey px-4"
+								className={ `group bg-white rounded-md border border-brand-grey p-6 transition-all duration-200 ease-in-out !cursor-pointer w-full` }
 								onClick={ () => toggleAccordion( id ) }
 							>
 								<button
 									type="button"
-									className="w-full text-left flex items-center justify-between text-xl font-medium select-none group-hover:cursor-pointer"
+									className="!w-full text-left text-xl font-medium select-none  !cursor-pointer"
 								>
-									<p className="!text-lg font-normal">
-										{ item.title }
-									</p>
-									<svg
-										className={ `w-5 h-5 transition-transform duration-250 ${
-											isActive ? 'rotate-45' : ''
-										}` }
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									>
-										<line x1="12" y1="5" x2="12" y2="19" />
-										<line x1="5" y1="12" x2="19" y2="12" />
-									</svg>
+									<div className="!flex !flex-row !w-full !items-center !justify-between !cursor-pointer">
+										<h3 class="!my-0 text-lg !cursor-pointer font-normal !normal-case">
+											{ item.title }
+										</h3>
+										<svg
+											className={ `w-5 h-5 transition-transform duration-300 ease-out flex-shrink-0 ${
+												isActive ? 'rotate-45' : ''
+											}` }
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											strokeWidth="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										>
+											<line
+												x1="12"
+												y1="5"
+												x2="12"
+												y2="19"
+											/>
+											<line
+												x1="5"
+												y1="12"
+												x2="19"
+												y2="12"
+											/>
+										</svg>
+									</div>
 								</button>
 
 								<div
-									ref={ ( el ) =>
-										( contentRefs.current[ id ] = el )
-									}
-									style={ {
-										maxHeight: isActive
-											? contentRefs.current[ id ]
-													?.scrollHeight + 'px'
-											: '0px',
-										overflow: 'hidden',
-										transition: 'max-height 0.25s ease',
-									} }
+									className={ `overflow-hidden transition-all duration-300 ease-in-out ${
+										isActive
+											? 'max-h-96 opacity-100'
+											: 'max-h-0 opacity-0'
+									}` }
 								>
-									<p className="text-sm text-muted-foreground !pt-0 !mt-0">
+									<div className="pt-4 text-base text-neutral-500 cursor-default">
 										{ item.text }
-									</p>
+									</div>
 								</div>
 							</div>
 						);

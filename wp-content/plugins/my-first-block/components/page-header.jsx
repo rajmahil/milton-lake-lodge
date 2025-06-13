@@ -6,7 +6,7 @@ export default function PageHeader( {
 	return (
 		<section class="!plugin-custom-block">
 			<section
-				className="relative w-full h-[350px] md:h-[500px] lg:h-[600px] flex items-center not-prose justify-center bg-cover bg-center"
+				className="relative  !h-[350px] md:!h-[500px] lg:!h-[600px] !flex items-center not-prose justify-center !bg-cover !bg-center"
 				style={ {
 					backgroundImage: `url(${ image.url })`,
 				} }
