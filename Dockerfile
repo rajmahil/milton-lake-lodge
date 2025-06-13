@@ -15,5 +15,9 @@ RUN npm ci && npm run build
 WORKDIR /var/www/html/wp-content/themes/theme-tailwind
 RUN npm ci && npm run build
 
+
+RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R 755 /var/www/html
+
 # FINAL — reset WORKDIR so entrypoint works!
 WORKDIR /var/www/html
