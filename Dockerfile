@@ -6,21 +6,15 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. Copy the core & wp-content in one go, already owned by www-data
+# 2. Seed in WordPress core & your custom content (owned by www-data)
 COPY --chown=www-data:www-data \
     --from=wordpress:apache /usr/src/wordpress/ /var/www/html/
-
 COPY --chown=www-data:www-data \
     wp-content/ /var/www/html/wp-content/
 
 
 
-RUN chown -R www-data:www-data /var/www/html/wp-content \
-    && chmod -R ug+rwX /var/www/html/wp-content
-
-
-
-# 4. Build your plugin
+# 4. Build your custom plugin
 WORKDIR /var/www/html/wp-content/plugins/my-first-block
 RUN npm ci && npm run build
 
@@ -28,6 +22,9 @@ RUN npm ci && npm run build
 WORKDIR /var/www/html/wp-content/themes/theme-tailwind
 RUN npm ci && npm run build
 
+# 6. Now fix ownership & permissions on everything under wp-content
+RUN chown -R www-data:www-data /var/www/html/wp-content \
+    && chmod -R ug+rwX /var/www/html/wp-content
 
-
+# 7. Reset back to webroot for the official entrypoint
 WORKDIR /var/www/html
