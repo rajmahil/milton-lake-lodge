@@ -2,8 +2,11 @@ FROM wordpress:php8.1-apache
 
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get update && apt-get install -y nodejs \
+    && apt-get update \
+    && apt-get install -y nodejs gettext-base \
     && rm -rf /var/lib/apt/lists/*
+
+
 
 # Copy and build your plugins and theme
 COPY wp-content/ /var/www/html/wp-content/
