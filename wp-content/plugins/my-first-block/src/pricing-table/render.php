@@ -1,13 +1,13 @@
 <?php
 /**
  * Pricing Table Block - Server-side render using Alpine.js for tabs
- * Fixed version with proper currency validation and conversion
+ * Fixed version with USD as default currency and proper CAD conversion
  */
 
 $heading = $attributes['heading'] ?? 'Milton Lake Lodge Mini-Lodge & Outpost Combo Trips';
 $tabs = $attributes['tabs'] ?? [];
 $rates = get_exchange_rates('USD');
-$exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.25;
+$exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.37;
 ?>
 
 <section
@@ -16,7 +16,7 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.25;
 >
   <div class="max-w-container mx-auto flex flex-col gap-8">
 
-    <h2 class="text-center heading-two font-extrabold uppercase text-brand-green">
+    <h2 class="text-center heading-two">
       <?php echo esc_html($heading); ?>
     </h2>
 
@@ -24,18 +24,18 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.25;
     <div
       x-data="{
           activeTab: 1,
-          currency: 'CAD',
+          currency: 'USD',
           exchangeRate: <?php echo $exchange_rate; ?>,
           setTab(tabIndex) {
               this.activeTab = tabIndex;
           },
-          convertPrice(price, fromCAD = true) {
+          convertPrice(price, fromUSD = true) {
               if (!price || isNaN(parseFloat(price))) return price;
               const numPrice = parseFloat(price);
-              if (this.currency === 'CAD') {
-                  return fromCAD ? numPrice : (numPrice * this.exchangeRate);
+              if (this.currency === 'USD') {
+                  return fromUSD ? numPrice : (numPrice / this.exchangeRate);
               } else {
-                  return fromCAD ? (numPrice / this.exchangeRate) : numPrice;
+                  return fromUSD ? (numPrice * this.exchangeRate) : numPrice;
               }
           },
           formatPrice(price, priceType) {
@@ -68,7 +68,7 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.25;
         </div>
       </div>
 
-      <div class="relative overflow-hidden h-auto max-w-5xl w-full mx-auto">
+      <div class="relative overflow-hidden h-auto  w-full mx-auto">
         <?php foreach ($tabs as $index => $tab): ?>
         <div
           x-show="activeTab === <?php echo $index + 1; ?>"

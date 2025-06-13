@@ -44,8 +44,8 @@ $content_order_class = $inverted ? 'order-first' : 'order-last';
 ?>
 
 <section class="plugin-custom-block not-prose section-padding w-full">
-  <div class="relative max-w-container mx-auto w-full grid grid-cols-5 gap-8 items-center">
-    <div class="<?php echo esc_attr($content_order_class); ?> flex flex-col gap-4 w-full col-span-2 max-w-[600px] mx-auto">
+  <div class="relative max-w-container mx-auto w-full flex flex-col gap-14 sm:gap-20 900:!grid 900:!grid-cols-5 900:!gap-8 itemts-start 900:items-center">
+    <div class="<?php echo esc_attr($content_order_class); ?> flex flex-col gap-4 w-full 900:col-span-2 900:max-w-[600px] 900:mx-auto">
       <div class='flex flex-col gap-2 w-full'>
         <h2 class="heading-two text-left">
           <?php echo esc_html($heading); ?>

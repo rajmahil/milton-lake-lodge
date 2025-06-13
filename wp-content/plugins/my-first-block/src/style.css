@@ -10,14 +10,11 @@
 @source inline("lg:grid-cols-2");
 @source inline("lg:grid");
 
-
 /* Global wrapper class for all your blocks */
 .my-unique-plugin-wrapper-class {
 	@import "tailwindcss/preflight.css" layer(base);
 	@import "tailwindcss/utilities.css" layer(utilities);
 }
-
-
 
 @theme {
 	--font-heading: "Bebas Neue Pro", sans-serif;
@@ -30,6 +27,8 @@
 	--color-brand-yellow-dark: #edbb4f;
 	--color-brand-grey: #e4e1d6;
 	--color-brand-light-grey: #e8dfd8;
+
+	--breakpoint-900: 900px;
 
 	--color-background: #ffffff;
 	--color-foreground: #0b0f19;
@@ -251,7 +250,7 @@
 	}
 
 	.heading-two {
-		@apply !my-0  !text-7xl;
+		@apply !my-0  !text-4xl sm:!text-5xl md:!text-6xl lg:!text-7xl;
 	}
 
 	.my-calendar-wrapper .fc-theme-standard .fc-scrollgrid {

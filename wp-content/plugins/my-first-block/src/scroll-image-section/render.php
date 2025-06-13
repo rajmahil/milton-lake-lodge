@@ -50,10 +50,10 @@ $imageHeight = $image['height'] ?? '';
 
     <div class="section-padding w-full">
       <div class="relative z-10 text-white flex flex-col items-start justify-start gap-4 !max-w-7xl !w-full mx-auto ">
-        <div class="flex flex-col items-center sm:items-start gap-3">
+        <div class="flex flex-col w-full items-start gap-3">
           <?php if ($heading): ?>
           <h2
-            class="!my-0 !text-3xl md:!text-4xl lg:!text-5xl !font-[600] max-w-none md:max-w-[60%] text-center sm:text-left"
+            class="heading-two max-w-none md:max-w-[60%] text-left"
           >
             <?php echo esc_html($heading); ?>
           </h2>

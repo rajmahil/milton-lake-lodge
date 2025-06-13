@@ -53,7 +53,7 @@ $totalImages = count($images);
     @keyup.left.window="imageGalleryPrev()"
   >
     <?php if (!empty($heading)) : ?>
-    <h2 class="!my-0 heading-two font-semibold text-center">
+    <h2 class="heading-two text-center">
       <?php echo esc_html($heading); ?>
     </h2>
     <?php endif; ?>

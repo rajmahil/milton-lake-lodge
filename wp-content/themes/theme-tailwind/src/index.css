@@ -21,6 +21,8 @@
   --color-brand-grey: #e4e1d6;
   --color-brand-light-grey: #f8f6f4;
 
+  --breakpoint-900: 900px;
+
   --color-background: #ffffff;
   --color-foreground: #0b0f19;
   --color-card: #ffffff;
@@ -180,9 +182,6 @@ h6 {
   background-size: "auto";
   background-blend-mode: color-burn, normal;
 }
-
-
-
 
 @layer components {
   /* First Block Components */

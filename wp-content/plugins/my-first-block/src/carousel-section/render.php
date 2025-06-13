@@ -193,7 +193,7 @@ $total_items = count($items);
         <div class='flex items-end justify-between flex-wrap gap-5 mb-10 sm:mb-16 max-w-container'>
           <div class='flex flex-col gap-2 items-start'>
             <?php if ($heading) : ?>
-            <h2 class="heading-two font-bold !text-left"><?php echo esc_html($heading); ?></h2>
+            <h2 class="heading-two !text-left"><?php echo esc_html($heading); ?></h2>
             <?php endif; ?>
 
             <?php if ($subheading) : ?>

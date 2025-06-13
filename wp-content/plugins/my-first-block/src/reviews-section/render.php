@@ -68,7 +68,7 @@ $totalSlides = count($reviews);
       }
   }"
 >
-  <div class="max-w-container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center justify-center gap-10">
+  <div class="max-w-container mx-auto flex flex-col lg:grid lg:grid-cols-2 items-center justify-center gap-10 sm:gap-20 lg:gap-10">
     <div class="relative min-h-[300px] sm:min-h-[400px] w-full flex items-center justify-center">
       <?php foreach ($reviews as $i => $review): ?>
         <?php

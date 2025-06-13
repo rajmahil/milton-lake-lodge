@@ -11,7 +11,7 @@ $features = $attributes['features'] ?? [];
   <div class="max-w-container mx-auto flex flex-col gap-16">
 
     <?php if ($heading): ?>
-    <h2 class="!my-0 !text-3xl md:!text-4xl lg:!text-5xl !font-[600] text-left lg:max-w-[60%]">
+    <h2 class="heading-two text-left lg:max-w-[60%]">
       <?php echo esc_html($heading); ?>
     </h2>
     <?php endif; ?>

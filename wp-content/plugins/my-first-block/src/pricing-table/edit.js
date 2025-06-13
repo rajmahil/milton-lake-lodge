@@ -254,7 +254,7 @@ export default function Edit( { attributes, setAttributes } ) {
 										<TextControl
 											label={
 												feature.priceType === 'currency'
-													? 'Price (CAD)'
+													? 'Price (USD)'
 													: 'Note'
 											}
 											value={ feature.price }
@@ -295,7 +295,7 @@ export default function Edit( { attributes, setAttributes } ) {
 											help={
 												feature.priceType === 'currency'
 													? __(
-															'Enter numeric value only. Will be converted to USD automatically.',
+															'Enter numeric value only. Will be converted to CAD automatically.',
 															'your-text-domain'
 													  )
 													: __(

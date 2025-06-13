@@ -82,9 +82,9 @@ if ($image) {
     <!-- Content -->
     <div class="relative z-[2] max-w-container overflow-hidden flex flex-col gap-14">
       <!-- Text Content -->
-      <div class="flex flex-row items-end justify-between gap-8 w-full">
+      <div class="w-full  flex flex-row gap-5 flex-wrap items-end justify-between ">
         <div class="flex flex-col gap-0 max-w-[650px] ">
-          <h1 class="!my-0  !text-8xl !font-[700] text-left text-white font-sans drop-shadow-lg !leaind">
+          <h1 class="!my-0 !text-5xl sm:!text-6xl md:!text-7xl lg:!text-8xl !font-[700] text-left text-white font-sans drop-shadow-lg !leaind">
             <?php echo esc_html($heading); ?>
           </h1>
           <?php if ($subheading): ?>
