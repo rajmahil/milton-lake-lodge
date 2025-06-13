@@ -13,8 +13,7 @@ COPY --chown=www-data:www-data \
 COPY --chown=www-data:www-data \
     wp-content/ /var/www/html/wp-content/
 
-# 3. Copy your config
-COPY wp-config.php /var/www/html/wp-config.php
+
 
 # 4. Build your plugin
 WORKDIR /var/www/html/wp-content/plugins/my-first-block
