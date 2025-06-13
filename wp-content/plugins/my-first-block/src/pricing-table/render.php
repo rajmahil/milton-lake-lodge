@@ -7,7 +7,8 @@
 $heading = $attributes['heading'] ?? 'Milton Lake Lodge Mini-Lodge & Outpost Combo Trips';
 $tabs = $attributes['tabs'] ?? [];
 $rates = get_exchange_rates('USD');
-$exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.36;
+
+$exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 2;
 ?>
 
 <section
@@ -21,32 +22,32 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.36;
     </h2>
 
     <?php if (!empty($tabs)): ?>
-      <div
-        x-data="{
-            activeTab: 1,
-            currency: 'USD', 
-            exchangeRate: <?php echo $exchange_rate; ?>,
-            setTab(tabIndex) {
-                this.activeTab = tabIndex;
-            },
-            convertToCAD(price) {
-                if (!price || isNaN(parseFloat(price))) return price;
-                return parseFloat(price) * this.exchangeRate;
-            },
-            formatPrice(price, priceType) {
-                if (priceType !== 'currency') return price;
-                if (!price || isNaN(parseFloat(price))) return 'N/A';
-                
-                const amount = this.currency === 'CAD' ? 
-                    this.convertToCAD(price) : 
-                    parseFloat(price);
-                    
-                return new Intl.NumberFormat('en-US', {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 2
-                }).format(amount);
-            }
-        }"
+    <div
+      x-data="{
+          activeTab: 1,
+          currency: 'USD',
+          exchangeRate: <?php echo $exchange_rate; ?>,
+          setTab(tabIndex) {
+              this.activeTab = tabIndex;
+          },
+          convertToCAD(price) {
+              if (!price || isNaN(parseFloat(price))) return price;
+              return parseFloat(price) * this.exchangeRate;
+          },
+          formatPrice(price, priceType) {
+              if (priceType !== 'currency') return price;
+              if (!price || isNaN(parseFloat(price))) return 'N/A';
+      
+              const amount = this.currency === 'CAD' ?
+                  this.convertToCAD(price) :
+                  parseFloat(price);
+      
+              return new Intl.NumberFormat('en-US', {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2
+              }).format(amount);
+          }
+      }"
       class="flex flex-col gap-8"
     >
 
