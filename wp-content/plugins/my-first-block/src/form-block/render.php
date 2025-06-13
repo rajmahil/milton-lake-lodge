@@ -28,6 +28,7 @@ $fields = $attributes['fields'] ?? [];
           name="action"
           value="my_custom_form_submit"
         >
+        <input type="hidden" name="form_template" value="main_form">
 
         <?php foreach ( $fields as $index => $field ) : ?>
         <?php

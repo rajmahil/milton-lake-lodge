@@ -322,6 +322,7 @@
             name="action"
             value="my_custom_form_submit"
           >
+          <input type="hidden" name="form_template" value="newsletter">
           <input
             class="form-input   "
             placeholder="youremail@gmail.com"

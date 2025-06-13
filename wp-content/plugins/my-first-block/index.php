@@ -84,8 +84,11 @@ function handle_custom_form_email()
 {
     error_log('Form handler triggered');
 
-    $skip = ['action', '_wpnonce', '_wp_http_referer'];
+    $skip = ['action', '_wpnonce', '_wp_http_referer', 'form_template'];
     $data = [];
+    $form_template = isset($_POST['form_template']) ? sanitize_text_field($_POST['form_template']) : 'default';
+    error_log('Form template used: ' . $form_template);
+
 
     foreach ($_POST as $key => $value) {
         if (in_array($key, $skip)) {
@@ -109,16 +112,44 @@ function handle_custom_form_email()
         $val = is_array($value) ? implode(', ', $value) : nl2br(esc_html($value));
 
         $rows .= "<div style=\"display: flex; margin-bottom: 8px; column-gap: 12px;\">
-        <div style=\"font-weight: bold; color: #374151; white-space: nowrap;\">$label:</div>
-        <div style=\"color: #111827;\">$val</div>
-    </div>";
+            <div style=\"font-weight: bold; color: #374151; white-space: nowrap;\">$label:</div>
+            <div style=\"color: #111827;\">$val</div>
+        </div>";
     }
 
-    $template_path = plugin_dir_path(__FILE__) . 'components/email-templates/email-template.php';
-    $template_html = file_get_contents($template_path);
-    $template_html = str_replace('{{ dynamic_rows }}', $rows, $template_html);
+    // Determine template file path based on form_template value
+    $base_path = plugin_dir_path(__FILE__) . 'components/email-templates/';
+    $template_file = $base_path . $form_template . '-template.php';
 
-    wp_mail('raj@306technologies.com', 'New Form Submission', $template_html, ['Content-Type: text/html; charset=UTF-8']);
+    if (!file_exists($template_file)) {
+        $template_file = $base_path . 'newsletter-template.php';
+    }
+
+    // Load template content
+    $template_html = file_get_contents($template_file);
+
+    // Replace placeholders
+    if ($form_template === 'main_form') {
+        $template_html = str_replace('{{ dynamic_rows }}', $rows, $template_html);
+    }
+
+    $user_email = (isset($data['email']) && is_email($data['email'])) ? $data['email'] : null;
+
+    $recipients = ['ayush@306technologies.com'];
+    if ($user_email) {
+        $recipients[] = $user_email;
+    }
+
+    if ($form_template === 'main_form') {
+        $subject = 'New Form Submission';
+    } else {
+        $subject = 'New Newsletter Subscription';
+    }
+
+    error_log("Form Template: $form_template\nEmail HTML Content:\n" . $template_html);
+
+
+    wp_mail($recipients, $subject, $template_html, ['Content-Type: text/html; charset=UTF-8']);
 
     error_log('Form submitted: ' . print_r($data, true));
     wp_redirect(home_url('/thank-you'));
