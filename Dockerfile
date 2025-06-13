@@ -15,6 +15,11 @@ COPY --chown=www-data:www-data \
 
 
 
+RUN chown -R www-data:www-data /var/www/html/wp-content \
+    && chmod -R ug+rwX /var/www/html/wp-content
+
+
+
 # 4. Build your plugin
 WORKDIR /var/www/html/wp-content/plugins/my-first-block
 RUN npm ci && npm run build
@@ -24,12 +29,5 @@ WORKDIR /var/www/html/wp-content/themes/theme-tailwind
 RUN npm ci && npm run build
 
 
-# === Add Redis object cache drop-in ===
-COPY --chown=www-data:www-data \
-    wp-content/plugins/redis-cache/object-cache.php \
-    /var/www/html/wp-content/object-cache.php
-
-# (Optional) Ensure ownership on all wp-content
-RUN chown -R www-data:www-data /var/www/html/wp-content
 
 WORKDIR /var/www/html
