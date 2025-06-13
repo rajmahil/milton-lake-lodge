@@ -8,6 +8,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 
 # 2. Copy only your themes & plugins
 COPY wp-content/ /var/www/html/wp-content/
+COPY --from=wordpress:php8.1-apache /usr/src/wordpress/ /var/www/html/
 
 # 3. Build your custom plugin
 WORKDIR /var/www/html/wp-content/plugins/my-first-block

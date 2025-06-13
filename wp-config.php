@@ -23,8 +23,8 @@
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 
-if (file_exists(__DIR__ . '/wp-config-docker.php')) {
-    require_once __DIR__ . '/wp-config-docker.php';
+if (file_exists(__DIR__ . '/var/www/html/wp-config-docker.php')) {
+    require_once __DIR__ . '/var/www/html/wp-config-docker.php';
     return; // skip the rest of the stock file
 }
 
