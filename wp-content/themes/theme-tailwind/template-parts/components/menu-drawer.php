@@ -30,52 +30,55 @@ function render_menu_node($node, $depth = 0) {
     $font_weights = ['font-medium', 'font-normal', 'font-light', 'font-extralight'];
     $font_weight = $font_weights[min($depth, count($font_weights) - 1)];
     ?>
-    <li class="w-full">
-        <?php if ($has_children) : ?>
-            <div x-data="{ expanded: false }" class="w-full">
-                <button
-                    @click="expanded = !expanded"
-                    class="flex flex-row gap-0.5 items-center justify-between w-full text-left py-2 transition-all ease-in-out duration-300 hover:text-brand-green-dark"
-                >
-                    <span class="<?php echo $text_size; ?> <?php echo $font_weight; ?>"><?php echo esc_html($node->title); ?></span>
-                    <svg
-                        :class="{ 'rotate-180': expanded }"
-                        class="h-4 w-4 ease-in-out duration-300"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </button>
-                
-                <div
-                    x-show="expanded"
-                    x-collapse
-                    class="ml-<?php echo min($depth + 2, 6); ?> mt-2 space-y-2"
-                >
-                    <ul class="space-y-2 list-none">
-                        <?php foreach ($node->children as $child) : ?>
-                            <?php render_menu_node($child, $depth + 1); ?>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-            </div>
-        <?php else : ?>
-            <a
-                href="<?php echo esc_url($node->url); ?>"
-                @click="slideOverOpen = false"
-                class="block py-2 <?php echo $text_size; ?> <?php echo $font_weight; ?> hover:text-brand-green-dark transition-colors duration-200"
-            >
-                <?php echo esc_html($node->title); ?>
-            </a>
-        <?php endif; ?>
-    </li>
-    <?php
+<li class="w-full">
+  <?php if ($has_children) : ?>
+  <div
+    x-data="{ expanded: false }"
+    class="w-full"
+  >
+    <button
+      @click="expanded = !expanded"
+      class="flex flex-row gap-0.5 items-center justify-between w-full text-left py-2 transition-all ease-in-out duration-300 hover:text-brand-green-dark"
+    >
+      <span class="<?php echo $text_size; ?> <?php echo $font_weight; ?>"><?php echo esc_html($node->title); ?></span>
+      <svg
+        :class="{ 'rotate-180': expanded }"
+        class="h-4 w-4 ease-in-out duration-300"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
+
+    <div
+      x-show="expanded"
+      x-collapse
+      class="ml-<?php echo min($depth + 2, 6); ?> mt-2 space-y-2"
+    >
+      <ul class="space-y-2 list-none">
+        <?php foreach ($node->children as $child) : ?>
+        <?php render_menu_node($child, $depth + 1); ?>
+        <?php endforeach; ?>
+      </ul>
+    </div>
+  </div>
+  <?php else : ?>
+  <a
+    href="<?php echo esc_url($node->url); ?>"
+    @click="slideOverOpen = false"
+    class="block py-2 <?php echo $text_size; ?> <?php echo $font_weight; ?> hover:text-brand-green-dark transition-colors duration-200"
+  >
+    <?php echo esc_html($node->title); ?>
+  </a>
+  <?php endif; ?>
+</li>
+<?php
 }
 ?>
 <div
@@ -160,7 +163,7 @@ function render_menu_node($node, $depth = 0) {
                   <div class="relative flex-1">
                     <ul class="flex flex-col items-start gap-4 list-none">
                       <?php foreach ($tree as $node) : ?>
-                        <?php render_menu_node($node); ?>
+                      <?php render_menu_node($node); ?>
                       <?php endforeach; ?>
                     </ul>
                   </div>
@@ -191,7 +194,7 @@ function render_menu_node($node, $depth = 0) {
                         </button>
                       </a>
                       <?php endif; ?>
-                      
+
                       <a
                         href="<?php echo esc_url($cta_url); ?>"
                         @click="slideOverOpen = false"

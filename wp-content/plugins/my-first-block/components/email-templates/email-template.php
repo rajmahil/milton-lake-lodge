@@ -131,14 +131,6 @@
       href="https://miltonlakelodge.com"
       class="cta-button"
     >Visit Our Website</a>
-
-    <div class="footer">
-      <p>
-        If you wish to unsubscribe from our newsletter and stop receiving emails from us, please click here (<a
-          href="#"
-        >unsubscribe link</a>).
-      </p>
-    </div>
   </div>
 </body>
 
