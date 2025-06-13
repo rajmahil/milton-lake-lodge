@@ -23,11 +23,6 @@
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 
-if (file_exists(__DIR__ . '/var/www/html/wp-config-docker.php')) {
-    require_once __DIR__ . '/var/www/html/wp-config-docker.php';
-    return; // skip the rest of the stock file
-}
-
 define('WP_REDIS_SCHEME', 'tcp');
 define('WP_REDIS_HOST', 'crossover.proxy.rlwy.net');
 define('WP_REDIS_PORT', 40516);
