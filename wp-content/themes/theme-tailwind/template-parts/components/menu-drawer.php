@@ -194,7 +194,6 @@ function render_menu_node($node, $depth = 0) {
                         </button>
                       </a>
                       <?php endif; ?>
-
                       <a
                         href="<?php echo esc_url($cta_url); ?>"
                         @click="slideOverOpen = false"
