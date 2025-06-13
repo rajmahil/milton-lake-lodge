@@ -8,8 +8,6 @@ $heading = $attributes['heading'] ?? 'Milton Lake Lodge Mini-Lodge & Outpost Com
 $tabs = $attributes['tabs'] ?? [];
 $rates = get_exchange_rates('USD');
 
-error_log('Exchange rates fetched: ' . print_r($rates, true));
-
 $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 2;
 ?>
 
