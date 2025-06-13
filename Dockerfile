@@ -19,6 +19,5 @@ RUN npm ci && npm run build
 
 
 
-
 # 6. Reset WORKDIR so the stock entrypoint still works
 WORKDIR /var/www/html
