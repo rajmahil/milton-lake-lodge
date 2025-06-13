@@ -18,5 +18,8 @@ WORKDIR /var/www/html/wp-content/themes/theme-tailwind
 RUN npm ci && npm run build
 
 
+# 4. Overwrite the default wp-config with your Docker-specific config
+COPY wp-config-docker.php /var/www/html/wp-config.php
+
 # 6. Reset WORKDIR so the stock entrypoint still works
 WORKDIR /var/www/html
