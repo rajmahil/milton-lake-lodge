@@ -22,7 +22,7 @@
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-// ** Database settings from environment ** //
+define('WP_CACHE', true);
 define('WP_REDIS_SCHEME', 'tcp');
 define('WP_REDIS_HOST', 'crossover.proxy.rlwy.net');
 define('WP_REDIS_PORT', 40516);
@@ -33,18 +33,20 @@ define('WP_REDIS_PREFIX', 'miltonlake_');
 define('WP_REDIS_DATABASE', 0);
 define('WP_REDIS_TIMEOUT', 1);
 define('WP_REDIS_READ_TIMEOUT', 1);
+
+// SSL Context for Redis
 define('WP_REDIS_SSL_CONTEXT', [
     'verify_peer' => false,
     'verify_peer_name' => false,
 ]);
 
-error_log('[PROD] REDIS_HOST constant is: ' . (defined('WP_REDIS_HOST') ? WP_REDIS_HOST : 'NOT DEFINED 123'));
+// Exchange Rate API
+define('EXCHANGE_RATE_API_KEY', '7128e4810a5d0bca289f546c');
 
 define('WPCACHEHOME', '/Users/rajmahil/Local Sites/wp-test/app/public/wp-content/plugins/wp-super-cache/');
 define('DB_NAME', getenv('WORDPRESS_DB_NAME') ?: 'local');
 define('DB_USER', getenv('WORDPRESS_DB_USER') ?: 'root');
 define('DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD') ?: 'root');
-define('EXCHANGE_RATE_API_KEY', '7128e4810a5d0bca289f546c');
 
 // The host needs the “host:port” form, e.g. “containers-123.railway.internal:3306”
 define('DB_HOST', getenv('WORDPRESS_DB_HOST') ?: 'localhost');
