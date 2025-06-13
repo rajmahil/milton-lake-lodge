@@ -18,10 +18,5 @@ WORKDIR /var/www/html/wp-content/themes/theme-tailwind
 RUN npm ci && npm run build
 
 
-# Ensure wp-content is fully writable by Apache
-RUN chown -R www-data:www-data /var/www/html/wp-content \
-    && find /var/www/html/wp-content -type d -exec chmod 775 {} \; \
-    && find /var/www/html/wp-content -type f -exec chmod 664 {} \;
-
 # 6. Reset WORKDIR so the stock entrypoint still works
 WORKDIR /var/www/html
