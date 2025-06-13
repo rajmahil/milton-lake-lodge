@@ -36,15 +36,15 @@ $total_items = count($items);
                   this.updateSlidesPerView();
                   this.updateContainerWidth();
               });
-              
+      
               // Bind drag handlers
               this.boundHandleDragMove = this.handleDragMove.bind(this);
               this.boundHandleDragEnd = this.handleDragEnd.bind(this);
-              
+      
               // Get initial container width
               this.updateContainerWidth();
           },
-          
+      
           updateContainerWidth() {
               this.containerWidth = this.$refs.container.clientWidth;
           },
@@ -97,55 +97,55 @@ $total_items = count($items);
           get maxDots() {
               return Math.max(1, this.totalSlides - this.slidesPerView + 1);
           },
-          
+      
           // Improved drag functionality
           handleDragStart(event) {
               this.isDragging = true;
               this.startX = event.type.includes('touch') ? event.touches[0].clientX : event.clientX;
               this.currentX = this.startX;
               this.dragOffset = 0;
-              
+      
               // Update container width for accurate calculations
               this.updateContainerWidth();
-              
+      
               // Store the initial transform position
               this.initialTransform = this.currentIndex * (this.slideWidthPercentage + this.gapPercentage);
-              
+      
               // Attach window event listeners
               window.addEventListener('mousemove', this.boundHandleDragMove, { passive: false });
               window.addEventListener('touchmove', this.boundHandleDragMove, { passive: false });
               window.addEventListener('mouseup', this.boundHandleDragEnd);
               window.addEventListener('touchend', this.boundHandleDragEnd);
-              
+      
               // Prevent text selection during drag
               event.preventDefault();
           },
-          
+      
           handleDragMove(event) {
               if (!this.isDragging) return;
-              
+      
               // Prevent scrolling on touch devices
               event.preventDefault();
-              
+      
               this.currentX = event.type.includes('touch') ? event.touches[0].clientX : event.clientX;
               this.dragOffset = this.currentX - this.startX;
           },
-          
+      
           handleDragEnd() {
               if (!this.isDragging) return;
-              
+      
               // Remove window event listeners
               window.removeEventListener('mousemove', this.boundHandleDragMove);
               window.removeEventListener('touchmove', this.boundHandleDragMove);
               window.removeEventListener('mouseup', this.boundHandleDragEnd);
               window.removeEventListener('touchend', this.boundHandleDragEnd);
-              
+      
               this.isDragging = false;
-              
+      
               // Determine if we should change slide based on drag distance and velocity
               const threshold = this.containerWidth * 0.15; // 15% threshold
               const dragDistance = Math.abs(this.dragOffset);
-              
+      
               if (dragDistance > threshold) {
                   if (this.dragOffset > 0 && this.canGoPrev) {
                       this.prev();
@@ -153,22 +153,22 @@ $total_items = count($items);
                       this.next();
                   }
               }
-              
+      
               // Reset drag offset
               this.dragOffset = 0;
           },
-          
+      
           // Calculate track transform with smooth drag offset
           get trackTransform() {
               if (this.isDragging && this.containerWidth > 0) {
                   // Convert drag offset to percentage of container width
                   const dragPercentage = (this.dragOffset / this.containerWidth) * 100;
                   const baseTransform = this.initialTransform;
-                  
+      
                   // Apply resistance at boundaries
                   let finalDragPercentage = dragPercentage;
                   const maxIndex = Math.max(0, this.totalSlides - this.slidesPerView);
-                  
+      
                   // Resistance when trying to go before first slide
                   if (this.currentIndex === 0 && dragPercentage > 0) {
                       finalDragPercentage = dragPercentage * 0.3; // 30% resistance
@@ -177,7 +177,7 @@ $total_items = count($items);
                   else if (this.currentIndex === maxIndex && dragPercentage < 0) {
                       finalDragPercentage = dragPercentage * 0.3; // 30% resistance
                   }
-                  
+      
                   return `translateX(${-baseTransform + finalDragPercentage}%)`;
               } else {
                   // Normal transform when not dragging
@@ -256,8 +256,8 @@ $total_items = count($items);
         <div
           class="carousel-track flex ease-in-out max-w-container mx-auto cursor-grab select-none"
           :class="{
-            'transition-none cursor-grabbing': isDragging,
-            'cursor-grab transition-transform duration-500': !isDragging
+              'transition-none cursor-grabbing': isDragging,
+              'cursor-grab transition-transform duration-500': !isDragging
           }"
           :style="'transform: ' + trackTransform"
           @mousedown="handleDragStart"

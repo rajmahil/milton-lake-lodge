@@ -8,6 +8,7 @@ $heading = $attributes['heading'] ?? 'Milton Lake Lodge Mini-Lodge & Outpost Com
 $tabs = $attributes['tabs'] ?? [];
 $rates = get_exchange_rates('USD');
 $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.25;
+
 ?>
 
 <section
@@ -24,7 +25,7 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.25;
     <div
       x-data="{
           activeTab: 1,
-          currency: 'CAD',
+          currency: 'USD',
           exchangeRate: <?php echo $exchange_rate; ?>,
           setTab(tabIndex) {
               this.activeTab = tabIndex;
