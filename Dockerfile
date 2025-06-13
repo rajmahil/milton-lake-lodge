@@ -24,12 +24,12 @@ WORKDIR /var/www/html/wp-content/themes/theme-tailwind
 RUN npm ci && npm run build
 
 
-# === Add Redis drop-in here ===
-RUN cp /var/www/html/wp-content/plugins/redis-cache/object-cache.php \
-    /var/www/html/wp-content/object-cache.php \
-    && chown www-data:www-data /var/www/html/wp-content/object-cache.php
+# === Add Redis object cache drop-in ===
+COPY --chown=www-data:www-data \
+    wp-content/plugins/redis-cache/object-cache.php \
+    /var/www/html/wp-content/object-cache.php
 
-# Optionally, fix perms on everything in wp-content
+# (Optional) Ensure ownership on all wp-content
 RUN chown -R www-data:www-data /var/www/html/wp-content
 
 WORKDIR /var/www/html
