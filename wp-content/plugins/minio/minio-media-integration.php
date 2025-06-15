@@ -65,6 +65,10 @@ function my_minio_client()
     return $client;
 }
 
+add_filter('wp_get_attachment_url', function ($url) {
+    return str_replace('http://wp-test.local/wp-content/uploads', 'https://bucket-production-599e.up.railway.app/wpmedia', $url);
+});
+
 // 2️⃣ Upload hook — push file to MinIO
 add_filter('wp_handle_upload', function ($upload) {
     if (isset($upload['error']) && $upload['error']) {

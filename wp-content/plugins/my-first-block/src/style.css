@@ -9,6 +9,15 @@
 @source inline("sm:w-fit");
 @source inline("lg:grid-cols-2");
 @source inline("lg:grid");
+@source inline("xl:grid-cols-5")
+@source inline("xl:col-span-3");
+@source inline("xl:col-span-2");
+@source inline("1050:grid");
+@source inline("gap-40");
+@source inline("lg:gap-10");
+@source inline("lg:text-2xl");
+@source inline("md:text-2xl");
+@source inline("lg:grid-cols-5");
 
 /* Global wrapper class for all your blocks */
 .my-unique-plugin-wrapper-class {
@@ -29,6 +38,7 @@
 	--color-brand-light-grey: #e8dfd8;
 
 	--breakpoint-900: 900px;
+	--breakpoint-1050: 1050px;
 
 	--color-background: #ffffff;
 	--color-foreground: #0b0f19;
@@ -226,8 +236,9 @@
 
 	/* Sizes */
 	.btn-xl {
-		@apply text-lg py-3 px-8 h-14;
+		@apply text-base lg:text-lg py-2 lg:py-3 px-6 lg:px-8 h-12 lg:h-14;
 	}
+
 
 	.btn-lg {
 		@apply text-base py-2 px-6 h-12;

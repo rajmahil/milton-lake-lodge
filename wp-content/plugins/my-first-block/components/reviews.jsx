@@ -82,7 +82,7 @@ export default function ReviewsSection( { topHeading, reviews = [] } ) {
 					}
 				}
 
-				.animate-slide-center-left {
+				. {
 					animation: slideFromCenterToLeft 0.8s ease-out forwards;
 				}
 
@@ -151,7 +151,7 @@ export default function ReviewsSection( { topHeading, reviews = [] } ) {
 										key={ `image1-${ i }-${ animationKey }` } // Key to re-trigger animation
 										className={ `image-left w-full aspect-[3/4] max-w-[170px] sm:max-w-[200px] md:max-w-[350px] rounded-lg shadow-lg bg-white p-1 absolute ${
 											i === currentIndex
-												? 'animate-slide-center-left'
+												? ''
 												: 'final-position'
 										}` }
 									>

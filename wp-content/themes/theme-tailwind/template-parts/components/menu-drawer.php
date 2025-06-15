@@ -27,7 +27,7 @@ function render_menu_node($node, $depth = 0) {
     $text_sizes = ['text-lg', 'text-base', 'text-sm', 'text-xs'];
     $text_size = $text_sizes[min($depth, count($text_sizes) - 1)];
     
-    $font_weights = ['font-medium', 'font-normal', 'font-light', 'font-extralight'];
+    $font_weights = [ 'font-normal', 'font-light', 'font-extralight'];
     $font_weight = $font_weights[min($depth, count($font_weights) - 1)];
     ?>
 <li class="w-full">
@@ -59,9 +59,9 @@ function render_menu_node($node, $depth = 0) {
     <div
       x-show="expanded"
       x-collapse
-      class="ml-<?php echo min($depth + 2, 6); ?> mt-2 space-y-2"
+      class="ml-<?php echo min($depth + 2, 6); ?> mt-2 space-y-0"
     >
-      <ul class="space-y-2 list-none">
+      <ul class="space-y-0 list-none">
         <?php foreach ($node->children as $child) : ?>
         <?php render_menu_node($child, $depth + 1); ?>
         <?php endforeach; ?>
@@ -132,7 +132,7 @@ function render_menu_node($node, $depth = 0) {
             >
               <div
                 class="flex flex-col h-full py-5 overflow-y-scroll bg-white border-l shadow-lg border-neutral-100/70">
-                <div class="px-4 sm:px-5 flex flex-col gap-4 h-full">
+                <div class="px-4 sm:px-5 flex flex-col gap-2 h-full">
                   <div class="flex items-start justify-between pb-1">
                     <h2 class="text-2xl">Menu</h2>
                     <div class="flex items-center h-auto ml-3">
@@ -161,7 +161,7 @@ function render_menu_node($node, $depth = 0) {
 
                   <!-- Menu Items Section -->
                   <div class="relative flex-1">
-                    <ul class="flex flex-col items-start gap-4 list-none">
+                    <ul class="flex flex-col items-start gap-2 list-none">
                       <?php foreach ($tree as $node) : ?>
                       <?php render_menu_node($node); ?>
                       <?php endforeach; ?>

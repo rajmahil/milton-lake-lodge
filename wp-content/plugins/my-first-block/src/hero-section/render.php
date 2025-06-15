@@ -38,6 +38,10 @@ if ($image) {
         // Direct URL
         $image_url = $image;
     }
+} else {
+    // Fallback image if none provided
+    $image_url = get_template_directory_uri() . '/assets/images/default-hero.jpg';
+    $image_alt = 'Default Hero Image';
 }
 ?>
 
@@ -59,7 +63,7 @@ if ($image) {
       ]); ?>
       <?php else: ?>
       <!-- Fallback for direct URLs -->
-      <imgb
+      <img
         src="<?php echo esc_url($image_url); ?>"
         alt="<?php echo esc_attr($image_alt); ?>"
         class="object-cover object-center w-full h-full"
@@ -84,11 +88,13 @@ if ($image) {
       <!-- Text Content -->
       <div class=" w-full  flex flex-row gap-5 flex-wrap items-end justify-between ">
         <div class="flex flex-col gap-0 max-w-[650px] ">
-          <h1 class="!my-0 !text-5xl sm:!text-6xl md:!text-7xl lg:!text-8xl !font-[700] text-left text-white font-sans drop-shadow-lg !leaind">
+          <h1
+            class="!my-0 !text-5xl sm:!text-6xl md:!text-7xl lg:!text-8xl !font-[700] text-left text-white font-sans drop-shadow-lg "
+          >
             <?php echo esc_html($heading); ?>
           </h1>
           <?php if ($subheading): ?>
-          <p class="!my-0 text-2xl  text-left  text-white">
+          <p class="!my-0 text-xl md:text-2xl  text-left  text-white">
             <?php echo esc_html($subheading); ?>
           </p>
           <?php endif; ?>
@@ -123,8 +129,12 @@ if ($image) {
       </div>
 
 
-      <div class="grid grid-cols-5 gap-0  w-full p-2 bg-black/50 rounded-md relative overflow-hidden">
-        <div class="flex flex-row gap-3 p-2 text-white  rounded-lg w-full px-2 items-center justify-start">
+      <div
+        class="flex flex-col lg:grid md:grid-cols-3 lg:grid-cols-5 gap-0  w-full p-1 lg:p-2 bg-black/50 rounded-md relative overflow-hidden"
+      >
+        <div
+          class="flex flex-row gap-2 lg:gap-3 p-2 text-white  rounded-lg w-full px-2 items-center justify-start min-w-[250px] "
+        >
           <div class="bg-[#33e0a1] text-black h-fit p-1 rounded-full">
             <svg
               fill="currentColor"
@@ -157,8 +167,7 @@ if ($image) {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
                   fill="currentColor"
-                  height="25"
-                  width="25"
+                  class="w-6"
                 >
                   <path
                     fill-rule="evenodd"
@@ -172,8 +181,7 @@ if ($image) {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
                   fill="currentColor"
-                  height="25"
-                  width="25"
+                  class="w-6"
                   style="clip-path: inset(0 30% 0 0);"
                 >
                   <path
@@ -186,25 +194,35 @@ if ($image) {
               <p class="font-[400] text-sm">Rated <?php echo esc_html($tripAdvisorStars); ?>/5 stars on Trip Advisor</p>
             </div>
           </div>
-          <div class="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-black to-transparent z-[100]"></div>
+          <div
+            class="absolute top-0 right-0 w-10 lg:w-20 h-full bg-gradient-to-l from-black to-transparent z-[100] lg:block hidden"
+          >
+          </div>
         </div>
-        <div class="col-span-4 overflow-hidden flex flex-row items-center relative">
-          <div class="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-black to transparent z-[100]"></div>
-
+        <div class="col-span-2 lg:col-span-4 overflow-hidden flex flex-row items-center relative">
+          <div class="absolute top-0 left-0 w-10 lg:w-20 h-full bg-gradient-to-r from-black to transparent z-[100]">
+          </div>
+          <div
+            class="absolute bottom-0 right-0 w-10 lg:w-20 h-full bg-gradient-to-l from-black to-transparent z-[100] lg:hidden block"
+          >
+          </div>
           <?php for($x =1 ; $x <=2; $x++): ?>
           <div class="flex flex-row flex-nowrap text-white animate-slide">
             <?php foreach ( $tripAdvisorReviews as $tripAdvisorReview ) : ?>
-            <div class="py-2 px-4 rounded-lg flex flex-row gap-4 items-center w-[350px]">
-              <div class="h-12 w-12 aspect-square rounded-full bg-white">
+            <div class="py-2 px-4 rounded-lg flex flex-row gap-4 items-center min-w-[300px]  md:min-w-[350px]">
+              <div class="h-12 w-12 min-h-12 min-w-12 aspect-square rounded-full bg-white">
                 <?php if ( ! empty( $tripAdvisorReview['image'] ) ) : ?>
                 <img
                   src="<?php echo esc_url($tripAdvisorReview['image']); ?>"
                   alt=""
-                  class="h-full w-full object-cover rounded-full"
+                  class="object-cover object-center w-full h-full rounded-full"
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
                 />
                 <?php endif; ?>
               </div>
-              <p class="text-sm text-left !leading-tight">
+              <p class="text-[15px] text-left !leading-tight">
                 <?php echo !empty($tripAdvisorReview['text']) ? esc_html($tripAdvisorReview['text']) : ''; ?>
               </p>
             </div>
