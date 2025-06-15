@@ -52,16 +52,21 @@ add_action('admin_post_my_custom_form_submit', 'handle_custom_form_email');
 
 function get_exchange_rates($base = 'USD')
 {
-    // Replace this with your actual API key
+    $transient_key = 'exchange_rates_' . strtolower($base);
+    $cached_rates = get_transient($transient_key);
+
+    if ($cached_rates !== false) {
+        return $cached_rates;
+    }
 
     $api_key = defined('EXCHANGE_RATE_API_KEY') ? EXCHANGE_RATE_API_KEY : '';
+
     if (!$api_key) {
         error_log('ExchangeRate API key is missing.');
         return false;
     }
 
     $url = "https://v6.exchangerate-api.com/v6/{$api_key}/latest/{$base}";
-
     $response = wp_remote_get($url);
 
     if (is_wp_error($response)) {
@@ -73,6 +78,8 @@ function get_exchange_rates($base = 'USD')
     $data = json_decode($body, true);
 
     if (isset($data['conversion_rates'])) {
+        // Cache the result for 6 hours (21600 seconds)
+        set_transient($transient_key, $data['conversion_rates'], 6 * HOUR_IN_SECONDS);
         return $data['conversion_rates'];
     }
 
@@ -88,7 +95,6 @@ function handle_custom_form_email()
     $data = [];
     $form_template = isset($_POST['form_template']) ? sanitize_text_field($_POST['form_template']) : 'default';
     error_log('Form template used: ' . $form_template);
-
 
     foreach ($_POST as $key => $value) {
         if (in_array($key, $skip)) {
@@ -133,7 +139,7 @@ function handle_custom_form_email()
         $template_html = str_replace('{{ dynamic_rows }}', $rows, $template_html);
     }
 
-    $user_email = (isset($data['email']) && is_email($data['email'])) ? $data['email'] : null;
+    $user_email = isset($data['email']) && is_email($data['email']) ? $data['email'] : null;
 
     $recipients = ['ayush@306technologies.com'];
     if ($user_email) {
@@ -147,7 +153,6 @@ function handle_custom_form_email()
     }
 
     error_log("Form Template: $form_template\nEmail HTML Content:\n" . $template_html);
-
 
     wp_mail($recipients, $subject, $template_html, ['Content-Type: text/html; charset=UTF-8']);
 

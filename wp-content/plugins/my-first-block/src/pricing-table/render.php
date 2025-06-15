@@ -8,7 +8,9 @@ $heading = $attributes['heading'] ?? 'Milton Lake Lodge Mini-Lodge & Outpost Com
 $tabs = $attributes['tabs'] ?? [];
 $rates = get_exchange_rates('USD');
 
-$exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 2;
+error_log('Exchange rates: ' . print_r($rates, true));
+
+$exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
 ?>
 
 <section
@@ -68,7 +70,7 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 2;
         </div>
       </div>
 
-      <div class="relative overflow-hidden h-auto  w-full mx-auto">
+      <div class="relative overflow-hidden h-auto  w-full max-w-4xl mx-auto">
         <?php foreach ($tabs as $index => $tab): ?>
         <div
           x-show="activeTab === <?php echo $index + 1; ?>"

@@ -41,7 +41,7 @@ define('WP_REDIS_SSL_CONTEXT', [
 ]);
 
 // Exchange Rate API
-define('EXCHANGE_RATE_API_KEY', '7128e4810a5d0bca289f546c');
+define('EXCHANGE_RATE_API_KEY', '1ce01530097bff1a9e1bd9d7');
 
 define('WPCACHEHOME', '/Users/rajmahil/Local Sites/wp-test/app/public/wp-content/plugins/wp-super-cache/');
 define('DB_NAME', getenv('WORDPRESS_DB_NAME') ?: 'local');
