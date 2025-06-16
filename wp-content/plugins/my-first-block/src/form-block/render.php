@@ -7,6 +7,8 @@
 $topHeading = $attributes['topHeading'] ?? 'Your Adventure Awaits';
 $heading = $attributes['heading'] ?? 'Your Adventure Awaits';
 $fields = $attributes['fields'] ?? [];
+$formTitle = $attributes['formTitle'] ?? [];
+
 ?>
 
 <section class="plugin-custom-block">
@@ -29,6 +31,7 @@ $fields = $attributes['fields'] ?? [];
           value="my_custom_form_submit"
         >
         <input type="hidden" name="form_template" value="main_form">
+        <input type="hidden" name="formTitle" value="main_form">
 
         <?php foreach ( $fields as $index => $field ) : ?>
         <?php

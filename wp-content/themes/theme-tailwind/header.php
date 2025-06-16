@@ -20,11 +20,28 @@
   $menu_items = [];
   $enable_dark_mode = false;
 
+  
   if ($menu) {
-      $menu_items = wp_get_nav_menu_items($menu->term_id);
-      $enable_dark_mode = get_field('enable_dark_mode', 'nav_menu_' . $menu->term_id);
-      error_log('Enable dark mode is: ' . var_export($enable_dark_mode, true));
-  }
+    $menu_items = wp_get_nav_menu_items($menu->term_id);
+    
+    $current_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    error_log('This is the Current Path: ' . $current_path);
+    
+    $dark_paths = get_field('dark_paths', 'nav_menu_' . $menu->term_id);
+    
+    if ($dark_paths) {
+        foreach ($dark_paths as $dark_path) {
+            $path = $dark_path['add_paths']; 
+            if ($path && $current_path === $path) {
+                $enable_dark_mode = true;
+                break;
+            }
+        }
+    }
+    
+    error_log('Dark paths: ' . var_export($dark_paths, true));
+    error_log('Enable dark mode is: ' . var_export($enable_dark_mode, true));
+}
 
   $cta_text = get_theme_mod('boilerplate_cta_text', 'Get Started');
   $cta_url = get_theme_mod('boilerplate_cta_url', '#');
@@ -70,9 +87,6 @@
       }
   }"
 >
-<script>
-  console.log('enable_dark_mode:', <?php echo json_encode($enable_dark_mode); ?>);
-</script>
 
   <div
     class="fixed z-[100] w-full section-padding !py-2 transition-all duration-300 ease-in-out isolate"

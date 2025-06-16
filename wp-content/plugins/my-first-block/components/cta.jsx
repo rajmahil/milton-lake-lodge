@@ -12,7 +12,7 @@ const Cta = ( {
 	return (
 		<section className="plugin-custom-block section-padding w-full">
 			<div
-				className="relative max-w-container bg-brand-green bg-blend-hard-light grid grid-cols-5 !items-center gap-5 text-white w-full rounded-2xl z-[0] bg-repeat"
+				className="relative max-w-container bg-brand-green bg-blend-hard-light grid grid-cols-5 !items-center gap-5 text-white w-full rounded-2xl z-[0] bg-repeat bg-size-[450px]"
 				style={ {
 					backgroundImage: backgroundImage?.url
 						? `url('${ backgroundImage.url }')`

@@ -94,7 +94,8 @@ function handle_custom_form_email()
     $skip = ['action', '_wpnonce', '_wp_http_referer', 'form_template'];
     $data = [];
     $form_template = isset($_POST['form_template']) ? sanitize_text_field($_POST['form_template']) : 'default';
-    error_log('Form template used: ' . $form_template);
+    $form_title = isset($_POST['form_title']) ? sanitize_text_field($_POST['form_title']) : 'Form Submission';
+
 
     foreach ($_POST as $key => $value) {
         if (in_array($key, $skip)) {
@@ -114,8 +115,7 @@ function handle_custom_form_email()
     
     // Insert a new Submission post
     $name = $data['name'] ?? 'Anonymous';
-    $labelled_template = ($form_template === 'main_form') ? 'Main Form' : 'Newsletter';
-    $post_title = "{$name} | {$labelled_template}";
+    $post_title = "{$name} | {$form_title}";
     $post_id = wp_insert_post([
         'post_title'  => sanitize_text_field($post_title),
         'post_type'   => 'submissions',

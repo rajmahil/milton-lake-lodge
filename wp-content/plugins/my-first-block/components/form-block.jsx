@@ -5,6 +5,7 @@ const FormBlock = ( props ) => {
 		heading = 'Your Adventure Awaits',
 		topHeading = 'Your Adventure Awaits',
 		fields = [],
+		formTitle,
 	} = props;
 
 	// State for form interactions
@@ -311,6 +312,11 @@ const FormBlock = ( props ) => {
 							type="hidden"
 							name="form_template"
 							value={ 'main_form' }
+						/>
+						<input
+							type="hidden"
+							name="formTitle"
+							value={ formTitle }
 						/>
 						{ fields.map( ( field, index ) =>
 							renderField( field, index )

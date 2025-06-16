@@ -53,7 +53,7 @@ $background_image = $attributes['backgroundImage'] ?? [];
 
 
 <section class="plugin-custom-block section-padding w-full ">
-  <div class="relative max-w-container bg-brand-green bg-blend-hard-light grid grid-cols-5 !items-center  gap-5 text-white  w-full rounded-2xl z-[0] bg-repeat"  style="background-image: url('<?php echo !empty($background_image['url']) 
+  <div class="relative max-w-container bg-brand-green bg-blend-hard-light grid grid-cols-5 !items-center  gap-5 text-white  w-full rounded-2xl z-[0] bg-repeat bg-size-[450px]"  style="background-image: url('<?php echo !empty($background_image['url']) 
     ? esc_url($background_image['url']) 
     : esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
 >
