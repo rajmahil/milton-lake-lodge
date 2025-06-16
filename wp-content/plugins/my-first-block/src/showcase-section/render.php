@@ -5,6 +5,8 @@ $heading = $attributes['heading'] ?? '';
 $button_text = $attributes['buttonText'] ?? 'Learn More';
 $button_url = $attributes['buttonUrl'] ?? '#';
 $images = $attributes['images'] ?? [];
+$background_image = $attributes['backgroundImage'] ?? [];
+
 $imagesSpeed = $attributes['imagesSpeed'] ?? 'medium';
 
 $speed_map = [
@@ -16,11 +18,14 @@ $speed_map = [
 $base_duration = $speed_map[$imagesSpeed] ?? 30;
 $reduced_duration = max($base_duration - 15, 5);
 $animation_class = 'showcase-animate-' . uniqid();
+
 ?>
 
 <section
-  class="plugin-custom-block flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-green bg-repeat  bg-size-[450px] bg-blend-hard-light"
-  style="background-image: url('<?php echo esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
+  class="plugin-custom-block flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-green bg-repeat bg-blend-hard-light bg-size-[450px]"
+  style="background-image: url('<?php echo !empty($background_image['url']) 
+    ? esc_url($background_image['url']) 
+    : esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
 >
 
   <div class="relative z-[2] max-w-container flex flex-row flex-wrap gap-5 items-end justify-between">

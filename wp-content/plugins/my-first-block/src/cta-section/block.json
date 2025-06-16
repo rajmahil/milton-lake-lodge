@@ -32,6 +32,10 @@
 		"image2": {
 			"type": "object",
 			"default": {}
+		},
+		"backgroundImage": {
+			"type": "object",
+			"default": {}
 		}
 	},
 	"supports": {

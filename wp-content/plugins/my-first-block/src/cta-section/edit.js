@@ -8,7 +8,8 @@ import { PanelBody, TextControl, Button } from '@wordpress/components';
 import Cta from '../../components/cta';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { topHeading, heading, buttonText, buttonUrl } = attributes;
+	const { topHeading, heading, buttonText, buttonUrl, backgroundImage } =
+		attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
@@ -34,7 +35,6 @@ export default function Edit( { attributes, setAttributes } ) {
 						} )
 					}
 					allowedTypes={ [ 'image' ] }
-					// Removed the value prop that was causing conflicts
 					render={ ( { open } ) => (
 						<Button
 							onClick={ open }
@@ -116,6 +116,65 @@ export default function Edit( { attributes, setAttributes } ) {
 				<PanelBody title={ __( 'Image Settings', 'your-text-domain' ) }>
 					{ renderImageUploader( 'image', 'Upload Image' ) }
 					{ renderImageUploader( 'image2', 'Upload Image 2' ) }
+				</PanelBody>
+
+				<PanelBody
+					title={ __( 'Background Settings', 'your-text-domain' ) }
+				>
+					<MediaUpload
+						onSelect={ ( media ) =>
+							setAttributes( {
+								backgroundImage: {
+									id: media.id,
+									url: media.url,
+									alt: media.alt,
+								},
+							} )
+						}
+						allowedTypes={ [ 'image' ] }
+						value={ backgroundImage?.id }
+						render={ ( { open } ) => (
+							<>
+								<Button onClick={ open } isSecondary>
+									{ backgroundImage?.url
+										? __(
+												'Replace Background',
+												'your-text-domain'
+										  )
+										: __(
+												'Add Custom Background',
+												'your-text-domain'
+										  ) }
+								</Button>
+								{ backgroundImage?.url && (
+									<div style={ { marginTop: '10px' } }>
+										<img
+											src={ backgroundImage.url }
+											alt={ backgroundImage.alt || '' }
+											style={ {
+												maxWidth: '100%',
+												height: 'auto',
+											} }
+										/>
+										<Button
+											onClick={ () =>
+												setAttributes( {
+													backgroundImage: {},
+												} )
+											}
+											isDestructive
+											style={ { marginTop: '5px' } }
+										>
+											{ __(
+												'Remove Custom Background',
+												'your-text-domain'
+											) }
+										</Button>
+									</div>
+								) }
+							</>
+						) }
+					/>
 				</PanelBody>
 			</InspectorControls>
 

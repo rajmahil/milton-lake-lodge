@@ -8,6 +8,7 @@
     content="width=device-width, initial-scale=1"
   >
   <?php wp_head(); ?>
+  
 </head>
 
 <body
@@ -17,11 +18,14 @@
   // Get menu items from the menu named "Main Menu"
   $menu = wp_get_nav_menu_object('Main Menu');
   $menu_items = [];
-  
+  $enable_dark_mode = false;
+
   if ($menu) {
       $menu_items = wp_get_nav_menu_items($menu->term_id);
+      $enable_dark_mode = get_field('enable_dark_mode', 'nav_menu_' . $menu->term_id);
+      error_log('Enable dark mode is: ' . var_export($enable_dark_mode, true));
   }
-  
+
   $cta_text = get_theme_mod('boilerplate_cta_text', 'Get Started');
   $cta_url = get_theme_mod('boilerplate_cta_url', '#');
   $cta_phone = get_theme_mod('boilerplate_cta_phone', '#');
@@ -31,6 +35,8 @@
   error_log('This is the Current Path: ' . $current_path);
   
   ?>
+
+  
   x-data="{
       scrollY: 0,
       lastScrollY: 0,
@@ -64,15 +70,21 @@
       }
   }"
 >
+<script>
+  console.log('enable_dark_mode:', <?php echo json_encode($enable_dark_mode); ?>);
+</script>
+
   <div
     class="fixed z-[100] w-full section-padding !py-2 transition-all duration-300 ease-in-out isolate"
     :class="{
-        'transform -translate-y-full':
-            !showNavbar,
+        'transform -translate-y-full': !showNavbar,
         'transform translate-y-0': showNavbar,
-        'bg-brand-green-dark/50 backdrop-blur-xl shadow-lg ring-1 ring-black/5 ': isScrolled,
-        'bg-transparent':
-            !isScrolled,
+        <?php if ($enable_dark_mode): ?>
+        'bg-brand-green-dark shadow-lg ring-1 ring-black/5': true
+        <?php else: ?>
+        'bg-brand-green-dark/50 backdrop-blur-xl shadow-lg ring-1 ring-black/5': isScrolled,
+        'bg-transparent': !isScrolled,
+        <?php endif; ?>
     }"
   >
     <!-- Header Container -->

@@ -45,18 +45,25 @@ if ($image2) {
         $image2_url = $image2;
     }
 }
+
+$background_image = $attributes['backgroundImage'] ?? [];
+
+
 ?>
 
 
 <section class="plugin-custom-block section-padding w-full ">
-  <div class="relative max-w-container bg-brand-green bg-blend-hard-light grid grid-cols-5 !items-center  gap-5 text-white  w-full rounded-2xl z-[0] bg-repeat" style="background-image: url('<?php echo esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');">
+  <div class="relative max-w-container bg-brand-green bg-blend-hard-light grid grid-cols-5 !items-center  gap-5 text-white  w-full rounded-2xl z-[0] bg-repeat"  style="background-image: url('<?php echo !empty($background_image['url']) 
+    ? esc_url($background_image['url']) 
+    : esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
+>
     <!-- <div
       class="absolute bottom-0 left-0 bg-brand-green w-full h-[100%] rounded-2xl z-[0] bg-repeat  bg-size-[400px] bg-blend-hard-light"
       style="background-image: url('<?php echo esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
     ></div> -->
     <div class="flex flex-col gap-4 w-full relative z-[1] items-start justify-center section-padding col-span-5 900:col-span-2">
       <h2 class="heading-two text-center 900:text-left text-white ">
-        <?php echo esc_html($heading); ?>1
+        <?php echo esc_html($heading); ?>
       </h2>
       <a href="<?php echo esc_url($button_url); ?>" class="mx-auto 900:mx-0">
         <button class="btn btn-outline btn-xl ">

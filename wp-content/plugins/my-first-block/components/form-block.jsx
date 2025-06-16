@@ -307,6 +307,11 @@ const FormBlock = ( props ) => {
 
 				<div className="max-w-2xl w-full mx-auto">
 					<form className="grid grid-cols-2 gap-4">
+						<input
+							type="hidden"
+							name="form_template"
+							value={ 'main_form' }
+						/>
 						{ fields.map( ( field, index ) =>
 							renderField( field, index )
 						) }

@@ -33,6 +33,10 @@
 				"type": "object"
 			}
 		},
+		"backgroundImage": {
+			"type": "object",
+			"default": {}
+		},
 		"imagesSpeed": {
 			"type": "string",
 			"default": "medium"

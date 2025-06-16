@@ -13,9 +13,15 @@ import {
 import Showcase from '../../components/showcase';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { topHeading, heading, buttonText, buttonUrl, images, imagesSpeed } =
-		attributes;
-	// This is crucial - it provides the block wrapper with proper WordPress functionality
+	const {
+		topHeading,
+		heading,
+		buttonText,
+		buttonUrl,
+		images,
+		backgroundImage,
+		imagesSpeed,
+	} = attributes;
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
 		style: {
@@ -62,7 +68,6 @@ export default function Edit( { attributes, setAttributes } ) {
 						}
 					/>
 				</PanelBody>
-
 				<PanelBody title={ __( 'Image Gallery', 'your-text-domain' ) }>
 					<MediaUpload
 						onSelect={ ( media ) => {
@@ -117,6 +122,64 @@ export default function Edit( { attributes, setAttributes } ) {
 							) ) }
 						</div>
 					) }
+				</PanelBody>
+				<PanelBody
+					title={ __( 'Background Settings', 'your-text-domain' ) }
+				>
+					<MediaUpload
+						onSelect={ ( media ) =>
+							setAttributes( {
+								backgroundImage: {
+									id: media.id,
+									url: media.url,
+									alt: media.alt,
+								},
+							} )
+						}
+						allowedTypes={ [ 'image' ] }
+						value={ backgroundImage?.id }
+						render={ ( { open } ) => (
+							<>
+								<Button onClick={ open } isSecondary>
+									{ backgroundImage?.url
+										? __(
+												'Replace Background',
+												'your-text-domain'
+										  )
+										: __(
+												'Add Custom Background',
+												'your-text-domain'
+										  ) }
+								</Button>
+								{ backgroundImage?.url && (
+									<div style={ { marginTop: '10px' } }>
+										<img
+											src={ backgroundImage.url }
+											alt={ backgroundImage.alt || '' }
+											style={ {
+												maxWidth: '100%',
+												height: 'auto',
+											} }
+										/>
+										<Button
+											onClick={ () =>
+												setAttributes( {
+													backgroundImage: {},
+												} )
+											}
+											isDestructive
+											style={ { marginTop: '5px' } }
+										>
+											{ __(
+												'Remove Custom Background',
+												'your-text-domain'
+											) }
+										</Button>
+									</div>
+								) }
+							</>
+						) }
+					/>
 				</PanelBody>
 				<PanelBody title={ __( 'Slider Speed', 'your-text-domain' ) }>
 					<RadioControl

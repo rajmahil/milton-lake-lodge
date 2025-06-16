@@ -311,6 +311,7 @@
       <div class="flex flex-col gap-4 w-full order-last  md:col-span-1 col-span-3 max-w-[450px] mx-auto">
         <h4 class="font-medium text-white text-center text-2xl">Subscribe to Newsletter</h4>
         <form
+          method="POST"
           class="flex
           flex-col
           items-center

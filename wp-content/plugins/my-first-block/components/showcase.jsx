@@ -7,7 +7,7 @@ const Showcase = ( {
 	buttonUrl,
 	images = [],
 	imagesSpeed,
-	backgroundPattern,
+	backgroundImage,
 } ) => {
 	const [ duration, setDuration ] = useState( '30s' );
 
@@ -39,8 +39,9 @@ const Showcase = ( {
 		<section
 			className="plugin-custom-block flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-green bg-repeat bg-blend-hard-light bg-size-[450px]"
 			style={ {
-				backgroundImage:
-					"url('http://milton-lodge.local/wp-content/uploads/effects/green-topo.png')",
+				backgroundImage: backgroundImage?.url
+					? `url('${ backgroundImage.url }')`
+					: "url('http://milton-lodge.local/wp-content/uploads/effects/green-topo.png')",
 			} }
 		>
 			<div className="relative z-[2] max-w-container flex flex-row flex-wrap gap-5 items-end justify-between">

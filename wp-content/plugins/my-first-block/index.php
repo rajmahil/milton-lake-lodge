@@ -111,7 +111,33 @@ function handle_custom_form_email()
             $data[$key] = sanitize_text_field($value);
         }
     }
+    
+    // Insert a new Submission post
+    $name = $data['name'] ?? 'Anonymous';
+    $labelled_template = ($form_template === 'main_form') ? 'Main Form' : 'Newsletter';
+    $post_title = "{$name} | {$labelled_template}";
+    $post_id = wp_insert_post([
+        'post_title'  => sanitize_text_field($post_title),
+        'post_type'   => 'submissions',
+        'post_status' => 'publish',
+    ]);
 
+    $content_blocks = '';
+
+    foreach ($data as $key => $value) {
+        $label = ucwords(str_replace('_', ' ', $key));
+        $val = is_array($value) ? implode(', ', $value) : esc_html($value);
+    
+        $content_blocks .= "<!-- wp:paragraph --><p><strong>{$label}:</strong> {$val}</p><!-- /wp:paragraph -->\n";
+    }
+    
+    // Now update post content
+    wp_update_post([
+        'ID' => $post_id,
+        'post_content' => $content_blocks,
+    ]);
+    
+    // Build HTML rows for email
     $rows = '';
     foreach ($data as $key => $value) {
         $label = ucwords(str_replace('_', ' ', $key));
