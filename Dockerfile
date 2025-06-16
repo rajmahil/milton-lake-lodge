@@ -11,6 +11,8 @@ COPY --chown=www-data:www-data \
     --from=wordpress:apache /usr/src/wordpress/ /var/www/html/
 COPY --chown=www-data:www-data \
     wp-content/ /var/www/html/wp-content/
+COPY php.ini /usr/local/etc/php/conf.d/custom-php.ini
+
 
 
 # 4. Build your custom plugin
