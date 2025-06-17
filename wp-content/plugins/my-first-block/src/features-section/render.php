@@ -30,7 +30,7 @@ $features = $attributes['features'] ?? [];
           <img
             src="<?php echo esc_url($image_url); ?>"
             alt="<?php echo esc_attr($image_alt); ?>"
-            class="w-full rounded-lg h-auto object-cover aspect-[1.8/1] relative z-[2]"
+            class="w-full rounded-lg h-auto object-cover aspect-[4/3] relative z-[2]"
           />
         </div>
 
