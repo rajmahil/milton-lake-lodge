@@ -93,10 +93,10 @@ function handle_custom_form_email()
 {
     error_log('Form handler triggered');
 
-    $skip = ['action', '_wpnonce', '_wp_http_referer', 'form_template'];
+    $skip = ['action', '_wpnonce', '_wp_http_referer', 'form_template','formTitle'];
     $data = [];
     $form_template = isset($_POST['form_template']) ? sanitize_text_field($_POST['form_template']) : 'default';
-    $form_title = isset($_POST['form_title']) ? sanitize_text_field($_POST['form_title']) : 'Form Submission';
+    $form_title = isset($_POST['formTitle']) ? sanitize_text_field($_POST['formTitle']) : 'Form Submission';
 
     foreach ($_POST as $key => $value) {
         if (in_array($key, $skip)) {
@@ -115,22 +115,38 @@ function handle_custom_form_email()
     }
 
     // Insert a new Submission post
-    $name = $data['name'] ?? 'Anonymous';
+    $name = $data['name'] ?? $data['email'];
     $post_title = "{$name} | {$form_title}";
     $post_id = wp_insert_post([
         'post_title' => sanitize_text_field($post_title),
         'post_type' => 'submissions',
         'post_status' => 'publish',
     ]);
+    
 
     $content_blocks = '';
 
     foreach ($data as $key => $value) {
         $label = ucwords(str_replace('_', ' ', $key));
         $val = is_array($value) ? implode(', ', $value) : esc_html($value);
-
-        $content_blocks .= "<!-- wp:paragraph --><p><strong>{$label}:</strong> {$val}</p><!-- /wp:paragraph -->\n";
+    
+        $content_blocks .= "<p><strong>{$label}:</strong> {$val}</p>\n";
     }
+
+    $repeater_rows = [];
+
+    foreach ($data as $key => $value) {
+        $label = ucwords(str_replace('_', ' ', $key));
+        $val = is_array($value) ? implode(', ', $value) : $value;
+    
+        $repeater_rows[] = [
+            'label' => $label,
+            'value' => $val,
+        ];
+    }
+    
+    update_field('form_fields', $repeater_rows, $post_id);
+    
 
     // Now update post content
     wp_update_post([
@@ -168,7 +184,7 @@ function handle_custom_form_email()
 
     $user_email = isset($data['email']) && is_email($data['email']) ? $data['email'] : null;
 
-    $recipients = ['raj@306technologies.com'];
+    $recipients = ['ayush@306technologies.com'];
     if ($user_email) {
         $recipients[] = $user_email;
     }

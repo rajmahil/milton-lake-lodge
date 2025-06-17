@@ -328,6 +328,11 @@
             name="form_template"
             value="newsletter"
           >
+        	<input
+							type="hidden"
+							name="formTitle"
+							value="Newsletter"
+						/>
           <input
             class="form-input   "
             placeholder="youremail@gmail.com"

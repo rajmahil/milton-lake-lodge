@@ -31,7 +31,7 @@ $formTitle = $attributes['formTitle'] ?? [];
           value="my_custom_form_submit"
         >
         <input type="hidden" name="form_template" value="main_form">
-        <input type="hidden" name="formTitle" value="main_form">
+        <input type="hidden" name="formTitle" value="<?php echo esc_attr($formTitle); ?>">
 
         <?php foreach ( $fields as $index => $field ) : ?>
         <?php
