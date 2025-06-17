@@ -2900,7 +2900,7 @@ ul.wp-block-rss.is-grid li{
 }
 
 :root :where(.wp-block-site-logo.is-style-rounded){
-  border-radius:9999px;
+  border-radius:12px;
 }
 
 .wp-block-site-tagline,.wp-block-site-title{

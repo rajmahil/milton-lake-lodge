@@ -21,8 +21,6 @@ export default function Edit( { attributes, setAttributes } ) {
 		[]
 	);
 
-	console.log( 'Posts:', myCalendarData );
-
 	// Convert to options array for ComboboxControl
 	const postOptions = posts
 		? posts.map( ( post ) => ( {
@@ -30,8 +28,6 @@ export default function Edit( { attributes, setAttributes } ) {
 				label: post.title.rendered,
 		  } ) )
 		: [];
-
-	const selectedPost = posts?.find( ( post ) => post.id === selectedPostId );
 
 	return (
 		<div { ...blockProps }>
@@ -48,7 +44,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<FullCalendar { ...attributes } selectedPost={ selectedPost } />
+			<div>Selected post: { selectedPostId }</div>
 		</div>
 	);
 }

@@ -22,14 +22,15 @@ function register_custom_blocks()
 add_action('init', 'register_custom_blocks');
 
 // Pass season_calendar posts to the frontend
-add_action('wp_enqueue_scripts', function () {
+function get_my_calendar_data()
+{
     $posts = get_posts([
         'post_type' => 'season_calendar',
         'posts_per_page' => -1,
         'post_status' => 'publish',
     ]);
 
-    $formatted = array_map(function ($post) {
+    return array_map(function ($post) {
         return [
             'id' => $post->ID,
             'title' => get_the_title($post),
@@ -40,14 +41,25 @@ add_action('wp_enqueue_scripts', function () {
             'trips' => get_field('trips', $post->ID),
         ];
     }, $posts);
+}
 
+// Enqueue frontend script and localize data
+add_action('wp_enqueue_scripts', function () {
     wp_enqueue_script('my-calendar-frontend', plugins_url('src/calendar-section/frontend.js', __FILE__), [], null, true);
-    wp_enqueue_script('my-calendar-edit', plugins_url('src/calendar-section/edit.js', __FILE__), [], null, true);
 
-    wp_localize_script('my-calendar-frontend', 'myCalendarData', ['posts' => $formatted]);
-    wp_localize_script('my-calendar-edit', 'myCalendarData', ['posts' => $formatted]);
+    wp_localize_script('my-calendar-frontend', 'myCalendarData', [
+        'posts' => get_my_calendar_data(),
+    ]);
 });
 
+// Enqueue editor script and localize data
+add_action('enqueue_block_editor_assets', function () {
+    wp_enqueue_script('my-calendar-editor', plugins_url('src/calendar-section/edit.js', __FILE__), ['wp-blocks', 'wp-element', 'wp-editor', 'wp-components'], null, true);
+
+    wp_localize_script('my-calendar-editor', 'myCalendarData', [
+        'posts' => get_my_calendar_data(),
+    ]);
+});
 // Handle custom form email
 add_action('admin_post_nopriv_my_custom_form_submit', 'handle_custom_form_email');
 add_action('admin_post_my_custom_form_submit', 'handle_custom_form_email');
@@ -93,7 +105,7 @@ function handle_custom_form_email()
 {
     error_log('Form handler triggered');
 
-    $skip = ['action', '_wpnonce', '_wp_http_referer', 'form_template','formTitle'];
+    $skip = ['action', '_wpnonce', '_wp_http_referer', 'form_template', 'formTitle'];
     $data = [];
     $form_template = isset($_POST['form_template']) ? sanitize_text_field($_POST['form_template']) : 'default';
     $form_title = isset($_POST['formTitle']) ? sanitize_text_field($_POST['formTitle']) : 'Form Submission';
@@ -122,14 +134,13 @@ function handle_custom_form_email()
         'post_type' => 'submissions',
         'post_status' => 'publish',
     ]);
-    
 
     $content_blocks = '';
 
     foreach ($data as $key => $value) {
         $label = ucwords(str_replace('_', ' ', $key));
         $val = is_array($value) ? implode(', ', $value) : esc_html($value);
-    
+
         $content_blocks .= "<p><strong>{$label}:</strong> {$val}</p>\n";
     }
 
@@ -138,15 +149,14 @@ function handle_custom_form_email()
     foreach ($data as $key => $value) {
         $label = ucwords(str_replace('_', ' ', $key));
         $val = is_array($value) ? implode(', ', $value) : $value;
-    
+
         $repeater_rows[] = [
             'label' => $label,
             'value' => $val,
         ];
     }
-    
+
     update_field('form_fields', $repeater_rows, $post_id);
-    
 
     // Now update post content
     wp_update_post([

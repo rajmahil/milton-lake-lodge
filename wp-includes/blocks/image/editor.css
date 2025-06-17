@@ -8,6 +8,7 @@ figure.wp-block-image:not(.wp-block){
 
 .wp-block-image{
   position:relative;
+
 }
 .wp-block-image .is-applying img,.wp-block-image.is-transient img{
   opacity:.3;

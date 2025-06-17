@@ -64,8 +64,8 @@ $totalImages = count($images);
       x-ref="gallery"
     >
       <?php
-                $globalIndex = 0;
-                foreach ($groups as $groupIndex => $groupImages) : ?>
+      $globalIndex = 0;
+      foreach ($groups as $groupIndex => $groupImages) : ?>
       <div class="flex flex-col gap-2 sm:gap-4">
         <div class="flex flex-col md:flex-row gap-2 sm:gap-4">
           <?php if (!empty($groupImages[0])) :

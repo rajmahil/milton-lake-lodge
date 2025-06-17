@@ -27,25 +27,22 @@ function hexToRgba( hex, opacity ) {
 }
 
 const FullCalendarComp = ( props ) => {
-	const { heading, subheading, selectedPostId, selectedPost } = props;
+	const { heading, subheading, selectedPostId } = props;
 
 	const [ selected, setSelected ] = useState( null );
 	const [ slots, setSlots ] = useState( [] );
 
+	console.log( 'Posts:', myCalendarData );
+
 	useEffect( () => {
-		const calendarData =
-			typeof myCalendarData !== 'undefined' ? myCalendarData : null;
+		if ( myCalendarData?.posts?.length ) {
+			const selectedPost = myCalendarData.posts.find(
+				( post ) => post.id === selectedPostId
+			);
 
-		if ( calendarData?.posts?.length || selectedPost ) {
-			const matchedPost =
-				selectedPost ||
-				calendarData.posts.find(
-					( post ) => post.id === selectedPostId
-				);
-
-			if ( matchedPost && ! selectedPost ) {
-				const tripSlots = matchedPost?.trips.map( ( slot ) => {
-					const slotType = matchedPost?.slot_types.find(
+			if ( selectedPost ) {
+				const tripSlots = selectedPost?.trips.map( ( slot ) => {
+					const slotType = selectedPost?.slot_types.find(
 						( type ) => type.label_ === slot.trip_type
 					);
 
@@ -55,8 +52,8 @@ const FullCalendarComp = ( props ) => {
 						end: addDayToYYYYMMDD( slot.end_date ),
 						extendedProps: {
 							backgroundColor:
-								slotType?.background_color || '#fef3c7',
-							textColor: slotType?.text_color || '#1f2937',
+								slotType.background_color || '#fef3c7', // default yellow
+							textColor: slotType.text_color || '#1f2937', // default gray-800
 							status: slot.status,
 							startDate: slot.start_date,
 							endDate: slot.end_date,
@@ -65,28 +62,20 @@ const FullCalendarComp = ( props ) => {
 				} );
 
 				setSlots( tripSlots );
-				setSelected( matchedPost );
+				setSelected( selectedPost );
 			} else {
-				setSelected( selectedPost || calendarData.posts[ 0 ] );
+				setSelected( myCalendarData.posts[ 0 ] );
 			}
+		} else if ( selectedPost ) {
+			setSelected( selectedPost );
 		}
-	}, [ selectedPostId, selectedPost ] );
+	}, [ myCalendarData ] );
 
-	console.log( 'Selected Post:', selected, 'slots:', slots );
-
-	if ( ! selected || ! selected?.trips?.length ) {
+	if ( ! myCalendarData?.posts?.length ) {
 		return (
-			<section className="plugin-custom-block section-padding">
-				<div className="max-w-container w-full mx-auto flex flex-col gap-12">
-					<h2 className="heading-two text-center">
-						{ heading || 'Select a calendar to view' }
-					</h2>
-					<p className="text-center">
-						{ subheading ||
-							'Please select a calendar to view its events.' }
-					</p>
-				</div>
-			</section>
+			<div className="text-center text-gray-500">
+				No calendar posts found.
+			</div>
 		);
 	}
 
@@ -161,6 +150,8 @@ const FullCalendarComp = ( props ) => {
 											'bg-yellow-300 text-black text-xs py-0.5 px-2 rounded-full',
 										Booked: 'bg-red-600 text-white text-xs py-0.5 px-2 rounded-full',
 									};
+
+									console.log( start, end, 'Event Dates' );
 
 									return (
 										<div
