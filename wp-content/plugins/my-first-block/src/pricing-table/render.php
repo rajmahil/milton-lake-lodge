@@ -70,14 +70,14 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
         </div>
       </div>
 
-      <div class="relative overflow-hidden h-auto  w-full max-w-4xl mx-auto">
+      <div class="relative overflow-hidden h-auto  w-full  mx-auto">
         <?php foreach ($tabs as $index => $tab): ?>
         <div
           x-show="activeTab === <?php echo $index + 1; ?>"
           class="bg-white rounded-2xl overflow-hidden"
           x-cloak
         >
-          <div class="grid grid-cols-3 md:grid-cols-2 py-6 px-4 sm:px-8 !text-base !text-gray-800 gap-3 lg:gap-10">
+          <div class="grid grid-cols-3 md:grid-cols-2 !py-6 !px-4 sm:!px-8 !text-base !text-gray-800 gap-3 lg:gap-10">
             <p class='col-span-2 md:col-span-1'>Package Type</p>
             <div class="flex  justify-end md:justify-start items-center gap-4 flex-wrap">
               <p class="!mb-0">Per Person</p>
@@ -101,7 +101,7 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
 
           <?php if (!empty($tab['features'])): ?>
           <?php foreach ($tab['features'] as $feature): ?>
-          <div class="grid grid-cols-3 md:grid-cols-2 pb-6 gap-3 lg:gap-10 !pt-0 px-4 sm:px-8 ">
+          <div class="grid grid-cols-3 md:grid-cols-2 pb-6 gap-3 lg:gap-10 !pt-0 !px-4 sm:!px-8  ">
             <div class="mb-2 md:mb-0 col-span-2 md:col-span-1">
               <h3 class="!text-lg !font-medium !font-sans !capitalize ">
                 <?php echo esc_html($feature['title']); ?>
@@ -148,7 +148,7 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
           <?php endforeach; ?>
           <?php endif; ?>
           <?php if (!empty($tab['note'])): ?>
-          <div class="border-t border-brand-grey p-4 sm:p-8 text-gray-800">
+          <div class="border-t border-brand-grey !p-4 sm:!p-8 text-gray-800">
             <p class="!text-sm">
               <?php echo esc_html($tab['note']); ?>
             </p>

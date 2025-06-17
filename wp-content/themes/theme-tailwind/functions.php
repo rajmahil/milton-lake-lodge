@@ -137,6 +137,30 @@ function boilerplate_customize_register($wp_customize)
         ]),
     );
 
+    $wp_customize->add_setting('boilerplate_compass_image', [
+        'sanitize_callback' => 'absint',
+        'capability'        => 'edit_theme_options',
+        'default'           => 0,
+        'transport'         => 'refresh',
+    ]);
+
+    $wp_customize->add_control(
+        new WP_Customize_Cropped_Image_Control(
+            $wp_customize,
+            'boilerplate_compass_image_control',
+            [
+                'label'       => __('Compass Image', 'boilerplate'),
+                'description' => __('Upload image for compass icon', 'boilerplate'),
+                'section'     => 'boilerplate_footer_section',
+                'settings'    => 'boilerplate_compass_image',
+                'flex_width'  => true,
+                'flex_height' => true,
+                'width'       => 100,
+                'height'      => 100,
+            ]
+        )
+    );
+
     //Footer description
     $wp_customize->add_setting('boilerplate_footer_description', [
         'default' => '',
@@ -323,6 +347,25 @@ function boilerplate_display_footer_logo()
         $logo_url = wp_get_attachment_image_url($logo_id, 'full');
         $logo_alt = get_post_meta($logo_id, '_wp_attachment_image_alt', true);
         echo '<img src="' . esc_url($logo_url) . '" alt="' . esc_attr($logo_alt) . '" class="footer-logo">';
+    }
+}
+
+function boilerplate_get_compass_image_url()
+{
+    $image_id = get_theme_mod('boilerplate_compass_image', 0);
+    return $image_id ? wp_get_attachment_image_url($image_id, 'full') : '';
+}
+
+function boilerplate_display_compass_image($class = 'compass-icon')
+{
+    if ($url = boilerplate_get_compass_image_url()) {
+        $alt = get_post_meta(get_theme_mod('boilerplate_compass_image'), '_wp_attachment_image_alt', true) ?: 'Compass Icon';
+        printf(
+            '<img src="%s" alt="%s" class="%s">',
+            esc_url($url),
+            esc_attr($alt),
+            esc_attr($class)
+        );
     }
 }
 

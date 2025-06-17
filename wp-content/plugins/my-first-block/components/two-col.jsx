@@ -1,82 +1,72 @@
 const TwoCol = ( {
-	topHeading,
 	heading,
+	text,
 	buttonText,
 	buttonUrl,
 	image,
 	image2,
-	text,
 	inverted,
 } ) => {
+	const contentOrderClass = inverted ? 'order-first' : 'order-last';
+
 	return (
-		<section className="plugin-custom-block  not-prose section-padding w-full static-background">
-			<div className="relative max-w-container mx-auto w-full grid md:grid-cols-2 items-center gap-10 justify-between">
+		<section className="plugin-custom-block not-prose section-padding w-full">
+			<div className="relative max-w-container mx-auto w-full flex flex-col gap-14 sm:gap-20 900:!grid 900:!grid-cols-5 900:!gap-8 items-start 900:items-center">
 				<div
-					className={ `${
-						inverted ? 'order-first' : 'order-last'
-					} flex flex-col gap-4 w-full` }
+					className={ `${ contentOrderClass } flex flex-col gap-4 w-full 900:col-span-2 900:max-w-[600px] 900:mx-auto` }
 				>
-					<div className="w-full flex flex-col gap-2">
-						<div className="flex flex-col gap-1 w-full">
-							<p className="decorative-text !text-brand-yellow-dark text-3xl lg:!text-4xl !my-0 text-center md:text-left">
-								{ topHeading }
-							</p>
-							<h2 className="!my-0 !text-3xl md:!text-4xl lg:!text-5xl !font-[600] text-center md:text-left">
-								{ heading }
-							</h2>
-						</div>
-						<p className="!my-0 text-base leading-relaxed text-center md:text-left">
+					<div className="flex flex-col gap-2 w-full">
+						<h2 className="heading-two text-left">{ heading }</h2>
+						<p className="!my-0 text-left !text-base lg:!text-lg">
 							{ text }
 						</p>
 					</div>
-					<a
-						href={ buttonUrl || '#' }
-						className="w-fit mx-auto md:mx-0 group"
-					>
-						<span className="inline-flex !text-black items-center gap-1 border-b border-black pb-[2px]">
-							<span className="text-black text-base">
-								{ buttonText || 'Learn More' }
-							</span>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="1.5"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								className="lucide lucide-arrow-right transition-transform duration-300 ease-in-out group-hover:translate-x-[3px]"
-							>
-								<path d="M5 12h14" />
-								<path d="m12 5 7 7-7 7" />
-							</svg>
-						</span>
+					<a href={ buttonUrl }>
+						<button className="flex flex-row items-center w-fit gap-1 cursor-pointer !text-lg group relative pb-0.5">
+							<div className="flex items-center border-b border-black gap-1 pb-0.5">
+								<span className="!text-black !text-base sm:!text-lg">
+									{ buttonText }
+								</span>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="18"
+									height="18"
+									fill="#000000"
+									viewBox="0 0 256 256"
+									className="group-hover:translate-x-1 transition-transform duration-300 ease-in-out"
+								>
+									<path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z" />
+								</svg>
+							</div>
+						</button>
 					</a>
 				</div>
-				<div className=" w-full flex items-center gap-5 justify-end max-w-[300px]  md:max-w-none mx-auto p-4 sm:p-0">
-					<div className="relative mx-auto">
-						<div className="flex justify-center items-center relative ">
-							{ image?.url && (
-								<div className="w-full aspect-[3/4] max-w-[260px] md:max-w-[360px] rounded-lg shadow-lg rotate-[-8deg]  bg-white p-1">
-									<img
-										src={ image.url }
-										className="w-full h-full aspect-[3/4] max-w-[260px] md:max-w-[360px] object-cover "
-									/>
-								</div>
-							) }
 
-							{ image2?.url && (
-								<div className="w-full  aspect-[3/4] max-w-[260px] md:max-w-[360px]  rounded-lg shadow-lg  -ml-24 sm:-ml-32 lg:-ml-[160px] z-10 bg-white p-1 rotate-[2deg]">
-									<img
-										src={ image2.url }
-										className="w-full h-full aspect-[3/4] max-w-[260px] md:max-w-[360px] object-cover "
-									/>
-								</div>
-							) }
+				<div className="flex justify-center items-center relative col-span-3">
+					{ image && image.id && (
+						<div className="max-w-[400px] w-full rotate-5 relative left-10 shadow-lg">
+							<img
+								src={ image.url }
+								alt={ image.alt || '' }
+								className="aspect-[3/4] w-full object-cover"
+								loading="lazy"
+								decoding="async"
+								fetchPriority="high"
+							/>
 						</div>
-					</div>
+					) }
+					{ image2 && image2.id && (
+						<div className="max-w-[400px] w-full rotate-[-10deg] shadow-lg relative right-10">
+							<img
+								src={ image2.url }
+								alt={ image2.alt || '' }
+								className="aspect-[3/4] w-full object-cover"
+								loading="lazy"
+								decoding="async"
+								fetchPriority="auto"
+							/>
+						</div>
+					) }
 				</div>
 			</div>
 		</section>

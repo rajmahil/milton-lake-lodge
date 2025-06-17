@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const FormBlock = ( props ) => {
 	const {
 		heading = 'Your Adventure Awaits',
-		topHeading = 'Your Adventure Awaits',
+		// topHeading = 'Your Adventure Awaits',
 		fields = [],
 		formTitle,
 	} = props;
@@ -298,9 +298,9 @@ const FormBlock = ( props ) => {
 		<section className="my-unique-plugin-wrapper-class plugin-custom-block ">
 			<div className="section-padding static-background flex flex-col gap-12 !bg-brand-light-grey">
 				<div class="max-w-3xl w-full mx-auto flex flex-col gap-4">
-					<p class="decorative-text text-brand-yellow-dark text-center text-3xl lg:!text-4xl">
+					{ /* <p class="decorative-text text-brand-yellow-dark text-center text-3xl lg:!text-4xl">
 						{ topHeading }
-					</p>
+					</p> */ }
 					<h2 class="heading-two text-center text-brand-green-dark">
 						{ heading }
 					</h2>

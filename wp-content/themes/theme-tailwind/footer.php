@@ -6,6 +6,12 @@
   
   $upload_dir = wp_upload_dir();
   $upload_url = $upload_dir['baseurl'];
+  
+  $compass_image_id = get_theme_mod('boilerplate_compass_image', 0);
+  $compass_image_url = $compass_image_id ? wp_get_attachment_image_url($compass_image_id, 'full') : '';
+  $compass_alt = $compass_image_id ? get_post_meta($compass_image_id, '_wp_attachment_image_alt', true) : 'Milton Lake Lodge | Fishing Saskatchewan';
+  
+  $final_compass_url = $compass_image_url ?: $upload_url . '/effects/compass-footer.png';
   ?>
 
   <div
@@ -16,9 +22,9 @@
     class="static-background w-full bg-brand-light-grey flex items-center justify-center"
   >
     <div class="w-40 h-40 bg-brand-green-dark rounded-full relative translate-y-[60%] p-4">
-      <img
-        src="<?php echo esc_url($upload_url . '/effects/compass-footer.png'); ?>"
-        alt="Milton Lake Lodge | Fishing Saskatchewan"
+    <img
+        src="<?php echo esc_url($final_compass_url); ?>"
+        alt="<?php echo esc_attr($compass_alt); ?>"
         width="160"
         height="160"
         class="select-none pointer-events-none transition-transform duration-500 ease-in-out will-change-transform"
