@@ -25,7 +25,7 @@ $features = $attributes['features'] ?? [];
         $image_id = $image['id'] ?? 0;
 
       ?>
-      <div class="flex flex-col lg:flex-row !items-start lg:!items-center gap-8 md:gap-16 <?php echo $is_even ? 'lg:!flex-row' : 'lg:!flex-row-reverse'; ?>">
+      <div class="flex flex-col lg:flex-row justify-between !items-start  lg:!items-center gap-8 md:gap-16 <?php echo $is_even ? 'lg:!flex-row ' : 'lg:!flex-row-reverse'; ?>">
       
         <div class="relative w-full lg:!ml-2 max-w-[90%] md:max-w-[70%] lg:max-w-[45%]">
           <?php 
@@ -43,11 +43,11 @@ $features = $attributes['features'] ?? [];
           ?>
       </div>
 
-        <div class="w-full lg:w-1/2">
+        <div class="w-full lg:w-1/2  lg:!max-w-[48%] ">
           <h3 class="!text-2xl sm:!text-3xl md:!text-4xl lg:!text-5xl font-semibold !my-4">
             <?php echo esc_html($feature['heading'] ?? ''); ?>
           </h3>
-          <p class="!text-base lg:!text-lg leading-relaxed  lg:!max-w-[80%]">
+          <p class="!text-base lg:!text-lg leading-relaxed ">
             <?php echo esc_html($feature['text'] ?? ''); ?>
           </p>
         </div>

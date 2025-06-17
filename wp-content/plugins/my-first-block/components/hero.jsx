@@ -14,12 +14,12 @@ const Hero = ( {
 		<section className="plugin-custom-block bg-brand-green">
 			<section className="h-[95vh] min-h-[800px] flex items-end overflow-hidden relative not-prose section-padding pb-6  w-full  rounded-b-4xl overlfow-hidden ">
 				{ /* Background Image */ }
-				<div className="absolute top-0 left-0 w-full h-full z-[0] pointer-events-none select-none">
+				<div className="absolute top-0 left-0 w-full h-full z-[0] pointer-events-none select-none !">
 					{ image?.url ? (
 						<img
 							src={ image.url }
 							alt={ image.alt || '' }
-							className="object-cover object-center w-full h-full"
+							className="object-cover object-center w-full h-full "
 							loading="eager"
 							fetchpriority="high"
 							decoding="async"
@@ -145,9 +145,9 @@ const Hero = ( {
 										( review, idx ) => (
 											<div
 												key={ `review-${ x }-${ idx }` }
-												className="py-2 px-4 rounded-lg flex flex-row gap-4 items-center w-[350px] flex-shrink-0"
+												className="py-2 px-4 rounded-lg flex flex-row gap-4 items-center !min-w-[300px]  md:!min-w-[350px] "
 											>
-												<div className="h-12 w-12 aspect-square rounded-full bg-white overflow-hidden">
+												<div className="h-12 w-12 aspect-square rounded-full bg-white overflow-hidden flex-shrink-0">
 													{ review.image && (
 														<img
 															src={ review.image }
@@ -156,7 +156,7 @@ const Hero = ( {
 														/>
 													) }
 												</div>
-												<p className="text-sm text-left leading-tight !my-0">
+												<p className="!text-sm text-left leading-tight !my-0">
 													{ review.text }
 												</p>
 											</div>
