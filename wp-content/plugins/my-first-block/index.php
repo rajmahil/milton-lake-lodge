@@ -42,8 +42,10 @@ add_action('wp_enqueue_scripts', function () {
     }, $posts);
 
     wp_enqueue_script('my-calendar-frontend', plugins_url('src/calendar-section/frontend.js', __FILE__), [], null, true);
+    wp_enqueue_script('my-calendar-edit', plugins_url('src/calendar-section/edit.js', __FILE__), [], null, true);
 
     wp_localize_script('my-calendar-frontend', 'myCalendarData', ['posts' => $formatted]);
+    wp_localize_script('my-calendar-edit', 'myCalendarData', ['posts' => $formatted]);
 });
 
 // Handle custom form email
@@ -96,7 +98,6 @@ function handle_custom_form_email()
     $form_template = isset($_POST['form_template']) ? sanitize_text_field($_POST['form_template']) : 'default';
     $form_title = isset($_POST['form_title']) ? sanitize_text_field($_POST['form_title']) : 'Form Submission';
 
-
     foreach ($_POST as $key => $value) {
         if (in_array($key, $skip)) {
             continue;
@@ -112,13 +113,13 @@ function handle_custom_form_email()
             $data[$key] = sanitize_text_field($value);
         }
     }
-    
+
     // Insert a new Submission post
     $name = $data['name'] ?? 'Anonymous';
     $post_title = "{$name} | {$form_title}";
     $post_id = wp_insert_post([
-        'post_title'  => sanitize_text_field($post_title),
-        'post_type'   => 'submissions',
+        'post_title' => sanitize_text_field($post_title),
+        'post_type' => 'submissions',
         'post_status' => 'publish',
     ]);
 
@@ -127,16 +128,16 @@ function handle_custom_form_email()
     foreach ($data as $key => $value) {
         $label = ucwords(str_replace('_', ' ', $key));
         $val = is_array($value) ? implode(', ', $value) : esc_html($value);
-    
+
         $content_blocks .= "<!-- wp:paragraph --><p><strong>{$label}:</strong> {$val}</p><!-- /wp:paragraph -->\n";
     }
-    
+
     // Now update post content
     wp_update_post([
         'ID' => $post_id,
         'post_content' => $content_blocks,
     ]);
-    
+
     // Build HTML rows for email
     $rows = '';
     foreach ($data as $key => $value) {
@@ -167,7 +168,7 @@ function handle_custom_form_email()
 
     $user_email = isset($data['email']) && is_email($data['email']) ? $data['email'] : null;
 
-    $recipients = ['ayush@306technologies.com'];
+    $recipients = ['raj@306technologies.com'];
     if ($user_email) {
         $recipients[] = $user_email;
     }

@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, ComboboxControl } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
+import FullCalendar from '../../components/full-calendar';
 
 export default function Edit( { attributes, setAttributes } ) {
 	const { selectedPostId } = attributes;
@@ -20,7 +21,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		[]
 	);
 
-	console.log( 'Posts:', posts );
+	console.log( 'Posts:', myCalendarData );
 
 	// Convert to options array for ComboboxControl
 	const postOptions = posts
@@ -29,6 +30,8 @@ export default function Edit( { attributes, setAttributes } ) {
 				label: post.title.rendered,
 		  } ) )
 		: [];
+
+	const selectedPost = posts?.find( ( post ) => post.id === selectedPostId );
 
 	return (
 		<div { ...blockProps }>
@@ -45,12 +48,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			{ selectedPostId && (
-				<p>
-					{ __( 'Selected Post ID:', 'my-plugin' ) }{ ' ' }
-					{ selectedPostId }
-				</p>
-			) }
+			<FullCalendar { ...attributes } selectedPost={ selectedPost } />
 		</div>
 	);
 }
