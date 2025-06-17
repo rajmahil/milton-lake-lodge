@@ -16,7 +16,7 @@
   }
 }
 .wp-block-image[style*=border-radius] img,.wp-block-image[style*=border-radius]>a{
-  border-radius:inherit;
+  border-radius: 12px;
 }
 .wp-block-image.has-custom-border img{
   box-sizing:border-box;

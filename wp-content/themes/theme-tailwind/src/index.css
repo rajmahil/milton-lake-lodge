@@ -4,6 +4,9 @@
 
 @source inline("md:grid-cols-2");
 @source inline("sm:rounded-full");
+@source inline("flex");
+@source inline("flex-col");
+@source inline("md:flex-row");
 @source inline("sm:flex-row");
 @source inline("sm:w-fit");
 @source inline("lg:grid-cols-2");
@@ -17,6 +20,7 @@
 @source inline("lg:text-2xl");
 @source inline("md:text-2xl");
 @source inline("lg:grid-cols-5");
+@source inline("lg:flex-row");
 
 @theme {
   --font-heading: "Bebas Neue Pro", sans-serif;

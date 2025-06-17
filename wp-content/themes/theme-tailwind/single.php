@@ -50,7 +50,7 @@ get_header(); ?>
                 // Only render if the block actually produced some output
                 if (!empty(trim($rendered_block))) {
                     echo '<div class="section-padding !py-0">';
-                    echo '  <div class="max-w-container w-full mx-auto">';
+                    echo '  <div class="max-w-container w-full mx-auto prose">';
                     echo $rendered_block;
                     echo '  </div>';
                     echo '</div>';

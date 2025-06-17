@@ -42,7 +42,7 @@ if ($menu) {
                 if (!empty(trim($rendered_block))) {
                     // Using the wrapper from your single.php example
                     echo '<div class="section-padding !py-0">';
-                    echo '  <div class="max-w-container w-full mx-auto">';
+                    echo '  <div class="max-w-container w-full mx-auto prose">';
                     echo $rendered_block;
                     echo '  </div>';
                     echo '</div>';

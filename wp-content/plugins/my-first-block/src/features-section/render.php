@@ -7,7 +7,7 @@ $heading = $attributes['heading'] ?? '';
 $features = $attributes['features'] ?? [];
 ?>
 
-<section class="plugin-custom-block not-prose section-padding w-full static-background">
+<section class="plugin-custom-block not-prose section-padding w-full">
   <div class="max-w-container mx-auto flex flex-col gap-16">
 
     <?php if ($heading): ?>
@@ -26,15 +26,12 @@ $features = $attributes['features'] ?? [];
       <div class="flex flex-col lg:flex-row items-start lg:items-center gap-8 md:gap-16 <?php echo $is_even ? 'lg:flex-row' : 'lg:flex-row-reverse'; ?>">
 
         <!-- Image -->
-        <div
-          class="relative w-full ml-2 max-w-[90%] md:max-w-[70%] lg:max-w-[45%] -rotate-2 border-2 border-black rounded-xl"
-        >
+        <div class="relative w-full ml-2 max-w-[90%] md:max-w-[70%] lg:max-w-[45%]">
           <img
             src="<?php echo esc_url($image_url); ?>"
             alt="<?php echo esc_attr($image_alt); ?>"
-            class="w-full rounded-lg h-auto object-cover aspect-[1.8/1] relative z-[2]"
+            class="w-full rounded-lg h-auto object-cover aspect-[4/3] relative z-[2]"
           />
-          <div class="rounded-xl w-full h-full absolute right-2 top-2 bg-black z-[1]"></div>
         </div>
 
         <!-- Text Area -->
