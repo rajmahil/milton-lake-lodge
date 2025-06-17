@@ -6,6 +6,7 @@
 $topHeading = $attributes['topHeading'] ?? '';
 $reviews = $attributes['reviews'] ?? [];
 $totalSlides = count($reviews);
+
 ?>
 
 <section
@@ -131,6 +132,8 @@ $totalSlides = count($reviews);
       <?php endif; ?>
 
       <?php if (!empty($review['image2']['url'])): ?>
+      
+
       <div
         x-ref="right-<?php echo $i; ?>"
         x-show="currentIndex === <?php echo $i; ?>"

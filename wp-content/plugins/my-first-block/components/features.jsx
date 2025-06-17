@@ -12,22 +12,21 @@ const Features = ( { heading, features = [] } ) => {
 					{ features.map( ( feature, idx ) => {
 						const isEven = idx % 2 === 0;
 
-						// Get image data with fallback
 						const image = feature.image || {};
 						const imageUrl =
-							image.sizes?.large?.url || image.url || '';
-						const imageAlt = image.alt || '';
+							image?.sizes?.large?.url || image?.url || '';
+						const imageAlt = image?.alt || '';
 
 						return (
 							<div
 								key={ `feature-${ idx }` }
-								className={ `flex flex-col lg:flex-row items-start lg:items-center gap-8 md:gap-16 ${
+								className={ `flex flex-col lg:flex-row !items-start lg:!items-center gap-8 md:gap-16 ${
 									isEven
-										? 'lg:flex-row'
-										: 'lg:flex-row-reverse'
+										? 'lg:!flex-row'
+										: 'lg:!flex-row-reverse'
 								}` }
 							>
-								<div className="relative w-full ml-2 max-w-[90%] md:max-w-[70%] lg:max-w-[45%]">
+								<div className="relative w-full lg:!ml-2 max-w-[90%] md:max-w-[70%] lg:max-w-[45%]">
 									{ imageUrl ? (
 										<img
 											src={ imageUrl }
@@ -40,10 +39,10 @@ const Features = ( { heading, features = [] } ) => {
 								</div>
 
 								<div className="w-full lg:w-1/2">
-									<h3 className="text-2xl font-semibold my-4">
+									<h3 className="!text-2xl sm:!text-3xl md:!text-4xl lg:!text-5xl font-semibold !my-4">
 										{ feature.heading }
 									</h3>
-									<p className="text-base leading-relaxed">
+									<p className="!text-base lg:!text-lg leading-relaxed lg:!max-w-[80%]">
 										{ feature.text }
 									</p>
 								</div>

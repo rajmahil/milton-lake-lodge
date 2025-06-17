@@ -25,9 +25,9 @@ $features = $attributes['features'] ?? [];
         $image_id = $image['id'] ?? 0;
 
       ?>
-      <div class="flex flex-col lg:flex-row items-start lg:items-center gap-8 md:gap-16 <?php echo $is_even ? 'lg:flex-row' : 'lg:flex-row-reverse'; ?>">
+      <div class="flex flex-col lg:flex-row !items-start lg:!items-center gap-8 md:gap-16 <?php echo $is_even ? 'lg:!flex-row' : 'lg:!flex-row-reverse'; ?>">
       
-        <div class="relative w-full ml-2 max-w-[90%] md:max-w-[70%] lg:max-w-[45%]">
+        <div class="relative w-full lg:!ml-2 max-w-[90%] md:max-w-[70%] lg:max-w-[45%]">
           <?php 
             if ($image_id) {
               echo wp_get_attachment_image($image_id, 'large', false, [
@@ -44,10 +44,10 @@ $features = $attributes['features'] ?? [];
       </div>
 
         <div class="w-full lg:w-1/2">
-          <h3 class="text-2xl font-semibold my-4">
+          <h3 class="!text-2xl sm:!text-3xl md:!text-4xl lg:!text-5xl font-semibold !my-4">
             <?php echo esc_html($feature['heading'] ?? ''); ?>
           </h3>
-          <p class="text-base leading-relaxed">
+          <p class="!text-base lg:!text-lg leading-relaxed  lg:!max-w-[80%]">
             <?php echo esc_html($feature['text'] ?? ''); ?>
           </p>
         </div>

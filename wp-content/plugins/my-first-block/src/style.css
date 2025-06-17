@@ -23,7 +23,6 @@
 @source inline("lg:grid-cols-5");
 @source inline("lg:flex-row");
 
-
 /* Global wrapper class for all your blocks */
 .my-unique-plugin-wrapper-class {
 	@import "tailwindcss/preflight.css" layer(base);
@@ -268,6 +267,9 @@
 
 	.heading-two {
 		@apply !my-0  !text-4xl sm:!text-5xl md:!text-6xl lg:!text-7xl;
+	}
+	.heading-three {
+		@apply !my-0  !text-3xl sm:!text-4xl md:!text-5xl lg:!text-6xl;
 	}
 
 	.my-calendar-wrapper .fc-theme-standard .fc-scrollgrid {
