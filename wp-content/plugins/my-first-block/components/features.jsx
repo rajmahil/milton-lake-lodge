@@ -3,7 +3,7 @@ const Features = ( { heading, features = [] } ) => {
 		<section className="plugin-custom-block not-prose section-padding w-full static-background">
 			<div className="max-w-container mx-auto flex flex-col gap-16">
 				{ heading && (
-					<h2 className="heading-two !text-left lg:!max-w-[60%]">
+					<h2 className="heading-two text-left lg:max-w-[60%]">
 						{ heading }
 					</h2>
 				) }
@@ -11,6 +11,13 @@ const Features = ( { heading, features = [] } ) => {
 				<div className="flex flex-col w-full gap-16 lg:gap-24">
 					{ features.map( ( feature, idx ) => {
 						const isEven = idx % 2 === 0;
+
+						// Get image data with fallback
+						const image = feature.image || {};
+						const imageUrl =
+							image.sizes?.large?.url || image.url || '';
+						const imageAlt = image.alt || '';
+
 						return (
 							<div
 								key={ `feature-${ idx }` }
@@ -20,24 +27,23 @@ const Features = ( { heading, features = [] } ) => {
 										: 'lg:flex-row-reverse'
 								}` }
 							>
-								<div className="relative w-full ml-2 max-w-[90%] md:max-w-[70%] lg:max-w-[45%] -rotate-2 border-2 border-black rounded-xl">
-									{ feature.image?.url ? (
+								<div className="relative w-full ml-2 max-w-[90%] md:max-w-[70%] lg:max-w-[45%]">
+									{ imageUrl ? (
 										<img
-											src={ feature.image.url }
-											alt={ feature.image.alt || '' }
-											className="w-full rounded-lg h-auto object-cover aspect-[1.8/1] relative z-[2]"
+											src={ imageUrl }
+											alt={ imageAlt }
+											className="w-full rounded-lg h-auto object-cover aspect-[4/3] relative z-[2]"
 										/>
 									) : (
-										<div className="w-full rounded-lg h-auto aspect-[1.8/1] relative z-[2] bg-gray-200 border-2 border-dashed" />
+										<div className="w-full rounded-lg h-auto aspect-[4/3] bg-gray-200 border-2 border-dashed" />
 									) }
-									<div className="rounded-xl w-full h-full absolute right-2 top-2 bg-black z-[1]"></div>
 								</div>
 
 								<div className="w-full lg:w-1/2">
-									<h3 className="!text-2xl font-semibold my-4">
+									<h3 className="text-2xl font-semibold my-4">
 										{ feature.heading }
 									</h3>
-									<p className="!text-base leading-relaxed">
+									<p className="text-base leading-relaxed">
 										{ feature.text }
 									</p>
 								</div>

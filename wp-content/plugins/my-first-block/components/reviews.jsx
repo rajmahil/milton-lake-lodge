@@ -261,8 +261,8 @@ export default function ReviewsSection( { topHeading, reviews = [] } ) {
 										key={ i }
 										className={ `!h-3 !w-3 !rounded-full !transition-colors !cursor-pointer ${
 											currentIndex === i
-												? '!bg-brand-green'
-												: '!border !border-brand-green'
+												? '!bg-brand-green-dark'
+												: '!border !border-brand-green-dark'
 										}` }
 										onClick={ () => goToSlide( i ) }
 										aria-label={ `Go to review ${ i + 1 }` }
