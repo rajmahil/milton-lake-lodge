@@ -194,7 +194,7 @@ function handle_custom_form_email()
 
     $user_email = isset($data['email']) && is_email($data['email']) ? $data['email'] : null;
 
-    $recipients = ['ayush@306technologies.com'];
+    $recipients = ['raj@306technologies.com'];
     if ($user_email) {
         $recipients[] = $user_email;
     }
