@@ -36,6 +36,10 @@
 		"imagesSpeed": {
 			"type": "string",
 			"default": "medium"
+		},
+		"sectionId": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

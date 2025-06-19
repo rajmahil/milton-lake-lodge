@@ -1,5 +1,9 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InspectorControls,
+	InspectorAdvancedControls,
+} from '@wordpress/block-editor';
 import {
 	PanelBody,
 	TextControl,
@@ -12,7 +16,7 @@ import '../style.css';
 import PriceTable from '../../components/price-table';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { heading, tabs } = attributes;
+	const { heading, tabs, sectionId } = attributes;
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
 		style: { maxWidth: '100%', margin: '0 auto' },
@@ -104,6 +108,16 @@ export default function Edit( { attributes, setAttributes } ) {
 			);
 		}
 		return null;
+	};
+
+	const slugPattern = /^[a-z0-9-]*$/;
+
+	const onChangeSectionId = ( value ) => {
+		const sanitized = value.toLowerCase().replace( /[^a-z0-9-]/g, '' );
+
+		if ( slugPattern.test( sanitized ) ) {
+			setAttributes( { sectionId: sanitized } );
+		}
 	};
 
 	return (
@@ -358,6 +372,15 @@ export default function Edit( { attributes, setAttributes } ) {
 						{ __( 'Add Package', 'your-text-domain' ) }
 					</Button>
 				</div>
+
+				<InspectorAdvancedControls>
+					<TextControl
+						label="Section ID (slug, hyphens only)"
+						value={ sectionId }
+						onChange={ onChangeSectionId }
+						help="Use lowercase letters, numbers, and hyphens only."
+					/>
+				</InspectorAdvancedControls>
 			</InspectorControls>
 
 			<PriceTable { ...attributes } />

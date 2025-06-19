@@ -8,9 +8,13 @@ const Hero = ( {
 	image,
 	tripAdvisorStars,
 	tripAdvisorReviews = [],
+	sectionId,
 } ) => {
 	return (
-		<section className="plugin-custom-block bg-brand-green">
+		<section
+			id={ sectionId || undefined }
+			className="plugin-custom-block bg-brand-green"
+		>
 			<section className="h-[95vh] min-h-[800px] flex items-end overflow-hidden relative not-prose section-padding pb-6  w-full  rounded-b-4xl overlfow-hidden ">
 				{ /* Background Image */ }
 				<div className="absolute top-0 left-0 w-full h-full z-[0] pointer-events-none select-none !">

@@ -16,6 +16,10 @@
 		"features": {
 			"type": "array",
 			"default": []
+		},
+		"sectionId": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

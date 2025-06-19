@@ -4,6 +4,7 @@ import {
 	InspectorControls,
 	MediaUpload,
 	MediaUploadCheck,
+	InspectorAdvancedControls,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -14,7 +15,7 @@ import {
 import Carousel from '../../components/carousel';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { heading, subheading, items = [] } = attributes;
+	const { heading, subheading, items = [], sectionId } = attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'carousel-section-wrapper',
@@ -59,6 +60,16 @@ export default function Edit( { attributes, setAttributes } ) {
 		const updated = [ ...items ];
 		updated[ index ].image = { id: null, url: '', alt: '' };
 		setAttributes( { items: updated } );
+	};
+
+	const slugPattern = /^[a-z0-9-]*$/;
+
+	const onChangeSectionId = ( value ) => {
+		const sanitized = value.toLowerCase().replace( /[^a-z0-9-]/g, '' );
+
+		if ( slugPattern.test( sanitized ) ) {
+			setAttributes( { sectionId: sanitized } );
+		}
 	};
 
 	return (
@@ -204,6 +215,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						{ __( 'Add Item', 'carousel-section-block' ) }
 					</Button>
 				</div>
+				<InspectorAdvancedControls>
+					<TextControl
+						label="Section ID (slug, hyphens only)"
+						value={ sectionId }
+						onChange={ onChangeSectionId }
+						help="Use lowercase letters, numbers, and hyphens only."
+					/>
+				</InspectorAdvancedControls>
 			</InspectorControls>
 
 			<Carousel

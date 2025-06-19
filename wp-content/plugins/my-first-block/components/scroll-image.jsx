@@ -1,7 +1,13 @@
 import { useRef, useState, useEffect } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-const ScrollImage = ( { heading, buttonText, buttonUrl, image } ) => {
+const ScrollImage = ( {
+	heading,
+	buttonText,
+	buttonUrl,
+	image,
+	sectionId,
+} ) => {
 	const containerRef = useRef( null );
 	const [ scale, setScale ] = useState( 0.9 );
 	const tickingRef = useRef( false );
@@ -76,7 +82,10 @@ const ScrollImage = ( { heading, buttonText, buttonUrl, image } ) => {
 	const imageHeight = image?.height || '';
 
 	return (
-		<section className="plugin-custom-block">
+		<section
+			id={ sectionId || undefined }
+			className="plugin-custom-block static-background"
+		>
 			<div
 				ref={ containerRef }
 				className="relative w-full overflow-hidden rounded-2xl h-[150vh] flex items-start justify-start not-prose"

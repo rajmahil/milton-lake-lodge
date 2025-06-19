@@ -6,10 +6,12 @@
 $topHeading = $attributes['topHeading'] ?? '';
 $reviews = $attributes['reviews'] ?? [];
 $totalSlides = count($reviews);
+$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
 
 ?>
 
 <section
+id="<?php echo $section_id; ?>" 
   class="plugin-custom-block not-prose section-padding w-full"
   x-data="{
       currentIndex: 0,

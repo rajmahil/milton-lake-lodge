@@ -17,10 +17,13 @@ $speed_map = [
 $base_duration = $speed_map[$imagesSpeed] ?? 30;
 $reduced_duration = max($base_duration - 15, 5);
 $animation_class = 'showcase-animate-' . uniqid();
+$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
+
 
 ?>
 
 <section
+  id="<?php echo $section_id; ?>"
   class="plugin-custom-block flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-green bg-repeat bg-blend-hard-light bg-size-[450px]"
   style="background-image: url('<?php echo !empty($background_image['url']) 
     ? esc_url($background_image['url']) 

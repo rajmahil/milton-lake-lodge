@@ -12,6 +12,7 @@ $button_url = $attributes['buttonUrl'] ?? '#';
 $button2_text = $attributes['button2Text'] ?? 'Learn More';
 $button2_url = $attributes['button2Url'] ?? '#';
 $image = $attributes['image'] ?? null;
+$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
 
 $tripAdvisorStars = $attributes['tripAdvisorStars'];
 $tripAdvisorReviews = $attributes['tripAdvisorReviews'];
@@ -44,7 +45,7 @@ if ($image) {
 }
 ?>
 
-<section class="plugin-custom-block bg-brand-green">
+<section  id="<?php echo $section_id; ?>" class="plugin-custom-block bg-brand-green">
   <section
     class="h-[95vh] min-h-[800px] flex items-end overflow-hidden relative not-prose section-padding pb-6  w-full  rounded-b-4xl overlfow-hidden "
   >

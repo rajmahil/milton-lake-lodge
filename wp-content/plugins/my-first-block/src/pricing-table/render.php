@@ -7,6 +7,7 @@
 $heading = $attributes['heading'] ?? 'Milton Lake Lodge Mini-Lodge & Outpost Combo Trips';
 $tabs = $attributes['tabs'] ?? [];
 $rates = get_exchange_rates('USD');
+$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
 
 error_log('Exchange rates: ' . print_r($rates, true));
 
@@ -14,6 +15,7 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
 ?>
 
 <section
+  id="<?php echo $section_id; ?>" 
   class="plugin-custom-block not-prose section-padding w-full"
   <?php echo get_block_wrapper_attributes(); ?>
 >

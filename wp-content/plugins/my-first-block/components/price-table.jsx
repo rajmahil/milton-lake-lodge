@@ -1,31 +1,46 @@
 import { useState, useEffect, useRef } from 'react';
 
-function convertPrice( price, fromCAD = true ) {
-	const currency = 'CAD';
-	const exchangeRate = 1.25;
+const exchangeRate = 1.36; // USD to CAD
+
+function convertPrice( price, fromCAD = false ) {
+	// fromCAD=false means price is USD by default
 	if ( ! price || isNaN( parseFloat( price ) ) ) return price;
 	const numPrice = parseFloat( price );
-	if ( currency === 'CAD' ) {
-		return fromCAD ? numPrice : numPrice * exchangeRate;
+
+	if ( fromCAD ) {
+		// convert CAD -> USD
+		return numPrice / exchangeRate;
 	} else {
-		return fromCAD ? numPrice / exchangeRate : numPrice;
+		// USD -> CAD
+		return numPrice * exchangeRate;
 	}
 }
 
-function formatPrice( price, priceType ) {
+function formatPrice( price, priceType, currency ) {
 	if ( priceType !== 'currency' ) return price;
 	if ( ! price || isNaN( parseFloat( price ) ) ) return 'N/A';
-	const converted = convertPrice( price, true );
+
+	let amount =
+		currency === 'CAD'
+			? convertPrice( price, false ) /* USD -> CAD */
+			: parseFloat( price );
+
+	if ( currency === 'USD' ) {
+		amount = parseFloat( price ); // USD no conversion
+	} else if ( currency === 'CAD' ) {
+		amount = price * exchangeRate;
+	}
+
 	return new Intl.NumberFormat( 'en-US', {
 		minimumFractionDigits: 0,
-		maximumFractionDigits: 0,
-	} ).format( Math.round( converted ) );
+		maximumFractionDigits: 2,
+	} ).format( amount );
 }
 
-const PriceTable = ( { heading, tabs } ) => {
+const PriceTable = ( { heading, tabs, sectionId } ) => {
 	const [ activeTab, setActiveTab ] = useState( 1 );
+	const [ currency, setCurrency ] = useState( 'USD' ); // default USD
 	const [ slideDirection, setSlideDirection ] = useState( 'right' );
-	const [ currency, setCurrency ] = useState( 'CAD' );
 
 	const tabButtonsRef = useRef( [] );
 
@@ -41,14 +56,18 @@ const PriceTable = ( { heading, tabs } ) => {
 	}, [ tabs ] );
 
 	return (
-		<section className="plugin-custom-block not-prose section-padding w-full static-background">
-			<div className=" max-w-container mx-auto flex flex-col gap-8">
+		<section
+			id={ sectionId || undefined }
+			className="plugin-custom-block not-prose section-padding w-full static-background"
+		>
+			<div className="max-w-container mx-auto flex flex-col gap-8">
 				<h2 className="!my-0 text-center heading-two font-extrabold uppercase text-brand-green">
 					{ heading }
 				</h2>
 
 				{ tabs.length > 0 ? (
 					<div className="flex flex-col gap-8">
+						{ /* Tab Buttons */ }
 						<div className="bg-white rounded-lg sm:rounded-full w-full sm:w-fit mx-auto p-1">
 							<div className="flex flex-col sm:flex-row justify-center">
 								{ tabs.map( ( tab, index ) => (
@@ -73,6 +92,7 @@ const PriceTable = ( { heading, tabs } ) => {
 							</div>
 						</div>
 
+						{ /* Tab Content */ }
 						<div
 							className="relative overflow-hidden"
 							style={ { height: 'auto', minHeight: '300px' } }
@@ -88,7 +108,7 @@ const PriceTable = ( { heading, tabs } ) => {
 											: 'hidden -translate-x-full opacity-0'
 									}` }
 								>
-									<div className="bg-white rounded-2xl  overflow-hidden">
+									<div className="bg-white rounded-2xl overflow-hidden">
 										<div className="!grid !grid-cols-3 md:!grid-cols-2 py-6 px-4 sm:px-8 !text-base !text-gray-800 gap-5 lg:gap-10">
 											<p className="!col-span-2 md:!col-span-1 !my-0">
 												Package Type
@@ -123,6 +143,7 @@ const PriceTable = ( { heading, tabs } ) => {
 												</div>
 											</div>
 										</div>
+
 										<div className="pt-8 md:pt-0">
 											{ tab.features &&
 											tab.features.length > 0 ? (
@@ -167,7 +188,8 @@ const PriceTable = ( { heading, tabs } ) => {
 																				$
 																				{ formatPrice(
 																					feature.price,
-																					'currency'
+																					'currency',
+																					currency
 																				) }
 																			</span>{ ' ' }
 																			<span className="!text-sm">
@@ -190,7 +212,7 @@ const PriceTable = ( { heading, tabs } ) => {
 												)
 											) : (
 												<p className="text-gray-800 px-4 sm:px-8 !py-0 !pb-5 !text-base">
-													No features avaialble for
+													No features available for
 													this package.
 												</p>
 											) }

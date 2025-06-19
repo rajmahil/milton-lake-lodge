@@ -3,6 +3,7 @@ import {
 	useBlockProps,
 	MediaUpload,
 	InspectorControls,
+	InspectorAdvancedControls,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -14,7 +15,7 @@ import {
 import TwoCol from '../../components/two-col';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { topHeading, heading, buttonText, buttonUrl, text } = attributes;
+	const { sectionId, heading, buttonText, buttonUrl, text } = attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
@@ -79,6 +80,16 @@ export default function Edit( { attributes, setAttributes } ) {
 		);
 	};
 
+	const slugPattern = /^[a-z0-9-]*$/;
+
+	const onChangeSectionId = ( value ) => {
+		const sanitized = value.toLowerCase().replace( /[^a-z0-9-]/g, '' );
+
+		if ( slugPattern.test( sanitized ) ) {
+			setAttributes( { sectionId: sanitized } );
+		}
+	};
+
 	return (
 		<div { ...blockProps }>
 			<InspectorControls>
@@ -131,6 +142,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						}
 					/>
 				</PanelBody>
+				<InspectorAdvancedControls>
+					<TextControl
+						label="Section ID (slug, hyphens only)"
+						value={ sectionId }
+						onChange={ onChangeSectionId }
+						help="Use lowercase letters, numbers, and hyphens only."
+					/>
+				</InspectorAdvancedControls>
 			</InspectorControls>
 
 			<TwoCol { ...attributes } />

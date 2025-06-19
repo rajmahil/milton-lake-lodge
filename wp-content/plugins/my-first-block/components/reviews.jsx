@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 
-export default function ReviewsSection( { topHeading, reviews = [] } ) {
+export default function ReviewsSection( {
+	topHeading,
+	reviews = [],
+	sectionId,
+} ) {
 	const [ currentIndex, setCurrentIndex ] = useState( 0 );
 	const [ dragging, setDragging ] = useState( false );
 	const [ startX, setStartX ] = useState( 0 );
@@ -84,7 +88,10 @@ export default function ReviewsSection( { topHeading, reviews = [] } ) {
 				}
 			` }</style>
 
-			<section className="plugin-custom-block not-prose section-padding w-full">
+			<section
+				id={ sectionId || undefined }
+				className="plugin-custom-block not-prose section-padding w-full static-background"
+			>
 				<div className="max-w-container mx-auto flex flex-col lg:grid grid-cols-2 xl:grid-cols-5 !items-center !justify-center gap-20 lg:gap-10">
 					{ /* Images Section */ }
 					<div className="relative w-full !flex !items-center !justify-center col-span-1 xl:col-span-3 !min-h-[280px] 400:!min-h-[500px]">

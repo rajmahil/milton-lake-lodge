@@ -4,6 +4,7 @@ import {
 	MediaUpload,
 	InspectorControls,
 	MediaUploadCheck,
+	InspectorAdvancedControls,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -25,6 +26,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		image,
 		tripAdvisorStars,
 		tripAdvisorReviews,
+		sectionId,
 	} = attributes;
 	// This is crucial - it provides the block wrapper with proper WordPress functionality
 	const blockProps = useBlockProps( {
@@ -50,6 +52,16 @@ export default function Edit( { attributes, setAttributes } ) {
 	const removeReview = ( index ) => {
 		const newReviews = tripAdvisorReviews.filter( ( _, i ) => i !== index );
 		setAttributes( { tripAdvisorReviews: newReviews } );
+	};
+
+	const slugPattern = /^[a-z0-9-]*$/;
+
+	const onChangeSectionId = ( value ) => {
+		const sanitized = value.toLowerCase().replace( /[^a-z0-9-]/g, '' );
+
+		if ( slugPattern.test( sanitized ) ) {
+			setAttributes( { sectionId: sanitized } );
+		}
 	};
 
 	return (
@@ -229,6 +241,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						{ __( 'Add Review', 'your-text-domain' ) }
 					</Button>
 				</PanelBody>
+				<InspectorAdvancedControls>
+					<TextControl
+						label="Section ID (slug, hyphens only)"
+						value={ sectionId }
+						onChange={ onChangeSectionId }
+						help="Use lowercase letters, numbers, and hyphens only."
+					/>
+				</InspectorAdvancedControls>
 			</InspectorControls>
 			<Hero { ...attributes } />
 		</div>

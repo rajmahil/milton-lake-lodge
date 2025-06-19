@@ -3,6 +3,7 @@ import {
 	useBlockProps,
 	MediaUpload,
 	InspectorControls,
+	InspectorAdvancedControls,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -13,12 +14,22 @@ import {
 import Features from '../../components/features';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { heading, features } = attributes;
+	const { heading, features, sectionId } = attributes;
 	// This is crucial - it provides the block wrapper with proper WordPress functionality
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
 		style: { maxWidth: '100%', margin: '0 auto' },
 	} );
+
+	const slugPattern = /^[a-z0-9-]*$/;
+
+	const onChangeSectionId = ( value ) => {
+		const sanitized = value.toLowerCase().replace( /[^a-z0-9-]/g, '' );
+
+		if ( slugPattern.test( sanitized ) ) {
+			setAttributes( { sectionId: sanitized } );
+		}
+	};
 
 	return (
 		<div { ...blockProps }>
@@ -134,6 +145,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						</Button>
 					</div>
 				</div>
+				<InspectorAdvancedControls>
+					<TextControl
+						label="Section ID (slug, hyphens only)"
+						value={ sectionId }
+						onChange={ onChangeSectionId }
+						help="Use lowercase letters, numbers, and hyphens only."
+					/>
+				</InspectorAdvancedControls>
 			</InspectorControls>
 			<Features { ...attributes } />
 		</div>

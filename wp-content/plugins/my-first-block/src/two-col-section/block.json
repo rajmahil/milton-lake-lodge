@@ -36,6 +36,10 @@
 		"inverted": {
 			"type": "boolean",
 			"default": false
+		},
+		"sectionId": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

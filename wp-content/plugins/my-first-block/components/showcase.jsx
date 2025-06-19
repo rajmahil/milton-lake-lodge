@@ -7,6 +7,7 @@ const Showcase = ( {
 	images = [],
 	imagesSpeed,
 	backgroundImage,
+	sectionId,
 } ) => {
 	const [ duration, setDuration ] = useState( '30s' );
 
@@ -36,6 +37,7 @@ const Showcase = ( {
 
 	return (
 		<section
+			id={ sectionId || undefined }
 			className="plugin-custom-block flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-green bg-repeat bg-blend-hard-light bg-size-[450px]"
 			style={ {
 				backgroundImage: backgroundImage?.url

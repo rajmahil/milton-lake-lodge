@@ -8,10 +8,11 @@ $topHeading = $attributes['topHeading'] ?? 'Your Adventure Awaits';
 $heading = $attributes['heading'] ?? 'Your Adventure Awaits';
 $fields = $attributes['fields'] ?? [];
 $formTitle = $attributes['formTitle'] ?? [];
+$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
 
 ?>
 
-<section class="plugin-custom-block">
+<section id="<?php echo $section_id; ?>" class="plugin-custom-block">
   <div class="section-padding static-background flex flex-col gap-12 !bg-brand-light-grey">
     <div class="max-w-3xl w-full mx-auto flex flex-col gap-2">
       <h2 class="heading-two text-center">

@@ -6,9 +6,11 @@
 $heading = $attributes['heading'] ?? '';
 $breadcrumbs = $attributes['breadcrumbs'] ?? [];
 $image = $attributes['image'] ?? null;
+$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
+
 ?>
 
-<section class="plugin-custom-block">
+<section id="<?php echo $section_id; ?>" class="plugin-custom-block">
   <section
     class="relative  h-[350px] md:h-[500px] lg:h-[600px] flex items-center not-prose justify-center bg-cover bg-center"
     style="<?php echo !empty($image['url']) ? 'background-image: url(' . esc_url($image['url']) . ');' : ''; ?>"

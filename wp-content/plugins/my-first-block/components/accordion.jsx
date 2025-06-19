@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const Accordion = ( { heading, subheading, items = [] } ) => {
+const Accordion = ( { heading, subheading, items = [], sectionId } ) => {
 	const [ activeAccordion, setActiveAccordion ] = useState( null );
 
 	const toggleAccordion = ( id ) => {
@@ -8,7 +8,10 @@ const Accordion = ( { heading, subheading, items = [] } ) => {
 	};
 
 	return (
-		<section className="plugin-custom-block not-prose section-padding w-full">
+		<section
+			id={ sectionId || undefined }
+			className="plugin-custom-block not-prose section-padding w-full static-background"
+		>
 			<div className="max-w-container mx-auto grid lg:grid-cols-2 gap-8 items-start">
 				<div className="flex flex-col gap-2">
 					{ heading && (
@@ -40,7 +43,7 @@ const Accordion = ( { heading, subheading, items = [] } ) => {
 									className="!w-full text-left text-xl font-medium select-none  !cursor-pointer"
 								>
 									<div className="!flex !flex-row !w-full !items-center !justify-between !cursor-pointer">
-										<h3 class="!my-0 text-lg !cursor-pointer font-normal !normal-case">
+										<h3 class="!my-0 text-lg !cursor-pointer font-normal !capitalize">
 											{ item.title }
 										</h3>
 										<svg

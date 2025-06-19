@@ -1,5 +1,9 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InspectorControls,
+	InspectorAdvancedControls,
+} from '@wordpress/block-editor';
 import {
 	PanelBody,
 	TextControl,
@@ -9,7 +13,7 @@ import {
 import Accordion from '../../components/accordion';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { heading, subheading, items = [] } = attributes;
+	const { heading, subheading, items = [], sectionId } = attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
@@ -25,6 +29,16 @@ export default function Edit( { attributes, setAttributes } ) {
 	const removeItem = ( index ) => {
 		const updated = items.filter( ( _, i ) => i !== index );
 		setAttributes( { items: updated } );
+	};
+
+	const slugPattern = /^[a-z0-9-]*$/;
+
+	const onChangeSectionId = ( value ) => {
+		const sanitized = value.toLowerCase().replace( /[^a-z0-9-]/g, '' );
+
+		if ( slugPattern.test( sanitized ) ) {
+			setAttributes( { sectionId: sanitized } );
+		}
 	};
 
 	return (
@@ -95,6 +109,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						{ __( 'Add Item', 'your-text-domain' ) }
 					</Button>
 				</div>
+				<InspectorAdvancedControls>
+					<TextControl
+						label="Section ID (slug, hyphens only)"
+						value={ sectionId }
+						onChange={ onChangeSectionId }
+						help="Use lowercase letters, numbers, and hyphens only."
+					/>
+				</InspectorAdvancedControls>
 			</InspectorControls>
 
 			<Accordion { ...attributes } />

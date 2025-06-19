@@ -5,9 +5,11 @@
 $heading = $attributes['heading'] ?? '';
 $subheading = $attributes['subheading'] ?? '';
 $items = $attributes['items'] ?? [];
+$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
+
 ?>
 
-<section class="plugin-custom-block not-prose section-padding w-full ">
+<section id="<?php echo $section_id; ?>"  class="plugin-custom-block not-prose section-padding w-full ">
   <div
     class="max-w-container mx-auto grid lg:grid-cols-2 gap-8 items-start"
     x-data="{ activeAccordion: null }"
@@ -21,7 +23,7 @@ $items = $attributes['items'] ?? [];
       <?php endif; ?>
 
       <?php if ( $subheading ): ?>
-      <p class="text-lg text-left max-w-2xl">
+      <p class="!text-lg lg:!text-xl text-left max-w-2xl">
         <?php echo esc_html($subheading); ?>
       </p>
       <?php endif; ?>
@@ -38,7 +40,7 @@ $items = $attributes['items'] ?? [];
           type="button"
           class="w-full text-left flex items-center justify-between text-xl font-medium select-none "
         >
-          <h3 class="text-lg !cursor-pointer font-normal !normal-case flex flex-row w-full items-center justify-between">
+          <h3 class="text-xl !cursor-pointer font-normal flex flex-row w-full items-center justify-between !capitalize">
             <?php echo esc_html($item['title'] ?? ''); ?></p>
             <svg
               class="accordion-icon w-5 h-5 transition-transform duration-300 ease-out flex-shrink-0"

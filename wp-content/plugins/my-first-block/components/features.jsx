@@ -1,6 +1,9 @@
-const Features = ( { heading, features = [] } ) => {
+const Features = ( { heading, features = [], sectionId } ) => {
 	return (
-		<section className="plugin-custom-block not-prose section-padding w-full static-background">
+		<section
+			id={ sectionId || undefined }
+			className="plugin-custom-block not-prose section-padding w-full static-background"
+		>
 			<div className="max-w-container mx-auto flex flex-col gap-16">
 				{ heading && (
 					<h2 className="heading-two text-left lg:max-w-[60%]">

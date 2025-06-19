@@ -16,9 +16,13 @@ $full = $image['sizes']['full']['url'] ?? '';
 $imageAlt = $image['alt'] ?? '';
 $imageWidth = $image['width'] ?? '';
 $imageHeight = $image['height'] ?? '';
+
+$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
+
 ?>
 
 <section
+id="<?php echo $section_id; ?>" 
   x-data="optimizedScrollScale()"
   x-init="init()"
   class="plugin-custom-block"

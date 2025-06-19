@@ -4,12 +4,13 @@ import {
 	InspectorControls,
 	MediaUpload,
 	MediaUploadCheck,
+	InspectorAdvancedControls,
 } from '@wordpress/block-editor';
 import { PanelBody, TextControl, Button } from '@wordpress/components';
 import PageHeader from '../../components/page-header';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { heading, breadcrumbs = [], image = {} } = attributes;
+	const { heading, breadcrumbs = [], image = {}, sectionId } = attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'page-header-section-wrapper',
@@ -31,6 +32,16 @@ export default function Edit( { attributes, setAttributes } ) {
 		setAttributes( {
 			breadcrumbs: [ ...breadcrumbs, { text: '', link: '' } ],
 		} );
+	};
+
+	const slugPattern = /^[a-z0-9-]*$/;
+
+	const onChangeSectionId = ( value ) => {
+		const sanitized = value.toLowerCase().replace( /[^a-z0-9-]/g, '' );
+
+		if ( slugPattern.test( sanitized ) ) {
+			setAttributes( { sectionId: sanitized } );
+		}
 	};
 
 	return (
@@ -164,6 +175,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						</div>
 					) }
 				</PanelBody>
+				<InspectorAdvancedControls>
+					<TextControl
+						label="Section ID (slug, hyphens only)"
+						value={ sectionId }
+						onChange={ onChangeSectionId }
+						help="Use lowercase letters, numbers, and hyphens only."
+					/>
+				</InspectorAdvancedControls>
 			</InspectorControls>
 			<PageHeader { ...attributes } />
 		</div>

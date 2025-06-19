@@ -5,9 +5,11 @@
 
 $heading = $attributes['heading'] ?? '';
 $features = $attributes['features'] ?? [];
+$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
+
 ?>
 
-<section class="plugin-custom-block not-prose section-padding w-full">
+<section id="<?php echo $section_id; ?>" class="plugin-custom-block not-prose section-padding w-full">
   <div class="max-w-container mx-auto flex flex-col gap-16">
 
     <?php if ($heading): ?>

@@ -32,6 +32,10 @@
 		"backgroundImage": {
 			"type": "object",
 			"default": {}
+		},
+		"sectionId": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

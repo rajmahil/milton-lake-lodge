@@ -5,11 +5,15 @@ const Cta = ( {
 	image,
 	image2,
 	backgroundImage,
+	sectionId,
 } ) => {
 	// Default background image fallback
 
 	return (
-		<section className="plugin-custom-block section-padding w-full">
+		<section
+			id={ sectionId || undefined }
+			className="plugin-custom-block section-padding w-full static-background"
+		>
 			<div
 				className="relative max-w-container bg-brand-green bg-blend-hard-light grid grid-cols-5 !items-center  text-white w-full rounded-2xl z-[0] bg-repeat bg-size-[450px]"
 				style={ {
@@ -19,10 +23,10 @@ const Cta = ( {
 				} }
 			>
 				<div className="flex flex-col gap-4 w-full relative z-[1] items-start justify-center section-padding py-16 col-span-5 900:col-span-2 ">
-					<h2 className="heading-two text-center 900:text-left text-white">
+					<h2 className="heading-two !text-left text-white">
 						{ heading }
 					</h2>
-					<a href={ buttonUrl || '#' } className="mx-auto 900:mx-0">
+					<a href={ buttonUrl || '#' }>
 						<button className="btn btn-outline btn-xl">
 							{ buttonText }
 						</button>

@@ -19,6 +19,10 @@
 		"submitButtonText": {
 			"type": "string",
 			"default": "Send Message"
+		},
+		"sectionId": {
+			"type": "string",
+			"default": ""
 		}
 	},
 

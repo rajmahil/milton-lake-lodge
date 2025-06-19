@@ -381,4 +381,13 @@
 	.animate-slide-center-right {
 		animation: slideFromCenterToRight 0.7s ease-out forwards;
 	}
+
+	.lock-scroll {
+		overflow: hidden !important;
+		position: fixed !important;
+		width: 100% !important;
+		height: 100% !important;
+		touch-action: none !important;
+		overscroll-behavior: none !important;
+	}
 }

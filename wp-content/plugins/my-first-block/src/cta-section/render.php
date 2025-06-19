@@ -8,6 +8,7 @@ $button_text = $attributes['buttonText'] ?? 'Learn More';
 $button_url = $attributes['buttonUrl'] ?? '#';
 $image1 = $attributes['image'] ?? null;
 $image2 = $attributes['image2'] ?? null;
+$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
 
 // Image 1
 $image1_url = '';
@@ -48,16 +49,16 @@ if ($image2) {
 $background_image = $attributes['backgroundImage'] ?? [];
 ?>
 
-<section class="plugin-custom-block section-padding w-full">
+<section id="<?php echo $section_id; ?>" class="plugin-custom-block section-padding w-full">
 	<div
 		class="relative max-w-container bg-brand-green bg-blend-hard-light grid grid-cols-5 !items-center text-white w-full rounded-2xl z-[0] bg-repeat bg-size-[450px]"
 		style="background-image: url('<?php echo !empty($background_image['url']) ? esc_url($background_image['url']) : esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
 	>
 		<div class="flex flex-col gap-4 w-full relative z-[1] !items-start !justify-center section-padding py-16 col-span-5 900:col-span-2">
-			<h2 class="heading-two !text-center 900:!text-left text-white">
+			<h2 class="heading-two !text-left text-white">
 				<?php echo esc_html($heading); ?>
 			</h2>
-			<a href="<?php echo esc_url($button_url); ?>" class="mx-auto 900:!mx-0">
+			<a href="<?php echo esc_url($button_url); ?>" >
 				<button class="btn btn-outline btn-xl">
 					<?php echo esc_html($button_text); ?>
 				</button>

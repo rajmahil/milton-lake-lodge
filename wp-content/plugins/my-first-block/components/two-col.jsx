@@ -6,11 +6,15 @@ const TwoCol = ( {
 	image,
 	image2,
 	inverted,
+	sectionId,
 } ) => {
 	const contentOrderClass = inverted ? 'order-first' : 'order-last';
 
 	return (
-		<section className="plugin-custom-block not-prose section-padding w-full">
+		<section
+			id={ sectionId || undefined }
+			className="plugin-custom-block not-prose section-padding w-full static-background"
+		>
 			<div className="relative max-w-container mx-auto w-full flex flex-col gap-14 sm:gap-20 900:!grid 900:!grid-cols-5 900:!gap-8 items-start 900:items-center">
 				<div
 					className={ `${ contentOrderClass } flex flex-col gap-4 w-full 900:col-span-2 900:max-w-[600px] 900:mx-auto` }

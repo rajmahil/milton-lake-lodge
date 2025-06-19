@@ -6,12 +6,13 @@
 
 $heading = $attributes['heading'] ?? '';
 $images = $attributes['images'] ?? [];
+$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
 
 $groups = array_chunk($images, 10);
 $totalImages = count($images);
 ?>
 
-<section class="plugin-custom-block not-prose section-padding w-full">
+<section id="<?php echo $section_id; ?>"  class="plugin-custom-block not-prose section-padding w-full">
   <div
     class="max-w-container mx-auto flex flex-col gap-16"
     x-data="{
@@ -235,7 +236,7 @@ $totalImages = count($images);
                   <spand x-text="totalImages"></spand>
                 </div>
 
-                <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex items-center gap-4 lg:!hidden">
+                <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex items-center gap-4 xl:!hidden">
                   <div
                     @click="$event.stopPropagation(); imageGalleryPrev()"
                     class="flex items-center justify-center text-white rounded-full cursor-pointer bg-white/10 w-10 sm:w-14 h-10 m:h-14  hover:bg-white/20 transition-colors duration-200"

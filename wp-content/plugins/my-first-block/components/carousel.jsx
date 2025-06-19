@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 
-const CarouselBlock = ( { heading, subheading, items } ) => {
+const CarouselBlock = ( { heading, subheading, items, sectionId } ) => {
 	const totalItems = items.length;
 	const containerRef = useRef();
 
@@ -138,7 +138,10 @@ const CarouselBlock = ( { heading, subheading, items } ) => {
 	if ( ! items || items.length === 0 ) return null;
 
 	return (
-		<section className="plugin-custom-block not-prose w-full static-background">
+		<section
+			id={ sectionId || undefined }
+			className="plugin-custom-block not-prose w-full static-background"
+		>
 			<div className="text-center flex flex-col gap-16">
 				<div
 					className="relative w-full overflow-hidden"

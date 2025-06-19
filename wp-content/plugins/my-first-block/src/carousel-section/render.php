@@ -9,9 +9,11 @@ $heading = $attributes['heading'] ?? '';
 $subheading = $attributes['subheading'] ?? '';
 $items = $attributes['items'] ?? [];
 $total_items = count($items);
+$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
+
 ?>
 
-<section class="plugin-custom-block not-prose w-full">
+<section id="<?php echo $section_id; ?>" class="plugin-custom-block not-prose w-full">
   <div class="text-center flex flex-col gap-16">
     <?php if (!empty($items)) : ?>
     <div
