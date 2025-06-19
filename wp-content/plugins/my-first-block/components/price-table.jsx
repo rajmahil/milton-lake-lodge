@@ -72,7 +72,6 @@ const PriceTable = ( { heading, tabs } ) => {
 								) ) }
 							</div>
 						</div>
-
 						<div
 							className="relative overflow-hidden"
 							style={ { height: 'auto', minHeight: '300px' } }
