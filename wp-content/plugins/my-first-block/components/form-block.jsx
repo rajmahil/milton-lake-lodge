@@ -302,9 +302,6 @@ const FormBlock = ( props ) => {
 		>
 			<div className="section-padding static-background flex flex-col gap-12">
 				<div class="max-w-3xl w-full mx-auto flex flex-col gap-4">
-					{ /* <p class="decorative-text text-brand-yellow-dark text-center text-3xl lg:!text-4xl">
-						{ topHeading }
-					</p> */ }
 					<h2 class="heading-two text-center text-brand-green-dark">
 						{ heading }
 					</h2>

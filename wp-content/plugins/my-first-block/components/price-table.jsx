@@ -66,7 +66,7 @@ const PriceTable = ( { heading, tabs, sectionId } ) => {
 				</h2>
 
 				{ tabs.length > 0 ? (
-					<div className="flex flex-col gap-8">
+					<div className="flex flex-col gap-8  max-w-4xl mx-auto">
 						{ /* Tab Buttons */ }
 						<div className="bg-white rounded-lg sm:rounded-full w-full sm:w-fit mx-auto p-1">
 							<div className="flex flex-col sm:flex-row justify-center">

@@ -15,14 +15,8 @@ import {
 import FormBlock from '../../components/form-block';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const {
-		topHeading,
-		heading,
-		formTitle,
-		submitButtonText,
-		fields,
-		sectionId,
-	} = attributes;
+	const { heading, formTitle, submitButtonText, fields, sectionId } =
+		attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
@@ -74,13 +68,6 @@ export default function Edit( { attributes, setAttributes } ) {
 					title={ __( 'Content', 'form-section-block' ) }
 					initialOpen={ true }
 				>
-					<TextControl
-						label="Top Heading"
-						value={ topHeading }
-						onChange={ ( value ) =>
-							setAttributes( { topHeading: value } )
-						}
-					/>
 					<TextControl
 						label="Heading"
 						value={ heading }

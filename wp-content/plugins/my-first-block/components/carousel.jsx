@@ -13,7 +13,7 @@ const CarouselBlock = ( { heading, subheading, items, sectionId } ) => {
 	const [ containerWidth, setContainerWidth ] = useState( 0 );
 
 	const updateSlidesPerView = useCallback( () => {
-		if ( window.innerWidth >= 1024 ) {
+		if ( window.innerWidth >= 1200 ) {
 			setSlidesPerView( 3 );
 		} else if ( window.innerWidth >= 640 ) {
 			setSlidesPerView( 2 );
@@ -248,33 +248,35 @@ const CarouselBlock = ( { heading, subheading, items, sectionId } ) => {
 										width: `${ slideWidthPercentage }%`,
 									} }
 								>
-									<div className="relative rounded-2xl overflow-hidden aspect-[10/11]">
-										{ item.image?.url && (
-											<>
-												<div
-													className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-													style={ {
-														backgroundImage: `url('${ item.image.url }')`,
-													} }
-												/>
-												<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-											</>
-										) }
-										<div className="absolute bottom-0 left-0 right-0 p-4 lg:p-6 text-white">
-											<div className="flex flex-col items-start">
-												{ item.title && (
-													<h3 className="!my-0 !text-3xl font-bold uppercase tracking-wide">
-														{ item.title }
-													</h3>
-												) }
-												{ item.text && (
-													<p className="!my-0 !text-base sm:!text-lg sm:!leading-relaxed !text-left">
-														{ item.text }
-													</p>
-												) }
+									<a href={ item.link || '#' }>
+										<div className="relative rounded-2xl overflow-hidden aspect-[5/6]">
+											{ item.image?.url && (
+												<>
+													<div
+														className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+														style={ {
+															backgroundImage: `url('${ item.image.url }')`,
+														} }
+													/>
+													<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+												</>
+											) }
+											<div className="absolute bottom-0 left-0 right-0 p-4 lg:p-6 text-white">
+												<div className="flex flex-col items-start">
+													{ item.title && (
+														<h3 className="!my-0 !text-3xl md:!text-4xl font-bold uppercase tracking-wide !text-left">
+															{ item.title }
+														</h3>
+													) }
+													{ item.text && (
+														<p className="!my-0 !text-base sm:!text-lg sm:!leading-relaxed !text-left">
+															{ item.text }
+														</p>
+													) }
+												</div>
 											</div>
 										</div>
-									</div>
+									</a>
 								</div>
 							) ) }
 						</div>

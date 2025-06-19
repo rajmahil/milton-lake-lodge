@@ -52,7 +52,7 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
           },
       
           updateSlidesPerView() {
-              if (window.innerWidth >= 1024) { // lg+ (3 slides)
+              if (window.innerWidth >= 1200) { // lg+ (3 slides)
                   this.slidesPerView = 3;
               } else if (window.innerWidth >= 640) { // sm+ (2 slides)
                   this.slidesPerView = 2;
@@ -265,12 +265,15 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
           @mousedown="handleDragStart"
           @touchstart="handleDragStart"
         >
-          <?php foreach ($items as $item) : ?>
+        <?php foreach ($items as $item) : ?>
+          <?php $item_link = !empty($item['link']) ? $item['link'] : '#'; ?>
+        
           <div
             class="carousel-slide flex-shrink-0"
             :style="{ 'width': slideWidthPercentage + '%', 'margin-right': gapPercentage + '%' }"
           >
-            <div class="relative rounded-2xl overflow-hidden aspect-[10/11]">
+          <a href="<?php echo esc_url($item_link); ?>">
+            <div class="relative rounded-2xl overflow-hidden aspect-[5/6]">
               <?php if (!empty($item['image']['url'])) : ?>
               <div
                 class="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -284,23 +287,24 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
               <div class="absolute bottom-0 left-0 right-0 p-4 lg:p-6 text-white">
                 <div class='flex flex-col items-start'>
                   <?php if (!empty($item['title'])) : ?>
-                  <h3 class="text-3xl font-bold uppercase tracking-wide">
+                  <h3 class="!text-3xl md:!text-4xl font-bold uppercase tracking-wide !text-left">
                     <?php echo esc_html($item['title']); ?>
                   </h3>
                   <?php endif; ?>
 
                   <?php if (!empty($item['text'])) : ?>
-                  <p class="text-base sm:text-lg sm:!leading-relaxed text-left">
+                  <p class="text-base sm:text-lg sm:!leading-relaxed !text-left">
                     <?php echo esc_html($item['text']); ?>
                   </p>
                   <?php endif; ?>
                 </div>
               </div>
             </div>
+            </a>
           </div>
           <?php endforeach; ?>
         </div>
       </div>
-      <?php endif; ?>
-    </div>
+    <?php endif; ?>
+  </div>
 </section>

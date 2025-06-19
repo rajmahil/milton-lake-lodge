@@ -8,6 +8,10 @@
 	"icon": "smiley",
 	"example": {},
 	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": "Your Adventure Awaits"
+		},
 		"formTitle": {
 			"type": "string",
 			"default": "Contact Us"

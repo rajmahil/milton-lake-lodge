@@ -15,7 +15,7 @@ import {
 import Carousel from '../../components/carousel';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { heading, subheading, items = [], sectionId } = attributes;
+	const { heading, subheading, items = [], sectionId, link } = attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'carousel-section-wrapper',
@@ -118,6 +118,14 @@ export default function Edit( { attributes, setAttributes } ) {
 							}
 						/>
 
+						<TextControl
+							label={ __( 'URL', 'carousel-section-block' ) }
+							value={ item.link || '' }
+							onChange={ ( value ) =>
+								updateItem( index, 'link', value )
+							}
+						/>
+
 						<div style={ { marginTop: '15px' } }>
 							<label
 								style={ {
@@ -215,6 +223,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						{ __( 'Add Item', 'carousel-section-block' ) }
 					</Button>
 				</div>
+
 				<InspectorAdvancedControls>
 					<TextControl
 						label="Section ID (slug, hyphens only)"

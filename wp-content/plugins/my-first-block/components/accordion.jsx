@@ -43,7 +43,7 @@ const Accordion = ( { heading, subheading, items = [], sectionId } ) => {
 									className="!w-full text-left text-xl font-medium select-none  !cursor-pointer"
 								>
 									<div className="!flex !flex-row !w-full !items-center !justify-between !cursor-pointer">
-										<h3 class="!my-0 text-lg !cursor-pointer font-normal !uppercase">
+										<h3 class="!my-0 text-lg !cursor-pointer font-normal !capitalize">
 											{ item.title }
 										</h3>
 										<svg

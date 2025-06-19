@@ -4,7 +4,6 @@
  * Optimized for performance, SEO, and accessibility
  */
 
-$topHeading = $attributes['topHeading'] ?? 'Your Adventure Awaits';
 $heading = $attributes['heading'] ?? 'Your Adventure Awaits';
 $fields = $attributes['fields'] ?? [];
 $formTitle = $attributes['formTitle'] ?? [];
