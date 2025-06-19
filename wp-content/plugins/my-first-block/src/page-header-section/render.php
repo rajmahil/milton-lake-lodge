@@ -16,12 +16,12 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
     style="<?php echo !empty($image['url']) ? 'background-image: url(' . esc_url($image['url']) . ');' : ''; ?>"
   >
 
-    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="absolute inset-0 bg-brand-green-dark/60"></div>
 
     <div class="relative z-10 text-center px-4 flex items-center justify-center w-full">
       <div class="flex flex-col items-center gap-2 max-w-screen-xl mx-auto !pt-14 lg:!pt-5">
         <?php if (!empty($heading)): ?>
-        <h1 class="!text-5xl md:!text-6xl lg:!text-7xl !font-[600] text-center !text-white !uppercase">
+        <h1 class="!text-5xl sm:!text-6xl md:!text-7xl lg:!text-8xl !font-[600] text-center !text-white !uppercase">
           <?php echo esc_html($heading); ?>
         </h1>
         <?php endif; ?>

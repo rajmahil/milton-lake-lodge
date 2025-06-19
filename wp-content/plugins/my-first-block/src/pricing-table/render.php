@@ -72,7 +72,7 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
         </div>
       </div>
 
-      <div class="relative overflow-hidden h-auto  w-full  mx-auto">
+      <div class="relative overflow-hidden h-auto  w-full max-w-4xl mx-auto">
         <?php foreach ($tabs as $index => $tab): ?>
         <div
           x-show="activeTab === <?php echo $index + 1; ?>"
@@ -138,9 +138,7 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
                 </span>
                 <?php endif; ?>
                 <?php else: ?>
-                <span
-                  class="text-base sm:!text-lg md:!text-xl break-words whitespace-normal block max-w-full "
-                >
+                <span class="text-base sm:!text-lg md:!text-xl break-words whitespace-normal block max-w-full ">
                   <?php echo esc_html($feature['price']); ?>
                 </span>
                 <?php endif; ?>

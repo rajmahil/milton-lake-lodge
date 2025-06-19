@@ -12,7 +12,7 @@ export default function PageHeader( {
 					backgroundImage: `url(${ image.url })`,
 				} }
 			>
-				<div className="absolute inset-0 bg-black/40" />
+				<div className="absolute inset-0 bg-brand-green-dark/60" />
 
 				<div className="relative z-10 text-center px-4 flex items-center justify-center">
 					<div className="flex flex-col items-center gap-3 !pt-14 lg:!pt-5">
