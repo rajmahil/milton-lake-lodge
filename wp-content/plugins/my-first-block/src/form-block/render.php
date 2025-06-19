@@ -8,11 +8,14 @@ $topHeading = $attributes['topHeading'] ?? 'Your Adventure Awaits';
 $heading = $attributes['heading'] ?? 'Your Adventure Awaits';
 $fields = $attributes['fields'] ?? [];
 $formTitle = $attributes['formTitle'] ?? [];
-$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
+$section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId']) : '';
 
 ?>
 
-<section id="<?php echo $section_id; ?>" class="plugin-custom-block">
+<section
+  id="<?php echo $section_id; ?>"
+  class="plugin-custom-block"
+>
   <div class="section-padding static-background flex flex-col gap-12 !bg-brand-light-grey">
     <div class="max-w-3xl w-full mx-auto flex flex-col gap-2">
       <h2 class="heading-two text-center">
@@ -31,8 +34,16 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
           name="action"
           value="my_custom_form_submit"
         >
-        <input type="hidden" name="form_template" value="main_form">
-        <input type="hidden" name="formTitle" value="<?php echo esc_attr($formTitle); ?>">
+        <input
+          type="hidden"
+          name="form_template"
+          value="main_form"
+        >
+        <input
+          type="hidden"
+          name="formTitle"
+          value="<?php echo esc_attr($formTitle); ?>"
+        >
 
         <?php foreach ( $fields as $index => $field ) : ?>
         <?php
@@ -71,43 +82,47 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
           break;
           case 'select':
             ?>
-            <div
-                x-data="{
-                    open: false,
-                    selected: '',
-                    placeholder: '<?php echo $field['placeholder']; ?>',
-                    items: <?php echo esc_attr(json_encode($field['options'] ?? [])); ?>
-                }"
-                class="relative <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
+        <div
+          x-data="{
+              open: false,
+              selected: '',
+              placeholder: '<?php echo $field['placeholder']; ?>',
+              items: <?php echo esc_attr(json_encode($field['options'] ?? [])); ?>
+          }"
+          class="relative <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
+        >
+          <?php if (!empty($field['label'])) : ?>
+          <label class="block mb-3 text-medium text-center">
+            <?php echo esc_html($field['label']); ?>
+            <?php if (!empty($field['required'])) : ?>
+            <span>*</span>
+            <?php endif; ?>
+          </label>
+          <?php endif; ?>
+
+          <input
+            type="hidden"
+            name="<?php echo esc_attr($field['name'] ?? ''); ?>"
+            x-model="selected"
+            <?php if (!empty($field['required'])) {
+                echo 'required';
+            } ?>
+          >
+
+          <button
+            @click="open = !open"
+            type="button"
+            class="w-full form-input cursor-pointer flex items-center justify-start px-4 relative"
+          >
+            <p
+              class="text-base capitalize"
+              :class="!selected ? 'text-neutral-400' : ''"
+              x-text="selected ? selected : placeholder"
+            ></p>
+
+            <span
+              class="flex justify-center items-center pointer-events-none absolute right-0 h-14 px-2 text-neutral-400"
             >
-                <?php if (!empty($field['label'])) : ?>
-                    <label class="block mb-3 text-medium text-center">
-                        <?php echo esc_html($field['label']); ?>
-                        <?php if (!empty($field['required'])) : ?>
-                            <span>*</span>
-                        <?php endif; ?>
-                    </label>
-                <?php endif; ?>
-            
-                <input 
-                    type="hidden" 
-                    name="<?php echo esc_attr($field['name'] ?? ''); ?>" 
-                    x-model="selected"
-                    <?php if (!empty($field['required'])) echo 'required'; ?>
-                >
-            
-                <button
-                    @click="open = !open"
-                    type="button"
-                    class="w-full form-input cursor-pointer flex items-center justify-start px-4 relative"
-                >
-                    <p
-                        class="text-base capitalize"
-                        :class="!selected ? 'text-neutral-400' : ''"
-                        x-text="selected ? selected : placeholder"
-                    ></p>
-                    
-                    <span class="flex justify-center items-center pointer-events-none absolute right-0 h-14 px-2 text-neutral-400">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
@@ -124,25 +139,28 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
               </svg>
             </span>
 
-            </button>
+          </button>
 
-              <ul
-                  x-show="open"
-                  @click.away="open = false"
-                  class="absolute left-0 w-full mt-1 bg-white border border-brand-grey rounded-md shadow-2xl max-h-50 overflow-auto z-10"
-                  x-transition
+          <ul
+            x-show="open"
+            @click.away="open = false"
+            class="absolute left-0 w-full mt-1 bg-white border border-brand-grey rounded-md shadow-2xl max-h-50 overflow-auto z-10"
+            x-transition
+          >
+            <template
+              x-for="item in items"
+              :key="item"
+            >
+              <li
+                @click="selected = item; open = false"
+                class="px-4 py-3 hover:bg-brand-light-grey cursor-pointer capitalize"
               >
-                  <template x-for="item in items" :key="item">
-                      <li
-                          @click="selected = item; open = false"
-                          class="px-4 py-3 hover:bg-brand-light-grey cursor-pointer capitalize"
-                      >
-                          <span x-text="item"></span>
-                      </li>
-                  </template>
-              </ul>
-          </div>
-          <?php
+                <span x-text="item"></span>
+              </li>
+            </template>
+          </ul>
+        </div>
+        <?php
           break;
           case 'checkbox':
       ?>
