@@ -155,8 +155,8 @@ function boilerplate_customize_register($wp_customize)
                 'settings'    => 'boilerplate_compass_image',
                 'flex_width'  => true,
                 'flex_height' => true,
-                'width'       => 100,
-                'height'      => 100,
+                'width'       => 200,
+                'height'      => 200,
             ]
         )
     );
@@ -295,36 +295,36 @@ function boilerplate_customize_register($wp_customize)
         'type' => 'url',
     ]);
 
-    $wp_customize->add_setting('boilerplate_footer_bg_color', [
-        'default' => '#ffffff',
-        'sanitize_callback' => 'sanitize_hex_color',
-        'capability' => 'edit_theme_options',
-        'transport' => 'refresh',
-    ]);
+    // $wp_customize->add_setting('boilerplate_footer_bg_color', [
+    //     'default' => '#ffffff',
+    //     'sanitize_callback' => 'sanitize_hex_color',
+    //     'capability' => 'edit_theme_options',
+    //     'transport' => 'refresh',
+    // ]);
 
-    $wp_customize->add_control(
-        new WP_Customize_Color_Control($wp_customize, 'boilerplate_footer_bg_color_control', [
-            'label' => __('Footer Background Color', 'boilerplate'),
-            'section' => 'boilerplate_footer_section',
-            'settings' => 'boilerplate_footer_bg_color',
-        ]),
-    );
+    // $wp_customize->add_control(
+    //     new WP_Customize_Color_Control($wp_customize, 'boilerplate_footer_bg_color_control', [
+    //         'label' => __('Footer Background Color', 'boilerplate'),
+    //         'section' => 'boilerplate_footer_section',
+    //         'settings' => 'boilerplate_footer_bg_color',
+    //     ]),
+    // );
 
-    $wp_customize->add_setting('boilerplate_footer_bg_image', [
-        'sanitize_callback' => 'absint', // store the image ID (like your logo)
-        'capability' => 'edit_theme_options',
-        'default' => 0,
-        'transport' => 'refresh',
-    ]);
+    // $wp_customize->add_setting('boilerplate_footer_bg_image', [
+    //     'sanitize_callback' => 'absint', // store the image ID (like your logo)
+    //     'capability' => 'edit_theme_options',
+    //     'default' => 0,
+    //     'transport' => 'refresh',
+    // ]);
 
-    $wp_customize->add_control(
-        new WP_Customize_Media_Control($wp_customize, 'boilerplate_footer_bg_image_control', [
-            'label' => __('Footer Background Image', 'boilerplate'),
-            'section' => 'boilerplate_footer_section',
-            'settings' => 'boilerplate_footer_bg_image',
-            'mime_type' => 'image', // only allow images
-        ]),
-    );
+    // $wp_customize->add_control(
+    //     new WP_Customize_Media_Control($wp_customize, 'boilerplate_footer_bg_image_control', [
+    //         'label' => __('Footer Background Image', 'boilerplate'),
+    //         'section' => 'boilerplate_footer_section',
+    //         'settings' => 'boilerplate_footer_bg_image',
+    //         'mime_type' => 'image', // only allow images
+    //     ]),
+    // );
 }
 
 add_action('customize_register', 'boilerplate_customize_register');

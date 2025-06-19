@@ -9,10 +9,6 @@
 	"description": "Example block scaffolded with Create Block tool.",
 	"example": {},
 	"attributes": {
-		"topHeading": {
-			"type": "string",
-			"selector": "p"
-		},
 		"heading": {
 			"type": "string",
 			"selector": "h1"

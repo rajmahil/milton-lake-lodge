@@ -1,5 +1,4 @@
 const Cta = ( {
-	topHeading,
 	heading,
 	buttonText,
 	buttonUrl,

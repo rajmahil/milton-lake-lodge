@@ -113,14 +113,14 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
               <?php endif; ?>
             </div>
             <div class="flex justify-end md:justify-start items-start">
-              <p>
+              <p class='!text-right'>
                 <?php if (($feature['priceType'] ?? 'currency') === 'currency'): ?>
                 <?php
                 $price = $feature['price'] ?? '';
                 $is_numeric = is_numeric($price);
                 ?>
                 <?php if ($is_numeric): ?>
-                <span class="text-lg sm:!text-xl !font-medium">
+                <span class="text-lg sm:!text-xl !font-medium ">
                   $<span x-text="formatPrice('<?php echo esc_js($price); ?>', 'currency')"></span>
                 </span>
                 <span
@@ -137,7 +137,7 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
                 <?php endif; ?>
                 <?php else: ?>
                 <span
-                  class="text-base sm:!text-lg md:!text-xl break-words whitespace-normal block max-w-full text-right"
+                  class="text-base sm:!text-lg md:!text-xl break-words whitespace-normal block max-w-full "
                 >
                   <?php echo esc_html($feature['price']); ?>
                 </span>

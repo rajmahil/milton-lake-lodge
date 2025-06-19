@@ -5,7 +5,6 @@
  */
 
 // Extract attributes with safe defaults
-$top_heading = $attributes['topHeading'] ?? 'Top Fishing Adventures';
 $heading = $attributes['heading'] ?? 'Your Adventure Awaits';
 $subheading = $attributes['subheading'] ?? 'Discover amazing fishing experiences';
 $button_text = $attributes['buttonText'] ?? 'Learn More';
@@ -200,7 +199,7 @@ if ($image) {
           </div>
         </div>
         <div class="col-span-2 lg:col-span-4 overflow-hidden flex flex-row items-center relative">
-          <div class="absolute top-0 left-0 w-10 lg:w-20 h-full bg-gradient-to-r from-black to transparent z-[100]">
+          <div class="absolute top-0 left-0 w-12 lg:w-20 h-full bg-gradient-to-r from-black to transparent z-[100]">
           </div>
           <div
             class="absolute bottom-0 right-0 w-10 lg:w-20 h-full bg-gradient-to-l from-black to-transparent z-[100] lg:hidden block"

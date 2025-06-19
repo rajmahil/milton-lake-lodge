@@ -1,6 +1,5 @@
 <?php
 
-$top_heading = $attributes['topHeading'] ?? '';
 $heading = $attributes['heading'] ?? '';
 $button_text = $attributes['buttonText'] ?? 'Learn More';
 $button_url = $attributes['buttonUrl'] ?? '#';

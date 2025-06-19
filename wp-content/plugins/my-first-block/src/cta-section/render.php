@@ -3,7 +3,6 @@
  * CTA Section Block - Render Template
  */
 
-$top_heading = $attributes['topHeading'] ?? 'Top Heading';
 $heading = $attributes['heading'] ?? 'Main Heading';
 $button_text = $attributes['buttonText'] ?? 'Learn More';
 $button_url = $attributes['buttonUrl'] ?? '#';

@@ -1,10 +1,16 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 
 const CarouselBlock = ( { heading, subheading, items } ) => {
 	const totalItems = items.length;
+	const containerRef = useRef();
+
 	const [ currentIndex, setCurrentIndex ] = useState( 0 );
 	const [ slidesPerView, setSlidesPerView ] = useState( 1 );
-	const [ isMounted, setIsMounted ] = useState( false );
+	const [ startX, setStartX ] = useState( 0 );
+	const [ currentX, setCurrentX ] = useState( 0 );
+	const [ dragOffset, setDragOffset ] = useState( 0 );
+	const [ isDragging, setIsDragging ] = useState( false );
+	const [ containerWidth, setContainerWidth ] = useState( 0 );
 
 	const updateSlidesPerView = useCallback( () => {
 		if ( window.innerWidth >= 1024 ) {
@@ -17,21 +23,28 @@ const CarouselBlock = ( { heading, subheading, items } ) => {
 	}, [] );
 
 	useEffect( () => {
-		setIsMounted( true );
 		updateSlidesPerView();
+		const updateWidth = () => {
+			setContainerWidth( containerRef.current?.clientWidth || 1 );
+		};
 
-		window.addEventListener( 'resize', updateSlidesPerView );
-		return () =>
+		updateWidth();
+		window.addEventListener( 'resize', () => {
+			updateSlidesPerView();
+			updateWidth();
+		} );
+		return () => {
 			window.removeEventListener( 'resize', updateSlidesPerView );
+			window.removeEventListener( 'resize', updateWidth );
+		};
 	}, [ updateSlidesPerView ] );
 
 	useEffect( () => {
-		if ( ! isMounted ) return;
 		const maxIndex = Math.max( 0, totalItems - slidesPerView );
 		if ( currentIndex > maxIndex ) {
 			setCurrentIndex( maxIndex );
 		}
-	}, [ slidesPerView, currentIndex, totalItems, isMounted ] );
+	}, [ slidesPerView, currentIndex, totalItems ] );
 
 	const nextSlide = () => {
 		const maxIndex = Math.max( 0, totalItems - slidesPerView );
@@ -49,26 +62,88 @@ const CarouselBlock = ( { heading, subheading, items } ) => {
 	const canGoNext = currentIndex < Math.max( 0, totalItems - slidesPerView );
 	const canGoPrev = currentIndex > 0;
 
-	const getSlideWidthClass = () => {
-		switch ( slidesPerView ) {
-			case 1:
-				return 'w-full';
-			case 2:
-				return 'w-1/2';
-			case 3:
-				return 'w-1/3';
+	const slideWidthPercentage =
+		( 100 - ( slidesPerView - 1 ) * 1.5 ) / slidesPerView;
+	const gapPercentage = 1.5;
 
-			default:
-				return 'w-full';
-		}
+	const handleDragStart = ( e ) => {
+		setIsDragging( true );
+		const clientX = e.type.includes( 'touch' )
+			? e.touches[ 0 ].clientX
+			: e.clientX;
+		setStartX( clientX );
+		setCurrentX( clientX );
+		setDragOffset( 0 );
+
+		window.addEventListener( 'mousemove', handleDragMove, {
+			passive: false,
+		} );
+		window.addEventListener( 'touchmove', handleDragMove, {
+			passive: false,
+		} );
+		window.addEventListener( 'mouseup', handleDragEnd );
+		window.addEventListener( 'touchend', handleDragEnd );
 	};
 
-	if ( totalItems === 0 ) return null;
+	const handleDragMove = ( e ) => {
+		if ( ! isDragging ) return;
+		e.preventDefault();
+		const clientX = e.type.includes( 'touch' )
+			? e.touches[ 0 ].clientX
+			: e.clientX;
+		setCurrentX( clientX );
+		setDragOffset( clientX - startX );
+	};
+
+	const handleDragEnd = () => {
+		if ( ! isDragging ) return;
+		const threshold = containerWidth * 0.15;
+		const distance = Math.abs( dragOffset );
+
+		if ( distance > threshold ) {
+			if ( dragOffset > 0 && canGoPrev ) {
+				prevSlide();
+			} else if ( dragOffset < 0 && canGoNext ) {
+				nextSlide();
+			}
+		}
+
+		setIsDragging( false );
+		setDragOffset( 0 );
+
+		window.removeEventListener( 'mousemove', handleDragMove );
+		window.removeEventListener( 'touchmove', handleDragMove );
+		window.removeEventListener( 'mouseup', handleDragEnd );
+		window.removeEventListener( 'touchend', handleDragEnd );
+	};
+
+	const getTransform = () => {
+		const baseTransform =
+			currentIndex * ( slideWidthPercentage + gapPercentage );
+		if ( isDragging && containerWidth ) {
+			let dragPercent = ( dragOffset / containerWidth ) * 100;
+
+			if ( currentIndex === 0 && dragOffset > 0 ) {
+				dragPercent *= 0.3;
+			}
+			const maxIndex = Math.max( 0, totalItems - slidesPerView );
+			if ( currentIndex === maxIndex && dragOffset < 0 ) {
+				dragPercent *= 0.3;
+			}
+			return `translateX(-${ baseTransform - dragPercent }%)`;
+		}
+		return `translateX(-${ baseTransform }%)`;
+	};
+
+	if ( ! items || items.length === 0 ) return null;
 
 	return (
 		<section className="plugin-custom-block not-prose w-full static-background">
 			<div className="text-center flex flex-col gap-16">
-				<div className="relative w-full overflow-hidden">
+				<div
+					className="relative w-full overflow-hidden"
+					ref={ containerRef }
+				>
 					<div className="section-padding pb-0">
 						<div className="flex items-end justify-between flex-wrap gap-5 mb-10 sm:mb-16 max-w-container mx-auto">
 							<div className="flex flex-col gap-2 items-start">
@@ -88,7 +163,7 @@ const CarouselBlock = ( { heading, subheading, items } ) => {
 								<button
 									onClick={ prevSlide }
 									disabled={ ! canGoPrev }
-									className={ `rounded-full p-3 transition  ${
+									className={ `rounded-full p-3 transition ${
 										canGoPrev
 											? 'bg-white hover:bg-gray-100'
 											: 'bg-gray-200 cursor-not-allowed'
@@ -148,19 +223,27 @@ const CarouselBlock = ( { heading, subheading, items } ) => {
 						</div>
 					</div>
 
-					<div className="relative w-full overflow-hidden section-padding  !pt-0">
+					<div className="relative w-full overflow-hidden section-padding !pt-0">
 						<div
-							className="carousel-track flex transition-transform duration-500 ease-in-out max-w-container gap-5"
+							className={ `carousel-track flex max-w-container mx-auto select-none ${
+								isDragging
+									? 'transition-none cursor-grabbing'
+									: 'transition-transform duration-500 cursor-grab'
+							}` }
 							style={ {
-								transform: `translateX(-${
-									currentIndex * ( 100 / slidesPerView )
-								}%)`,
+								transform: getTransform(),
+								gap: `${ gapPercentage }%`,
 							} }
+							onMouseDown={ handleDragStart }
+							onTouchStart={ handleDragStart }
 						>
 							{ items.map( ( item, index ) => (
 								<div
 									key={ index }
-									className={ `carousel-slide flex-shrink-0 ${ getSlideWidthClass() }` }
+									className="carousel-slide flex-shrink-0"
+									style={ {
+										width: `${ slideWidthPercentage }%`,
+									} }
 								>
 									<div className="relative rounded-2xl overflow-hidden aspect-[10/11]">
 										{ item.image?.url && (
@@ -171,10 +254,9 @@ const CarouselBlock = ( { heading, subheading, items } ) => {
 														backgroundImage: `url('${ item.image.url }')`,
 													} }
 												/>
-												<div className="absolute inset-0 bg-black/20" />
+												<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 											</>
 										) }
-
 										<div className="absolute bottom-0 left-0 right-0 p-4 lg:p-6 text-white">
 											<div className="flex flex-col items-start">
 												{ item.title && (

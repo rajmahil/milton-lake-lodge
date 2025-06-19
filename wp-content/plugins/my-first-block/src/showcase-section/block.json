@@ -9,10 +9,6 @@
 	"description": "A customizable showcase section block with a top heading, main heading, subheading, dual buttons, and a sliding image gallery.",
 	"example": {},
 	"attributes": {
-		"topHeading": {
-			"type": "string",
-			"selector": "p"
-		},
 		"heading": {
 			"type": "string",
 			"selector": "h2"

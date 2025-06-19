@@ -3,7 +3,6 @@
  * Scroll Image Section - Server-side render with optimized Alpine.js scroll animation
  */
 
-$topHeading = $attributes['topHeading'] ?? '';
 $heading = $attributes['heading'] ?? '';
 $buttonText = $attributes['buttonText'] ?? '';
 $buttonUrl = $attributes['buttonUrl'] ?? '#';

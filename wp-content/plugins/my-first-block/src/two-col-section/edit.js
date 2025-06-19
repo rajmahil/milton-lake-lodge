@@ -84,13 +84,6 @@ export default function Edit( { attributes, setAttributes } ) {
 			<InspectorControls>
 				<PanelBody title={ __( 'Content', 'your-text-domain' ) }>
 					<TextControl
-						label={ __( 'Top Heading', 'your-text-domain' ) }
-						value={ topHeading }
-						onChange={ ( value ) =>
-							setAttributes( { topHeading: value } )
-						}
-					/>
-					<TextControl
 						label={ __( 'Heading', 'your-text-domain' ) }
 						value={ heading }
 						onChange={ ( value ) =>

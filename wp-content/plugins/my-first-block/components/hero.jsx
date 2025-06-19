@@ -1,5 +1,4 @@
 const Hero = ( {
-	topHeading,
 	heading,
 	subheading,
 	buttonText,
@@ -77,7 +76,7 @@ const Hero = ( {
 					</div>
 
 					{ /* TripAdvisor Section */ }
-					<div className="grid grid-cols-5 gap-0 w-full p-2 bg-black/50 rounded-md relative overflow-hidden">
+					<div className="flex flex-col lg:!grid md:!grid-cols-3 lg:!grid-cols-5 gap-0  w-full p-2 bg-black/50 rounded-md relative overflow-hidden">
 						<div className="flex flex-row gap-3 p-2 text-white rounded-lg w-full px-2 items-center justify-start">
 							<div className="bg-[#33e0a1] text-black h-fit p-1 rounded-full">
 								<svg

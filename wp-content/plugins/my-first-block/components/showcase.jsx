@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 const Showcase = ( {
-	topHeading,
 	heading,
 	buttonText,
 	buttonUrl,
