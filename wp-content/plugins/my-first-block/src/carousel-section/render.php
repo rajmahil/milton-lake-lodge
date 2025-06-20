@@ -217,31 +217,31 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
               }
           }
       }"
-      class="relative w-full overflow-hidden"
+      class="relative w-full overflow-hidden flex flex-col gap-10 lg:gap-16"
       x-ref="container"
     >
       <div class='section-padding pb-0'>
-        <div class='flex items-end justify-between flex-wrap gap-5 mb-10 sm:mb-16 max-w-container'>
-          <div class='flex flex-col gap-2 items-start'>
+        <div class='flex items-end justify-between flex-wrap gap-5  max-w-container'>
+          <div class='flex flex-col gap-2 items-start lg:max-w-4xl'>
             <?php if ($heading) : ?>
             <h2 class="heading-two !text-left"><?php echo esc_html($heading); ?></h2>
             <?php endif; ?>
 
             <?php if ($subheading) : ?>
-            <p class="text-xl font-medium !text-left"><?php echo esc_html($subheading); ?></p>
+            <p class="text-xl !text-left text-neutral-500"><?php echo esc_html($subheading); ?></p>
             <?php endif; ?>
           </div>
           <div class='flex items-center gap-2'>
             <button
               @click="prev()"
               :disabled="!canGoPrev"
-              :class="canGoPrev ? 'bg-white hover:bg-gray-100' : 'bg-gray-200 cursor-not-allowed'"
-              class="rounded-full p-3 transition "
+              :class="canGoPrev ? 'opacity-100 cursor-pointer hover:bg-white duration-300 transition-all ease-in-out' :
+                  'opacity-50 cursor-not-allowed'"
+              class="rounded-full p-3 border border-dashed "
               aria-label="Previous slide"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                :class="canGoPrev ? 'text-black' : 'text-gray-400'"
                 class="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -259,13 +259,13 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
             <button
               @click="next()"
               :disabled="!canGoNext"
-              :class="canGoNext ? 'bg-white hover:bg-gray-100' : 'bg-gray-200 cursor-not-allowed'"
-              class="rounded-full p-3 transition "
+              :class="canGoNext ? 'opacity-100 cursor-pointer hover:bg-white duration-300 transition-all ease-in-out' :
+                  'opacity-50 cursor-not-allowed'"
+              class="rounded-full p-3 border border-dashed "
               aria-label="Next slide"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                :class="canGoNext ? 'text-black' : 'text-gray-400'"
                 class="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -313,7 +313,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
               <?php endif; ?>
-              <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-10 text-white">
+              <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-10 text-white  h-48">
                 <div class='flex flex-col items-start'>
                   <?php if (!empty($item['title'])) : ?>
                   <h3 class="!text-3xl md:!text-4xl font-bold uppercase tracking-wide !text-left">
@@ -322,7 +322,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
                   <?php endif; ?>
 
                   <?php if (!empty($item['text'])) : ?>
-                  <p class="text-base sm:text-lg sm:!leading-relaxed !text-left">
+                  <p class="text-lg sm:text-xl  !text-left">
                     <?php echo esc_html($item['text']); ?>
                   </p>
                   <?php endif; ?>

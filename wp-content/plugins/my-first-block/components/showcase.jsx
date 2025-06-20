@@ -8,6 +8,7 @@ const Showcase = ( {
 	imagesSpeed,
 	backgroundImage,
 	sectionId,
+	text,
 } ) => {
 	const [ duration, setDuration ] = useState( '30s' );
 
@@ -46,12 +47,13 @@ const Showcase = ( {
 			} }
 		>
 			<div className="relative z-[2] max-w-container flex flex-row flex-wrap gap-5 items-end justify-between">
-				<div className="flex flex-col gap-2 lg:max-w-2xl w-full">
+				<div className="flex flex-col gap-2 lg:max-w-4xl w-full">
 					{ heading && (
 						<h2 className="heading-two !text-left !text-white">
 							{ heading }
 						</h2>
 					) }
+					{ text && <p class="text-xl text-white">{ text }</p> }
 				</div>
 
 				<div>

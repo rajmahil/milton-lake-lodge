@@ -22,7 +22,7 @@
 @source inline("md:text-2xl");
 @source inline("lg:grid-cols-5");
 @source inline("lg:flex-row");
-@source inline("lg:p-10")
+@source inline("lg:p-10");
 
 /* Global wrapper class for all your blocks */
 .my-unique-plugin-wrapper-class {
@@ -267,7 +267,7 @@
 	}
 
 	.heading-two {
-		@apply !my-0  !text-4xl sm:!text-5xl md:!text-6xl lg:!text-7xl;
+		@apply !my-0  !text-5xl md:!text-6xl lg:!text-7xl;
 	}
 	.heading-three {
 		@apply !my-0  !text-3xl sm:!text-4xl md:!text-5xl lg:!text-6xl;

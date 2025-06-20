@@ -1,6 +1,7 @@
 <?php
 
 $heading = $attributes['heading'] ?? '';
+$text = $attributes['text'] ?? '';
 $button_text = $attributes['buttonText'] ?? 'Learn More';
 $button_url = $attributes['buttonUrl'] ?? '#';
 $images = $attributes['images'] ?? [];
@@ -16,25 +17,27 @@ $speed_map = [
 $base_duration = $speed_map[$imagesSpeed] ?? 30;
 $reduced_duration = max($base_duration - 15, 5);
 $animation_class = 'showcase-animate-' . uniqid();
-$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
-
+$section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId']) : '';
 
 ?>
 
 <section
   id="<?php echo $section_id; ?>"
   class="plugin-custom-block flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-green bg-repeat bg-blend-hard-light bg-size-[450px]"
-  style="background-image: url('<?php echo !empty($background_image['url']) 
-    ? esc_url($background_image['url']) 
-    : esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
+  style="background-image: url('<?php echo !empty($background_image['url']) ? esc_url($background_image['url']) : esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
 >
 
   <div class="relative z-[2] max-w-container flex flex-row flex-wrap gap-5 items-end justify-between">
-    <div class="flex flex-col gap-2 lg:max-w-2xl w-full">
+    <div class="flex flex-col gap-2 lg:max-w-4xl w-full">
       <?php if ($heading): ?>
       <h2 class="heading-two text-left text-white">
         <?php echo esc_html($heading); ?>
       </h2>
+      <?php endif; ?>
+      <?php if ($text): ?>
+      <p class="text-xl text-white">
+        <?php echo esc_html($text); ?>
+      </p>
       <?php endif; ?>
     </div>
     <div>
@@ -55,32 +58,26 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
       class="flex w-max animate-slide gap-10 whitespace-nowrap <?php echo esc_attr($animation_class); ?>"
       style="animation-duration: <?php echo esc_attr($base_duration); ?>s;"
     >
-      <?php foreach (array_merge($images, $images) as $idx => $image):
-    $image_url = $image['sizes']['large']['url'] ?? ($image['url'] ?? '');
-    $image_alt = $image['alt'] ?? '';
-    $image_width = $image['width'] ?? '';
-    $image_height = $image['height'] ?? '';
+      <?php foreach ($images as $idx => $image):
 
+			$id = $image['id'] ?? '';
     $rotation_class = match ($idx % 3) {
-      0 => 'rotate-[-3deg]',
-      1 => 'rotate-[2deg]',
-      default => 'rotate-[-1deg]',
+        0 => 'rotate-[-3deg]',
+        1 => 'rotate-[2deg]',
+        default => 'rotate-[-1deg]',
     };
+
+    error_log($image . ' Image URLS Showcase');
 ?>
       <div
         class="<?php echo $rotation_class; ?>
-      !w-[calc(100vw-40px)] sm:!w-[calc(50vw-40px)] md:!w-[calc(33.33vw-40px)] lg:!w-[calc(25vw-40px)]
-    "
+      !w-[calc(90vw-40px)] sm:!w-[calc(50vw-40px)] lg:!w-[calc(33.33vw-40px)] xl:!w-[calc(25vw-40px)]"
       >
-        <img
-          src="<?php echo esc_url($image_url); ?>"
-          srcset="<?php echo esc_attr(sprintf('%s 150w, %s 300w, %s 1024w, %s %sw', $image['sizes']['thumbnail']['url'] ?? '', $image['sizes']['medium']['url'] ?? '', $image['sizes']['large']['url'] ?? '', $image['sizes']['full']['url'] ?? ($image['url'] ?? ''), $image_width)); ?>"
-          sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1023px) 33vw, 25vw"
-          alt="<?php echo esc_attr($image_alt); ?>"
-          class="flex-shrink-0 h-full aspect-[3/4] w-full object-cover"
-          loading="lazy"
-          decoding="async"
-        />
+        <div class="aspect-[2/3] overflow-hidden flex items-center justify-center">
+          <?php echo wp_get_attachment_image($id, 'large', false, [
+              'class' => 'w-full h-auto  shadow-md ',
+          ]); ?>
+        </div>
       </div>
       <?php endforeach; ?>
 

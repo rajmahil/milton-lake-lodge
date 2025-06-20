@@ -40,11 +40,11 @@ const Hero = ( {
 					{ /* Text Content */ }
 					<div className="w-full flex flex-row gap-5 flex-wrap items-end justify-between">
 						<div className="flex flex-col gap-0 max-w-[650px]">
-							<h1 className="!my-0 !text-5xl sm:!text-6xl md:!text-7xl lg:!text-8xl !font-[700] text-left text-white font-sans drop-shadow-lg">
+							<h1 className="!my-0 !text-5xl sm:!text-6xl md:!text-7xl lg:!text-8xl !font-[700] text-left !text-white font-sans drop-shadow-lg">
 								{ heading }
 							</h1>
 							{ subheading && (
-								<p className="!my-0 !text-2xl text-left text-white">
+								<p className="!my-0 !text-2xl text-left !text-white">
 									{ subheading }
 								</p>
 							) }
