@@ -44,7 +44,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<div>Selected post: { selectedPostId }</div>
+			<FullCalendar { ...attributes } />
 		</div>
 	);
 }

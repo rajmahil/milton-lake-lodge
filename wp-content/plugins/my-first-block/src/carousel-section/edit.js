@@ -15,7 +15,7 @@ import {
 import Carousel from '../../components/carousel';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { heading, subheading, items = [], sectionId, link } = attributes;
+	const { heading, subheading, items = [], sectionId } = attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'carousel-section-wrapper',

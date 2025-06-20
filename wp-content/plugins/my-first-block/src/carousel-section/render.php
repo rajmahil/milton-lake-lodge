@@ -2,7 +2,7 @@
 /**
  * Carousel Section Block - Render Template (Alpine.js Version)
  * Responsive: 3 slides on md+, 2 on sm+, 1 on sm-
- * Fixed smooth dragging implementation
+ * Fixed smooth dragging implementation with click prevention
  */
 
 $heading = $attributes['heading'] ?? '';
@@ -27,6 +27,7 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
           currentX: 0,
           dragOffset: 0,
           isDragging: false,
+          hasDragged: false, // Track if user has dragged
           containerWidth: 0,
           boundHandleDragMove: null,
           boundHandleDragEnd: null,
@@ -103,6 +104,7 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
           // Improved drag functionality
           handleDragStart(event) {
               this.isDragging = true;
+              this.hasDragged = false; // Reset drag flag
               this.startX = event.type.includes('touch') ? event.touches[0].clientX : event.clientX;
               this.currentX = this.startX;
               this.dragOffset = 0;
@@ -131,6 +133,11 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
       
               this.currentX = event.type.includes('touch') ? event.touches[0].clientX : event.clientX;
               this.dragOffset = this.currentX - this.startX;
+              
+              // Mark as dragged if user has moved more than 5px
+              if (Math.abs(this.dragOffset) > 5) {
+                  this.hasDragged = true;
+              }
           },
       
           handleDragEnd() {
@@ -158,6 +165,25 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
       
               // Reset drag offset
               this.dragOffset = 0;
+              
+              // Reset hasDragged after a short delay to allow click event to be prevented
+              setTimeout(() => {
+                  this.hasDragged = false;
+              }, 10);
+          },
+          
+          // Handle click events on links
+          handleLinkClick(event, link) {
+              // Prevent navigation if user has dragged
+              if (this.hasDragged) {
+                  event.preventDefault();
+                  return false;
+              }
+              
+              // Allow normal navigation if no drag occurred
+              if (link && link !== '#') {
+                  window.location.href = link;
+              }
           },
       
           // Calculate track transform with smooth drag offset
@@ -272,13 +298,15 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
             class="carousel-slide flex-shrink-0"
             :style="{ 'width': slideWidthPercentage + '%', 'margin-right': gapPercentage + '%' }"
           >
-          <a href="<?php echo esc_url($item_link); ?>">
-            <div class="relative rounded-2xl overflow-hidden aspect-[5/6]">
+            <div 
+              class="relative rounded-2xl overflow-hidden aspect-[5/6] group cursor-pointer"
+              @click="handleLinkClick($event, '<?php echo esc_js($item_link); ?>')"
+            >
               <?php if (!empty($item['image']['url'])) : ?>
-              <div
-                class="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                style="background-image: url('<?php echo esc_url($item['image']['url']); ?>');"
-              ></div>
+                <div
+                  class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-105"
+                  style="background-image: url('<?php echo esc_url($item['image']['url']); ?>');"
+                ></div>
 
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
@@ -300,7 +328,6 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
                 </div>
               </div>
             </div>
-            </a>
           </div>
           <?php endforeach; ?>
         </div>
