@@ -13,6 +13,10 @@
 			"type": "string",
 			"selector": "h2"
 		},
+		"text": {
+			"type": "string",
+			"selector": "p"
+		},
 
 		"buttonText": {
 			"type": "string",

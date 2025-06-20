@@ -144,19 +144,19 @@ const CarouselBlock = ( { heading, subheading, items, sectionId } ) => {
 		>
 			<div className="text-center flex flex-col gap-16">
 				<div
-					className="relative w-full overflow-hidden"
+					class="relative w-full overflow-hidden flex flex-col gap-10 lg:gap-16"
 					ref={ containerRef }
 				>
 					<div className="section-padding pb-0">
-						<div className="flex items-end justify-between flex-wrap gap-5 mb-10 sm:mb-16 max-w-container mx-auto">
-							<div className="flex flex-col gap-2 items-start">
+						<div className="flex items-end justify-between flex-wrap gap-5 max-w-container mx-auto">
+							<div className="flex flex-col gap-2 items-start max-w-4xl mr-auto">
 								{ heading && (
 									<h2 className="heading-two font-bold !text-left !my-0">
 										{ heading }
 									</h2>
 								) }
 								{ subheading && (
-									<p className="text-xl font-medium !text-left !my-0">
+									<p className="text-xl text-neutral-500 !text-left !my-0">
 										{ subheading }
 									</p>
 								) }
@@ -248,35 +248,33 @@ const CarouselBlock = ( { heading, subheading, items, sectionId } ) => {
 										width: `${ slideWidthPercentage }%`,
 									} }
 								>
-									<a href={ item.link || '#' }>
-										<div className="relative rounded-2xl overflow-hidden aspect-[5/6]">
-											{ item.image?.url && (
-												<>
-													<div
-														className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-														style={ {
-															backgroundImage: `url('${ item.image.url }')`,
-														} }
-													/>
-													<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-												</>
-											) }
-											<div className="absolute bottom-0 left-0 right-0 p-4 lg:p-6 text-white">
-												<div className="flex flex-col items-start">
-													{ item.title && (
-														<h3 className="!my-0 !text-3xl md:!text-4xl font-bold uppercase tracking-wide !text-left">
-															{ item.title }
-														</h3>
-													) }
-													{ item.text && (
-														<p className="!my-0 !text-base sm:!text-lg sm:!leading-relaxed !text-left">
-															{ item.text }
-														</p>
-													) }
-												</div>
+									<div className="relative rounded-2xl overflow-hidden aspect-[5/7] group cursor-pointer">
+										{ item.image?.url && (
+											<>
+												<div
+													className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+													style={ {
+														backgroundImage: `url('${ item.image.url }')`,
+													} }
+												/>
+												<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+											</>
+										) }
+										<div class="absolute bottom-0 left-0 right-0 p-6 lg:p-10 text-white  h-48">
+											<div className="flex flex-col items-start">
+												{ item.title && (
+													<h3 className="!my-0 !text-3xl md:!text-4xl font-bold uppercase tracking-wide !text-left">
+														{ item.title }
+													</h3>
+												) }
+												{ item.text && (
+													<p className="!my-0 !text-base sm:!text-lg sm:!leading-relaxed !text-left">
+														{ item.text }
+													</p>
+												) }
 											</div>
 										</div>
-									</a>
+									</div>
 								</div>
 							) ) }
 						</div>

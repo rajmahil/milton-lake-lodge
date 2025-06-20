@@ -10,6 +10,7 @@ import {
 	TextControl,
 	Button,
 	RadioControl,
+	TextareaControl,
 } from '@wordpress/components';
 import Showcase from '../../components/showcase';
 
@@ -22,6 +23,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		backgroundImage,
 		imagesSpeed,
 		sectionId,
+		text,
 	} = attributes;
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
@@ -51,6 +53,13 @@ export default function Edit( { attributes, setAttributes } ) {
 						value={ heading }
 						onChange={ ( value ) =>
 							setAttributes( { heading: value } )
+						}
+					/>
+					<TextareaControl
+						label={ __( 'Text', 'your-text-domain' ) }
+						value={ text }
+						onChange={ ( value ) =>
+							setAttributes( { text: value } )
 						}
 					/>
 				</PanelBody>
