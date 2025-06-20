@@ -17,21 +17,18 @@ $speed_map = [
 $base_duration = $speed_map[$imagesSpeed] ?? 30;
 $reduced_duration = max($base_duration - 15, 5);
 $animation_class = 'showcase-animate-' . uniqid();
-$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
-
+$section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId']) : '';
 
 ?>
 
 <section
   id="<?php echo $section_id; ?>"
   class="plugin-custom-block flex flex-col gap-24 overflow-hidden relative not-prose section-padding w-full bg-brand-green bg-repeat bg-blend-hard-light bg-size-[450px]"
-  style="background-image: url('<?php echo !empty($background_image['url']) 
-    ? esc_url($background_image['url']) 
-    : esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
+  style="background-image: url('<?php echo !empty($background_image['url']) ? esc_url($background_image['url']) : esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
 >
 
   <div class="relative z-[2] max-w-container flex flex-row flex-wrap gap-5 items-end justify-between">
-    <div class="flex flex-col gap-2 lg:max-w-2xl w-full">
+    <div class="flex flex-col gap-2 lg:max-w-4xl w-full">
       <?php if ($heading): ?>
       <h2 class="heading-two text-left text-white">
         <?php echo esc_html($heading); ?>
