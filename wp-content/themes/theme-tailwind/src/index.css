@@ -21,6 +21,8 @@
 @source inline("md:text-2xl");
 @source inline("lg:grid-cols-5");
 @source inline("lg:flex-row");
+@source inline("lg:p-10");
+
 
 @theme {
   --font-heading: "Bebas Neue Pro", sans-serif;

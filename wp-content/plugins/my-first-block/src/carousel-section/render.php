@@ -9,11 +9,14 @@ $heading = $attributes['heading'] ?? '';
 $subheading = $attributes['subheading'] ?? '';
 $items = $attributes['items'] ?? [];
 $total_items = count($items);
-$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
+$section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId']) : '';
 
 ?>
 
-<section id="<?php echo $section_id; ?>" class="plugin-custom-block not-prose w-full">
+<section
+  id="<?php echo $section_id; ?>"
+  class="plugin-custom-block not-prose w-full"
+>
   <div class="text-center flex flex-col gap-16">
     <?php if (!empty($items)) : ?>
     <div
@@ -133,7 +136,7 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
       
               this.currentX = event.type.includes('touch') ? event.touches[0].clientX : event.clientX;
               this.dragOffset = this.currentX - this.startX;
-              
+      
               // Mark as dragged if user has moved more than 5px
               if (Math.abs(this.dragOffset) > 5) {
                   this.hasDragged = true;
@@ -165,13 +168,13 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
       
               // Reset drag offset
               this.dragOffset = 0;
-              
+      
               // Reset hasDragged after a short delay to allow click event to be prevented
               setTimeout(() => {
                   this.hasDragged = false;
               }, 10);
           },
-          
+      
           // Handle click events on links
           handleLinkClick(event, link) {
               // Prevent navigation if user has dragged
@@ -179,7 +182,7 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
                   event.preventDefault();
                   return false;
               }
-              
+      
               // Allow normal navigation if no drag occurred
               if (link && link !== '#') {
                   window.location.href = link;
@@ -291,28 +294,26 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
           @mousedown="handleDragStart"
           @touchstart="handleDragStart"
         >
-        <?php foreach ($items as $item) : ?>
+          <?php foreach ($items as $item) : ?>
           <?php $item_link = !empty($item['link']) ? $item['link'] : '#'; ?>
-        
+
           <div
             class="carousel-slide flex-shrink-0"
             :style="{ 'width': slideWidthPercentage + '%', 'margin-right': gapPercentage + '%' }"
           >
-            <div 
-              class="relative rounded-2xl overflow-hidden aspect-[5/6] group cursor-pointer"
+            <div
+              class="relative rounded-2xl overflow-hidden aspect-[5/7] group cursor-pointer"
               @click="handleLinkClick($event, '<?php echo esc_js($item_link); ?>')"
             >
               <?php if (!empty($item['image']['url'])) : ?>
-                <div
-                  class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-105"
-                  style="background-image: url('<?php echo esc_url($item['image']['url']); ?>');"
-                ></div>
-
+              <div
+                class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-105"
+                style="background-image: url('<?php echo esc_url($item['image']['url']); ?>');"
+              ></div>
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
               <?php endif; ?>
-
-              <div class="absolute bottom-0 left-0 right-0 p-4 lg:p-6 text-white">
+              <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-10 text-white">
                 <div class='flex flex-col items-start'>
                   <?php if (!empty($item['title'])) : ?>
                   <h3 class="!text-3xl md:!text-4xl font-bold uppercase tracking-wide !text-left">
@@ -332,6 +333,6 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
           <?php endforeach; ?>
         </div>
       </div>
-    <?php endif; ?>
-  </div>
+      <?php endif; ?>
+    </div>
 </section>
