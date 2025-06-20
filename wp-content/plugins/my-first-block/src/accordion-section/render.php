@@ -41,7 +41,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
       >
         <button
           type="button"
-          class="w-full text-left flex items-center justify-between text-xl font-medium select-none "
+          class="w-full text-left  flex items-center justify-between text-xl font-medium select-none "
         >
           <h3
             class="text-lg font-medium !cursor-pointer  flex flex-row w-full items-center justify-between !capitalize  !font-sans"
