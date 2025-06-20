@@ -322,7 +322,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
                   <?php endif; ?>
 
                   <?php if (!empty($item['text'])) : ?>
-                  <p class="text-base sm:text-lg sm:!leading-relaxed !text-left">
+                  <p class="text-lg sm:text-xl  !text-left">
                     <?php echo esc_html($item['text']); ?>
                   </p>
                   <?php endif; ?>
