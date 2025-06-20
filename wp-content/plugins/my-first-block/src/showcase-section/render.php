@@ -5,7 +5,6 @@ $button_text = $attributes['buttonText'] ?? 'Learn More';
 $button_url = $attributes['buttonUrl'] ?? '#';
 $images = $attributes['images'] ?? [];
 $background_image = $attributes['backgroundImage'] ?? [];
-
 $imagesSpeed = $attributes['imagesSpeed'] ?? 'medium';
 
 $speed_map = [

@@ -35,41 +35,39 @@ const FullCalendarComp = ( props ) => {
 	console.log( 'Posts:', myCalendarData );
 
 	useEffect( () => {
-		if ( myCalendarData?.posts?.length ) {
-			const selectedPost = myCalendarData.posts.find(
-				( post ) => post.id === selectedPostId
-			);
+		if ( ! myCalendarData?.posts?.length ) return;
 
-			if ( selectedPost ) {
-				const tripSlots = selectedPost?.trips.map( ( slot ) => {
-					const slotType = selectedPost?.slot_types.find(
-						( type ) => type.label_ === slot.trip_type
-					);
+		const selectedPost = myCalendarData?.posts?.find(
+			( post ) => post.id === selectedPostId
+		);
 
-					return {
-						title: slot.trip_type,
-						start: slot.start_date,
-						end: addDayToYYYYMMDD( slot.end_date ),
-						extendedProps: {
-							backgroundColor:
-								slotType.background_color || '#fef3c7', // default yellow
-							textColor: slotType.text_color || '#1f2937', // default gray-800
-							status: slot.status,
-							startDate: slot.start_date,
-							endDate: slot.end_date,
-						},
-					};
-				} );
+		if ( selectedPost ) {
+			const tripSlots = selectedPost?.trips.map( ( slot ) => {
+				const slotType = selectedPost?.slot_types.find(
+					( type ) => type.label_ === slot.trip_type
+				);
 
-				setSlots( tripSlots );
-				setSelected( selectedPost );
-			} else {
-				setSelected( myCalendarData.posts[ 0 ] );
-			}
-		} else if ( selectedPost ) {
+				return {
+					title: slot.trip_type,
+					start: slot.start_date,
+					end: addDayToYYYYMMDD( slot.end_date ),
+					extendedProps: {
+						backgroundColor:
+							slotType?.background_color || '#fef3c7',
+						textColor: slotType?.text_color || '#1f2937',
+						status: slot.status,
+						startDate: slot.start_date,
+						endDate: slot.end_date,
+					},
+				};
+			} );
+
+			setSlots( tripSlots );
 			setSelected( selectedPost );
+		} else {
+			setSelected( myCalendarData.posts[ 0 ] );
 		}
-	}, [ myCalendarData ] );
+	}, [ myCalendarData, selectedPostId ] );
 
 	if ( ! myCalendarData?.posts?.length ) {
 		return (
