@@ -205,10 +205,10 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
                   x-model="radioGroupSelectedValue"
                   class="accent-brand-green-dark translate-y-px focus:ring-brand-green-dark !h-4.5 !w-4.5"
                 />
-                <span class="relative flex flex-col text-left space-y-1.5 leading-none">
+                <span class="relative flex flex-col text-left space-y-1.5">
                   <span
                     x-text="option.title"
-                    class="font-normal tex-left capitalize leading-none mt-0.5"
+                    class="font-normal tex-left capitalize leading-tight  mt-0.5"
                   ></span>
                 </span>
               </label>

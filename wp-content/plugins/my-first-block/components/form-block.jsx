@@ -222,8 +222,8 @@ const FormBlock = ( props ) => {
 												readOnly
 												className=" translate-y-px  !h-4.5 !w-4.5 !bg-white"
 											/>
-											<span className="relative flex flex-col text-left space-y-1.5 leading-none">
-												<span className="font-normal text-left capitalize leading-none ">
+											<span className="relative flex flex-col text-left space-y-1.5 ">
+												<span className="font-normal text-left capitalize leading-tight ">
 													{ option }
 												</span>
 											</span>
