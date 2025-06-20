@@ -301,41 +301,36 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
             class="carousel-slide flex-shrink-0"
             :style="{ 'width': slideWidthPercentage + '%', 'margin-right': gapPercentage + '%' }"
           >
-            <a href="<?php echo esc_url($item_link); ?>">
-              <div class="relative rounded-xl overflow-hidden aspect-[5/6]">
-                <?php if (!empty($item['image']['url'])) : ?>
-                <div
-                  class="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style="background-image: url('<?php echo esc_url($item['image']['url']); ?>');"
-                ></div>
+            <div
+              class="relative rounded-2xl overflow-hidden aspect-[5/6] group cursor-pointer"
+              @click="handleLinkClick($event, '<?php echo esc_js($item_link); ?>')"
+            >
+              <?php if (!empty($item['image']['url'])) : ?>
+              <div
+                class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-105"
+                style="background-image: url('<?php echo esc_url($item['image']['url']); ?>');"
+              ></div>
 
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <?php endif; ?>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
-                <div class="absolute bottom-0 left-0 right-0 p-4 lg:p-10 text-white ">
-                  <div class='flex flex-col items-start'>
-                    <?php if (!empty($item['title'])) : ?>
-                    <h3
-                      class="!text-3xl
-                  md:!text-4xl
-                  font-bold
-                  uppercase
-                  tracking-wide
-                  !text-left"
-                    >
-                      <?php echo esc_html($item['title']); ?>
-                    </h3>
-                    <?php endif; ?>
+              <?php endif; ?>
 
-                    <?php if (!empty($item['text'])) : ?>
-                    <p class="text-base sm:text-lg sm:!leading-relaxed !text-left">
-                      <?php echo esc_html($item['text']); ?>
-                    </p>
-                    <?php endif; ?>
-                  </div>
+              <div class="absolute bottom-0 left-0 right-0 p-4 lg:p-6 text-white">
+                <div class='flex flex-col items-start'>
+                  <?php if (!empty($item['title'])) : ?>
+                  <h3 class="!text-3xl md:!text-4xl font-bold uppercase tracking-wide !text-left">
+                    <?php echo esc_html($item['title']); ?>
+                  </h3>
+                  <?php endif; ?>
+
+                  <?php if (!empty($item['text'])) : ?>
+                  <p class="text-base sm:text-lg sm:!leading-relaxed !text-left">
+                    <?php echo esc_html($item['text']); ?>
+                  </p>
+                  <?php endif; ?>
                 </div>
               </div>
-            </a>
+            </div>
           </div>
           <?php endforeach; ?>
         </div>
