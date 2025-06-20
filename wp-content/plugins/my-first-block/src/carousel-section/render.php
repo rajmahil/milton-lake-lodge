@@ -311,6 +311,9 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
               <?php endif; ?>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+              <?php endif; ?>
 
               <div class="absolute bottom-0 left-0 right-0 p-4 lg:p-6 text-white">
                 <div class='flex flex-col items-start'>
@@ -319,7 +322,22 @@ $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['secti
                     <?php echo esc_html($item['title']); ?>
                   </h3>
                   <?php endif; ?>
+              <div class="absolute bottom-0 left-0 right-0 p-4 lg:p-6 text-white">
+                <div class='flex flex-col items-start'>
+                  <?php if (!empty($item['title'])) : ?>
+                  <h3 class="!text-3xl md:!text-4xl font-bold uppercase tracking-wide !text-left">
+                    <?php echo esc_html($item['title']); ?>
+                  </h3>
+                  <?php endif; ?>
 
+                  <?php if (!empty($item['text'])) : ?>
+                  <p class="text-base sm:text-lg sm:!leading-relaxed !text-left">
+                    <?php echo esc_html($item['text']); ?>
+                  </p>
+                  <?php endif; ?>
+                </div>
+              </div>
+            </div>
                   <?php if (!empty($item['text'])) : ?>
                   <p class="text-base sm:text-lg sm:!leading-relaxed !text-left">
                     <?php echo esc_html($item['text']); ?>
