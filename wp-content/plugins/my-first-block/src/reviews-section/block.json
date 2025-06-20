@@ -9,9 +9,9 @@
 	"description": "Reviews section",
 	"example": {},
 	"attributes": {
-		"topHeading": {
+		"heading": {
 			"type": "string",
-			"default": "Top Heading Here"
+			"default": "Heading Here"
 		},
 		"reviews": {
 			"type": "array",

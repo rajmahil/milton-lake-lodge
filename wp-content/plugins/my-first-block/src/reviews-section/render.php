@@ -3,7 +3,7 @@
  * Reviews Section Block - Drag on text slider + image animations + animated arrow
  */
 
-$topHeading = $attributes['topHeading'] ?? '';
+$heading = $attributes['heading'] ?? '';
 $reviews = $attributes['reviews'] ?? [];
 $totalSlides = count($reviews);
 $section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
@@ -155,9 +155,9 @@ id="<?php echo $section_id; ?>"
       <?php endforeach; ?>
     </div>
     <div class="flex flex-col gap-2 col-span-1 xl:col-span-2 ">
-      <?php if ($topHeading): ?>
+      <?php if ($heading): ?>
       <h2 class="heading-two text-center">
-        <?php echo esc_html($topHeading); ?>
+        <?php echo esc_html($heading); ?>
       </h2>
       <?php endif; ?>
       <div

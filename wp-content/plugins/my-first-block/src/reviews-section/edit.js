@@ -16,7 +16,7 @@ import {
 import Reviews from '../../components/reviews';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { topHeading, reviews = [], sectionId } = attributes;
+	const { heading, reviews = [], sectionId } = attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'reviews-section-wrapper',
@@ -83,10 +83,10 @@ export default function Edit( { attributes, setAttributes } ) {
 					initialOpen={ true }
 				>
 					<TextControl
-						label={ __( 'Top Heading', 'reviews-section-block' ) }
-						value={ topHeading }
+						label={ __( 'Heading', 'reviews-section-block' ) }
+						value={ heading }
 						onChange={ ( value ) =>
-							setAttributes( { topHeading: value } )
+							setAttributes( { heading: value } )
 						}
 					/>
 				</PanelBody>
@@ -333,7 +333,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				</InspectorAdvancedControls>
 			</InspectorControls>
 
-			<Reviews topHeading={ topHeading } reviews={ reviews } />
+			<Reviews heading={ heading } reviews={ reviews } />
 		</div>
 	);
 }

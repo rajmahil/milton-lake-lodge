@@ -1,10 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 
-export default function ReviewsSection( {
-	topHeading,
-	reviews = [],
-	sectionId,
-} ) {
+export default function ReviewsSection( { heading, reviews = [], sectionId } ) {
 	const [ currentIndex, setCurrentIndex ] = useState( 0 );
 	const [ dragging, setDragging ] = useState( false );
 	const [ startX, setStartX ] = useState( 0 );
@@ -157,11 +153,10 @@ export default function ReviewsSection( {
 						) ) }
 					</div>
 
-					{ /* Content Section */ }
 					<div className="!flex !flex-col !gap-2 col-span-1 xl:col-span-2">
-						{ topHeading && (
+						{ heading && (
 							<h2 class="heading-two text-center my-0">
-								{ topHeading }
+								{ heading }
 							</h2>
 						) }
 
