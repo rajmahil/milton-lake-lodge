@@ -69,11 +69,9 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
 
     error_log($image . ' Image URLS Showcase');
 ?>
-      <div
-        class="<?php echo $rotation_class; ?>
-      !w-[calc(90vw-40px)] sm:!w-[calc(50vw-40px)] lg:!w-[calc(33.33vw-40px)] xl:!w-[calc(25vw-40px)]"
-      >
-        <div class="aspect-[2/3] overflow-hidden flex items-center justify-center">
+      <div class="<?php echo $rotation_class; ?>
+      !w-[calc(90vw-40px)] lg:!w-[calc(50vw-40px)] xl:!w-[calc(33.33vw-40px)] ">
+        <div class="aspect-[3/2] overflow-hidden flex items-center justify-center">
           <?php echo wp_get_attachment_image($id, 'large', false, [
               'class' => 'w-full h-auto  shadow-md ',
           ]); ?>
