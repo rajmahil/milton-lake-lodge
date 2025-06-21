@@ -71,9 +71,9 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
 ?>
       <div class="<?php echo $rotation_class; ?>
       !w-[calc(90vw-40px)] lg:!w-[calc(50vw-40px)] xl:!w-[calc(33.33vw-40px)] ">
-        <div class="aspect-[3/2] overflow-hidden flex items-center justify-center">
+        <div class="flex items-center justify-center">
           <?php echo wp_get_attachment_image($id, 'large', false, [
-              'class' => 'w-full h-auto  shadow-md ',
+              'class' => 'w-full h-auto ',
           ]); ?>
         </div>
       </div>
