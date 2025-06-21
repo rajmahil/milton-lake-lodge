@@ -9,9 +9,9 @@ $background_image = $attributes['backgroundImage'] ?? [];
 $imagesSpeed = $attributes['imagesSpeed'] ?? 'medium';
 
 $speed_map = [
-    'slow' => 60,
-    'medium' => 30,
-    'fast' => 15,
+    'slow' => 90,
+    'medium' => 60,
+    'fast' => 30,
 ];
 
 $base_duration = $speed_map[$imagesSpeed] ?? 30;
@@ -53,9 +53,9 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
   </div>
 
   <!-- Sliding Images Gallery -->
-  <div class="group relative w-full h-full select-none">
+  <div class="group relative w-full h-full select-none flex flex-row ">
     <div
-      class="flex w-max animate-slide gap-10 whitespace-nowrap <?php echo esc_attr($animation_class); ?>"
+      class="flex w-max animate-slide pl-4 whitespace-nowrap <?php echo esc_attr($animation_class); ?>"
       style="animation-duration: <?php echo esc_attr($base_duration); ?>s;"
     >
       <?php foreach ($images as $idx => $image):
@@ -67,10 +67,38 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
         default => 'rotate-[-1deg]',
     };
 
-    error_log($image . ' Image URLS Showcase');
 ?>
-      <div class="<?php echo $rotation_class; ?>
-      !w-[calc(90vw-40px)] lg:!w-[calc(50vw-40px)] xl:!w-[calc(33.33vw-40px)] ">
+      <div
+        class="<?php echo $rotation_class; ?>
+      !w-[calc(90vw-40px)] lg:!w-[calc(50vw-40px)] xl:!w-[calc(33.33vw-40px)] px-4"
+      >
+        <div class="flex items-center justify-center">
+          <?php echo wp_get_attachment_image($id, 'large', false, [
+              'class' => 'w-full h-auto ',
+          ]); ?>
+        </div>
+      </div>
+      <?php endforeach; ?>
+
+    </div>
+    <div
+      class="flex w-max animate-slide pl-4 whitespace-nowrap <?php echo esc_attr($animation_class); ?>"
+      style="animation-duration: <?php echo esc_attr($base_duration); ?>s;"
+    >
+      <?php foreach ($images as $idx => $image):
+
+			$id = $image['id'] ?? '';
+    $rotation_class = match ($idx % 3) {
+        0 => 'rotate-[-3deg]',
+        1 => 'rotate-[2deg]',
+        default => 'rotate-[-1deg]',
+    };
+
+?>
+      <div
+        class="<?php echo $rotation_class; ?>
+      !w-[calc(90vw-40px)] lg:!w-[calc(50vw-40px)] xl:!w-[calc(33.33vw-40px)] px-4"
+      >
         <div class="flex items-center justify-center">
           <?php echo wp_get_attachment_image($id, 'large', false, [
               'class' => 'w-full h-auto ',
