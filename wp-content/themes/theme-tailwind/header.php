@@ -18,31 +18,30 @@
   $menu = wp_get_nav_menu_object('Main Menu');
   $menu_items = [];
   $enable_dark_mode = false;
-
+  
   if ($menu) {
-    $menu_items = wp_get_nav_menu_items($menu->term_id);
-    $current_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    
-    $dark_paths = get_field('dark_paths', 'nav_menu_' . $menu->term_id);
-    
-    if ($dark_paths) {
-        foreach ($dark_paths as $dark_path) {
-            $path = $dark_path['add_paths']; 
-            if ($path && $current_path === $path) {
-                $enable_dark_mode = true;
-                break;
-            }
-        }
-    }
+      $menu_items = wp_get_nav_menu_items($menu->term_id);
+      $current_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+  
+      $dark_paths = get_field('dark_paths', 'nav_menu_' . $menu->term_id);
+  
+      if ($dark_paths) {
+          foreach ($dark_paths as $dark_path) {
+              $path = $dark_path['add_paths'];
+              if ($path && $current_path === $path) {
+                  $enable_dark_mode = true;
+                  break;
+              }
+          }
+      }
   }
-
+  
   $cta_text = get_theme_mod('boilerplate_cta_text', 'Get Started');
   $cta_url = get_theme_mod('boilerplate_cta_url', '#');
   $cta_phone = get_theme_mod('boilerplate_cta_phone', '#');
   ?>
-
   <div
-    x-data="{
+  x-data="{
       scrollY: 0,
       lastScrollY: 0,
       showNavbar: true,
@@ -73,18 +72,16 @@
               this.lastScrollY = this.scrollY;
           });
       }
-    }"
-  >
+  }"
+>
 
   <div
     class="fixed z-[100] w-full section-padding !py-2 transition-all duration-300 ease-in-out isolate"
     :class="{
         'transform -translate-y-full': !showNavbar,
         'transform translate-y-0': showNavbar,
-        <?php if ($enable_dark_mode): ?>
-        'bg-brand-green-dark shadow-lg ring-1 ring-black/5': true
-        <?php else: ?>
-        'bg-brand-green-dark/50 backdrop-blur-xl shadow-lg ring-1 ring-black/5': isScrolled,
+        <?php if ($enable_dark_mode): ?> 'bg-brand-green-dark shadow-lg ring-1 ring-black/5': true
+        <?php else: ?> 'bg-brand-green-dark/50 backdrop-blur-xl shadow-lg ring-1 ring-black/5': isScrolled,
         'bg-transparent': !isScrolled,
         <?php endif; ?>
     }"
@@ -176,39 +173,39 @@
               ?>
               <li>
                 <?php if ($has_children) : ?>
-                  <!-- Dropdown items remain as buttons -->
-                  <button
-                    :class="{
-                        'bg-white/15 rounded-md': navigationMenu == '<?php echo esc_js($menu_key); ?>',
-                    }"
-                    class="flex flex-row gap-0.5 items-center px-2.5 py-1 text-white transition-all ease-in-out duration-300"
-                    @mouseover="navigationMenuOpen = true; navigationMenuReposition($el); navigationMenu = '<?php echo esc_js($menu_key); ?>'"
-                    @mouseleave="navigationMenuLeave()"
+                <!-- Dropdown items remain as buttons -->
+                <button
+                  :class="{
+                      'bg-white/15 rounded-md': navigationMenu == '<?php echo esc_js($menu_key); ?>',
+                  }"
+                  class="flex flex-row gap-0.5 items-center px-2.5 py-1 text-white transition-all ease-in-out duration-300"
+                  @mouseover="navigationMenuOpen = true; navigationMenuReposition($el); navigationMenu = '<?php echo esc_js($menu_key); ?>'"
+                  @mouseleave="navigationMenuLeave()"
+                >
+                  <?php echo esc_html($parent_item->title); ?>
+                  <svg
+                    :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == '<?php echo esc_js($menu_key); ?>' }"
+                    class="relative top-[1px] ml-1 h-3 w-3 ease-in-out duration-300"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
                   >
-                    <?php echo esc_html($parent_item->title); ?>
-                    <svg
-                      :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == '<?php echo esc_js($menu_key); ?>' }"
-                      class="relative top-[1px] ml-1 h-3 w-3 ease-in-out duration-300"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </button>
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
                 <?php else : ?>
-                  <!-- FIX: Non-dropdown items become clickable links -->
-                  <a
-                    href="<?php echo esc_url($parent_item->url); ?>"
-                    class="flex flex-row gap-0.5 items-center px-2.5 py-1 text-white transition-all ease-in-out duration-300 hover:bg-white/15 rounded-md"
-                  >
-                    <?php echo esc_html($parent_item->title); ?>
-                  </a>
+                <!-- FIX: Non-dropdown items become clickable links -->
+                <a
+                  href="<?php echo esc_url($parent_item->url); ?>"
+                  class="flex flex-row gap-0.5 items-center px-2.5 py-1 text-white transition-all ease-in-out duration-300 hover:bg-white/15 rounded-md"
+                >
+                  <?php echo esc_html($parent_item->title); ?>
+                </a>
                 <?php endif; ?>
               </li>
               <?php endforeach; ?>
@@ -236,11 +233,11 @@
             <?php if ($has_children) : ?>
             <div
               x-show="navigationMenu == '<?php echo esc_js($menu_key); ?>'"
-              class="relative flex items-stretch justify-center w-full max-w-2xl p-3 gap-x-3 bg-white rounded-md shadow-2xl"
+              class="relative flex items-stretch justify-center w-full max-w-2xl p-3 gap-x-3 bg-white rounded-md shadow-2xl "
             >
               <div class="absolute h-4.5 w-4.5 bg-white -top-1.5 left-1/2 -translate-x-1/2 rotate-45 rounded-xs"></div>
 
-              <ul class="w-50">
+              <ul class="max-w-xl">
                 <?php foreach ($menu_tree[$parent_item->ID]['children'] as $child_item) : ?>
                 <li class="py-1 px-2 group opacity-50 hover:opacity-100 transition-opacity duration-300">
                   <a
@@ -315,4 +312,5 @@
 
   <?php wp_footer(); ?>
 </body>
+
 </html>
