@@ -32,8 +32,6 @@ const FullCalendarComp = ( props ) => {
 	const [ selected, setSelected ] = useState( null );
 	const [ slots, setSlots ] = useState( [] );
 
-	console.log( 'Posts:', myCalendarData );
-
 	useEffect( () => {
 		if ( ! myCalendarData?.posts?.length ) return;
 
