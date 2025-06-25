@@ -26,6 +26,7 @@
 @source inline("400:block");
 @source inline("animate-spin");
 
+
 /* Global wrapper class for all your blocks */
 .my-unique-plugin-wrapper-class {
 	@import "tailwindcss/preflight.css" layer(base);
