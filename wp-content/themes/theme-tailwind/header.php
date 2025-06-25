@@ -144,6 +144,7 @@
                   this.navigationMenu = '';
               }
           }"
+          x-cloak
           class="relative z-10 w-auto lg:block hidden"
         >
           <div class="relative">
@@ -175,6 +176,7 @@
                 <?php if ($has_children) : ?>
                 <!-- Dropdown items remain as buttons -->
                 <button
+                  x-cloak
                   :class="{
                       'bg-white/15 rounded-md': navigationMenu == '<?php echo esc_js($menu_key); ?>',
                   }"
@@ -224,6 +226,7 @@
             @mouseleave="navigationMenuLeave()"
             class="absolute top-0 pt-5 duration-300 ease-in-out -translate-x-1/2 translate-y-11"
             x-cloak
+            style="display: none;"
           >
             <?php foreach ($parent_items as $index => $parent_item) : ?>
             <?php

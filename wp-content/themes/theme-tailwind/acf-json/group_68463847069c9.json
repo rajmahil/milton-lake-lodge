@@ -17,18 +17,18 @@
                 "id": ""
             },
             "choices": {
-                "January": "January",
-                "February": "February",
-                "March": "March",
-                "April": "April",
-                "May": "May",
-                "June": "June",
-                "July": "July",
-                "August": "August",
-                "September": "September",
-                "October": "October",
-                "November": "November",
-                "December": "December"
+                "01-01": "January",
+                "02-01": "February",
+                "03-01": "March",
+                "04-01": "April",
+                "05-01": "May",
+                "06-01": "June",
+                "07-01": "July",
+                "08-01": "August",
+                "09-01": "September",
+                "10-01": "October",
+                "11-01": "November",
+                "12-01": "December"
             },
             "default_value": "January",
             "return_format": "array",
@@ -233,5 +233,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1750031449
+    "modified": 1750821813
 }
