@@ -313,7 +313,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
               <?php endif; ?>
-              <div class="absolute bottom-0 left-0 right-0 p-8  text-white  h-auto">
+              <div class="absolute bottom-0 left-0 right-0 px-5 py-8  text-white  h-auto">
                 <div class='flex flex-col items-start'>
                   <?php if (!empty($item['title'])) : ?>
                   <h3 class="!text-3xl md:!text-4xl font-bold uppercase tracking-wide !text-left">

@@ -5,6 +5,7 @@
  */
 
 $heading = $attributes['heading'] ?? 'Your Adventure Awaits';
+$subheading = $attributes['subheading'] ?? 'Join us for an unforgettable experience.';
 $fields = $attributes['fields'] ?? [];
 $formTitle = $attributes['formTitle'] ?? [];
 $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId']) : '';
@@ -16,10 +17,15 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
   class="plugin-custom-block"
 >
   <div class="section-padding static-background flex flex-col gap-12 !bg-brand-light-grey">
-    <div class="max-w-3xl w-full mx-auto flex flex-col gap-2">
+    <div class="max-w-3xl w-full mx-auto flex flex-col gap-0">
       <h2 class="heading-two text-center">
         <?php echo esc_html($heading); ?>
       </h2>
+      <?php if (!empty($subheading)): ?>
+      <p class="text-center text-xl text-neutral-600">
+        <?php echo esc_html($subheading); ?>
+      </p>
+      <?php endif; ?>
     </div>
 
     <div

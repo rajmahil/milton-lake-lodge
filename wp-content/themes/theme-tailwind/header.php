@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html <?php language_attributes(); ?>>
+<html
+  <?php language_attributes(); ?>
+  class="scroll-smooth"
+>
 
 <head>
   <meta charset="<?php bloginfo('charset'); ?>">

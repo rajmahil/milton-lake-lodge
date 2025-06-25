@@ -5,12 +5,23 @@ import {
 	InspectorControls,
 	InspectorAdvancedControls,
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl, Button } from '@wordpress/components';
+import {
+	PanelBody,
+	TextControl,
+	TextareaControl,
+	Button,
+} from '@wordpress/components';
 import Cta from '../../components/cta';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { heading, buttonText, buttonUrl, backgroundImage, sectionId } =
-		attributes;
+	const {
+		heading,
+		subheading,
+		buttonText,
+		buttonUrl,
+		backgroundImage,
+		sectionId,
+	} = attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
@@ -94,6 +105,13 @@ export default function Edit( { attributes, setAttributes } ) {
 						value={ heading }
 						onChange={ ( value ) =>
 							setAttributes( { heading: value } )
+						}
+					/>
+					<TextareaControl
+						label={ __( 'Subheading', 'your-text-domain' ) }
+						value={ subheading }
+						onChange={ ( value ) =>
+							setAttributes( { subheading: value } )
 						}
 					/>
 				</PanelBody>

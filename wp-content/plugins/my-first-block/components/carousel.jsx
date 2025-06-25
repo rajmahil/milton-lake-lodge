@@ -260,7 +260,7 @@ const CarouselBlock = ( { heading, subheading, items, sectionId } ) => {
 												<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 											</>
 										) }
-										<div class="absolute bottom-0 left-0 right-0 p-6 lg:p-10 text-white  h-48">
+										<div class="absolute bottom-0 left-0 right-0  px-5 py-8  text-white ">
 											<div className="flex flex-col items-start">
 												{ item.title && (
 													<h3 className="!my-0 !text-3xl md:!text-4xl font-bold uppercase tracking-wide !text-left">

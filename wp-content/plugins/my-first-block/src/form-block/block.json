@@ -12,6 +12,10 @@
 			"type": "string",
 			"default": "Your Adventure Awaits"
 		},
+		"subheading": {
+			"type": "string",
+			"default": "You subheading goes"
+		},
 		"formTitle": {
 			"type": "string",
 			"default": "Contact Us"

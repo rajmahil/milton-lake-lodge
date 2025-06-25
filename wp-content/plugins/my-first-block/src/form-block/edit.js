@@ -15,8 +15,14 @@ import {
 import FormBlock from '../../components/form-block';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { heading, formTitle, submitButtonText, fields, sectionId } =
-		attributes;
+	const {
+		heading,
+		subheading,
+		formTitle,
+		submitButtonText,
+		fields,
+		sectionId,
+	} = attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
@@ -73,6 +79,13 @@ export default function Edit( { attributes, setAttributes } ) {
 						value={ heading }
 						onChange={ ( value ) =>
 							setAttributes( { heading: value } )
+						}
+					/>
+					<TextareaControl
+						label="Subheading"
+						value={ subheading }
+						onChange={ ( value ) =>
+							setAttributes( { subheading: value } )
 						}
 					/>
 				</PanelBody>

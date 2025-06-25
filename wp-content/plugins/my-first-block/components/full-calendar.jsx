@@ -27,7 +27,7 @@ function hexToRgba( hex, opacity ) {
 }
 
 const FullCalendarComp = ( props ) => {
-	const { heading, subheading, selectedPostId } = props;
+	const { heading, subheading, selectedPostId, sectionId } = props;
 
 	console.log( 'FullCalendarComp Props:', props );
 
@@ -93,7 +93,10 @@ const FullCalendarComp = ( props ) => {
 	}
 
 	return (
-		<section className="plugin-custom-block  section-padding">
+		<section
+			id={ sectionId }
+			className="plugin-custom-block  section-padding"
+		>
 			<div className="max-w-container w-full mx-auto flex flex-col gap-12">
 				<div>
 					{ heading && (

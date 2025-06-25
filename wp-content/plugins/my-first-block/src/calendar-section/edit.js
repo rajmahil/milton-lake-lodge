@@ -1,11 +1,15 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InspectorControls,
+	InspectorAdvancedControls,
+} from '@wordpress/block-editor';
 import { PanelBody, ComboboxControl, TextControl } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import FullCalendar from '../../components/full-calendar';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { selectedPostId, heading, subheading } = attributes;
+	const { selectedPostId, heading, subheading, sectionId } = attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
@@ -28,6 +32,15 @@ export default function Edit( { attributes, setAttributes } ) {
 				label: post.title.rendered,
 		  } ) )
 		: [];
+
+	const slugPattern = /^[a-z0-9-]*$/;
+	const onChangeSectionId = ( value ) => {
+		const sanitized = value.toLowerCase().replace( /[^a-z0-9-]/g, '' );
+
+		if ( slugPattern.test( sanitized ) ) {
+			setAttributes( { sectionId: sanitized } );
+		}
+	};
 
 	return (
 		<div { ...blockProps }>
@@ -59,9 +72,20 @@ export default function Edit( { attributes, setAttributes } ) {
 						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
+
+				<InspectorAdvancedControls>
+					<TextControl
+						label="Section ID (slug, hyphens only)"
+						value={ sectionId }
+						onChange={ onChangeSectionId }
+						help="Use lowercase letters, numbers, and hyphens only."
+					/>
+				</InspectorAdvancedControls>
 			</InspectorControls>
-			{ /* <FullCalendar { ...attributes } /> */ }
-			{ selectedPostId }
+
+			<div className="w-full flex items-center justify-center px-4 py-10">
+				Calendar Embedd: { selectedPostId }
+			</div>
 		</div>
 	);
 }

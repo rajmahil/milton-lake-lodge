@@ -1,5 +1,6 @@
 const Cta = ( {
 	heading,
+	subheading,
 	buttonText,
 	buttonUrl,
 	image,
@@ -22,10 +23,17 @@ const Cta = ( {
 						: "url('http://milton-lodge.local/wp-content/uploads/effects/green-topo.png')",
 				} }
 			>
-				<div className="flex flex-col gap-4 w-full relative z-[1] items-start justify-center section-padding py-16 col-span-5 900:col-span-2 ">
-					<h2 className="heading-two !text-left text-white">
-						{ heading }
-					</h2>
+				<div className="flex flex-col gap-6 w-full relative z-[1] items-start justify-center section-padding py-16 col-span-5 900:col-span-2 ">
+					<div>
+						<h2 className="heading-two !text-left text-white !my-0">
+							{ heading }
+						</h2>
+						{ subheading && (
+							<p class="text-lg !text-left text-white !leading-tight">
+								{ subheading }
+							</p>
+						) }
+					</div>
 					<a href={ buttonUrl || '#' }>
 						<button className="btn btn-outline btn-xl">
 							{ buttonText }

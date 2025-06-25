@@ -4,6 +4,7 @@ const FormBlock = ( props ) => {
 	const {
 		heading = 'Your Adventure Awaits',
 		// topHeading = 'Your Adventure Awaits',
+		subheading,
 		fields = [],
 		formTitle,
 		sectionId,
@@ -301,10 +302,13 @@ const FormBlock = ( props ) => {
 			className="my-unique-plugin-wrapper-class plugin-custom-block "
 		>
 			<div className="section-padding static-background flex flex-col gap-12">
-				<div class="max-w-3xl w-full mx-auto flex flex-col gap-4">
-					<h2 class="heading-two text-center text-brand-green-dark">
+				<div class="max-w-3xl w-full mx-auto flex flex-col gap-0">
+					<h2 class="heading-two text-center text-brand-green-dark !my-0 !py-0">
 						{ heading }
 					</h2>
+					<p class="text-center text-xl text-neutral-600 !py-0 !my-0">
+						{ subheading }
+					</p>
 				</div>
 
 				<div className="max-w-2xl w-full mx-auto">
