@@ -1,11 +1,11 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, ComboboxControl } from '@wordpress/components';
+import { PanelBody, ComboboxControl, TextControl } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import FullCalendar from '../../components/full-calendar';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { selectedPostId } = attributes;
+	const { selectedPostId, heading, subheading } = attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
@@ -32,6 +32,22 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<div { ...blockProps }>
 			<InspectorControls>
+				<PanelBody title={ __( 'Content', 'your-text-domain' ) }>
+					<TextControl
+						label={ __( 'Heading', 'your-text-domain' ) }
+						value={ heading }
+						onChange={ ( value ) =>
+							setAttributes( { heading: value } )
+						}
+					/>
+					<TextControl
+						label={ __( 'Subheading', 'your-text-domain' ) }
+						value={ subheading }
+						onChange={ ( value ) =>
+							setAttributes( { subheading: value } )
+						}
+					/>
+				</PanelBody>
 				<PanelBody title={ __( 'Select Calendar Post', 'my-plugin' ) }>
 					<ComboboxControl
 						label={ __( 'Calendar Post', 'my-plugin' ) }
@@ -45,7 +61,6 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 			</InspectorControls>
 			{ /* <FullCalendar { ...attributes } /> */ }
-
 			{ selectedPostId }
 		</div>
 	);

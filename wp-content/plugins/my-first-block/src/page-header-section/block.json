@@ -13,6 +13,10 @@
 			"type": "string",
 			"default": "Heading Here"
 		},
+		"navigation": {
+			"type": "array",
+			"default": []
+		},
 		"breadcrumbs": {
 			"type": "array",
 			"default": []

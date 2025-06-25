@@ -29,8 +29,11 @@ function hexToRgba( hex, opacity ) {
 const FullCalendarComp = ( props ) => {
 	const { heading, subheading, selectedPostId } = props;
 
+	console.log( 'FullCalendarComp Props:', props );
+
 	const [ selected, setSelected ] = useState( null );
 	const [ slots, setSlots ] = useState( [] );
+	const [ defMonth, setDefMonth ] = useState( null );
 
 	useEffect( () => {
 		if ( ! myCalendarData?.posts?.length ) return;
@@ -40,6 +43,8 @@ const FullCalendarComp = ( props ) => {
 		);
 
 		if ( selectedPost ) {
+			console.log( 'Selected Post:', selectedPost );
+
 			const tripSlots = selectedPost?.trips.map( ( slot ) => {
 				const slotType = selectedPost?.slot_types.find(
 					( type ) => type.label_ === slot.trip_type
@@ -60,6 +65,18 @@ const FullCalendarComp = ( props ) => {
 				};
 			} );
 
+			if ( ! selectedPost?.default_month_view ) {
+				const activeMonths = [ 5, 6, 7 ];
+				const currentMonth = new Date().getMonth();
+				const currentYear = new Date().getFullYear();
+
+				if ( activeMonths.includes( currentMonth ) ) {
+					setDefMonth(
+						`${ currentYear }-${ selectedPost?.default_month_view?.value }`
+					);
+				}
+			}
+
 			setSlots( tripSlots );
 			setSelected( selectedPost );
 		} else {
@@ -78,15 +95,24 @@ const FullCalendarComp = ( props ) => {
 	return (
 		<section className="plugin-custom-block  section-padding">
 			<div className="max-w-container w-full mx-auto flex flex-col gap-12">
-				{ heading && (
-					<h2 className="heading-two text-center">{ heading }</h2>
-				) }
+				<div>
+					{ heading && (
+						<h2 className="heading-two text-center">{ heading }</h2>
+					) }
+					{ subheading && (
+						<p className="text-center text-neutral-600 text-xl">
+							{ subheading }
+						</p>
+					) }
+				</div>
 				<div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
 					<div className="p-6 xl:col-span-3 bg-white rounded-lg my-calendar-wrapper">
 						<div className="overflow-x-scroll  w-full">
 							<FullCalendar
+								key={ defMonth || 'default' }
 								aspectRatio={ 1.35 }
 								height="auto"
+								initialDate={ defMonth || undefined }
 								headerToolbar={ {
 									left: 'title',
 									right: 'prev,today,next',
@@ -129,7 +155,9 @@ const FullCalendarComp = ( props ) => {
 											options
 										);
 									const endFormatted = end
-										? end.toLocaleDateString(
+										? new Date(
+												end.setDate( end.getDate() - 1 )
+										  ).toLocaleDateString(
 												undefined,
 												options
 										  )

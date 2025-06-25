@@ -10,7 +10,13 @@ import { PanelBody, TextControl, Button } from '@wordpress/components';
 import PageHeader from '../../components/page-header';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { heading, breadcrumbs = [], image = {}, sectionId } = attributes;
+	const {
+		heading,
+		navigation = [],
+		breadcrumbs = [],
+		image = {},
+		sectionId,
+	} = attributes;
 
 	const blockProps = useBlockProps( {
 		className: 'page-header-section-wrapper',
@@ -32,6 +38,23 @@ export default function Edit( { attributes, setAttributes } ) {
 		setAttributes( {
 			breadcrumbs: [ ...breadcrumbs, { text: '', link: '' } ],
 		} );
+	};
+
+	const addNavigation = () => {
+		setAttributes( {
+			navigation: [ ...navigation, { text: '', link: '' } ],
+		} );
+	};
+
+	const updateNavigation = ( index, field, value ) => {
+		const updated = [ ...navigation ];
+		updated[ index ][ field ] = value;
+		setAttributes( { navigation: updated } );
+	};
+
+	const removeNavigation = ( index ) => {
+		const updated = navigation.filter( ( _, i ) => i !== index );
+		setAttributes( { navigation: updated } );
 	};
 
 	const slugPattern = /^[a-z0-9-]*$/;
@@ -62,6 +85,61 @@ export default function Edit( { attributes, setAttributes } ) {
 							setAttributes( { heading: value } )
 						}
 					/>
+				</PanelBody>
+
+				<PanelBody
+					title={ __( 'Navigation', 'page-header-section-block' ) }
+					initialOpen={ false }
+				>
+					{ navigation.map( ( navigation, index ) => (
+						<PanelBody
+							key={ index }
+							title={ `${ __(
+								'Navigation',
+								'page-header-section'
+							) } ${ index + 1 }` }
+							initialOpen={ false }
+						>
+							<TextControl
+								label={ __(
+									'Text',
+									'page-header-section-block'
+								) }
+								value={ navigation.text }
+								onChange={ ( value ) =>
+									updateNavigation( index, 'text', value )
+								}
+							/>
+							<TextControl
+								label={ __(
+									'Link',
+									'page-header-section-block'
+								) }
+								value={ navigation.link }
+								onChange={ ( value ) =>
+									updateNavigation( index, 'link', value )
+								}
+							/>
+							<Button
+								isDestructive
+								onClick={ () => removeNavigation( index ) }
+								style={ { marginBottom: '10px' } }
+							>
+								{ __(
+									'Remove Navigation Item',
+									'page-header-section-block'
+								) }
+							</Button>
+						</PanelBody>
+					) ) }
+					<div className="!py-3">
+						<Button isSecondary onClick={ addNavigation }>
+							{ __(
+								'Add Navigation Item',
+								'page-header-section-block'
+							) }
+						</Button>
+					</div>
 				</PanelBody>
 
 				{ /* Breadcrumbs */ }

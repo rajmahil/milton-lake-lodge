@@ -22,8 +22,18 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
       </h2>
     </div>
 
-    <div class="max-w-2xl w-full mx-auto">
+    <div
+      class="max-w-2xl w-full mx-auto"
+      x-data="{
+          loading: false
+      }"
+      x-init="loading = false;
+      window.addEventListener('pageshow', () => {
+          loading = false;
+      });"
+    >
       <form
+        @submit.prevent="loading = true; $el.submit()"
         class="grid grid-cols-2 gap-4"
         action="<?php echo esc_url(admin_url('admin-post.php')); ?>"
         method="POST"
@@ -53,6 +63,8 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
           case 'tel':
       ?>
         <input
+          :disabled="loading"
+          :class="loading ? 'opacity-50 cursor-not-allowed' : ' '"
           type="<?php echo esc_attr($field['type'] ?? 'text'); ?>"
           name="<?php echo esc_attr($field['name'] ?? ''); ?>"
           value="<?php echo esc_attr($field['value'] ?? ''); ?>"
@@ -71,6 +83,8 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
           case 'textarea':
         ?>
         <textarea
+          :disabled="loading"
+          :class="loading ? 'opacity-50 cursor-not-allowed' : ' '"
           required="<?php echo !empty($field['required']) ? 'required' : ''; ?>"
           class="form-input min-h-24 pt-4 <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
           name="<?php echo esc_attr($field['name'] ?? ''); ?>"
@@ -109,6 +123,8 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
           >
 
           <button
+            :disabled="loading"
+            :class="loading ? 'opacity-50 cursor-not-allowed' : ' '"
             @click="open = !open"
             type="button"
             class="w-full form-input cursor-pointer flex items-center justify-start px-4 relative"
@@ -167,7 +183,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
         <div
           class="relative col-span-2"
           x-data="{
-              checkboxSelectedValue: null,
+              checkboxSelectedValue: [],
               checkboxOptions: JSON.parse($el.dataset.options)
           }"
           data-options='<?php echo esc_attr(
@@ -195,14 +211,15 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
               :key="index"
             >
               <label
-                @click="checkboxSelectedValue = option.value"
                 class="flex items-center justify-start p-5 space-x-3 bg-white border border-brand-grey rounded-md  cursor-pointer <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
               >
                 <input
+                  :disabled="loading"
+                  :class="loading ? 'opacity-50 cursor-not-allowed' : ' '"
                   type="checkbox"
-                  name="<?php echo esc_attr($field['name'] ?? 'checbox-group'); ?>"
+                  name="<?php echo esc_attr($field['name'] ?? 'checkbox-group'); ?>[]"
                   :value="option.value"
-                  x-model="radioGroupSelectedValue"
+                  x-model="checkboxSelectedValue"
                   class="accent-brand-green-dark translate-y-px focus:ring-brand-green-dark !h-4.5 !w-4.5"
                 />
                 <span class="relative flex flex-col text-left space-y-1.5">
@@ -215,7 +232,6 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
 
             </template>
           </div>
-          </label>
         </div>
 
         <?php
@@ -258,6 +274,8 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
                 class="flex items-start p-5 space-x-3 bg-white border border-brand-grey rounded-md  cursor-pointer <?php echo $field['fullWidth'] === true ? 'col-span-2' : ''; ?>"
               >
                 <input
+                  :disabled="loading"
+                  :class="loading ? 'opacity-50 cursor-not-allowed' : ' '"
                   type="radio"
                   name="<?php echo esc_attr($field['name'] ?? 'radio-group'); ?>"
                   :value="option.value"
@@ -287,9 +305,29 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
         <?php endforeach; ?>
         <button
           type="submit"
+          :disabled="loading"
+          :class="loading ? 'opacity-50 cursor-not-allowed' : ' '"
           class="btn btn-dark btn-xl col-span-2 h-14 !mt-4"
         >
           <?php echo esc_html($attributes['submitButtonText'] ?? 'Submit'); ?>
+
+          <span
+            x-show="loading"
+            class="animate-spin text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="26"
+              height="26"
+              fill="currentColor"
+              viewBox="0 0 256 256"
+              style="animation:spin 1s linear infinite;"
+            >
+              <path
+                d="M136,32V64a8,8,0,0,1-16,0V32a8,8,0,0,1,16,0Zm37.25,58.75a8,8,0,0,0,5.66-2.35l22.63-22.62a8,8,0,0,0-11.32-11.32L167.6,77.09a8,8,0,0,0,5.65,13.66ZM224,120H192a8,8,0,0,0,0,16h32a8,8,0,0,0,0-16Zm-45.09,47.6a8,8,0,0,0-11.31,11.31l22.62,22.63a8,8,0,0,0,11.32-11.32ZM128,184a8,8,0,0,0-8,8v32a8,8,0,0,0,16,0V192A8,8,0,0,0,128,184ZM77.09,167.6,54.46,190.22a8,8,0,0,0,11.32,11.32L88.4,178.91A8,8,0,0,0,77.09,167.6ZM72,128a8,8,0,0,0-8-8H32a8,8,0,0,0,0,16H64A8,8,0,0,0,72,128ZM65.78,54.46A8,8,0,0,0,54.46,65.78L77.09,88.4A8,8,0,0,0,88.4,77.09Z"
+              ></path>
+            </svg>
+          </span>
         </button>
       </form>
     </div>

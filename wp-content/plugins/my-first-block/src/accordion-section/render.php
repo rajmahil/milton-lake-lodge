@@ -14,11 +14,11 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
   class="plugin-custom-block not-prose section-padding w-full "
 >
   <div
-    class="max-w-container mx-auto grid lg:grid-cols-2 gap-8 items-start"
+    class="max-w-container mx-auto grid lg:grid-cols-2 gap-10 items-start"
     x-data="{ activeAccordion: null }"
   >
 
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 max-w-2xl">
       <?php if ( $heading ): ?>
       <h2 class="heading-two text-left">
         <?php echo esc_html($heading); ?>
@@ -26,7 +26,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
       <?php endif; ?>
 
       <?php if ( $subheading ): ?>
-      <p class="!text-lg lg:!text-xl text-left max-w-2xl">
+      <p class="!text-lg lg:!text-xl text-left text-neutral-600">
         <?php echo esc_html($subheading); ?>
       </p>
       <?php endif; ?>

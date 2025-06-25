@@ -17,12 +17,12 @@ $imageAlt = $image['alt'] ?? '';
 $imageWidth = $image['width'] ?? '';
 $imageHeight = $image['height'] ?? '';
 
-$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
+$section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId']) : '';
 
 ?>
 
 <section
-id="<?php echo $section_id; ?>" 
+  id="<?php echo $section_id; ?>"
   x-data="optimizedScrollScale()"
   x-init="init()"
   class="plugin-custom-block"
@@ -36,16 +36,23 @@ id="<?php echo $section_id; ?>"
       class="absolute inset-0 z-0 transform origin-center"
       style="will-change: transform;"
     >
-      <img
-        src="<?php echo esc_url($imageUrl); ?>"
-        srcset="<?php echo esc_attr("{$thumbnail} 150w, {$medium} 300w, {$large} 1024w, {$full} {$imageWidth}w"); ?>"
-        sizes="(max-width: 768px) 100vw, 1024px"
-        alt="<?php echo esc_attr($imageAlt); ?>"
-        width="<?php echo esc_attr($imageWidth); ?>"
-        height="<?php echo esc_attr($imageHeight); ?>"
-        class="object-cover w-full h-full"
-        loading="eager"
-      />
+      <?php
+      if (!empty($image['id'])) {
+          echo wp_get_attachment_image(
+              $image['id'],
+              'large', // instead of 'full' for smaller file size
+              false,
+              [
+                  'class' => 'object-cover w-full h-full',
+                  'loading' => 'lazy', // use lazy unless it's above the fold
+                  'decoding' => 'async',
+                  'alt' => esc_attr($imageAlt),
+                  'sizes' => '(max-width: 768px) 100vw, 1024px',
+              ],
+          );
+      }
+      ?>
+
       <div class="absolute inset-0 bg-black/30"></div>
     </div>
 
@@ -55,9 +62,7 @@ id="<?php echo $section_id; ?>"
       <div class="relative z-10 text-white flex flex-col items-start justify-start gap-4 !max-w-7xl !w-full mx-auto ">
         <div class="flex flex-col w-full items-start gap-3">
           <?php if ($heading): ?>
-          <h2
-            class="heading-two max-w-none md:max-w-[60%] text-left"
-          >
+          <h2 class="heading-two max-w-none md:max-w-[60%] text-left">
             <?php echo esc_html($heading); ?>
           </h2>
           <?php endif; ?>

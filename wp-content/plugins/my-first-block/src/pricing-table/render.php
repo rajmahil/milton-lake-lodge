@@ -7,7 +7,7 @@
 $heading = $attributes['heading'] ?? 'Milton Lake Lodge Mini-Lodge & Outpost Combo Trips';
 $tabs = $attributes['tabs'] ?? [];
 $rates = get_exchange_rates('USD');
-$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
+$section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId']) : '';
 
 error_log('Exchange rates: ' . print_r($rates, true));
 
@@ -15,7 +15,7 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
 ?>
 
 <section
-  id="<?php echo $section_id; ?>" 
+  id="<?php echo $section_id; ?>"
   class="plugin-custom-block not-prose section-padding w-full"
   <?php echo get_block_wrapper_attributes(); ?>
 >
@@ -64,7 +64,7 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
                 'bg-brand-green text-white ': activeTab === <?php echo $index + 1; ?>,
                 'text-gray-500 hover:text-gray-800': activeTab !== <?php echo $index + 1; ?>
             }"
-            class="px-6 py-2 text-lg rounded-full transition-all duration-300 cursor-pointer whitespace-nowrap"
+            class="px-4 py-2  rounded-full transition-all duration-300 cursor-pointer whitespace-nowrap"
           >
             <?php echo esc_html($tab['title']); ?>
           </button>
@@ -149,7 +149,7 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
           <?php endif; ?>
           <?php if (!empty($tab['note'])): ?>
           <div class="border-t border-brand-grey !p-4 sm:!p-8 text-gray-800">
-            <p class="!text-sm">
+            <p class="!text-base">
               <?php echo esc_html($tab['note']); ?>
             </p>
           </div>
