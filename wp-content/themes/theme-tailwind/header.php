@@ -240,7 +240,7 @@
             >
               <div class="absolute h-4.5 w-4.5 bg-white -top-1.5 left-1/2 -translate-x-1/2 rotate-45 rounded-xs"></div>
 
-              <ul class="max-w-xl">
+              <ul class="max-w-xl min-w-xs">
                 <?php foreach ($menu_tree[$parent_item->ID]['children'] as $child_item) : ?>
                 <li class="py-1 px-2 group opacity-50 hover:opacity-100 transition-opacity duration-300">
                   <a
