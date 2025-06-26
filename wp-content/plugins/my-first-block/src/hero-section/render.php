@@ -54,6 +54,10 @@ if ($image) {
   <section
     class="h-[95vh] min-h-[800px] flex items-end overflow-hidden relative not-prose section-padding pb-6  w-full  rounded-b-4xl overlfow-hidden "
   >
+    <div
+      class="absolute top-0 left-0 z-[10] bg-gradient-to-b from-brand-green-dark/40 to-brand-green-dark/09 h-40 w-full"
+    >
+    </div>
     <!-- Background Image -->
     <div class="absolute top-0 left-0 w-full h-full z-[0] pointer-events-none select-none">
       <?php if ($image_url): ?>
@@ -92,7 +96,7 @@ if ($image) {
     <div class="relative z-[2] max-w-container overflow-hidden flex flex-col gap-14">
       <!-- Text Content -->
       <div class=" w-full  flex flex-row gap-5 flex-wrap items-end justify-between ">
-        <div class="flex flex-col gap-0 max-w-[650px] ">
+        <div class="flex flex-col gap-0 max-w-[750px] ">
           <h1
             class="!my-0 !text-6xl md:!text-7xl lg:!text-8xl !font-[700] text-left text-white font-sans drop-shadow-lg "
           >
