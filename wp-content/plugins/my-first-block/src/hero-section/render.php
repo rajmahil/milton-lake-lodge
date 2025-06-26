@@ -93,7 +93,7 @@ if ($image) {
     </div>
 
     <!-- Content -->
-    <div class="relative z-[2] max-w-container overflow-hidden flex flex-col gap-14">
+    <div class="relative z-[2] max-w-container overflow-hidden flex flex-col gap-6 ">
       <!-- Text Content -->
       <div class=" w-full  flex flex-row gap-5 flex-wrap items-end justify-between ">
         <div class="flex flex-col gap-0 max-w-[750px] ">
