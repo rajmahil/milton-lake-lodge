@@ -5,6 +5,7 @@ import {
 	InspectorControls,
 	MediaUploadCheck,
 	InspectorAdvancedControls,
+	PanelColorSettings,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -27,7 +28,9 @@ export default function Edit( { attributes, setAttributes } ) {
 		tripAdvisorStars,
 		tripAdvisorReviews,
 		sectionId,
+		backgroundColor,
 	} = attributes;
+
 	// This is crucial - it provides the block wrapper with proper WordPress functionality
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
@@ -241,6 +244,18 @@ export default function Edit( { attributes, setAttributes } ) {
 						{ __( 'Add Review', 'your-text-domain' ) }
 					</Button>
 				</PanelBody>
+
+				<PanelColorSettings
+					title="Color Settings"
+					colorSettings={ [
+						{
+							value: backgroundColor,
+							onChange: ( color ) =>
+								setAttributes( { backgroundColor: color } ),
+							label: 'Background Color',
+						},
+					] }
+				/>
 				<InspectorAdvancedControls>
 					<TextControl
 						label="Section ID (slug, hyphens only)"

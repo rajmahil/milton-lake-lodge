@@ -186,7 +186,8 @@ const FullCalendarComp = ( props ) => {
 												backgroundImage: `linear-gradient(135deg, ${ bgColorFrom } 0%, ${ bgColorTo } 100%)`,
 												color: textColor,
 											} }
-											className="p-2 rounded-md h-22 font-medium  text-wrap flex flex-col gap-2 items-start justify-between"
+											className="p-2 rounded-md h-22 font-medium  text-wrap flex flex-col gap-2 items-start justify-between pattern-diagonal-lines pattern-blue-500 pattern-bg-white
+ pattern-size-6"
 										>
 											<p className="text-sm !leading-[1.1] ">
 												{ arg.event.title }{ ' ' }

@@ -45,6 +45,10 @@
 			"type": "array",
 			"default": []
 		},
+		"backgroundColor": {
+			"type": "string",
+			"default": "#f0f0f0"
+		},
 		"sectionId": {
 			"type": "string",
 			"default": ""

@@ -25,25 +25,27 @@ const TwoCol = ( {
 							{ text }
 						</p>
 					</div>
-					<a href={ buttonUrl }>
-						<button className="flex flex-row items-center w-fit gap-1 cursor-pointer !text-lg group relative pb-0.5">
-							<div className="flex items-center border-b border-black gap-1 pb-0.5">
-								<span className="!text-black !text-base sm:!text-lg">
-									{ buttonText }
-								</span>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="18"
-									height="18"
-									fill="#000000"
-									viewBox="0 0 256 256"
-									className="group-hover:translate-x-1 transition-transform duration-300 ease-in-out"
-								>
-									<path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z" />
-								</svg>
-							</div>
-						</button>
-					</a>
+					{ buttonUrl && buttonText && (
+						<a href={ buttonUrl }>
+							<button className="flex flex-row items-center w-fit gap-1 cursor-pointer !text-lg group relative pb-0.5">
+								<div className="flex items-center border-b border-black gap-1 pb-0.5">
+									<span className="!text-black !text-base sm:!text-lg">
+										{ buttonText }
+									</span>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="18"
+										height="18"
+										fill="#000000"
+										viewBox="0 0 256 256"
+										className="group-hover:translate-x-1 transition-transform duration-300 ease-in-out"
+									>
+										<path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z" />
+									</svg>
+								</div>
+							</button>
+						</a>
+					) }
 				</div>
 
 				<div className="flex justify-center items-center relative col-span-3">

@@ -10,7 +10,7 @@ $button_url = $attributes['buttonUrl'] ?? '#';
 $image1 = $attributes['image'] ?? null;
 $image2 = $attributes['image2'] ?? null;
 $inverted = $attributes['inverted'] ?? false;
-$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
+$section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId']) : '';
 
 // Image 1
 $image1_id = null;
@@ -43,15 +43,22 @@ if ($image2) {
 $content_order_class = $inverted ? 'order-first' : 'order-last';
 ?>
 
-<section id="<?php echo $section_id; ?>" class="plugin-custom-block not-prose section-padding w-full">
-  <div class="relative max-w-container mx-auto w-full flex flex-col gap-14 sm:gap-20 900:!grid 900:!grid-cols-5 900:!gap-8 itemts-start 900:items-center">
-    <div class="<?php echo esc_attr($content_order_class); ?> flex flex-col gap-4 w-full 900:col-span-2 900:max-w-[600px] 900:mx-auto">
+<section
+  id="<?php echo $section_id; ?>"
+  class="plugin-custom-block not-prose section-padding w-full"
+>
+  <div
+    class="relative max-w-container mx-auto w-full flex flex-col gap-14 sm:gap-20 900:!grid 900:!grid-cols-5 900:!gap-8 itemts-start 900:items-center"
+  >
+    <div class="<?php echo esc_attr($content_order_class); ?> flex flex-col gap-4 w-full 900:col-span-2 900:max-w-[800px] 900:mx-auto">
       <div class='flex flex-col gap-2 w-full'>
         <h2 class="heading-two text-left">
           <?php echo esc_html($heading); ?>
         </h2>
         <p class="!my-0 text-left text-lg"><?php echo esc_html($text); ?></p>
       </div>
+
+      <?php if ($button_text && $button_url): ?>
       <a href="<?php echo esc_url($button_url); ?>">
         <button class="flex flex-row items-center w-fit gap-1 cursor-pointer text-lg group relative pb-0.5">
           <div class="flex items-center border-b border-black gap-1 pb-0.5">
@@ -71,6 +78,7 @@ $content_order_class = $inverted ? 'order-first' : 'order-last';
           </div>
         </button>
       </a>
+      <?php endif; ?>
     </div>
 
     <div class="flex justify-center items-center relative col-span-3">

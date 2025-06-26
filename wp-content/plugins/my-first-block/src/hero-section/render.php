@@ -12,6 +12,7 @@ $button_url = $attributes['buttonUrl'] ?? '#';
 $button2_text = $attributes['button2Text'] ?? 'Learn More';
 $button2_url = $attributes['button2Url'] ?? '#';
 $image = $attributes['image'] ?? null;
+$backgroundColor = $attributes['backgroundColor'] ?? '#00473f';
 $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId']) : '';
 
 $tripAdvisorStars = $attributes['tripAdvisorStars'];
@@ -47,7 +48,8 @@ if ($image) {
 
 <section
   id="<?php echo $section_id; ?>"
-  class="plugin-custom-block bg-brand-green"
+  class="plugin-custom-block static-background"
+  style="background: <?php echo esc_attr($backgroundColor ?? ''); ?>"
 >
   <section
     class="h-[95vh] min-h-[800px] flex items-end overflow-hidden relative not-prose section-padding pb-6  w-full  rounded-b-4xl overlfow-hidden "
@@ -57,7 +59,7 @@ if ($image) {
       <?php if ($image_url): ?>
       <?php if ($image_id): ?>
       <!-- Use WordPress function for better performance and responsive images -->
-      <?php echo wp_get_attachment_image($image_id, 'large', false, [
+      <?php echo wp_get_attachment_image($image_id, 'full', false, [
           'class' => 'object-cover object-center w-full h-full ',
           'loading' => 'eager',
           'fetchpriority' => 'high',
@@ -202,7 +204,7 @@ if ($image) {
           >
           </div>
         </div>
-        <div class="col-span-2 lg:col-span-4 overflow-hidden flex flex-row items-center relative">
+        <div class="col-span-2 lg:col-span-4 overflow-hidden flex flex-row items-center relative rounded-md">
           <div class="absolute top-0 left-0 w-12 lg:w-20 h-full bg-gradient-to-r from-black to transparent z-[100]">
           </div>
           <div
@@ -212,7 +214,7 @@ if ($image) {
           <?php for($x =1 ; $x <=2; $x++): ?>
           <div class="flex flex-row flex-nowrap text-white animate-slide">
             <?php foreach ( $tripAdvisorReviews as $tripAdvisorReview ) : ?>
-            <div class="py-2 px-4 rounded-lg flex flex-row gap-4 items-center min-w-[300px]  md:min-w-[350px]">
+            <div class="py-2 px-4 rounded-lg flex flex-row gap-4 items-center  min-w-[400px]  md:min-w-[350px] ">
               <div class="h-12 w-12 min-h-12 min-w-12 aspect-square rounded-full bg-white">
                 <?php if ( ! empty( $tripAdvisorReview['image'] ) ) : ?>
                 <img
