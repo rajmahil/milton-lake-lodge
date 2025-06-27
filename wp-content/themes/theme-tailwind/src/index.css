@@ -30,6 +30,9 @@
 @source inline("!text-5xl");
 @source inline("md:!text-6xl");
 @source inline("lg:!text-7xl");
+@source inline("h-screen");
+@source inline("md:h-[150vh]");
+@source inline("!text-4xl");
 
 
 

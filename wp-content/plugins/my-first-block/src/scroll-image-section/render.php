@@ -28,7 +28,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
   class="plugin-custom-block"
 >
   <div
-    class="relative w-full overflow-hidden rounded-2xl h-[100vh] md:h-[150vh] flex items-start justify-start not-prose"
+    class="relative w-full overflow-hidden rounded-2xl h-screen md:h-[150vh] flex items-start justify-start not-prose"
     x-ref="container"
     :style="`transform: scale(${scale}); will-change: transform;`"
   >

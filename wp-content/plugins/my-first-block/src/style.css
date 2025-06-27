@@ -30,6 +30,9 @@
 @source inline("!text-5xl");
 @source inline("md:!text-6xl");
 @source inline("lg:!text-7xl");
+@source inline("h-screen");
+@source inline("md:h-[150vh]");
+@source inline("!text-4xl");
 
 
 
@@ -356,6 +359,17 @@
 	.footer-social-btn {
 		@apply h-10 w-10 bg-brand-yellow flex items-center justify-center rounded-full p-2 text-brand-green-dark;
 	}
+
+	.fc-customButton-button {
+  background-color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+  color: white !important;
+}
+
+.fc-customButton-button:hover {
+  background-color: #2563eb !important;
+  border-color: #2563eb !important;
+}
 }
 
 @layer utilities {
