@@ -132,7 +132,7 @@ function handle_custom_form_email()
     $post_id = wp_insert_post([
         'post_title' => sanitize_text_field($post_title),
         'post_type' => 'submissions',
-        'post_status' => 'publish',
+        'post_status' => 'private',
     ]);
 
     $content_blocks = '';
@@ -194,7 +194,7 @@ function handle_custom_form_email()
 
     $user_email = isset($data['email']) && is_email($data['email']) ? $data['email'] : null;
 
-    $recipients = ['dev-email@wpengine.local'];
+    $recipients = [get_option('admin_email')];
     if ($user_email) {
         $recipients[] = $user_email;
     }

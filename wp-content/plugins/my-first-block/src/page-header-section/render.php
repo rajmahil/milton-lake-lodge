@@ -37,14 +37,14 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
           class="400:block hidden"
         >
           <ol
-            class="flex flex-row items-center justify-center w-fit bg-brand-light-grey/60 backdrop-blur-md p-1 rounded-full"
+            class="flex flex-col sm:flex-row items-center justify-center w-fit bg-brand-light-grey/60 backdrop-blur-md p-1 rounded-2xl sm:rounded-full"
           >
             <?php foreach ($navigation as $i => $item): ?>
-            <li class="flex items-center gap-1">
+            <li class="flex items-center gap-1 w-full sm:w-fit ">
               <?php if (!empty($item['link'])): ?>
               <a
                 href="<?php echo esc_url($item['link']); ?>"
-                class=" !text-base btn btn-light btn-sm hover:!bg-brand-green-dark hover:text-white transition-all duration-200 ease-in-out"
+                class="w-full sm:w-fit !text-base btn btn-light btn-sm hover:!bg-brand-green-dark hover:text-white transition-all duration-200 ease-in-out"
               >
                 <?php echo esc_html($item['text']); ?>
               </a>

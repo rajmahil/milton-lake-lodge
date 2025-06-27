@@ -6,12 +6,12 @@
 $heading = $attributes['heading'] ?? '';
 $reviews = $attributes['reviews'] ?? [];
 $totalSlides = count($reviews);
-$section_id = ! empty( $attributes['sectionId'] ) ? esc_attr( $attributes['sectionId'] ) : '';
+$section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId']) : '';
 
 ?>
 
 <section
-id="<?php echo $section_id; ?>" 
+  id="<?php echo $section_id; ?>"
   class="plugin-custom-block not-prose section-padding w-full"
   x-data="{
       currentIndex: 0,
@@ -134,7 +134,7 @@ id="<?php echo $section_id; ?>"
       <?php endif; ?>
 
       <?php if (!empty($review['image2']['url'])): ?>
-      
+
 
       <div
         x-ref="right-<?php echo $i; ?>"

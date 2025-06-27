@@ -208,6 +208,7 @@
                 <a
                   href="<?php echo esc_url($parent_item->url); ?>"
                   class="flex flex-row gap-0.5 items-center px-2.5 py-1 text-white transition-all ease-in-out duration-300 hover:bg-white/15 rounded-md"
+                  target="<?php echo esc_attr($parent_item->target); ?>"
                 >
                   <?php echo esc_html($parent_item->title); ?>
                 </a>
@@ -250,6 +251,7 @@
                     @click="navigationMenuClose()"
                     href="<?php echo esc_url($child_item->url); ?>"
                     class="text-base flex flex-row items-center justify-between"
+                    target="<?php echo esc_attr($child_item->target); ?>"
                   >
                     <?php echo esc_html($child_item->title); ?>
                     <?php

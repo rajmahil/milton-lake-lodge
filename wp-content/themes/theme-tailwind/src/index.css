@@ -25,6 +25,8 @@
 @source inline("lg:gap-20");
 @source inline("animate-spin");
 @source inline("400:block");
+@source inline("rounded-b-2xl");
+@source inline("lg:rounded-b-4xl");
 
 
 @theme {

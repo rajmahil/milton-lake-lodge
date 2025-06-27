@@ -52,7 +52,7 @@ if ($image) {
   style="background: <?php echo esc_attr($backgroundColor ?? ''); ?>"
 >
   <section
-    class="h-[95vh] min-h-[800px] flex items-end overflow-hidden relative not-prose section-padding pb-6  w-full  rounded-b-4xl overlfow-hidden "
+    class="h-[95vh] min-h-[800px] flex items-end overflow-hidden relative not-prose section-padding pb-6  w-full  !rounded-b-3xl overlfow-hidden "
   >
     <div
       class="absolute top-0 left-0 z-[10] bg-gradient-to-b from-brand-green-dark/40 to-brand-green-dark/09 h-40 w-full"
@@ -93,7 +93,7 @@ if ($image) {
     </div>
 
     <!-- Content -->
-    <div class="relative z-[2] max-w-container overflow-hidden flex flex-col gap-6 ">
+    <div class="relative z-[2] max-w-container overflow-hidden flex flex-col gap-6 md:gap-8 lg:gap-14">
       <!-- Text Content -->
       <div class=" w-full  flex flex-row gap-5 flex-wrap items-end justify-between ">
         <div class="flex flex-col gap-0 max-w-[750px] ">

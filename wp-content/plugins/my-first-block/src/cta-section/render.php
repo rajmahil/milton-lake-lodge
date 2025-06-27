@@ -59,7 +59,7 @@ $background_image = $attributes['backgroundImage'] ?? [];
     style="background-image: url('<?php echo !empty($background_image['url']) ? esc_url($background_image['url']) : esc_url(wp_get_upload_dir()['baseurl'] . '/effects/green-topo.png'); ?>');"
   >
     <div
-      class="flex flex-col gap-6 w-full relative z-[1] !items-start !justify-center section-padding py-16 col-span-5 900:col-span-2"
+      class="flex flex-col gap-6 w-full relative z-[1] !items-start !justify-center section-padding px-4 py-16 col-span-5 900:col-span-2"
     >
 
       <div>

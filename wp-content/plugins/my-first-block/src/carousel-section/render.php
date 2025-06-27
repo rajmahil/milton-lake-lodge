@@ -106,28 +106,33 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
       
           // Improved drag functionality
           handleDragStart(event) {
+              // Only block dragging if the interaction starts from a non-link
+              const target = event.target;
+      
+              // If user touched a link or inside a link, allow default behavior
+              if (target.closest('a')) {
+                  return;
+              }
+      
               this.isDragging = true;
-              this.hasDragged = false; // Reset drag flag
+              this.hasDragged = false;
               this.startX = event.type.includes('touch') ? event.touches[0].clientX : event.clientX;
               this.currentX = this.startX;
               this.dragOffset = 0;
       
-              // Update container width for accurate calculations
               this.updateContainerWidth();
       
-              // Store the initial transform position
               this.initialTransform = this.currentIndex * (this.slideWidthPercentage + this.gapPercentage);
       
-              // Attach window event listeners
               window.addEventListener('mousemove', this.boundHandleDragMove, { passive: false });
               window.addEventListener('touchmove', this.boundHandleDragMove, { passive: false });
               window.addEventListener('mouseup', this.boundHandleDragEnd);
               window.addEventListener('touchend', this.boundHandleDragEnd);
       
-              // Prevent text selection during drag
+              // Only prevent default if not on a link
               event.preventDefault();
           },
-      
+          8
           handleDragMove(event) {
               if (!this.isDragging) return;
       
@@ -301,34 +306,56 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
             class="carousel-slide flex-shrink-0"
             :style="{ 'width': slideWidthPercentage + '%', 'margin-right': gapPercentage + '%' }"
           >
-            <div
-              class="relative rounded-2xl overflow-hidden aspect-[5/7] group cursor-pointer"
-              @click="handleLinkClick($event, '<?php echo esc_js($item_link); ?>')"
-            >
-              <?php if (!empty($item['image']['url'])) : ?>
+
+            <div class="relative rounded-2xl overflow-hidden aspect-[5/7] group cursor-pointer">
+
               <div
                 class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-105"
                 style="background-image: url('<?php echo esc_url($item['image']['url']); ?>');"
               ></div>
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-
-              <?php endif; ?>
-              <div class="absolute bottom-0 left-0 right-0 px-5 py-8  text-white  h-auto">
+              <div
+                class="absolute bottom-0 left-0 right-0 px-5 py-8  text-white  h-auto flex flex-col items-start justify-start gap-4"
+              >
                 <div class='flex flex-col items-start'>
                   <?php if (!empty($item['title'])) : ?>
-                  <h3 class="!text-3xl md:!text-4xl font-bold uppercase tracking-wide !text-left">
+                  <h3 class="!text-4xl font-bold uppercase tracking-wide !text-left">
                     <?php echo esc_html($item['title']); ?>
                   </h3>
                   <?php endif; ?>
 
                   <?php if (!empty($item['text'])) : ?>
-                  <p class="text-lg sm:text-xl  !text-left">
+                  <p class="text-lg sm:text-xl  !text-left leading-tight">
                     <?php echo esc_html($item['text']); ?>
                   </p>
                   <?php endif; ?>
                 </div>
+
+
+                <?php if (!empty($item_link) && $item_link !== '#') : ?>
+                <a
+                  href="<?php echo esc_url($item_link); ?>"
+                  class="flex flex-row items-center gap-2 text-white group"
+                >
+                  <span>Learn More</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    fill="currentColor"
+                    viewBox="0 0 256 256"
+                    class="group-hover:ml-2 transition-all duration-300 ease-in-out"
+                  >
+                    <path
+                      d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
+                    ></path>
+                  </svg>
+                </a>
+                <?php  endif;?>
+
               </div>
             </div>
+
           </div>
           <?php endforeach; ?>
         </div>

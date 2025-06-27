@@ -139,26 +139,22 @@ function boilerplate_customize_register($wp_customize)
 
     $wp_customize->add_setting('boilerplate_compass_image', [
         'sanitize_callback' => 'absint',
-        'capability'        => 'edit_theme_options',
-        'default'           => 0,
-        'transport'         => 'refresh',
+        'capability' => 'edit_theme_options',
+        'default' => 0,
+        'transport' => 'refresh',
     ]);
 
     $wp_customize->add_control(
-        new WP_Customize_Cropped_Image_Control(
-            $wp_customize,
-            'boilerplate_compass_image_control',
-            [
-                'label'       => __('Compass Image', 'boilerplate'),
-                'description' => __('Upload image for compass icon', 'boilerplate'),
-                'section'     => 'boilerplate_footer_section',
-                'settings'    => 'boilerplate_compass_image',
-                'flex_width'  => true,
-                'flex_height' => true,
-                'width'       => 200,
-                'height'      => 200,
-            ]
-        )
+        new WP_Customize_Cropped_Image_Control($wp_customize, 'boilerplate_compass_image_control', [
+            'label' => __('Compass Image', 'boilerplate'),
+            'description' => __('Upload image for compass icon', 'boilerplate'),
+            'section' => 'boilerplate_footer_section',
+            'settings' => 'boilerplate_compass_image',
+            'flex_width' => true,
+            'flex_height' => true,
+            'width' => 200,
+            'height' => 200,
+        ]),
     );
 
     //Footer description
@@ -360,12 +356,7 @@ function boilerplate_display_compass_image($class = 'compass-icon')
 {
     if ($url = boilerplate_get_compass_image_url()) {
         $alt = get_post_meta(get_theme_mod('boilerplate_compass_image'), '_wp_attachment_image_alt', true) ?: 'Compass Icon';
-        printf(
-            '<img src="%s" alt="%s" class="%s">',
-            esc_url($url),
-            esc_attr($alt),
-            esc_attr($class)
-        );
+        printf('<img src="%s" alt="%s" class="%s">', esc_url($url), esc_attr($alt), esc_attr($class));
     }
 }
 
@@ -402,3 +393,54 @@ add_filter('acf/load_field/name=trip_type', function ($field) {
     }
     return $field;
 });
+
+function add_custom_admin_box_to_submissions()
+{
+    add_meta_box(
+        'submission_admin_box', // Unique ID
+        'Submission Overview', // Box title
+        'render_submission_admin_box', // Content callback
+        'submissions', // Your CPT slug
+        'normal', // Context (normal, side, advanced)
+        'default', // Priority
+    );
+}
+add_action('add_meta_boxes', 'add_custom_admin_box_to_submissions');
+
+function render_submission_admin_box($post)
+{
+    echo '<div style="padding: 10px;">';
+
+    $form_fields = get_field('form_fields', $post->ID);
+
+    if (!empty($form_fields)) {
+        echo '<ul style="margin-left: 0px;">';
+        foreach ($form_fields as $field) {
+            $label = isset($field['label']) ? esc_html(str_replace('-', ' ', $field['label'])) : 'Unnamed Field';
+            $value = isset($field['value']) ? (is_array($field['value']) ? implode(', ', array_map('esc_html', $field['value'])) : esc_html($field['value'])) : '';
+
+            echo '<li style="border-bottom: 1px solid #dbdbdb; padding: 8px 0;"><strong>' . $label . ':</strong> ' . $value . '</li>';
+        }
+        echo '</ul>';
+    } else {
+        echo '<p><em>No form fields submitted.</em></p>';
+    }
+
+    echo '</div>';
+}
+
+function add_theme_color_meta_tag()
+{
+    echo '<meta name="theme-color" content="#00251e">' . "\n";
+}
+add_action('wp_head', 'add_theme_color_meta_tag');
+
+function add_friendlycaptcha_script()
+{
+    echo '<script
+      src="https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.23/site.min.js"
+      async
+      defer
+    ></script>';
+}
+add_action('wp_head', 'add_friendlycaptcha_script');
