@@ -13,6 +13,10 @@
 			"type": "string",
 			"selector": "h1"
 		},
+		"subheading": {
+			"type": "string",
+			"selector": "p"
+		},
 
 		"buttonText": {
 			"type": "string",

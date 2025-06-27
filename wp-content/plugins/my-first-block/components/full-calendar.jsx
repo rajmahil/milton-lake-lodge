@@ -379,6 +379,7 @@ const FullCalendarComp = ( props ) => {
 																		} }
 																		className="aspect-square w-[60px] sm:w-[70px] h-[60px] sm:h-[70px] rounded-md"
 																	></div>
+																	wd
 																	<div>
 																		<p className="font-medium text-base sm:text-lg">
 																			{

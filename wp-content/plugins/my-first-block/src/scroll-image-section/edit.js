@@ -5,11 +5,17 @@ import {
 	InspectorControls,
 	InspectorAdvancedControls,
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl, Button } from '@wordpress/components';
+import {
+	PanelBody,
+	TextControl,
+	Button,
+	TextareaControl,
+} from '@wordpress/components';
 import ScrollImage from '../../components/scroll-image';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { heading, buttonText, buttonUrl, image, sectionId } = attributes;
+	const { heading, subheading, buttonText, buttonUrl, image, sectionId } =
+		attributes;
 	// This is crucial - it provides the block wrapper with proper WordPress functionality
 	const blockProps = useBlockProps( {
 		className: 'my-unique-plugin-wrapper-class',
@@ -36,6 +42,13 @@ export default function Edit( { attributes, setAttributes } ) {
 						value={ heading }
 						onChange={ ( value ) =>
 							setAttributes( { heading: value } )
+						}
+					/>
+					<TextareaControl
+						label={ __( 'Subheading', 'your-text-domain' ) }
+						value={ subheading }
+						onChange={ ( value ) =>
+							setAttributes( { subheading: value } )
 						}
 					/>
 				</PanelBody>

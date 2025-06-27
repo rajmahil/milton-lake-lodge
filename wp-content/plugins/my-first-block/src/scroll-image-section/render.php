@@ -4,6 +4,7 @@
  */
 
 $heading = $attributes['heading'] ?? '';
+$subheading = $attributes['subheading'] ?? '';
 $buttonText = $attributes['buttonText'] ?? '';
 $buttonUrl = $attributes['buttonUrl'] ?? '#';
 $image = $attributes['image'] ?? [];
@@ -60,11 +61,14 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
 
     <div class="section-padding w-full">
       <div class="relative z-10 text-white flex flex-col items-start justify-start gap-4 !max-w-7xl !w-full mx-auto ">
-        <div class="flex flex-col w-full items-start gap-3">
+        <div class="flex flex-col w-full items-start gap-0 max-w-[600px] mr-auto">
           <?php if ($heading): ?>
-          <h2 class="heading-two max-w-none md:max-w-[60%] text-left">
+          <h2 class="heading-two max-w-none text-left">
             <?php echo esc_html($heading); ?>
           </h2>
+          <p className="!text-lg md:!text-xl text-left">
+            <?php echo esc_html($subheading); ?>
+          </p>
           <?php endif; ?>
         </div>
 

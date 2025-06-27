@@ -3,6 +3,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const ScrollImage = ( {
 	heading,
+	subheading,
 	buttonText,
 	buttonUrl,
 	image,
@@ -113,11 +114,16 @@ const ScrollImage = ( {
 
 				<div className="section-padding w-full">
 					<div className="relative z-10 text-white flex flex-col items-start justify-start gap-4 !max-w-7xl !w-full mx-auto">
-						<div className="flex flex-col w-full items-start gap-3">
+						<div className="flex flex-col w-full items-start gap-0 max-w-[600px] mr-auto">
 							{ heading && (
-								<h2 className="heading-two max-w-none md:max-w-[60%] text-left">
+								<h2 className="heading-two max-w-none text-left">
 									{ heading }
 								</h2>
+							) }
+							{ subheading && (
+								<p className="!text-lg md:t!text-xl text-left !py-0 !my-0">
+									{ subheading }
+								</p>
 							) }
 						</div>
 
