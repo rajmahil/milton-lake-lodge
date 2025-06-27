@@ -27,6 +27,10 @@
 @source inline("400:block");
 @source inline("rounded-b-2xl");
 @source inline("lg:rounded-b-4xl");
+@source inline("!text-5xl");
+@source inline("md:!text-6xl");
+@source inline("lg:!text-7xl");
+
 
 
 @theme {
@@ -218,6 +222,18 @@ h6 {
 @layer components {
   /* First Block Components */
   
+
+  .heading-two {
+		@apply !my-0  !text-5xl md:!text-6xl lg:!text-7xl;
+	}
+	.heading-three {
+		@apply !my-0  !text-3xl sm:!text-4xl md:!text-5xl lg:!text-6xl;
+	}
+
+  .frc-banner {
+		@apply !hidden
+	}
+
 
   .max-w-container {
     @apply mx-auto w-full !max-w-[1500px];

@@ -36,7 +36,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
       <?php foreach ( $items as $index => $item ): ?>
       <?php $id = 'accordion-item-' . $index; ?>
       <div
-        class="accordion-item !cursor-pointer group bg-white rounded-md border border-brand-grey p-6 transition-all duration-200 ease-in-out "
+        class="accordion-item !cursor-pointer group bg-white rounded-md border border-brand-grey p-4 md:p-6 transition-all duration-200 ease-in-out "
         @click="activeAccordion === '<?php echo $id; ?>' ? activeAccordion = null : activeAccordion = '<?php echo $id; ?>'"
       >
         <button
@@ -44,7 +44,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
           class="w-full text-left  flex items-center justify-between text-xl font-medium select-none "
         >
           <h3
-            class="text-lg font-medium !cursor-pointer  flex flex-row w-full items-center justify-between !capitalize  !font-sans"
+            class="text-base md:text-lg font-medium !cursor-pointer  flex flex-row w-full items-center justify-between !capitalize  !font-sans"
           >
             <?php echo esc_html($item['title'] ?? ''); ?></p>
             <svg

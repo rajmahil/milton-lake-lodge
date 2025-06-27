@@ -110,16 +110,3 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
     </div>
   </div>
 </section>
-
-
-<?php if ($heading): ?>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebPageElement",
-  "name": "Showcase Section",
-  "description": "<?php echo esc_js($heading); ?>",
-  "images": "<?php echo esc_js($images[0]['url'] ?? ''); ?>"
-}
-</script>
-<?php endif; ?>

@@ -27,6 +27,10 @@
 @source inline("animate-spin");
 @source inline("rounded-b-2xl");
 @source inline("lg:rounded-b-4xl");
+@source inline("!text-5xl");
+@source inline("md:!text-6xl");
+@source inline("lg:!text-7xl");
+
 
 
 /* Global wrapper class for all your blocks */

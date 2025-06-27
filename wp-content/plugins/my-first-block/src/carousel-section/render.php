@@ -200,7 +200,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
             <h2 class="heading-two !text-left"><?php echo esc_html($heading); ?></h2>
             <?php endif; ?>
             <?php if ($subheading) : ?>
-            <p class="text-xl !text-left text-neutral-500"><?php echo esc_html($subheading); ?></p>
+            <p class="text-xl !text-left text-neutral-600"><?php echo esc_html($subheading); ?></p>
             <?php endif; ?>
           </div>
           <div class='flex items-center gap-2'>
