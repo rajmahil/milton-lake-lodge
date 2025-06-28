@@ -1,29 +1,5 @@
 import { useState, useEffect } from '@wordpress/element';
 
-function addDayToYYYYMMDD( dateStr ) {
-	const year = parseInt( dateStr.slice( 0, 4 ) );
-	const month = parseInt( dateStr.slice( 4, 6 ) ) - 1;
-	const day = parseInt( dateStr.slice( 6, 8 ) );
-
-	const date = new Date( year, month, day );
-	date.setDate( date.getDate() + 1 );
-
-	const yyyy = date.getFullYear();
-	const mm = String( date.getMonth() + 1 ).padStart( 2, '0' );
-	const dd = String( date.getDate() ).padStart( 2, '0' );
-
-	return `${ yyyy }${ mm }${ dd }`;
-}
-
-function hexToRgba( hex, opacity ) {
-	const parsed = hex.replace( '#', '' );
-	const bigint = parseInt( parsed, 16 );
-	const r = ( bigint >> 16 ) & 255;
-	const g = ( bigint >> 8 ) & 255;
-	const b = bigint & 255;
-	return `rgba(${ r }, ${ g }, ${ b }, ${ opacity })`;
-}
-
 function formatDate( yyyymmdd ) {
 	const year = yyyymmdd.slice( 0, 4 );
 	const month = yyyymmdd.slice( 4, 6 ) - 1; // zero-indexed
@@ -60,7 +36,7 @@ const FullCalendarComp = ( props ) => {
 					return {
 						title: slot.trip_type,
 						start: slot.start_date,
-						end: addDayToYYYYMMDD( slot.end_date ),
+						end: slot.end_date,
 						description: slot.description,
 						extendedProps: {
 							backgroundColor:
