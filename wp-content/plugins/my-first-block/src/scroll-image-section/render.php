@@ -54,22 +54,29 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
       }
       ?>
 
-      <div class="absolute inset-0 bg-black/30"></div>
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent"></div>
     </div>
 
 
 
     <div class="section-padding w-full">
       <div class="relative z-10 text-white flex flex-col items-start justify-start gap-4 !max-w-7xl !w-full mx-auto ">
-        <div class="flex flex-col w-full items-start gap-0 max-w-[600px] mr-auto">
+        <div class="flex flex-col w-full items-start gap-0 max-w-[700px] mr-auto">
           <?php if ($heading): ?>
-          <h2 class="heading-two max-w-none text-left">
+          <h2 class="heading-two text-left">
             <?php echo esc_html($heading); ?>
           </h2>
-          <p className="!text-lg md:!text-xl text-left">
+          <?php endif; ?>
+          <?php if ($subheading): ?>
+          <p
+            className=" text-left"
+            style="font-size: 1.25rem;"
+          >
             <?php echo esc_html($subheading); ?>
           </p>
           <?php endif; ?>
+
         </div>
 
         <?php if ($buttonText): ?>

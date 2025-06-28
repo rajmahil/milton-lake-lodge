@@ -83,27 +83,14 @@ $content_order_class = $inverted ? 'order-first' : 'order-last';
 
     <div class="flex justify-center items-center relative col-span-3">
       <?php if ($image1_id): ?>
-      <div class="max-w-[400px] w-full rotate-5 relative left-10 shadow-lg">
+      <div class="shadow-lg rounded-lg overflow-hidden w-full max-w-[800px] <?php echo $inverted ? 'ml-auto' : 'mr-auto'; ?>">
         <?php
         echo wp_get_attachment_image($image1_id, 'medium', false, [
-            'class' => 'aspect-[3/4] w-full object-cover',
+            'class' => 'aspect-square w-full object-cover',
             'loading' => 'lazy',
             'decoding' => 'async',
             'fetchpriority' => 'high',
             'alt' => $image1_alt ?? '',
-        ]);
-        ?>
-      </div>
-      <?php endif; ?>
-      <?php if ($image2_id): ?>
-      <div class="max-w-[400px] w-full rotate-[-10deg] shadow-lg relative right-10">
-        <?php
-        echo wp_get_attachment_image($image2_id, 'large', false, [
-            'class' => 'aspect-[3/4] w-full object-cover',
-            'loading' => 'lazy',
-            'decoding' => 'async',
-            'fetchpriority' => 'auto',
-            'alt' => $image2_alt ?? '',
         ]);
         ?>
       </div>
