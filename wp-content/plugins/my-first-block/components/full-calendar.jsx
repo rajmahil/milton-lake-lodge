@@ -1,6 +1,4 @@
 import { useState, useEffect } from '@wordpress/element';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
 
 function addDayToYYYYMMDD( dateStr ) {
 	const year = parseInt( dateStr.slice( 0, 4 ) );
@@ -37,26 +35,11 @@ function formatDate( yyyymmdd ) {
 	} );
 }
 
-function isMobile() {
-	return window.innerWidth < 768; // md breakpoint in Tailwind
-}
-
 const FullCalendarComp = ( props ) => {
 	const { heading, subheading, selectedPostId, sectionId } = props;
 
 	const [ selected, setSelected ] = useState( null );
 	const [ slots, setSlots ] = useState( [] );
-	const [ defMonth, setDefMonth ] = useState( null );
-
-	const getInitialView = () => {
-		return isMobile() ? 'list' : 'calendar';
-	};
-
-	const [ defaultView, setDefaultView ] = useState( getInitialView() );
-
-	const handleViewChange = ( view ) => {
-		setDefaultView( view );
-	};
 
 	useEffect( () => {
 		if ( ! myCalendarData?.posts?.length ) return;
@@ -78,6 +61,7 @@ const FullCalendarComp = ( props ) => {
 						title: slot.trip_type,
 						start: slot.start_date,
 						end: addDayToYYYYMMDD( slot.end_date ),
+						description: slot.description,
 						extendedProps: {
 							backgroundColor:
 								slotType?.background_color || '#fef3c7',
@@ -88,7 +72,19 @@ const FullCalendarComp = ( props ) => {
 						},
 					};
 				} )
-				?.sort( ( a, b ) => new Date( a.start ) - new Date( b.start ) ); // sort by start date
+				?.sort( ( a, b ) => {
+					const formatDate = ( str ) => {
+						// Convert "20250613" -> "2025-06-13"
+						return new Date(
+							`${ str.slice( 0, 4 ) }-${ str.slice(
+								4,
+								6
+							) }-${ str.slice( 6, 8 ) }`
+						);
+					};
+
+					return formatDate( a.start ) - formatDate( b.start );
+				} );
 
 			if ( ! selectedPost?.default_month_view ) {
 				const activeMonths = [ 5, 6, 7 ];
@@ -108,23 +104,6 @@ const FullCalendarComp = ( props ) => {
 			setSelected( myCalendarData.posts[ 0 ] );
 		}
 	}, [ myCalendarData, selectedPostId ] );
-
-	// Handle resize to update view on screen size change
-	useEffect( () => {
-		const handleResize = () => {
-			const newInitialView = getInitialView();
-			setDefaultView( newInitialView );
-		};
-
-		window.addEventListener( 'resize', handleResize );
-
-		// Set initial view on component mount
-		setDefaultView( getInitialView() );
-
-		return () => {
-			window.removeEventListener( 'resize', handleResize );
-		};
-	}, [] );
 
 	if ( ! myCalendarData?.posts?.length ) {
 		return (
@@ -154,265 +133,149 @@ const FullCalendarComp = ( props ) => {
 				</div>
 
 				<div className="flex flex-col items-center gap-4">
-					<div className="w-fit bg-white p-1 rounded-full grid grid-cols-2 gap-0 mb-6">
-						<button
-							className={ `text-lg btn btn-lg ${
-								defaultView === 'calendar' ? 'btn-dark' : ''
-							}` }
-							onClick={ () => handleViewChange( 'calendar' ) }
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="22"
-								height="22"
-								fill="currentColor"
-								viewBox="0 0 256 256"
-								className="mr-1"
-							>
-								<path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-68-76a12,12,0,1,1-12-12A12,12,0,0,1,140,132Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,132ZM96,172a12,12,0,1,1-12-12A12,12,0,0,1,96,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,140,172Zm44,0a12,12,0,1,1-12-12A12,12,0,0,1,184,172Z"></path>
-							</svg>
-							Calendar
-						</button>
-						<button
-							className={ `text-lg btn btn-lg ${
-								defaultView === 'list' ? 'btn-dark' : ''
-							}` }
-							onClick={ () => handleViewChange( 'list' ) }
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="22"
-								height="22"
-								fill="currentColor"
-								viewBox="0 0 256 256"
-								className="mr-1"
-							>
-								<path d="M88,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H96A8,8,0,0,1,88,64Zm128,56H96a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H96a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM56,56H40a8,8,0,0,0,0,16H56a8,8,0,0,0,0-16Zm0,64H40a8,8,0,0,0,0,16H56a8,8,0,0,0,0-16Zm0,64H40a8,8,0,0,0,0,16H56a8,8,0,0,0,0-16Z"></path>
-							</svg>
-							List
-						</button>
-					</div>
-
 					<div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-						<div className="p-3 sm:p-6 xl:col-span-3 bg-white rounded-lg my-calendar-wrapper">
-							{ defaultView === 'calendar' ? (
-								<div className="overflow-x-scroll  w-full">
-									<FullCalendar
-										key={ defMonth || 'default' }
-										aspectRatio={ 1.35 }
-										height="auto"
-										initialDate={ defMonth || undefined }
-										headerToolbar={ {
-											left: 'title',
-											right: 'prev,today,next',
-										} }
-										plugins={ [ dayGridPlugin ] }
-										initialView="dayGridMonth"
-										events={ slots }
-										eventContent={ ( arg ) => {
-											const bgColorFrom =
-												hexToRgba(
-													arg.event.extendedProps
-														.backgroundColor,
-													0.1
-												) || '#fef3c7';
-
-											const bgColorTo =
-												hexToRgba(
-													arg.event.extendedProps
-														.backgroundColor,
-													0.2
-												) || '#fef3c7';
-											const textColor =
-												arg.event.extendedProps
-													.textColor || '#1f2937';
-											const status =
-												arg.event.extendedProps.status
-													.label;
-
-											const start = arg.event.start;
-											const end = arg.event.end;
-
-											const options = {
+						<div className="p-0 lg:p-6 xl:col-span-3 rounded-lg my-calendar-wrapper">
+							<div className="flex flex-col gap-10">
+								{ Object.entries(
+									slots?.reduce( ( groups, slot ) => {
+										const date = new Date(
+											slot.start.slice( 0, 4 ),
+											slot.start.slice( 4, 6 ) - 1
+										);
+										const key = date.toLocaleString(
+											'default',
+											{
+												month: 'long',
 												year: 'numeric',
-												month: 'short',
-												day: 'numeric',
-											};
+											}
+										);
 
-											const startFormatted =
-												start.toLocaleDateString(
-													undefined,
-													options
-												);
-											const endFormatted = end
-												? new Date(
-														end.setDate(
-															end.getDate() - 1
-														)
-												  ).toLocaleDateString(
-														undefined,
-														options
-												  )
-												: startFormatted;
+										if ( ! groups[ key ] )
+											groups[ key ] = [];
+										groups[ key ].push( slot );
+										return groups;
+									}, {} )
+								)?.map( ( [ month, groupedSlots ], index ) => (
+									<div key={ month } className="">
+										<h2 className="text-3xl  mb-2">
+											{ month }
+										</h2>
 
-											const rangeText =
-												startFormatted === endFormatted
-													? startFormatted
-													: `${ startFormatted } → ${ endFormatted }`;
+										<div className="flex flex-col gap-2">
+											{ groupedSlots.map( ( slot, i ) => {
+												const status =
+													slot.extendedProps.status
+														.label;
 
-											const statusClasses = {
-												Open: 'bg-green-700 text-white text-xs py-0.5 px-2 rounded-full',
-												Pending:
-													'bg-yellow-300 text-black text-xs py-0.5 px-2 rounded-full',
-												Booked: 'bg-red-600 text-white text-xs py-0.5 px-2 rounded-full',
-											};
+												const statusClasses = {
+													Open: 'bg-green-100 border border-green-7000 text-green-700  py-0.5 px-2 rounded-full',
+													Pending:
+														'bg-yellow-100 border border-yellow-700  text-yellow-700  py-0.5 px-2 rounded-full',
+													Booked: 'bg-red-100 border border-red-700 text-red-700 py-0.5 px-2 rounded-full',
+													Past: 'bg-gray-100 border border-gray-700 text-gray-700 py-0.5 px-2 rounded-full',
+												};
 
-											console.log(
-												start,
-												end,
-												'Event Dates'
-											);
+												const isPast =
+													new Date(
+														slot.start.slice(
+															0,
+															4
+														),
+														slot.start.slice(
+															4,
+															6
+														) - 1,
+														slot.start.slice( 6, 8 )
+													) < new Date();
 
-											return (
-												<div
-													style={ {
-														backgroundImage: `linear-gradient(135deg, ${ bgColorFrom } 0%, ${ bgColorTo } 100%)`,
-														color: textColor,
-													} }
-													className="p-2 rounded-md h-22 font-medium  text-wrap flex flex-col gap-2 items-start justify-between pattern-diagonal-lines pattern-blue-500 pattern-bg-white
- pattern-size-6"
-												>
-													<p className="text-sm !leading-[1.1] ">
-														{ arg.event.title }{ ' ' }
-													</p>
-													<p className="text-sm leading-[1.1]">
-														{ rangeText }
-													</p>
-												</div>
-											);
-										} }
-									/>
-								</div>
-							) : (
-								<div className="flex flex-col gap-10">
-									{ Object.entries(
-										slots?.reduce( ( groups, slot ) => {
-											const date = new Date(
-												slot.start.slice( 0, 4 ),
-												slot.start.slice( 4, 6 ) - 1
-											);
-											const key = date.toLocaleString(
-												'default',
-												{
-													month: 'long',
-													year: 'numeric',
-												}
-											);
+												return (
+													<div
+														key={ i }
+														className="p-4 bg-white rounded-lg relative flex flex-col gap-4"
+													>
+														<div className="absolute top-2 right-2 text-xs py-0.5 px-2 rounded-full">
+															<div
+																className={
+																	statusClasses[
+																		! isPast
+																			? status
+																			: 'Past'
+																	] ||
+																	'bg-gray-300 text-black'
+																}
+															>
+																{ ! isPast
+																	? status
+																	: 'Completed' }
+															</div>
+														</div>
 
-											if ( ! groups[ key ] )
-												groups[ key ] = [];
-											groups[ key ].push( slot );
-											return groups;
-										}, {} )
-									).map(
-										( [ month, groupedSlots ], index ) => (
-											<div key={ month } className="">
-												<h2 className="text-2xl  mb-2">
-													{ month }
-												</h2>
-
-												<div className="flex flex-col gap-2">
-													{ groupedSlots.map(
-														( slot, i ) => {
-															const bgColorFrom =
-																hexToRgba(
-																	slot
+														<div className="flex flex-row items-center gap-4 ">
+															<div
+																style={ {
+																	backgroundColor:
+																		slot
+																			.extendedProps
+																			.backgroundColor,
+																	color: slot
 																		.extendedProps
-																		.backgroundColor,
-																	0.1
-																) || '#fef3c7';
-
-															const bgColorTo =
-																hexToRgba(
-																	slot
-																		.extendedProps
-																		.backgroundColor,
-																	0.2
-																) || '#fef3c7';
-
-															const status =
-																slot
-																	.extendedProps
-																	.status
-																	.label;
-
-															const statusClasses =
-																{
-																	Open: 'bg-green-700 text-white text-xs py-0.5 px-2 rounded-full',
-																	Pending:
-																		'bg-yellow-300 text-black text-xs py-0.5 px-2 rounded-full',
-																	Booked: 'bg-red-600 text-white text-xs py-0.5 px-2 rounded-full',
-																};
-
-															return (
-																<div
-																	key={ i }
-																	className="p-2 sm:p-3 border border-neutral-200 rounded-lg flex flex-row items-center gap-2 sm:gap-4 relative"
+																		.textColor,
+																} }
+																className="aspect-square w-[60px] h-[60px] rounded-md flex items-center justify-center"
+															>
+																<svg
+																	xmlns="http://www.w3.org/2000/svg"
+																	width="25"
+																	height="25"
+																	fill="currentColor"
+																	viewBox="0 0 256 256"
+																	className="opacity-60"
 																>
-																	<div className="absolute top-2 right-2 text-xs py-0.5 px-2 rounded-full">
-																		<div
-																			className={
-																				statusClasses[
-																					status
-																				] ||
-																				'bg-gray-300 text-black'
-																			}
-																		>
-																			{
-																				status
-																			}
-																		</div>
-																	</div>
-																	<div
-																		style={ {
-																			backgroundImage: `linear-gradient(135deg, ${ bgColorFrom } 0%, ${ bgColorTo } 100%)`,
-																		} }
-																		className="aspect-square w-[60px] sm:w-[70px] h-[60px] sm:h-[70px] rounded-md"
-																	></div>
-																	wd
-																	<div>
-																		<p className="font-medium text-base sm:text-lg">
-																			{
-																				slot.title
-																			}
-																		</p>
-																		<p className="text-base text-neutral-500 font-medium">
-																			{ formatDate(
-																				slot.start
-																			) }{ ' ' }
-																			→{ ' ' }
-																			{ formatDate(
-																				slot.end
-																			) }
-																		</p>
-																	</div>
-																</div>
-															);
-														}
-													) }
-												</div>
-											</div>
-										)
-									) }
-								</div>
-							) }
+																	<path d="M168,76a12,12,0,1,1-12-12A12,12,0,0,1,168,76Zm48.72,67.64c-19.37,34.9-55.44,53.76-107.24,56.1l-22,51.41A8,8,0,0,1,80.1,256l-.51,0a8,8,0,0,1-7.19-5.78L57.6,198.39,5.8,183.56a8,8,0,0,1-1-15.05l51.41-22c2.35-51.78,21.21-87.84,56.09-107.22,24.75-13.74,52.74-15.84,71.88-15.18,18.64.64,36,4.27,38.86,6a8,8,0,0,1,2.83,2.83c1.69,2.85,5.33,20.21,6,38.85C232.55,90.89,230.46,118.89,216.72,143.64Zm-55.18,29a52.11,52.11,0,0,1-33.4-44.78A52.09,52.09,0,0,1,83.37,94.47q-10.45,23.79-11.3,57.59a8,8,0,0,1-4.85,7.17L31.83,174.37l34.45,9.86a8,8,0,0,1,5.49,5.5l9.84,34.44,15.16-35.4a8,8,0,0,1,7.17-4.84Q137.71,183.12,161.54,172.64ZM212.42,43.57c-14.15-3-64.1-11-100.3,14.75a81.21,81.21,0,0,0-16,15.07,36,36,0,0,0,39.35,38.44,8,8,0,0,1,8.73,8.73,36,36,0,0,0,38.47,39.34,80.81,80.81,0,0,0,15-16C223.42,107.73,215.42,57.74,212.42,43.57Z"></path>
+																</svg>
+															</div>
+															<div>
+																<p className="font-medium text-lg ">
+																	{
+																		slot.title
+																	}
+																</p>
+																<p className="text-base text-neutral-500 font-medium">
+																	{ formatDate(
+																		slot.start
+																	) }{ ' ' }
+																	→{ ' ' }
+																	{ formatDate(
+																		slot.end
+																	) }
+																</p>
+															</div>
+														</div>
+
+														{ slot?.description && (
+															<p className="text-neutral-600">
+																{
+																	slot?.description
+																}
+															</p>
+														) }
+													</div>
+												);
+											} ) }
+										</div>
+									</div>
+								) ) }
+							</div>
 						</div>
-						<div className="flex flex-col gap-4 ">
-							<div className="p-4 rounded-lg bg-white flex flex-col gap-2 w-full">
-								<h3 className="text-2xl">Legend</h3>
-								<div className="flex flex-col gap-2">
-									{ ( selected?.calendar_legend || [] ).map(
-										( item, index ) => (
+
+						<div className="h-full ">
+							<div className="flex flex-col gap-4  h-fit sticky top-[100px]">
+								<div className="p-4 rounded-lg bg-white flex flex-col gap-2 w-full">
+									<h3 className="text-2xl">Legend</h3>
+									<div className="flex flex-col gap-2">
+										{ (
+											selected?.calendar_legend || []
+										).map( ( item, index ) => (
 											<div
 												key={ index }
 												className="flex items-center gap-2"
@@ -428,17 +291,17 @@ const FullCalendarComp = ( props ) => {
 													{ item.label }
 												</p>
 											</div>
-										)
-									) }
+										) ) }
+									</div>
 								</div>
-							</div>
 
-							{ selected?.additional_notes && (
-								<div className="p-4 rounded-lg bg-white flex flex-col gap-2 w-full">
-									<h3 className="text-2xl">Details</h3>
-									<p>{ selected?.additional_notes }</p>
-								</div>
-							) }
+								{ selected?.additional_notes && (
+									<div className="p-4 rounded-lg bg-white flex flex-col gap-2 w-full">
+										<h3 className="text-2xl">Details</h3>
+										<p>{ selected?.additional_notes }</p>
+									</div>
+								) }
+							</div>
 						</div>
 					</div>
 				</div>

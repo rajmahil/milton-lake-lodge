@@ -26,7 +26,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
     <div class="relative z-10 text-center px-4 flex items-center justify-center w-full">
       <div class="flex flex-col items-center gap-4 max-w-screen-xl mx-auto !pt-14 lg:!pt-5">
         <?php if (!empty($heading)): ?>
-        <h1 class="!text-5xl sm:!text-6xl md:!text-7xl lg:!text-8xl !font-[600] text-center !text-white !uppercase">
+        <h1 class="text-5xl sm:!text-6xl md:!text-7xl lg:!text-8xl !font-[600] text-center !text-white !uppercase">
           <?php echo esc_html($heading); ?>
         </h1>
         <?php endif; ?>
