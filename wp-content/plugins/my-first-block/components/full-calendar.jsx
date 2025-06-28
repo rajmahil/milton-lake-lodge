@@ -86,18 +86,6 @@ const FullCalendarComp = ( props ) => {
 					return formatDate( a.start ) - formatDate( b.start );
 				} );
 
-			if ( ! selectedPost?.default_month_view ) {
-				const activeMonths = [ 5, 6, 7 ];
-				const currentMonth = new Date().getMonth();
-				const currentYear = new Date().getFullYear();
-
-				if ( activeMonths.includes( currentMonth ) ) {
-					setDefMonth(
-						`${ currentYear }-${ selectedPost?.default_month_view?.value }`
-					);
-				}
-			}
-
 			setSlots( tripSlots );
 			setSelected( selectedPost );
 		} else {
