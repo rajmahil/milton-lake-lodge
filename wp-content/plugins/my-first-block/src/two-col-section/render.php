@@ -86,7 +86,7 @@ $content_order_class = $inverted ? 'order-first' : 'order-last';
       <div class="shadow-lg rounded-lg overflow-hidden w-full max-w-[800px] <?php echo $inverted ? 'ml-auto' : 'mr-auto'; ?>">
         <?php
         echo wp_get_attachment_image($image1_id, 'medium', false, [
-            'class' => 'aspect-square w-full object-cover',
+            'class' => 'aspect-[3/2] w-full object-cover',
             'loading' => 'lazy',
             'decoding' => 'async',
             'fetchpriority' => 'high',
