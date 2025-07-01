@@ -22,14 +22,16 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
       </h2>
       <?php endif; ?>
     </div>
-    <div class="relative w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 gap-6">
+    <div
+      class="relative w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 gap-2 sm:gap-6"
+    >
       <?php foreach ( $items as $index => $item ): ?>
       <div
         class=" col-span-1 "
         key="<?php echo esc_attr($index); ?>"
       >
 
-        <div class="flex flex-row items-center justify-start gap-2">
+        <div class="flex flex-row items-center justify-start gap-1 sm:gap-2">
           <?php if ( !empty( $item['image'] ) ): ?>
           <?php echo wp_get_attachment_image($item['image']['id'], 'medium', false, [
               'alt' => esc_attr($item['image']['alt'] ?? ''),
@@ -37,7 +39,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
           ]); ?>
           <?php endif; ?>
           <?php if ( !empty( $item['title'] ) ): ?>
-          <p class="text-center text-lg md:text-xl"><?php echo esc_html($item['title']); ?></span>
+          <p class="text-left text-lg md:text-xl"><?php echo esc_html($item['title']); ?></span>
             <?php endif; ?>
         </div>
 
