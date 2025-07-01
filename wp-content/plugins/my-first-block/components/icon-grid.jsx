@@ -5,7 +5,7 @@ const IconGrid = ( props ) => {
 		buttonUrl,
 		items = [],
 		sectionId = '',
-	} = attributes;
+	} = props;
 
 	return (
 		<section
