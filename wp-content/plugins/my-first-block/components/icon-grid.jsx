@@ -10,7 +10,7 @@ const IconGrid = ( props ) => {
 	return (
 		<section
 			id={ sectionId }
-			className="plugin-custom-block not-prose section-padding w-full"
+			className="plugin-custom-block not-prose section-padding w-full static-background"
 		>
 			<div className="max-w-container mx-auto flex flex-col gap-16">
 				{ heading && (

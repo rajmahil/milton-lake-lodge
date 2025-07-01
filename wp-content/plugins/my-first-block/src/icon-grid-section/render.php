@@ -29,11 +29,11 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
         key="<?php echo esc_attr($index); ?>"
       >
 
-        <div class="flex flex-col items-center justify-center gap-2">
+        <div class="flex flex-row items-center justify-start gap-2">
           <?php if ( !empty( $item['image'] ) ): ?>
           <?php echo wp_get_attachment_image($item['image']['id'], 'medium', false, [
               'alt' => esc_attr($item['image']['alt'] ?? ''),
-              'class' => 'w-40 h-40 object-contain object-center',
+              'class' => 'w-16 h-16 object-contain object-center',
           ]); ?>
           <?php endif; ?>
           <?php if ( !empty( $item['title'] ) ): ?>
