@@ -12,7 +12,8 @@ function formatDate( yyyymmdd ) {
 }
 
 const FullCalendarComp = ( props ) => {
-	const { heading, subheading, selectedPostId, sectionId } = props;
+	const { heading, subheading, downloadableFile, selectedPostId, sectionId } =
+		props;
 
 	const [ selected, setSelected ] = useState( null );
 	const [ slots, setSlots ] = useState( [] );
@@ -76,8 +77,6 @@ const FullCalendarComp = ( props ) => {
 			</div>
 		);
 	}
-
-	console.log( slots, 'Slots Data' );
 
 	return (
 		<section
@@ -264,6 +263,24 @@ const FullCalendarComp = ( props ) => {
 										<h3 className="text-2xl">Details</h3>
 										<p>{ selected?.additional_notes }</p>
 									</div>
+								) }
+
+								{ downloadableFile?.url && (
+									<a
+										href={ downloadableFile?.url }
+										target="_blank"
+										rel="noopener noreferrer"
+										download={ downloadableFile?.title }
+										aria-label="Download PDF"
+										class="hero-btn-link"
+									>
+										<button
+											class="btn btn-white hover:bg-brand-yellow bg-white btn-lg w-full"
+											type="button"
+										>
+											Download Trip Calendar
+										</button>
+									</a>
 								) }
 							</div>
 						</div>

@@ -18,14 +18,14 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
       totalSlides: <?php echo $totalSlides; ?>,
       startX: 0,
       dragging: false,
-  
+
       goToSlide(index) {
           if (index < 0) index = 0;
           if (index >= this.totalSlides) index = this.totalSlides - 1;
           this.currentIndex = index;
           this.$nextTick(() => this.triggerAnimations());
       },
-  
+
       triggerAnimations() {
           const leftImage = this.$refs[`left-${this.currentIndex}`];
           const rightImage = this.$refs[`right-${this.currentIndex}`];
@@ -38,25 +38,25 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
               rightImage.classList.add('animate-slide-center-right');
           }
       },
-  
+
       onDragStart(event) {
           this.dragging = true;
           this.startX = event.type.includes('touch') ? event.touches[0].clientX : event.clientX;
       },
-  
+
       onDragMove(event) {
           if (!this.dragging) return;
           // Optional: you can implement dragging feedback here if needed
       },
-  
+
       onDragEnd(event) {
           if (!this.dragging) return;
           this.dragging = false;
-  
+
           let endX = event.type.includes('touch') ? (event.changedTouches[0]?.clientX ?? this.startX) : event.clientX;
           let deltaX = endX - this.startX;
           let threshold = 50; // px threshold to change slide
-  
+
           if (deltaX < -threshold && this.currentIndex < this.totalSlides - 1) {
               this.goToSlide(this.currentIndex + 1);
           } else if (deltaX > threshold && this.currentIndex > 0) {
@@ -65,7 +65,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
               this.goToSlide(this.currentIndex); // snap back if no slide change
           }
       },
-  
+
       init() {
           this.$nextTick(() => this.triggerAnimations());
       }
@@ -79,16 +79,16 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
       <?php
       $image1 = $review['image1'] ?? null;
       $image2 = $review['image2'] ?? null;
-      
+
       $image1_url = $image1['url'] ?? '';
       $image1_alt = $image1['alt'] ?? '';
       $image2_url = $image2['url'] ?? '';
       $image2_alt = $image2['alt'] ?? '';
-      
+
       // Image 1
       $image1_id = null;
       $image1_alt = '';
-      
+
       if ($image1) {
           if (is_array($image1)) {
               $image1_id = $image1['id'] ?? ($image1['ID'] ?? null);
@@ -98,11 +98,11 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
               $image1_alt = get_post_meta($image1, '_wp_attachment_image_alt', true);
           }
       }
-      
+
       // Image 2
       $image2_id = null;
       $image2_alt = '';
-      
+
       if ($image2) {
           if (is_array($image2)) {
               $image2_id = $image2['id'] ?? ($image2['ID'] ?? null);
@@ -112,7 +112,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
               $image2_alt = get_post_meta($image2, '_wp_attachment_image_alt', true);
           }
       }
-      
+
       ?>
       <?php if (!empty($review['image1']['url'])): ?>
       <div
@@ -170,7 +170,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
         style="touch-action: pan-y;"
       >
         <div
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex flex-row items-center justify-between z-[100]"
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex flex-row items-center justify-between z-[10]"
         >
           <div
             class="p-2 rounded-full bg-white hover:bg-brand-green hover:text-white duration-300 transition-all ease-in-out shadow-lg cursor-pointer"

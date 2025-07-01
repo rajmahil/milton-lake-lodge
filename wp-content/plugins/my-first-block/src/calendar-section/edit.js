@@ -3,8 +3,14 @@ import {
 	useBlockProps,
 	InspectorControls,
 	InspectorAdvancedControls,
+	MediaUpload,
 } from '@wordpress/block-editor';
-import { PanelBody, ComboboxControl, TextControl } from '@wordpress/components';
+import {
+	PanelBody,
+	ComboboxControl,
+	TextControl,
+	Button,
+} from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import FullCalendar from '../../components/full-calendar';
 
@@ -70,6 +76,51 @@ export default function Edit( { attributes, setAttributes } ) {
 							setAttributes( { selectedPostId: value } )
 						}
 						__nextHasNoMarginBottom
+					/>
+
+					<MediaUpload
+						label={ __( 'Select Downloadable File', 'my-plugin' ) }
+						onSelect={ ( file ) => {
+							setAttributes( {
+								downloadableFile: {
+									id: file.id,
+									url: file.url,
+									title: file.title,
+									mime: file.mime,
+								},
+							} );
+						} }
+						allowedTypes={ [
+							'application/pdf',
+							'application/msword',
+							'application/zip',
+						] } // or just ['*']
+						render={ ( { open } ) => (
+							<div className="mt-4">
+								<Button onClick={ open } variant="secondary">
+									{ attributes.downloadableFile?.url
+										? 'Replace Downloadable File'
+										: 'Add Downloadable File' }
+								</Button>
+								{ attributes.downloadableFile?.url && (
+									<p style={ { marginTop: '10px' } }>
+										Selected:{ ' ' }
+										<a
+											href={
+												attributes.downloadableFile.url
+											}
+											target="_blank"
+											rel="noreferrer"
+										>
+											{
+												attributes.downloadableFile
+													.title
+											}
+										</a>
+									</p>
+								) }
+							</div>
+						) }
 					/>
 				</PanelBody>
 

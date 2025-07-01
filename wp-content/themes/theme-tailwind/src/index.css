@@ -34,6 +34,7 @@
 @source inline("md:h-[150vh]");
 @source inline("!text-4xl");
 @source inline("md:!text-xl");
+@source inline("xl:grid-cols-5");
 
 
 

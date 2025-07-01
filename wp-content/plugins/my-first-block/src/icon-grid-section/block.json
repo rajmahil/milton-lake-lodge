@@ -1,29 +1,29 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "brad-boilerplate/calendar-section",
+	"name": "brad-boilerplate/icon-grid-section",
 	"version": "0.1.0",
-	"title": "Calendar Section",
+	"title": "Icon Grid Section",
 	"category": "widgets",
 	"icon": "smiley",
-	"description": "Calendar section",
+	"description": "Icon grid section",
 	"example": {},
 	"attributes": {
 		"heading": {
 			"type": "string",
 			"default": "Heading Here"
 		},
-		"subheading": {
+		"items": {
+			"type": "array",
+			"default": []
+		},
+		"buttonText": {
 			"type": "string",
-			"default": "Subheading Here"
+			"default": "Learn More"
 		},
-		"selectedPostId": {
-			"type": "number",
-			"default": null
-		},
-		"downloadableFile": {
-			"type": "object",
-			"default": {}
+		"buttonUrl": {
+			"type": "string",
+			"default": "#"
 		},
 		"sectionId": {
 			"type": "string",
@@ -37,10 +37,9 @@
 			"text": true
 		}
 	},
-	"textdomain": "calendar-section-block",
+	"textdomain": "accordion-section-block",
 	"editorScript": "file:./index.js",
 	"editorStyle": [ "file:../style-index.css" ],
 	"style": [ "file:../style-index.css" ],
-	"render": "file:./render.php",
-	"viewScript": "file:./frontend.js"
+	"render": "file:./render.php"
 }

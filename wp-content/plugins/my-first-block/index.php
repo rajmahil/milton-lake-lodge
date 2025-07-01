@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 // Register all blocks
 function register_custom_blocks()
 {
-    $blocks = ['hero-section', 'showcase-section', 'features-section', 'accordion-section', 'reviews-section', 'scroll-image-section', 'cta-section', 'two-col-section', 'pricing-table', 'form-block', 'page-header-section', 'gallery-section', 'carousel-section', 'calendar-section'];
+    $blocks = ['icon-grid-section', 'hero-section', 'showcase-section', 'features-section', 'accordion-section', 'reviews-section', 'scroll-image-section', 'cta-section', 'two-col-section', 'pricing-table', 'form-block', 'page-header-section', 'gallery-section', 'carousel-section', 'calendar-section'];
 
     foreach ($blocks as $block) {
         register_block_type(__DIR__ . "/build/$block");
