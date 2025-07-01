@@ -8,6 +8,7 @@ $heading = $attributes['heading'] ?? 'Milton Lake Lodge Mini-Lodge & Outpost Com
 $tabs = $attributes['tabs'] ?? [];
 $rates = get_exchange_rates('USD');
 $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId']) : '';
+$whats_included = $attributes['whatsIncluded'] ?? '';
 
 error_log('Exchange rates: ' . print_r($rates, true));
 
@@ -41,11 +42,11 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
           formatPrice(price, priceType) {
               if (priceType !== 'currency') return price;
               if (!price || isNaN(parseFloat(price))) return 'N/A';
-      
+
               const amount = this.currency === 'CAD' ?
                   this.convertToCAD(price) :
                   parseFloat(price);
-      
+
               return new Intl.NumberFormat('en-US', {
                   minimumFractionDigits: 0,
                   maximumFractionDigits: 2
@@ -147,6 +148,22 @@ $exchange_rate = isset($rates['CAD']) ? $rates['CAD'] : 1.3;
           </div>
           <?php endforeach; ?>
           <?php endif; ?>
+
+          <?php if (!empty($tab['whatsIncluded'])): ?>
+          <div class="border-t border-brand-grey !p-4 sm:!p-8 text-gray-800">
+            <h3 class="!text-lg !font-medium !font-sans !capitalize mb-2">
+              What's Included
+            </h3>
+            <ul class="list-disc pl-5">
+              <?php foreach ($tab['whatsIncluded'] as $item): ?>
+              <li class="w-full">
+                <?php echo esc_html($item); ?>
+              </li>
+              <?php endforeach; ?>
+            </ul>
+          </div>
+          <?php endif; ?>
+
           <?php if (!empty($tab['note'])): ?>
           <div class="border-t border-brand-grey !p-4 sm:!p-8 text-gray-800">
             <p class="!text-base">

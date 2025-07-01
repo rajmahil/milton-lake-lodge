@@ -10,7 +10,7 @@ const IconGrid = ( props ) => {
 	return (
 		<section
 			id={ sectionId }
-			className="plugin-custom-block not-prose section-padding w-full"
+			className="plugin-custom-block not-prose section-padding w-full static-background"
 		>
 			<div className="max-w-container mx-auto flex flex-col gap-16">
 				{ heading && (
@@ -22,12 +22,12 @@ const IconGrid = ( props ) => {
 				<div className="relative w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-6">
 					{ items.map( ( item, index ) => (
 						<div className="col-span-1" key={ index }>
-							<div className="flex flex-row items-center justify-start gap-1 sm:gap-2">
+							<div className="!flex !flex-row items-center justify-start gap-1 sm:gap-2">
 								{ item?.image?.url && (
 									<img
 										src={ item.image.url }
 										alt={ item.image.alt || '' }
-										className="w-16 h-16 object-contain object-center"
+										className="!w-16 !h-16 object-contain object-center"
 									/>
 								) }
 								{ item?.title && (

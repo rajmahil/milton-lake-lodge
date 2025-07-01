@@ -29,6 +29,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				title: '',
 				note: '',
 				features: [],
+				whatsIncluded: [],
 			},
 		];
 		setAttributes( { tabs: newTabs } );
@@ -61,24 +62,19 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const updateFeature = ( tabIndex, featureIndex, field, value ) => {
 		const updatedTabs = [ ...tabs ];
-
-		// Special handling for price field when in currency mode
 		if (
 			field === 'price' &&
 			updatedTabs[ tabIndex ].features[ featureIndex ].priceType ===
 				'currency'
 		) {
-			// Only allow numeric values (including decimals) for currency
 			const numericRegex = /^\d*\.?\d*$/;
 			if ( value === '' || numericRegex.test( value ) ) {
 				updatedTabs[ tabIndex ].features[ featureIndex ][ field ] =
 					value;
 			}
-			// If invalid, don't update the value (effectively blocking the input)
 		} else {
 			updatedTabs[ tabIndex ].features[ featureIndex ][ field ] = value;
 		}
-
 		setAttributes( { tabs: updatedTabs } );
 	};
 
@@ -88,14 +84,32 @@ export default function Edit( { attributes, setAttributes } ) {
 		setAttributes( { tabs: updatedTabs } );
 	};
 
-	// Helper function to validate if a price is numeric
+	const addWhatsIncludedItem = ( tabIndex ) => {
+		const updatedTabs = [ ...tabs ];
+		updatedTabs[ tabIndex ].whatsIncluded =
+			updatedTabs[ tabIndex ].whatsIncluded || [];
+		updatedTabs[ tabIndex ].whatsIncluded.push( '' );
+		setAttributes( { tabs: updatedTabs } );
+	};
+
+	const updateWhatsIncludedItem = ( tabIndex, itemIndex, value ) => {
+		const updatedTabs = [ ...tabs ];
+		updatedTabs[ tabIndex ].whatsIncluded[ itemIndex ] = value;
+		setAttributes( { tabs: updatedTabs } );
+	};
+
+	const removeWhatsIncludedItem = ( tabIndex, itemIndex ) => {
+		const updatedTabs = [ ...tabs ];
+		updatedTabs[ tabIndex ].whatsIncluded.splice( itemIndex, 1 );
+		setAttributes( { tabs: updatedTabs } );
+	};
+
 	const isValidPrice = ( price, priceType ) => {
 		if ( priceType !== 'currency' ) return true;
-		if ( price === '' ) return true; // Allow empty values
+		if ( price === '' ) return true;
 		return /^\d+(\.\d{0,2})?$/.test( price );
 	};
 
-	// Helper function to get validation message
 	const getPriceValidationMessage = ( price, priceType ) => {
 		if (
 			priceType === 'currency' &&
@@ -114,7 +128,6 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const onChangeSectionId = ( value ) => {
 		const sanitized = value.toLowerCase().replace( /[^a-z0-9-]/g, '' );
-
 		if ( slugPattern.test( sanitized ) ) {
 			setAttributes( { sectionId: sanitized } );
 		}
@@ -160,6 +173,49 @@ export default function Edit( { attributes, setAttributes } ) {
 							}
 						/>
 
+						<div className="flex flex-col items-start gap-2 w-full">
+							<strong>
+								{ __( 'What’s Included', 'your-text-domain' ) }
+							</strong>
+							{ ( tab.whatsIncluded || [] ).map(
+								( item, iIndex ) => (
+									<div
+										key={ iIndex }
+										style={ { marginBottom: '10px' } }
+										className="w-full"
+									>
+										<TextControl
+											label={ `Item ${ iIndex + 1 }` }
+											value={ item }
+											onChange={ ( value ) =>
+												updateWhatsIncludedItem(
+													index,
+													iIndex,
+													value
+												)
+											}
+										/>
+										<Button
+											isDestructive
+											onClick={ () =>
+												removeWhatsIncludedItem(
+													index,
+													iIndex
+												)
+											}
+										>
+											Remove
+										</Button>
+									</div>
+								)
+							) }
+							<Button
+								variant="secondary"
+								onClick={ () => addWhatsIncludedItem( index ) }
+							>
+								{ __( 'Add Item', 'your-text-domain' ) }
+							</Button>
+						</div>
 						<hr />
 						<strong>
 							{ __( 'Features', 'your-text-domain' ) }
@@ -235,7 +291,6 @@ export default function Edit( { attributes, setAttributes } ) {
 													'priceType',
 													newPriceType
 												);
-												// Clear price when switching to currency mode if it's not numeric
 												if (
 													newPriceType ===
 														'currency' &&
@@ -347,14 +402,12 @@ export default function Edit( { attributes, setAttributes } ) {
 							} ) }
 						</div>
 
-						<div style={ { marginTop: '20px' } }>
-							<Button
-								variant="secondary"
-								onClick={ () => addFeature( index ) }
-							>
-								{ __( 'Add Feature', 'your-text-domain' ) }
-							</Button>
-						</div>
+						<Button
+							variant="secondary"
+							onClick={ () => addFeature( index ) }
+						>
+							{ __( 'Add Feature', 'your-text-domain' ) }
+						</Button>
 
 						<Button
 							isDestructive

@@ -118,12 +118,12 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
       <div
         x-ref="left-<?php echo $i; ?>"
         x-show="currentIndex === <?php echo $i; ?>"
-        class="max-w-[400px] w-full rotate-5 relative left-10 shadow-lg"
+        class="max-w-[400px] w-full rotate-5 relative left-8 shadow-lg"
       >
 
         <?php
         echo wp_get_attachment_image($image1_id, 'large', false, [
-            'class' => 'aspect-[3/4] w-full h-full object-cover',
+            'class' => 'aspect-[3/4] w-full h-full object-cover rounded-lg overflow-hidden',
             'loading' => 'lazy',
             'decoding' => 'async',
             'fetchpriority' => 'high',
@@ -139,11 +139,11 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
       <div
         x-ref="right-<?php echo $i; ?>"
         x-show="currentIndex === <?php echo $i; ?>"
-        class="max-w-[400px] w-full rotate-[-10deg] shadow-lg relative right-10"
+        class="max-w-[400px] w-full -rotate-5 shadow-lg relative right-8"
       >
         <?php
         echo wp_get_attachment_image($image2_id, 'large', false, [
-            'class' => 'aspect-[3/4]  w-full h-full object-cover',
+            'class' => 'aspect-[3/4]  w-full h-full object-cover rounded-lg overflow-hidden',
             'loading' => 'lazy',
             'decoding' => 'async',
             'fetchpriority' => 'auto',

@@ -83,6 +83,11 @@ module.exports = {
 			'src/icon-grid-section',
 			'index.js'
 		),
+		'news-section/index': path.resolve(
+			process.cwd(),
+			'src/news-section',
+			'index.js'
+		),
 		// Component entry points (JS only - no CSS imports), two entry points for client component (frontend.js)
 		'calendar-section/index': path.resolve(
 			process.cwd(),

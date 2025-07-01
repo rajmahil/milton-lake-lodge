@@ -1,33 +1,17 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "brad-boilerplate/page-header-section",
+	"name": "brad-boilerplate/news-section",
 	"version": "0.1.0",
-	"title": "Page Header Section",
+	"title": "News Section",
 	"category": "widgets",
 	"icon": "smiley",
-	"description": "Page Header section",
+	"description": "News section",
 	"example": {},
 	"attributes": {
-		"heading": {
+		"sortBy": {
 			"type": "string",
-			"default": "Heading Here"
-		},
-		"navigation": {
-			"type": "array",
-			"default": []
-		},
-		"breadcrumbs": {
-			"type": "array",
-			"default": []
-		},
-		"image": {
-			"type": "object",
-			"default": {}
-		},
-		"backgroudOverlayImage": {
-			"type": "object",
-			"default": {}
+			"default": "newest"
 		},
 		"sectionId": {
 			"type": "string",
@@ -41,7 +25,7 @@
 			"text": true
 		}
 	},
-	"textdomain": "page-header-section-block",
+	"textdomain": "news-section",
 	"editorScript": "file:./index.js",
 	"editorStyle": [ "file:../style-index.css" ],
 	"style": [ "file:../style-index.css" ],

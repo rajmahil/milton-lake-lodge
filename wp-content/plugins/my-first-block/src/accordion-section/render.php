@@ -78,8 +78,8 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
           x-collapse
           x-cloak
         >
-          <div class="pt-4">
-            <?php echo esc_html($item['text'] ?? ''); ?>
+          <div class="pt-4 [&_a]:text-brand-green [&_a]:underline ">
+            <p><?php echo wp_kses_post($item['text']); ?></p>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import {
 	useBlockProps,
 	InspectorControls,
 	InspectorAdvancedControls,
+	RichText,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -79,8 +80,10 @@ export default function Edit( { attributes, setAttributes } ) {
 								updateItem( index, 'title', value )
 							}
 						/>
+
 						<TextareaControl
-							label={ __( 'Text', 'your-text-domain' ) }
+							label="Answer (HTML allowed)"
+							help="Use simple HTML like <a href=''>link</a> for inline links."
 							value={ item.text }
 							onChange={ ( value ) =>
 								updateItem( index, 'text', value )

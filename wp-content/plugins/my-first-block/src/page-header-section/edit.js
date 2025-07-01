@@ -15,6 +15,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		navigation = [],
 		breadcrumbs = [],
 		image = {},
+		backgroudOverlayImage = {},
 		sectionId,
 	} = attributes;
 
@@ -253,6 +254,63 @@ export default function Edit( { attributes, setAttributes } ) {
 						</div>
 					) }
 				</PanelBody>
+
+				{ /* Backlground Overlay Image Upload */ }
+				<PanelBody
+					title={ __(
+						'Backgroud Overlay Image Settings',
+						'page-header-section-block'
+					) }
+					initialOpen={ false }
+				>
+					<MediaUploadCheck>
+						<MediaUpload
+							onSelect={ ( media ) =>
+								setAttributes( {
+									backgroudOverlayImage: {
+										id: media.id,
+										url: media.url,
+										alt: media.alt,
+										width: media.width,
+										height: media.height,
+										sizes: media.sizes,
+										srcSet: media.sizes?.full?.source_url
+											? undefined
+											: undefined,
+									},
+								} )
+							}
+							allowedTypes={ [ 'image' ] }
+							value={ image?.id }
+							render={ ( { open } ) => (
+								<Button onClick={ open } isPrimary>
+									{ backgroudOverlayImage?.url
+										? __(
+												'Replace Image',
+												'page-header-section-block'
+										  )
+										: __(
+												'Upload Image',
+												'page-header-section-block'
+										  ) }
+								</Button>
+							) }
+						/>
+					</MediaUploadCheck>
+
+					{ backgroudOverlayImage?.url && (
+						<div style={ { marginTop: '10px' } }>
+							<img
+								src={ backgroudOverlayImage.url }
+								alt={ backgroudOverlayImage.alt || '' }
+								width={ backgroudOverlayImage.width }
+								height={ backgroudOverlayImage.height }
+								style={ { maxWidth: '100%' } }
+							/>
+						</div>
+					) }
+				</PanelBody>
+
 				<InspectorAdvancedControls>
 					<TextControl
 						label="Section ID (slug, hyphens only)"

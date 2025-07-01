@@ -429,6 +429,8 @@ function render_submission_admin_box($post)
     echo '</div>';
 }
 
+add_theme_support('responsive-embeds');
+
 function add_theme_color_meta_tag()
 {
     echo '<meta name="theme-color" content="#00251e">' . "\n";

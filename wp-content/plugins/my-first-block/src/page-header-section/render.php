@@ -7,6 +7,7 @@ $heading = $attributes['heading'] ?? '';
 $navigation = $attributes['navigation'] ?? [];
 $breadcrumbs = $attributes['breadcrumbs'] ?? [];
 $image = $attributes['image'] ?? null;
+$backgroudOverlayImage = $attributes['backgroudOverlayImage'] ?? null;
 
 $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId']) : '';
 
@@ -21,6 +22,13 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
     style="<?php echo !empty($image['url']) ? 'background-image: url(' . esc_url($image['url']) . ');' : ''; ?>"
   >
 
+
+    <?php if (!empty($image['url'])): ?>
+    <div
+      class="absolute inset-0 bg-size-[200px_200px] bg-repeat"
+      style="<?php echo !empty($backgroudOverlayImage['url']) ? 'background-image: url(' . esc_url($backgroudOverlayImage['url']) . ');' : ''; ?>"
+    ></div>
+    <?php endif; ?>
     <div class="absolute inset-0 bg-brand-green-dark/60 "></div>
 
     <div class="relative z-10 text-center px-4 flex items-center justify-center w-full">
