@@ -36,6 +36,7 @@
 @source inline("md:!text-xl");
 @source inline("xl:grid-cols-5");
 @source inline("lg:grid-cols-3");
+@source inline("md:hidden");
 
 
 

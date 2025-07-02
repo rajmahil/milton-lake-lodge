@@ -24,9 +24,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
 
 <section
   id="<?php echo $section_id; ?>"
-  x-data="optimizedScrollScale()"
-  x-init="init()"
-  class="plugin-custom-block md:hidden block section-padding not-prose"
+  class="plugin-custom-block md:hidden section-padding "
 >
 
   <div class="max-w-container w-full mx-auto flex flex-col gap-12">
