@@ -24,7 +24,6 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
         <?php echo esc_html($heading); ?>
       </h2>
       <?php endif; ?>
-
       <?php if ( $subheading ): ?>
       <p class="!text-lg lg:!text-xl text-left text-neutral-600">
         <?php echo esc_html($subheading); ?>

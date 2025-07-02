@@ -26,7 +26,57 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
   id="<?php echo $section_id; ?>"
   x-data="optimizedScrollScale()"
   x-init="init()"
-  class="plugin-custom-block"
+  class="plugin-custom-block md:hidden block section-padding not-prose"
+>
+
+  <div class="max-w-container w-full mx-auto flex flex-col gap-12">
+
+    <?php
+    if (!empty($image['id'])) {
+        echo wp_get_attachment_image(
+            $image['id'],
+            'large', // instead of 'full' for smaller file size
+            false,
+            [
+                'class' => 'object-cover w-full h-full rounded-lg shadow-lg overflow-hidden',
+                'loading' => 'lazy', // use lazy unless it's above the fold
+                'decoding' => 'async',
+                'alt' => esc_attr($imageAlt),
+                'sizes' => '(max-width: 768px) 100vw, 1024px',
+            ],
+        );
+    }
+    ?>
+
+
+    <div class="flex flex-col items-start gap-4">
+      <h2 class="text-left heading-two">
+        <?php echo esc_html($heading); ?>
+      </h2>
+      <p class="text-left text-lg  text-neutral-500">
+        <?php echo esc_html($subheading); ?>
+      </p>
+
+      <?php if ($buttonText && $buttonUrl): ?>
+      <a
+        href="<?php echo esc_url($buttonUrl); ?>"
+        class="inline-block mt-4  w-fit "
+      >
+        <button class="btn btn-xl btn-outline text-black border border-black">
+          <?php echo esc_html($buttonText); ?>
+        </button>
+      </a>
+      <?php endif; ?>
+    </div>
+  </div>
+
+</section>
+
+<section
+  id="<?php echo $section_id; ?>"
+  x-data="optimizedScrollScale()"
+  x-init="init()"
+  class="plugin-custom-block md:block hidden"
 >
   <div
     class="relative w-full overflow-hidden rounded-2xl h-screen md:h-[150vh] flex items-start justify-start not-prose"
