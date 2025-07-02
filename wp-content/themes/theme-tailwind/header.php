@@ -103,7 +103,7 @@
             <img
               src="<?php echo esc_url($logo[0]); ?>"
               alt="<?php bloginfo('name'); ?> Logo"
-              class=" w-auto transition-all duration-300"
+              class=" w-auto transition-all duration-300 object-contain object-center"
               :class="{
                   'h-14': isScrolled,
                   'h-16': !isScrolled
