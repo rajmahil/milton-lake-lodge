@@ -12,6 +12,7 @@ $button_url = $attributes['buttonUrl'] ?? '#';
 $button2_text = $attributes['button2Text'] ?? 'Learn More';
 $button2_url = $attributes['button2Url'] ?? '#';
 $image = $attributes['image'] ?? null;
+$mobileImage = $attributes['mobileImage'] ?? null;
 $backgroundColor = $attributes['backgroundColor'] ?? '#00473f';
 $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId']) : '';
 
@@ -59,19 +60,44 @@ if ($image) {
     >
     </div>
     <!-- Background Image -->
+    <!-- Background Image -->
     <div class="absolute top-0 left-0 w-full h-full z-[0] pointer-events-none select-none">
-      <?php if ($image_url): ?>
+      <?php if ($mobileImage && is_array($mobileImage) && isset($mobileImage['url'])): ?>
+      <!-- Mobile Image -->
+      <picture>
+        <source
+          media="(max-width: 767px)"
+          srcset="<?php echo esc_url($mobileImage['url']); ?>"
+        />
+        <?php if ($image_id): ?>
+        <?php echo wp_get_attachment_image($image_id, 'full', false, [
+            'class' => 'object-cover object-center w-full h-full',
+            'loading' => 'eager',
+            'fetchpriority' => 'high',
+            'decoding' => 'async',
+            'alt' => esc_attr($image_alt),
+        ]); ?>
+        <?php else: ?>
+        <img
+          src="<?php echo esc_url($image_url); ?>"
+          alt="<?php echo esc_attr($image_alt); ?>"
+          class="object-cover object-center w-full h-full"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <?php endif; ?>
+      </picture>
+      <?php else: ?>
       <?php if ($image_id): ?>
-      <!-- Use WordPress function for better performance and responsive images -->
       <?php echo wp_get_attachment_image($image_id, 'full', false, [
-          'class' => 'object-cover object-center w-full h-full ',
+          'class' => 'object-cover object-center w-full h-full',
           'loading' => 'eager',
           'fetchpriority' => 'high',
           'decoding' => 'async',
-          'alt' => $image_alt,
+          'alt' => esc_attr($image_alt),
       ]); ?>
       <?php else: ?>
-      <!-- Fallback for direct URLs -->
       <img
         src="<?php echo esc_url($image_url); ?>"
         alt="<?php echo esc_attr($image_alt); ?>"
@@ -81,10 +107,6 @@ if ($image) {
         decoding="async"
       />
       <?php endif; ?>
-      <?php else: ?>
-
-
-      <div class="w-full h-full bg-gradient-to-br from-brand-green-dark to-brand-green-dark/80"></div>
       <?php endif; ?>
     </div>
 
@@ -216,7 +238,7 @@ if ($image) {
           >
           </div>
           <?php for($x =1 ; $x <=2; $x++): ?>
-          <div class="flex flex-row flex-nowrap text-white animate-slide">
+          <div class="flex flex-row flex-nowrap text-white animate-slide !duration-[1000ms]">
             <?php foreach ( $tripAdvisorReviews as $tripAdvisorReview ) : ?>
             <div class="py-2 px-4 rounded-lg flex flex-row gap-4 items-center  min-w-[400px]  md:min-w-[350px] ">
               <div class="h-12 w-12 min-h-12 min-w-12 aspect-square rounded-full bg-white">

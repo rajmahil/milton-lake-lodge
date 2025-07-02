@@ -315,7 +315,7 @@
 	}
 
 	.animate-slide {
-		animation: slide 30s linear infinite;
+		animation: slide 60s linear infinite;
 		animation-play-state: running;
 		will-change: transform;
 		transform: translate3d(0, 0, 0); /* triggers GPU */

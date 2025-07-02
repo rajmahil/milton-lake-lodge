@@ -216,7 +216,7 @@ const FullCalendarComp = ( props ) => {
 														</div>
 
 														{ slot?.description && (
-															<p className="text-neutral-600">
+															<p className="text-neutral-600  text-base md:text-sm ">
 																{
 																	slot?.description
 																}

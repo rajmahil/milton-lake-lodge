@@ -29,6 +29,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		tripAdvisorReviews,
 		sectionId,
 		backgroundColor,
+		mobileImage,
 	} = attributes;
 
 	// This is crucial - it provides the block wrapper with proper WordPress functionality
@@ -155,6 +156,49 @@ export default function Edit( { attributes, setAttributes } ) {
 								alt={ image.alt || '' }
 								width={ image.width }
 								height={ image.height }
+								style={ { maxWidth: '100%' } }
+							/>
+						</div>
+					) }
+				</PanelBody>
+
+				<PanelBody
+					title={ __( 'Mobile Image Settings', 'your-text-domain' ) }
+				>
+					<MediaUpload
+						onSelect={ ( media ) =>
+							setAttributes( {
+								mobileImage: {
+									id: media.id,
+									url: media.url,
+									alt: media.alt,
+									width: media.width,
+									height: media.height,
+									sizes: media.sizes,
+									srcSet: media.sizes?.full?.source_url
+										? undefined
+										: undefined, // example
+								},
+							} )
+						}
+						allowedTypes={ [ 'image' ] }
+						value={ mobileImage?.id }
+						render={ ( { open } ) => (
+							<Button onClick={ open } isPrimary>
+								{ mobileImage?.url
+									? __( 'Replace Image', 'your-text-domain' )
+									: __( 'Upload Image', 'your-text-domain' ) }
+							</Button>
+						) }
+					/>
+
+					{ mobileImage?.url && (
+						<div style={ { marginTop: '10px' } }>
+							<img
+								src={ mobileImage.url }
+								alt={ mobileImage.alt || '' }
+								width={ mobileImage.width }
+								height={ mobileImage.height }
 								style={ { maxWidth: '100%' } }
 							/>
 						</div>
