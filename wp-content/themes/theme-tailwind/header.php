@@ -93,7 +93,7 @@
     <div class="max-w-container mx-auto flex items-center justify-between">
       <div class="flex flex-row items-center gap-8">
         <!-- Site Logo -->
-        <div class="site-logo">
+        <div class="site-logo min-w-40 ">
           <?php if ( has_custom_logo() ) : ?>
           <?php
           $custom_logo_id = get_theme_mod('custom_logo');
@@ -103,7 +103,7 @@
             <img
               src="<?php echo esc_url($logo[0]); ?>"
               alt="<?php bloginfo('name'); ?> Logo"
-              class=" w-auto transition-all duration-300 object-contain object-center"
+              class="w-auto transition-all duration-300 object-contain object-center"
               :class="{
                   'h-14': isScrolled,
                   'h-16': !isScrolled
