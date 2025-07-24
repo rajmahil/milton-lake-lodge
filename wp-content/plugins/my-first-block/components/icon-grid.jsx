@@ -43,7 +43,7 @@ const IconGrid = ( props ) => {
 				{ buttonUrl && buttonText && (
 					<a href={ buttonUrl }>
 						<button className="flex flex-row items-center w-fit gap-1 cursor-pointer text-lg group relative pb-0.5 mx-auto">
-							<div className="flex items-center border-b border-black gap-1 pb-0.5">
+							<div className="flex items-center border-b border-black gap-1 pb-0.5 !text-black">
 								<span>{ buttonText }</span>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"

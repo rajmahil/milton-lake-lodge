@@ -99,52 +99,28 @@ export default function ReviewsSection( { heading, reviews = [], sectionId } ) {
 								}` }
 							>
 								{ review.image1?.url && (
-									<div
-										className={ `!max-w-[200px] 400:!max-w-[400px] !w-full !shadow-lg !absolute !left-10 image-container ${
-											i === currentIndex
-												? 'animate-slide-center-left'
-												: ''
-										}` }
-										style={ {
-											transform:
-												i !== currentIndex
-													? 'translateX(40px) translateY(0) rotate(5deg) scale(1)'
-													: 'translateX(0) translateY(8px) rotate(0deg) scale(0.9)',
-										} }
-									>
+									<div class="max-w-[400px] w-full rotate-5 relative left-8 shadow-lg">
 										<img
 											src={ review.image1.url }
 											alt={
 												review.image1.alt ||
 												'Review image 1'
 											}
-											className="!aspect-[3/4] !w-full !h-full !object-cover"
+											className="aspect-[3/4] w-full h-full object-cover rounded-lg overflow-hidden"
 											loading="lazy"
 										/>
 									</div>
 								) }
 
 								{ review.image2?.url && (
-									<div
-										className={ `!max-w-[200px] 400:!max-w-[400px] !w-full !shadow-lg !absolute !right-10 image-container ${
-											i === currentIndex
-												? 'animate-slide-center-right'
-												: ''
-										}` }
-										style={ {
-											transform:
-												i !== currentIndex
-													? 'translateX(-40px) translateY(0) rotate(-10deg) scale(1)'
-													: 'translateX(0) translateY(8px) rotate(0deg) scale(0.9)',
-										} }
-									>
+									<div class="max-w-[400px] w-full -rotate-5 shadow-lg relative right-8">
 										<img
 											src={ review.image2.url }
 											alt={
 												review.image2.alt ||
 												'Review image 2'
 											}
-											className="!aspect-[3/4] !w-full !h-full !object-cover"
+											className="aspect-[3/4]  w-full h-full object-cover rounded-lg overflow-hidden"
 											loading="lazy"
 										/>
 									</div>

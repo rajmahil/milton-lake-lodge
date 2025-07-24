@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 const Showcase = ( {
 	heading,
 	buttonText,
@@ -10,31 +8,15 @@ const Showcase = ( {
 	sectionId,
 	text,
 } ) => {
-	const [ duration, setDuration ] = useState( '30s' );
-
-	// Map speed options to duration values
 	const speedMap = {
-		slow: 60,
-		medium: 30,
-		fast: 15,
+		slow: 90,
+		medium: 60,
+		fast: 30,
 	};
 
-	useEffect( () => {
-		const updateSpeed = () => {
-			const isMobile = window.innerWidth < 768;
-			let baseDuration = speedMap[ imagesSpeed ] || 30;
+	const baseDuration = speedMap[ imagesSpeed ] ?? 30;
 
-			if ( isMobile ) {
-				baseDuration = Math.max( baseDuration - 15, 5 );
-			}
-
-			setDuration( `${ baseDuration }s` );
-		};
-
-		updateSpeed();
-		window.addEventListener( 'resize', updateSpeed );
-		return () => window.removeEventListener( 'resize', updateSpeed );
-	}, [ imagesSpeed ] );
+	console.log( 'images', images );
 
 	return (
 		<section
@@ -72,7 +54,7 @@ const Showcase = ( {
 			<div className="group relative w-full h-full select-none">
 				<div
 					className="flex w-max animate-slide gap-10 whitespace-nowrap"
-					style={ { animationDuration: duration } }
+					style={ { animationDuration: `${ baseDuration }s` } }
 				>
 					{ [ ...images, ...images ].map( ( image, idx ) => {
 						const rotationClass =
@@ -87,7 +69,7 @@ const Showcase = ( {
 								key={ `showcase-${
 									image.id || idx
 								}-${ Math.floor( idx / images.length ) }` }
-								className={ `${ rotationClass } !w-[calc(100vw-40px)] sm:!w-[calc(50vw-40px)] md:!w-[calc(33.33vw-40px)] lg:!w-[calc(25vw-40px)]` }
+								className={ `${ rotationClass } !w-[calc(90vw-40px)] lg:!w-[calc(50vw-40px)] xl:!w-[calc(33.33vw-40px)] px-4` }
 							>
 								<img
 									src={
@@ -95,17 +77,9 @@ const Showcase = ( {
 										image?.url ||
 										'/placeholder.svg'
 									}
-									srcSet={ `
-                    ${ image?.sizes?.thumbnail?.url || '' } 150w,
-                    ${ image?.sizes?.medium?.url || '' } 300w,
-                    ${ image?.sizes?.large?.url || '' } 1024w,
-                    ${ image?.sizes?.full?.url || image?.url || '' } ${
-						image?.width || ''
-					}w
-                  ` }
 									sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1023px) 33vw, 25vw"
 									alt={ image?.alt || '' }
-									className="flex-shrink-0 h-full aspect-[3/4] w-full object-cover"
+									className="w-full h-auto "
 									loading="lazy"
 									decoding="async"
 								/>

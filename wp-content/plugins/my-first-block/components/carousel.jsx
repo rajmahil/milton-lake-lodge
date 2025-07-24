@@ -260,7 +260,7 @@ const CarouselBlock = ( { heading, subheading, items, sectionId } ) => {
 												<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 											</>
 										) }
-										<div class="absolute bottom-0 left-0 right-0  px-5 py-8  text-white ">
+										<div class="absolute bottom-0 left-0 right-0  px-5 py-8  text-white flex flex-col gap-4 ">
 											<div className="flex flex-col items-start">
 												{ item.title && (
 													<h3 className="!my-0 !text-3xl md:!text-4xl font-bold uppercase tracking-wide !text-left">
@@ -268,11 +268,28 @@ const CarouselBlock = ( { heading, subheading, items, sectionId } ) => {
 													</h3>
 												) }
 												{ item.text && (
-													<p className="!my-0 !text-base sm:!text-lg sm:!leading-relaxed !text-left">
+													<p className="!my-0 !text-base sm:!leading-tight !text-left">
 														{ item.text }
 													</p>
 												) }
 											</div>
+
+											<a
+												href="<?php echo esc_url($item_link); ?>"
+												class="flex flex-row items-center gap-2 !text-white group"
+											>
+												<span>Learn More</span>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="22"
+													height="22"
+													fill="currentColor"
+													viewBox="0 0 256 256"
+													class="group-hover:ml-2 transition-all duration-300 ease-in-out"
+												>
+													<path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+												</svg>
+											</a>
 										</div>
 									</div>
 								</div>

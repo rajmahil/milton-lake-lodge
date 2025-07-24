@@ -131,7 +131,6 @@ export default function Edit( { attributes, setAttributes } ) {
 
 				<PanelBody title={ __( 'Image Settings', 'your-text-domain' ) }>
 					{ renderImageUploader( 'image', 'Upload Image' ) }
-					{ renderImageUploader( 'image2', 'Upload Image 2' ) }
 				</PanelBody>
 				<PanelBody title="Inverted" initialOpen={ true }>
 					<ToggleControl

@@ -15,7 +15,7 @@ const TwoCol = ( {
 			id={ sectionId || undefined }
 			className="plugin-custom-block not-prose section-padding w-full static-background"
 		>
-			<div className="relative max-w-container mx-auto w-full flex flex-col gap-14 sm:gap-20 900:!grid 900:!grid-cols-5 900:!gap-8 items-start 900:items-center">
+			<div className="relative max-w-container mx-auto w-full flex flex-col gap-14 sm:gap-20 900:!grid 900:!grid-cols-5 900:!gap-8 itemts-start 900:items-center">
 				<div
 					className={ `${ contentOrderClass } flex flex-col gap-4 w-full 900:col-span-2 900:max-w-[600px] 900:mx-auto` }
 				>
@@ -48,31 +48,21 @@ const TwoCol = ( {
 					) }
 				</div>
 
-				<div className="flex justify-center items-center relative col-span-3">
-					{ image && image.id && (
-						<div className="max-w-[400px] w-full rotate-5 relative left-10 shadow-lg">
+				<div class="flex justify-center items-center relative col-span-3">
+					<div
+						className={ `shadow-lg rounded-lg overflow-hidden w-full max-w-[800px] ` }
+					>
+						{ image && image.id && (
 							<img
 								src={ image.url }
 								alt={ image.alt || '' }
-								className="aspect-[3/4] w-full object-cover"
+								className="aspect-[3/2] w-full object-cover"
 								loading="lazy"
 								decoding="async"
 								fetchPriority="high"
 							/>
-						</div>
-					) }
-					{ image2 && image2.id && (
-						<div className="max-w-[400px] w-full rotate-[-10deg] shadow-lg relative right-10">
-							<img
-								src={ image2.url }
-								alt={ image2.alt || '' }
-								className="aspect-[3/4] w-full object-cover"
-								loading="lazy"
-								decoding="async"
-								fetchPriority="auto"
-							/>
-						</div>
-					) }
+						) }
+					</div>
 				</div>
 			</div>
 		</section>
