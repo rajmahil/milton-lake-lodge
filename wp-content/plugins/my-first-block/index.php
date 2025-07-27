@@ -192,11 +192,19 @@ function handle_custom_form_email()
         $template_html = str_replace('{{ dynamic_rows }}', $rows, $template_html);
     }
 
-    $user_email = isset($data['email']) && is_email($data['email']) ? $data['email'] : null;
+    $user_email = isset($data['your-email']) && is_email($data['your-email']) ? $data['your-email'] : null;
+
+    error_log('User email: ' . print_r($user_email, true));
 
     $recipients = [get_option('admin_email')];
     if ($user_email) {
         $recipients[] = $user_email;
+    }
+
+    $headers = ['Content-Type: text/html; charset=UTF-8'];
+
+    if ($user_email) {
+        $headers[] = 'Reply-To: ' . $user_email;
     }
 
     if ($form_template === 'main_form') {
@@ -207,7 +215,7 @@ function handle_custom_form_email()
 
     error_log("Form Template: $form_template\nEmail HTML Content:\n" . $template_html);
 
-    wp_mail($recipients, $subject, $template_html, ['Content-Type: text/html; charset=UTF-8']);
+    wp_mail($recipients, $subject, $template_html, $headers);
 
     error_log('Form submitted: ' . print_r($data, true));
     wp_redirect(home_url('/thank-you'));
