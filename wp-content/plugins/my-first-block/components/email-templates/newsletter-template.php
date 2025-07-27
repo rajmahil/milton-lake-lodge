@@ -30,7 +30,6 @@
     .logo {
       text-align: center;
       margin-bottom: 24px;
-      background-color: #00473f;
       border-radius: 10px;
       padding: 10px 0;
     }
@@ -96,23 +95,19 @@
   <div class="email-container">
     <div class="logo">
       <img
-        src="https://bucket-production-599e.up.railway.app/wpmedia/2025/06/logo.png"
-        alt="Milton Lake Lodge Logo"
+        src="https://www.miltonlakelodge.com/wp-content/uploads/2025/07/Milton_Lake_Lodge-Logo-150s2.png"
+        alt="Milton
+        Lake
+        Lodge
+        Logo"
       />
     </div>
 
     <p class="greeting">Hello,</p>
 
     <p>
-      Thank you for subscribing to the <strong>Milton Lake Lodge</strong> newsletter! We're excited to keep you updated with our latest news, offers, and special events.
-    </p>
-
-    <p>
-      You’ll start receiving our newsletters soon. If at any time you wish to unsubscribe, you can do so by clicking the unsubscribe link at the bottom of any newsletter.
-    </p>
-
-    <p>
-      In the meantime, feel free to explore our website to learn more about our lodge and experiences.
+      Thank you for subscribing to the <strong>Milton Lake Lodge</strong> newsletter! We're excited to keep you updated
+      with our latest news, offers, and special events.
     </p>
 
     <a

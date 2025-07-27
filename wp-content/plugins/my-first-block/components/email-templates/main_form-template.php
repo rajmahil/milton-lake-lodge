@@ -30,7 +30,6 @@
     .logo {
       text-align: center;
       margin-bottom: 24px;
-      background-color: #00473f;
       border-radius: 10px;
       padding: 10px 0;
     }
@@ -96,7 +95,7 @@
   <div class="email-container">
     <div class="logo">
       <img
-        src="https://bucket-production-599e.up.railway.app/wpmedia/2025/06/logo.png"
+        src="https://www.miltonlakelodge.com/wp-content/uploads/2025/07/Milton_Lake_Lodge-Logo-150s2.png"
         alt="Milton Lake Lodge Logo"
       />
     </div>
@@ -109,9 +108,9 @@
       us.
     </p>
     <p>
-      Our team is currently reviewing your inquiry and will get back to you as soon as possible. We strive to respond to
-      all inquiries within 24–48 hours. If your matter is urgent, please feel free to call us directly at
-      <strong>(306) 123-4567</strong>.
+      Our team is currently reviewing your inquiry and will get back to you as soon as possible. If your matter is
+      urgent, please feel free to call us directly at
+      <strong>+1 (855) 347-4244</strong>.
     </p>
 
     <div class="highlight-box">

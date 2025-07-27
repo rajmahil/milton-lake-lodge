@@ -332,7 +332,6 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
           }"
           x-init="initCaptcha()"
           class="frc-wrapper col-span-2"
-          class="frc-wrapper col-span-2"
         >
 
           <div
