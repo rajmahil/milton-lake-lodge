@@ -119,6 +119,12 @@ $table_prefix = 'wp_';
 //     define('WP_DEBUG', true);
 // }
 
+if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] === 'miltonlakelodge.com') {
+    $redirectUrl = 'https://www.miltonlakelodge.com' . $_SERVER['REQUEST_URI'];
+    header("Location: $redirectUrl", true, 301);
+    exit();
+}
+
 define('WP_DEBUG', true);
 define('WP_DEBUG_DISPLAY', false);
 @ini_set('display_errors', 0);
