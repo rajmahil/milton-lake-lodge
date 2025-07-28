@@ -1,12 +1,5 @@
 <?php
 
-if (isset($_SERVER['HTTP_HOST']) && strtolower($_SERVER['HTTP_HOST']) === 'miltonlakelodge.com' && (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on')) {
-    $redirectUrl = 'https://www.miltonlakelodge.com' . $_SERVER['REQUEST_URI'];
-    header('HTTP/1.1 301 Moved Permanently');
-    header("Location: $redirectUrl");
-    exit();
-}
-
 //Begin Really Simple Security session cookie settings
 @ini_set('session.cookie_httponly', true);
 @ini_set('session.cookie_secure', true);
