@@ -127,7 +127,7 @@ function handle_custom_form_email()
     }
 
     // Insert a new Submission post
-    $name = $data['name'] ?? $data['email'];
+    $name = $data['your-name'] ?? $data['your-email'];
     $post_title = "{$name} | {$form_title}";
     $post_id = wp_insert_post([
         'post_title' => sanitize_text_field($post_title),

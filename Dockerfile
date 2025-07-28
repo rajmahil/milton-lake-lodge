@@ -27,3 +27,12 @@ RUN chown -R www-data:www-data /var/www/html/wp-content \
 
 # 7. Reset back to webroot for the official entrypoint
 WORKDIR /var/www/html
+
+# 8. Add .htaccess redirect rule to force non-www → www
+RUN echo '\
+    <IfModule mod_rewrite.c>\n\
+    RewriteEngine On\n\
+    RewriteCond %{HTTP_HOST} ^miltonlakelodge\.com$ [NC]\n\
+    RewriteRule ^(.*)$ https://www.miltonlakelodge.com/$1 [L,R=301]\n\
+    </IfModule>\n\
+    ' >> /var/www/html/.htaccess
