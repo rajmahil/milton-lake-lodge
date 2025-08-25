@@ -196,7 +196,14 @@ function handle_custom_form_email()
 
     error_log('User email: ' . print_r($user_email, true));
 
-    $recipients = [get_option('admin_email')];
+    if ($form_template !== 'main_form') {
+        error_log("Skipping email. Non-main form submitted: {$form_template}");
+        // If you still want to thank the user (e.g., newsletter signup), keep redirect.
+        wp_redirect(home_url('/thank-you'));
+        exit();
+    }
+
+    $recipients = [get_option('admin_email'), 'admin@miltonlakelodge.com'];
     if ($user_email) {
         $recipients[] = $user_email;
     }
