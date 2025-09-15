@@ -126,17 +126,17 @@ const FullCalendarComp = ( props ) => {
 
 										<div className="flex flex-col gap-2">
 											{ groupedSlots.map( ( slot, i ) => {
-												const status =
-													slot.extendedProps.status
-														.label;
+												// const status =
+												// 	slot.extendedProps.status
+												// 		.label;
 
-												const statusClasses = {
-													Open: 'bg-green-100 border border-green-7000 text-green-700  py-0.5 px-2 rounded-full',
-													Pending:
-														'bg-yellow-100 border border-yellow-700  text-yellow-700  py-0.5 px-2 rounded-full',
-													Booked: 'bg-red-100 border border-red-700 text-red-700 py-0.5 px-2 rounded-full',
-													Past: 'bg-gray-100 border border-gray-700 text-gray-700 py-0.5 px-2 rounded-full',
-												};
+												// const statusClasses = {
+												// 	Open: 'bg-green-100 border border-green-7000 text-green-700  py-0.5 px-2 rounded-full',
+												// 	Pending:
+												// 		'bg-yellow-100 border border-yellow-700  text-yellow-700  py-0.5 px-2 rounded-full',
+												// 	Booked: 'bg-red-100 border border-red-700 text-red-700 py-0.5 px-2 rounded-full',
+												// 	Past: 'bg-gray-100 border border-gray-700 text-gray-700 py-0.5 px-2 rounded-full',
+												// };
 
 												const isPast =
 													new Date(
@@ -156,8 +156,8 @@ const FullCalendarComp = ( props ) => {
 														key={ i }
 														className="p-4 bg-white rounded-lg relative flex flex-col gap-4"
 													>
-														<div className="absolute top-2 right-2 text-xs py-0.5 px-2 rounded-full">
-															<div
+														<div className="absolute top-0  right-0 h-full py-2  px-4">
+															{ /* <div
 																className={
 																	statusClasses[
 																		! isPast
@@ -170,7 +170,15 @@ const FullCalendarComp = ( props ) => {
 																{ ! isPast
 																	? status
 																	: 'Completed' }
-															</div>
+															</div> */ }
+
+															<a
+																href="#contact"
+																className=" border-b border-transparent hover:border-brand-green text-sm animations text-brand-green-dark"
+															>
+																Request More
+																Info
+															</a>
 														</div>
 
 														<div className="flex flex-row items-center gap-4 ">
