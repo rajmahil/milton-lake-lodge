@@ -31,7 +31,8 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
     <div
       class="max-w-2xl w-full mx-auto"
       x-data="{
-          loading: false
+          loading: false,
+          humanAnswer: ''
       }"
       x-init="loading = false;
       window.addEventListener('pageshow', () => {
@@ -310,63 +311,51 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
       ?>
         <?php endforeach; ?>
 
-        <div
-          x-data="{
-              captchaCompleted: false,
-              initCaptcha() {
-                  const widget = this.$el.querySelector('.frc-captcha');
-          
-                  widget.addEventListener('frc:widget.complete', (e) => {
-                      console.log('Captcha done');
-                      this.captchaCompleted = true;
-                  });
-          
-                  widget.addEventListener('frc:widget.error', () => {
-                      this.captchaCompleted = false;
-                  });
-          
-                  widget.addEventListener('frc:widget.expire', () => {
-                      this.captchaCompleted = false;
-                  });
-              }
-          }"
-          x-init="initCaptcha()"
-          class="frc-wrapper col-span-2"
-        >
-
-          <div
-            class="frc-captcha !col-span-2 !w-full mt-4 !bg-white"
-            data-sitekey="FCMIQ5800A5TJO09"
-          ></div>
-          <button
-            id="form-submit-button"
-            type="submit"
-            :disabled="loading || !captchaCompleted"
-            :class="loading || !captchaCompleted ? 'opacity-50 cursor-not-allowed' : ' '"
-            class="btn btn-dark btn-xl col-span-2 h-14 !mt-4 w-full"
-          >
-            <?php echo esc_html($attributes['submitButtonText'] ?? 'Submit'); ?>
-
-            <span
-              x-show="loading"
-              class="animate-spin text-white"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="26"
-                height="26"
-                fill="currentColor"
-                viewBox="0 0 256 256"
-                style="animation:spin 1s linear infinite;"
-              >
-                <path
-                  d="M136,32V64a8,8,0,0,1-16,0V32a8,8,0,0,1,16,0Zm37.25,58.75a8,8,0,0,0,5.66-2.35l22.63-22.62a8,8,0,0,0-11.32-11.32L167.6,77.09a8,8,0,0,0,5.65,13.66ZM224,120H192a8,8,0,0,0,0,16h32a8,8,0,0,0,0-16Zm-45.09,47.6a8,8,0,0,0-11.31,11.31l22.62,22.63a8,8,0,0,0,11.32-11.32ZM128,184a8,8,0,0,0-8,8v32a8,8,0,0,0,16,0V192A8,8,0,0,0,128,184ZM77.09,167.6,54.46,190.22a8,8,0,0,0,11.32,11.32L88.4,178.91A8,8,0,0,0,77.09,167.6ZM72,128a8,8,0,0,0-8-8H32a8,8,0,0,0,0,16H64A8,8,0,0,0,72,128ZM65.78,54.46A8,8,0,0,0,54.46,65.78L77.09,88.4A8,8,0,0,0,88.4,77.09Z"
-                ></path>
-              </svg>
-            </span>
-          </button>
-
+        <!-- Simple human check instead of captcha -->
+        <div class="col-span-2 mt-4">
+          <label class="block mb-2 text-medium">
+            What is 6 + 3?
+          </label>
+          <input
+            type="number"
+            min="0"
+            x-model="humanAnswer"
+            :disabled="loading"
+            :class="loading ? 'opacity-50 cursor-not-allowed' : ' '"
+            class="form-input w-full"
+            placeholder="Enter your answer"
+            required
+          />
         </div>
+
+        <button
+          id="form-submit-button"
+          type="submit"
+          :disabled="loading || Number(humanAnswer) !== 9"
+          :class="(loading || Number(humanAnswer) !== 9) ? 'opacity-50 cursor-not-allowed' : ' '"
+          class="btn btn-dark btn-xl col-span-2 h-14 !mt-4 w-full"
+        >
+          <?php echo esc_html($attributes['submitButtonText'] ?? 'Submit'); ?>
+
+          <span
+            x-show="loading"
+            class="animate-spin text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="26"
+              height="26"
+              fill="currentColor"
+              viewBox="0 0 256 256"
+              style="animation:spin 1s linear infinite;"
+            >
+              <path
+                d="M136,32V64a8,8,0,0,1-16,0V32a8,8,0,0,1,16,0Zm37.25,58.75a8,8,0,0,0,5.66-2.35l22.63-22.62a8,8,0,0,0-11.32-11.32L167.6,77.09a8,8,0,0,0,5.65,13.66ZM224,120H192a8,8,0,0,0,0,16h32a8,8,0,0,0,0-16Zm-45.09,47.6a8,8,0,0,0-11.31,11.31l22.62,22.63a8,8,0,0,0,11.32-11.32ZM128,184a8,8,0,0,0-8,8v32a8,8,0,0,0,16,0V192A8,8,0,0,0,128,184ZM77.09,167.6,54.46,190.22a8,8,0,0,0,11.32,11.32L88.4,178.91A8,8,0,0,0,77.09,167.6ZM72,128a8,8,0,0,0-8-8H32a8,8,0,0,0,0,16H64A8,8,0,0,0,72,128ZM65.78,54.46A8,8,0,0,0,54.46,65.78L77.09,88.4A8,8,0,0,0,88.4,77.09Z"
+              ></path>
+            </svg>
+          </span>
+        </button>
+
       </form>
     </div>
 
