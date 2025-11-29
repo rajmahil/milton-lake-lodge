@@ -105,6 +105,12 @@ function handle_custom_form_email()
 {
     error_log('Form handler triggered');
 
+    // Anti-spam math check
+    if (!isset($_POST['human-check']) || intval($_POST['human-check']) !== 9) {
+        error_log('Human check failed. Value: ' . print_r($_POST['human-check'], true));
+        wp_die('Human verification failed. Please go back and try again.', 'Form Error', ['response' => 403]);
+    }
+
     $skip = ['action', '_wpnonce', '_wp_http_referer', 'form_template', 'formTitle'];
     $data = [];
     $form_template = isset($_POST['form_template']) ? sanitize_text_field($_POST['form_template']) : 'default';

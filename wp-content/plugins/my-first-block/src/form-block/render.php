@@ -317,6 +317,7 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
             What is 6 + 3?
           </label>
           <input
+            name="human-check"
             type="number"
             min="0"
             x-model="humanAnswer"
