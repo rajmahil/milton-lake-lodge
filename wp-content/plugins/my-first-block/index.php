@@ -21,6 +21,21 @@ function register_custom_blocks()
 }
 add_action('init', 'register_custom_blocks');
 
+define('MY_RECAPTCHA_SITE_KEY', getenv('MY_RECAPTCHA_SITE_KEY') ?: '6LeyTRwsAAAAAIWDJVr65JXMQSGCq_W934nuwcg0');
+define('MY_RECAPTCHA_SECRET_KEY', getenv('MY_RECAPTCHA_SECRET_KEY') ?: '6LeyTRwsAAAAAEb6uZfe_WonMpWUFV9_PHGJa9aN');
+
+// 2. Enqueue frontend reCAPTCHA script for the form block
+function my_form_block_enqueue_recaptcha()
+{
+    if (is_admin()) {
+        return;
+    }
+
+    // Only load on pages where blocks are rendered
+    wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js', [], null, true);
+}
+add_action('enqueue_block_assets', 'my_form_block_enqueue_recaptcha');
+
 // Pass season_calendar posts to the frontend
 function get_my_calendar_data()
 {
@@ -118,13 +133,52 @@ function handle_custom_form_email()
         wp_die('Spam detected.', 'Form Error', ['response' => 403]);
     }
 
-    // Anti-spam math check
-    if (!isset($_POST['human-check']) || intval($_POST['human-check']) !== 9) {
-        error_log('Human check failed. Value: ' . print_r($_POST['human-check'], true));
-        wp_die('Human verification failed. Please go back and try again.', 'Form Error', ['response' => 403]);
+    /**
+     * ----------------------------------------
+     * reCAPTCHA v2 verification
+     * ----------------------------------------
+     * Front-end uses:
+     * <div class="g-recaptcha" data-sitekey="..."></div>
+     * which posts "g-recaptcha-response"
+     */
+    $token = isset($_POST['g-recaptcha-response']) ? sanitize_text_field($_POST['g-recaptcha-response']) : '';
+
+    if (empty($token)) {
+        error_log('reCAPTCHA v2: g-recaptcha-response missing.');
+        wp_die('reCAPTCHA verification failed. Please try again.', 'Form Error', ['response' => 403]);
     }
 
-    $skip = ['action', '_wpnonce', '_wp_http_referer', 'form_template', 'formTitle'];
+    $response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
+        'body' => [
+            'secret' => MY_RECAPTCHA_SECRET_KEY, // must be your v2 secret
+            'response' => $token,
+            'remoteip' => $_SERVER['REMOTE_ADDR'] ?? '',
+        ],
+    ]);
+
+    if (is_wp_error($response)) {
+        error_log('reCAPTCHA HTTP error: ' . $response->get_error_message());
+        wp_die('reCAPTCHA request failed. Please try again later.', 'Form Error', ['response' => 500]);
+    }
+
+    $body = wp_remote_retrieve_body($response);
+    $result = json_decode($body, true);
+
+    if (empty($result['success'])) {
+        error_log('reCAPTCHA v2 failed. Error codes: ' . print_r($result['error-codes'] ?? [], true));
+        wp_die('reCAPTCHA verification failed. Please try again.', 'Form Error', ['response' => 403]);
+    }
+
+    $skip = [
+        'action',
+        '_wpnonce',
+        '_wp_http_referer',
+        'form_template',
+        'formTitle',
+        'form_time',
+        'website',
+        'g-recaptcha-response', // don't store this
+    ];
     $data = [];
     $form_template = isset($_POST['form_template']) ? sanitize_text_field($_POST['form_template']) : 'default';
     $form_title = isset($_POST['formTitle']) ? sanitize_text_field($_POST['formTitle']) : 'Form Submission';

@@ -80,6 +80,10 @@ define('MINIO_ACCESS_KEY', getenv('MINIO_ACCESS_KEY') ?: '9pXsoXgu8tm4hpjKPanh')
 define('MINIO_SECRET_KEY', getenv('MINIO_SECRET_KEY') ?: 'dEMI8Vb53H834EZf1oFZkSdoWJBsd239v9CFi8kf');
 define('MINIO_BUCKET', getenv('MINIO_BUCKET') ?: 'wpmedia');
 define('MINIO_PUBLIC_URL', getenv('MINIO_PUBLIC_URL') ?: 'https://bucket-production-599e.up.railway.app/wpmedia');
+
+define('MY_RECAPTCHA_SITE_KEY', getenv('MY_RECAPTCHA_SITE_KEY') ?: '6LeyTRwsAAAAAIWDJVr65JXMQSGCq_W934nuwcg0');
+define('MY_RECAPTCHA_SECRET_KEY', getenv('MY_RECAPTCHA_SECRET_KEY') ?: '6LeyTRwsAAAAAEb6uZfe_WonMpWUFV9_PHGJa9aN');
+
 // Parse REDIS_URL from Railway into the constants Redis Object Cache actually uses
 /**
  * WordPress database table prefix.

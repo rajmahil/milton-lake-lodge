@@ -354,95 +354,75 @@
           />
 
           <!-- Simple human check instead of reCAPTCHA -->
-          <div
-            x-data="{ humanAnswer: '' }"
-            class="w-full"
-          >
-            <label class="block mt-2 mb-1 text-white text-sm">
-              What is 6 + 3?
-            </label>
-            <input
-              name="human-check"
-              type="number"
-              min="0"
-              x-model="humanAnswer"
-              class="form-input w-full"
-              placeholder="Enter your answer"
-              required
-            />
-            <input
-              type="text"
-              name="website"
-              id="website"
-              style="display:none !important;"
+          <div class="w-full">
+            <
+              <div
+              class="g-recaptcha"
+              data-sitekey="<?php echo esc_attr(MY_RECAPTCHA_SITE_KEY); ?>"
             >
-            <input
-              type="hidden"
-              name="form_time"
-              value="<?php echo time(); ?>"
-            >
-
-            <button
-              :disabled="Number(humanAnswer) !== 9"
-              :class="Number(humanAnswer) !== 9 ? '!opacity-50 !cursor-not-allowed' : ' '"
-              class="btn btn-primary btn-lg w-full mt-4"
-            >
-              Subscribe
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                fill="#000000"
-                viewBox="0 0 256 256"
-                class="ml-1"
-              >
-                <path
-                  d="M227.32,28.68a16,16,0,0,0-15.66-4.08l-.15,0L19.57,82.84a16,16,0,0,0-2.49,29.8L102,154l41.3,84.87A15.86,15.86,0,0,0,157.74,248q.69,0,1.38-.06a15.88,15.88,0,0,0,14-11.51l58.2-191.94c0-.05,0-.1,0-.15A16,16,0,0,0,227.32,28.68ZM157.83,231.85l-.05.14,0-.07-40.06-82.3,48-48a8,8,0,0,0-11.31-11.31l-48,48L24.08,98.25l-.07,0,.14,0L216,40Z"
-                ></path>
-              </svg>
-            </button>
           </div>
-        </form>
+          <input
+            type="hidden"
+            name="recaptcha_token"
+            id="recaptcha_token"
+          >
+          <button class="btn btn-primary btn-lg w-full mt-4">
+            Subscribe
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              fill="#000000"
+              viewBox="0 0 256 256"
+              class="ml-1"
+            >
+              <path
+                d="M227.32,28.68a16,16,0,0,0-15.66-4.08l-.15,0L19.57,82.84a16,16,0,0,0-2.49,29.8L102,154l41.3,84.87A15.86,15.86,0,0,0,157.74,248q.69,0,1.38-.06a15.88,15.88,0,0,0,14-11.51l58.2-191.94c0-.05,0-.1,0-.15A16,16,0,0,0,227.32,28.68ZM157.83,231.85l-.05.14,0-.07-40.06-82.3,48-48a8,8,0,0,0-11.31-11.31l-48,48L24.08,98.25l-.07,0,.14,0L216,40Z"
+              ></path>
+            </svg>
+          </button>
       </div>
+      </form>
     </div>
+  </div>
 
-    <div
-      class="text-white max-w-container w-full mx-auto flex flex-col md:flex-row items-center justify-center md:justify-between gap-4"
-    >
-      <p>© <?php echo date('Y'); ?> All Rights Reserved. Built By <a
-          class="border-b border-white pb-0.6 cursor-pointer hover:border-brand-yellow hover:text-brand-yellow transition-all duration-300 ease-in-out"
-          target="_blank"
-          href="https://306technologies.com"
-          rel="sponsored"
-        >306
-          Technologies</a>
-      </p>
-      <div class="flex flex-row items-center gap-5">
+  <div
+    class="text-white max-w-container w-full mx-auto flex flex-col md:flex-row items-center justify-center md:justify-between gap-4"
+  >
+    <p>© <?php echo date('Y'); ?> All Rights Reserved. Built By <a
+        class="border-b border-white pb-0.6 cursor-pointer hover:border-brand-yellow hover:text-brand-yellow transition-all duration-300 ease-in-out"
+        target="_blank"
+        href="https://306technologies.com"
+        rel="sponsored"
+      >306
+        Technologies</a>
+    </p>
+    <div class="flex flex-row items-center gap-5">
 
-        <?php if ( $terms_conditions ) : ?>
-        <a
-          target="_blank"
-          rel="sponsored"
-          class="border-b border-white pb-0.6 cursor-pointer hover:border-brand-yellow hover:text-brand-yellow transition-all duration-300 ease-in-out"
-          href="<?php echo esc_url($terms_conditions); ?>"
-        >
-          Terms & Conditions
-        </a>
-        <?php endif; ?>
+      <?php if ( $terms_conditions ) : ?>
+      <a
+        target="_blank"
+        rel="sponsored"
+        class="border-b border-white pb-0.6 cursor-pointer hover:border-brand-yellow hover:text-brand-yellow transition-all duration-300 ease-in-out"
+        href="<?php echo esc_url($terms_conditions); ?>"
+      >
+        Terms & Conditions
+      </a>
+      <?php endif; ?>
 
-        <?php if ( $privacy_policy ) : ?>
-        <a
-          target="_blank"
-          rel="sponsored"
-          class="border-b border-white pb-0.6 cursor-pointer hover:border-brand-yellow hover:text-brand-yellow transition-all duration-300 ease-in-out"
-          href="<?php echo esc_url($privacy_policy); ?>"
-        >
-          Privacy Policy
-        </a>
-        <?php endif; ?>
-      </div>
+      <?php if ( $privacy_policy ) : ?>
+      <a
+        target="_blank"
+        rel="sponsored"
+        class="border-b border-white pb-0.6 cursor-pointer hover:border-brand-yellow hover:text-brand-yellow transition-all duration-300 ease-in-out"
+        href="<?php echo esc_url($privacy_policy); ?>"
+      >
+        Privacy Policy
+      </a>
+      <?php endif; ?>
     </div>
+  </div>
   </div>
 
 
@@ -451,7 +431,7 @@
   $footer_bg_image_url = $footer_bg_image_id ? wp_get_attachment_image_url($footer_bg_image_id, 'full') : '';
   ?>
   <div
-    class="hidden -mt-8 h-[300px] sm:h-[400px] md:h-[550px] sticky bottom-0 z-[-1] bg-right w-full bg-cover <?php echo $footer_bg_image_url ? '' : 'bg-[<?php echo esc_attr($footer_bg_color); ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>]'; ?>"
+    class="hidden -mt-8 h-[300px] sm:h-[400px] md:h-[550px] sticky bottom-0 z-[-1] bg-right w-full bg-cover <?php echo $footer_bg_image_url ? '' : 'bg-[<?php echo esc_attr($footer_bg_color); ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>]'; ?>"
     style="<?php if ($footer_bg_image_url) : ?>background-image: url('<?php echo esc_url($footer_bg_image_url); ?>');<?php endif; ?>"
   >
   </div>

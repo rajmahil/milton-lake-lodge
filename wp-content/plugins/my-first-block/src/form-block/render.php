@@ -311,23 +311,6 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
       ?>
         <?php endforeach; ?>
 
-        <!-- Simple human check instead of captcha -->
-        <div class="col-span-2 mt-4">
-          <label class="block mb-2 text-medium">
-            What is 6 + 3?
-          </label>
-          <input
-            name="human-check"
-            type="number"
-            min="0"
-            x-model="humanAnswer"
-            :disabled="loading"
-            :class="loading ? 'opacity-50 cursor-not-allowed' : ' '"
-            class="form-input w-full"
-            placeholder="Enter your answer"
-            required
-          />
-        </div>
 
         <input
           type="hidden"
@@ -341,12 +324,21 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
           id="website"
           style="display:none !important;"
         >
+        <div
+          class="g-recaptcha"
+          data-sitekey="<?php echo esc_attr(MY_RECAPTCHA_SITE_KEY); ?>"
+        ></div>
+        <input
+          type="hidden"
+          name="recaptcha_token"
+          id="recaptcha_token"
+        >
+
 
         <button
           id="form-submit-button"
           type="submit"
-          :disabled="loading || Number(humanAnswer) !== 9"
-          :class="(loading || Number(humanAnswer) !== 9) ? 'opacity-50 cursor-not-allowed' : ' '"
+          :class="(loading) ? 'opacity-50 cursor-not-allowed' : ' '"
           class="btn btn-dark btn-xl col-span-2 h-14 !mt-4 w-full"
         >
           <?php echo esc_html($attributes['submitButtonText'] ?? 'Submit'); ?>

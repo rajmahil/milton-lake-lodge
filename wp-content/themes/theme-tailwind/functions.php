@@ -65,6 +65,16 @@ function boilerplate_add_support()
 
 add_action('after_setup_theme', 'boilerplate_add_support');
 
+function my_recaptcha_enqueue_script()
+{
+    if (!is_page()) {
+        return; // optional: limit to specific page(s)
+    }
+
+    wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js', [], null, true);
+}
+add_action('wp_enqueue_scripts', 'my_recaptcha_enqueue_script');
+
 function boilerplate_customize_register($wp_customize)
 {
     // Section
