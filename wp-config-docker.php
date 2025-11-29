@@ -80,6 +80,8 @@ define('MINIO_ACCESS_KEY', getenv_docker('MINIO_ACCESS_KEY', ''));
 define('MINIO_SECRET_KEY', getenv_docker('MINIO_SECRET_KEY', ''));
 define('MINIO_BUCKET', getenv_docker('MINIO_BUCKET', ''));
 define('MINIO_PUBLIC_URL', getenv_docker('MINIO_PUBLIC_URL', ''));
+define('MY_RECAPTCHA_SITE_KEY', getenv('MY_RECAPTCHA_SITE_KEY'), '6LeyTRwsAAAAAIWDJVr65JXMQSGCq_W934nuwcg0');
+define('MY_RECAPTCHA_SECRET_KEY', getenv('MY_RECAPTCHA_SECRET_KEY'), '6LeyTRwsAAAAAEb6uZfe_WonMpWUFV9_PHGJa9aN');
 
 // ------------------------
 // Table prefix
