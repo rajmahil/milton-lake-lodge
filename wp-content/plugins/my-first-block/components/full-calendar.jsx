@@ -171,7 +171,6 @@ const FullCalendarComp = ( props ) => {
 																	? status
 																	: 'Completed' }
 															</div> */ }
-
 															<a
 																href="#contact"
 																className=" border-b border-transparent hover:border-brand-green text-sm animations text-brand-green-dark"

@@ -43,16 +43,16 @@
         <div class="flex flex-col gap-2 items-center md:items-start">
           <?php
     $footer_logo_id = get_theme_mod('boilerplate_footer_logo');
-    
+
 
     if ($footer_logo_id) :
          $footer_logo_alt = get_post_meta($footer_logo_id, '_wp_attachment_image_alt', true) ?: 'Footer Logo';
-    
+
     // Get multiple image sizes for responsive images
     $footer_logo_full = wp_get_attachment_image_url($footer_logo_id, 'full');
     $footer_logo_large = wp_get_attachment_image_url($footer_logo_id, 'large');
     $footer_logo_medium = wp_get_attachment_image_url($footer_logo_id, 'medium');
-    
+
     // Get image metadata for dimensions
     $image_meta = wp_get_attachment_metadata($footer_logo_id);
     $width = isset($image_meta['width']) ? $image_meta['width'] : '';
@@ -60,8 +60,8 @@
     ?>
           <img
             src="<?php echo esc_url($footer_logo_medium ?: $footer_logo_full); ?>"
-            srcset="<?php echo esc_url($footer_logo_medium); ?> 300w, 
-                <?php echo esc_url($footer_logo_large); ?> 1024w, 
+            srcset="<?php echo esc_url($footer_logo_medium); ?> 300w,
+                <?php echo esc_url($footer_logo_large); ?> 1024w,
                 <?php echo esc_url($footer_logo_full); ?> <?php echo $width; ?>w"
             sizes="(max-width: 768px) 100px, (max-width: 1024px) 150px, 200px"
             alt="<?php echo esc_attr($footer_logo_alt); ?>"
@@ -260,7 +260,7 @@
       $menu_tree = [];
       $parent_items = [];
       $child_items = [];
-      
+
       // Separate parent and child items
       foreach ( $footer_items as $item ) {
           if ( $item->menu_item_parent == 0 ) {
@@ -273,7 +273,7 @@
               $child_items[] = $item;
           }
       }
-      
+
       // Assign children to their parents
       foreach ( $child_items as $child ) {
           if ( isset( $menu_tree[$child->menu_item_parent] ) ) {
@@ -353,36 +353,25 @@
             aria-describedby="footer-newsletter-email-description"
           />
 
+          <!-- Simple human check instead of reCAPTCHA -->
           <div
-            x-data="{
-                captchaCompleted: false,
-                initCaptcha() {
-                    const widget = this.$el.querySelector('.frc-captcha');
-            
-                    widget.addEventListener('frc:widget.complete', (e) => {
-                        console.log('Captcha done');
-                        this.captchaCompleted = true;
-                    });
-            
-                    widget.addEventListener('frc:widget.error', () => {
-                        this.captchaCompleted = false;
-                    });
-            
-                    widget.addEventListener('frc:widget.expire', () => {
-                        this.captchaCompleted = false;
-                    });
-                }
-            }"
-            x-init="initCaptcha()"
-            class="frc-wrapper  w-full"
+            x-data="{ humanAnswer: '' }"
+            class="w-full"
           >
-            <div
-              class="frc-captcha !col-span-2 !w-full !bg-white"
-              data-sitekey="FCMIQ5800A5TJO09"
-            ></div>
+            <label class="block mt-2 mb-1 text-white text-sm">
+              What is 6 + 3?
+            </label>
+            <input
+              type="number"
+              min="0"
+              x-model="humanAnswer"
+              class="form-input w-full"
+              placeholder="Enter your answer"
+              required
+            />
             <button
-              :disabled="!captchaCompleted"
-              :class="!captchaCompleted ? '!opacity-50 !cursor-not-allowed' : ' '"
+              :disabled="Number(humanAnswer) !== 9"
+              :class="Number(humanAnswer) !== 9 ? '!opacity-50 !cursor-not-allowed' : ' '"
               class="btn btn-primary btn-lg w-full mt-4"
             >
               Subscribe
@@ -400,7 +389,6 @@
                 ></path>
               </svg>
             </button>
-
           </div>
         </form>
       </div>
@@ -450,7 +438,7 @@
   $footer_bg_image_url = $footer_bg_image_id ? wp_get_attachment_image_url($footer_bg_image_id, 'full') : '';
   ?>
   <div
-    class="hidden -mt-8 h-[300px] sm:h-[400px] md:h-[550px] sticky bottom-0 z-[-1] bg-right w-full bg-cover <?php echo $footer_bg_image_url ? '' : 'bg-[<?php echo esc_attr($footer_bg_color); ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>]'; ?>"
+    class="hidden -mt-8 h-[300px] sm:h-[400px] md:h-[550px] sticky bottom-0 z-[-1] bg-right w-full bg-cover <?php echo $footer_bg_image_url ? '' : 'bg-[<?php echo esc_attr($footer_bg_color); ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>'; ?>]'; ?>"
     style="<?php if ($footer_bg_image_url) : ?>background-image: url('<?php echo esc_url($footer_bg_image_url); ?>');<?php endif; ?>"
   >
   </div>
