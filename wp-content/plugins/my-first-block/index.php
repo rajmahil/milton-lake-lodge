@@ -105,6 +105,19 @@ function handle_custom_form_email()
 {
     error_log('Form handler triggered');
 
+    $start = isset($_POST['form_time']) ? (int) $_POST['form_time'] : 0;
+
+    if (time() - $start < 3) {
+        // < 3 seconds = likely bot
+        error_log('Form submitted too fast, spam blocked.');
+        wp_die('Spam detected.', 'Form Error', ['response' => 403]);
+    }
+
+    if (!empty($_POST['website'])) {
+        error_log('Honeypot triggered, spam blocked.');
+        wp_die('Spam detected.', 'Form Error', ['response' => 403]);
+    }
+
     // Anti-spam math check
     if (!isset($_POST['human-check']) || intval($_POST['human-check']) !== 9) {
         error_log('Human check failed. Value: ' . print_r($_POST['human-check'], true));

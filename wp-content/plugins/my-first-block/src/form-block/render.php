@@ -329,6 +329,19 @@ $section_id = !empty($attributes['sectionId']) ? esc_attr($attributes['sectionId
           />
         </div>
 
+        <input
+          type="hidden"
+          name="form_time"
+          value="<?php echo time(); ?>"
+        >
+
+        <input
+          type="text"
+          name="website"
+          id="website"
+          style="display:none !important;"
+        >
+
         <button
           id="form-submit-button"
           type="submit"
